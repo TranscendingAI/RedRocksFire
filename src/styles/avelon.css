@@ -1,0 +1,151 @@
+/* Avelon theme base — shared pieces extracted 1:1 from the demo
+ * (https://woocommerce-718927-6369698.cloudwaysapps.com/)
+ *
+ * Global values from the theme kit:
+ *   content:  Inter 400 16px / 1.875, #626262
+ *   headings: Space Grotesk 700, letter-spacing -0.04em, #0A0A0A
+ *   primary #D41226 · secondary #0D0D0B · tertiary #FFFFFF · quaternary #F5F5F5
+ *   body background: #FFFFFF
+ */
+
+.av-page {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.875;
+  font-weight: 400;
+  color: #626262;
+  background-color: #ffffff;
+}
+
+.av-page h1, .av-page h2, .av-page h3,
+.av-page h4, .av-page h5, .av-page h6,
+.av-heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #0a0a0a;
+  line-height: 1.2;
+}
+
+/* ── WGL button (text box + separated square icon box) ─────────
+ * Demo markup: <a class="wgl-button align-icon-right"><span text>… with a
+ * 60px square icon wrapper sitting flush against the right edge.
+ */
+.av-wgl-btn {
+  display: inline-flex;
+  align-items: stretch;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+.av-wgl-btn__text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 17px 39px;
+  border: 1px solid var(--av-wgl-btn-border, transparent);
+  background: var(--av-wgl-btn-bg, var(--av-primary));
+  color: var(--av-wgl-btn-color, #ffffff);
+  transition: 0.4s;
+}
+.av-wgl-btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--av-wgl-icon-wrapper, 60px);
+  min-height: var(--av-wgl-icon-wrapper, 60px);
+  border: 1px solid var(--av-wgl-btn-border, transparent);
+  background: var(--av-wgl-btn-bg, var(--av-primary));
+  color: var(--av-wgl-btn-color, #ffffff);
+  margin-left: 0.01px;
+  transition: 0.4s;
+}
+.av-wgl-btn__icon svg {
+  width: 16px;
+  height: 14px;
+  fill: currentColor;
+}
+.av-wgl-btn:hover .av-wgl-btn__text,
+.av-wgl-btn:hover .av-wgl-btn__icon {
+  background: var(--av-wgl-btn-bg-hover, #ffffff);
+  color: var(--av-wgl-btn-color-hover, #0a0a0a);
+  border-color: var(--av-wgl-btn-border-hover, #0a0a0a);
+}
+
+/* ── Double-heading subtitle (red label with diamond icons) ── */
+.av-dblh__subtitle {
+  display: inline-flex;
+  align-items: center;
+  color: var(--av-primary);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.25em;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  margin-bottom: 25px;
+}
+.av-dblh__subtitle .divider-icon {
+  display: inline-flex;
+  transform: translateY(1px);
+  margin-right: 10px;
+}
+.av-dblh__subtitle .divider-icon svg {
+  fill: currentColor;
+  width: 15px;
+  height: 20px;
+}
+.av-dblh__title {
+  font-size: 56px;
+  text-transform: uppercase;
+  line-height: 1.178em;
+  padding-bottom: 5px;
+  margin: 0;
+}
+@media (max-width: 1200px) {
+  .av-dblh__title { font-size: 42px; }
+}
+@media (max-width: 767px) {
+  .av-dblh__title { font-size: 28px; }
+}
+
+/* ── Scrolling text loop (marquee) ──────────────────────────── */
+@keyframes av-wgl-scroll-text {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+.av-loop {
+  display: flex;
+  gap: var(--av-loop-gap, 0.4em);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.av-loop__track {
+  display: flex;
+  flex: 0 0 auto;
+  gap: inherit;
+  animation: av-wgl-scroll-text var(--av-loop-duration, 120s) linear infinite;
+  white-space: nowrap;
+}
+
+/* ── Vertical edge delimiters (1px white 40% lines) ─────────── */
+.av-delimiter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #ffffff66;
+  z-index: 4;
+  pointer-events: none;
+}
+.av-delimiter--left { left: 0; }
+.av-delimiter--right { right: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .av-loop__track { animation: none; }
+}

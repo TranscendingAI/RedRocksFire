@@ -1,147 +1,1371 @@
 ---
 /**
- * Home — composed from design.md §7 element list.
- * Real content from rrfps.com (Home, Services, About pages).
+ * Home — 1:1 replica of the Avelon "Main Home" demo
+ * (https://woocommerce-718927-6369698.cloudwaysapps.com/)
  *
- * Band order (7 total, alternating per design.md):
- *   1. Hero (full-bleed photo) — "Raising the Standard in Fire Safety"
- *   2. Black band — ThreeBeat: Experience / Compliance / Response
- *   3. Light band — SplitPanel: "Trusted Fire Protection Experts in Colorado" + team photo
- *   4. Light band — SplitPanel: "Comprehensive Coverage" + jobsite photo
- *   5. Photo band — Big title + 4 CredentialTiles (NICET / CSA / Colorado / NFPA)
- *   6. White band — DualCTA: Schedule / About
- *   7. (footer is in BaseLayout)
+ * Structure and every pixel value below are extracted from the demo's
+ * Elementor CSS (reference/…/post-448.css) and theme kit:
+ *
+ *   1. Hero — bg h1-1.webp · 40px eyebrow · clamp(64px,10.417vw,200px) H1
+ *      · red counter box (357px col, 128px value) + GET IN TOUCH
+ *   2. Statement — "Building the Future" label · 64px word-appear H2 · MORE ABOUT US
+ *   3. Marquee — "Your Vision, Our Build." 170px outlined red stroke
+ *   4. Solutions — dark #0D0D0B section, 56px heading, ALL SERVICES,
+ *      4 bordered infoboxes (306px content, red icon tiles)
+ *   5. Services — 3 pinned #F5F5F5 panels (48px titles, 60px arrow buttons)
+ *   6. Clients — 6 masked logos (#0E2F3E → #FB651B hover) over h1-2.webp parallax
+ *   7. Presentation band — bg h1-3.webp, red "Precision. Quality. Innovation."
+ *      box + logo + mission + WATCH THE PRESENTATION
+ *   8. Portfolio — 56px double heading + ALL PROJECTS, 3-col carousel, square pagination
+ *   9. Testimonials — 170px white-stroke marquee · h1-4.webp + 36px quotes
+ *      carousel (PREV/NEXT) · avatar stack + "200+ happy customers"
+ *
+ * Fonts: Space Grotesk (headings/buttons/menu), Inter (content).
+ * Motion: GSAP + ScrollTrigger (BaseLayout CDN), Swiper 11 (CDN).
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import ThreeBeat from '../components/ThreeBeat.astro';
-import SplitPanel from '../components/SplitPanel.astro';
-import CredentialTile from '../components/CredentialTile.astro';
-import DualCTA from '../components/DualCTA.astro';
 
-const threeBeats = [
+// Shared arrow SVG path (16×14) used by every wgl button + portfolio hover icon
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+// Diamond divider icon used in double-heading subtitles
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+const statementWords = 'we build more than structures — we build trust, innovation, and enduring value'.split(' ');
+
+const solutions = [
   {
-    word: 'Experience.',
-    body: 'Over 100 years of combined expertise. NICET-certified, CSA-certified, and Colorado-licensed professionals led by Brian Kakac.',
+    title: 'General Contracting',
+    body: 'Comprehensive management and execution of construction projects from start to finish.',
   },
   {
-    word: 'Compliance.',
-    body: 'Standards-driven NFPA inspections with detailed written reports. Every system tested, every result documented.',
+    title: 'Design & Build',
+    body: 'An integrated approach that combines architectural design, engineering, and construction under one roof.',
   },
   {
-    word: 'Response.',
-    body: '24-hour emergency service with a 1-hour metro response window. We answer the phone when you call.',
+    title: 'Project Management',
+    body: 'Professional planning, scheduling, budgeting, and oversight to keep every project on track.',
+  },
+  {
+    title: 'building construction',
+    body: 'From modern homes to apartment complexes, we bring residential visions to life with precision.',
   },
 ];
 
-const credentials = [
-  { label: 'NICET', detail: 'Certified' },
-  { label: 'CSA', detail: 'Certified' },
-  { label: 'Colorado', detail: 'Licensed' },
-  { label: 'NFPA', detail: 'Compliant' },
+const services = [
+  {
+    number: '01',
+    title: 'Residential Construction',
+    body: 'From modern homes to apartment complexes, we bring residential visions to life with precision and quality craftsmanship.',
+    image: '/images/home/h1-s1.webp',
+    imageFirst: false,
+  },
+  {
+    number: '02',
+    title: 'Commercial Construction',
+    body: 'We build functional, aesthetic spaces for offices, retail, and business environments — designed to inspire productivity and growth.',
+    image: '/images/home/h1-s2.webp',
+    imageFirst: true,
+  },
+  {
+    number: '03',
+    title: 'Industrial Construction',
+    body: 'High-performance facilities built to meet the unique needs of manufacturing, logistics, and energy sectors.',
+    image: '/images/home/h1-s3.webp',
+    imageFirst: false,
+  },
 ];
 
-const dualCtas = [
-  {
-    title: 'Schedule Our Services.',
-    descriptor: 'Book an inspection or service visit — our team responds within one hour across the Denver metro area.',
-    href: '/contact',
-    label: 'Schedule a visit',
-  },
-  {
-    title: 'Learn About Us.',
-    descriptor: 'Family-owned since 2010. 100+ years of combined experience. Meet the team behind the inspections.',
-    href: '/about',
-    label: 'Read our story',
-  },
+const clients = [1, 2, 3, 4, 5, 6].map((n) => `/images/home/clients-${n}.webp`);
+
+const projects = [
+  { title: 'LUXURY GARDEN ESTATE', cats: ['building', 'residential'], image: '/images/home/pf-0-1160x820.webp' },
+  { title: 'URBAN OFFICE COMPLEX', cats: ['architecture', 'commercial'], image: '/images/home/pf-1-1160x820.webp' },
+  { title: 'THE CORE CENTER', cats: ['building', 'design'], image: '/images/home/pf-2-1160x820.webp' },
+  { title: 'WORKSPACE REDEFINED', cats: ['architecture', 'residential'], image: '/images/home/pf-3-1160x820.webp' },
+  { title: 'URBAN FAMILY HOME', cats: ['commercial', 'design'], image: '/images/home/pf-4-1160x820.webp' },
+];
+
+const testimonialQuote = '“From branding to website development, this team exceeded our expectations. Their creativity and technical expertise brought our vision to life seamlessly.”';
+const testimonials = [
+  { name: 'Christian Grant', position: 'Company client' },
+  { name: 'Matey Grant', position: 'Company client' },
+  { name: 'Marry Parton', position: 'Company client' },
+  { name: 'Luis Vireon', position: 'Company client' },
 ];
 ---
 
 <BaseLayout
-  title="Red Rocks Fire Protection | Colorado Fire Safety Experts"
-  description="Red Rocks Fire Protection — Colorado fire safety inspections, sprinkler systems, and 24/7 monitoring. NICET and CSA certified. Schedule our services."
+  title="Red Rocks Fire Protection"
+  description="Red Rocks Fire Protection — from concept to completion, we build it right."
 >
+  <div class="av-page">
 
-  {/* 1. Hero */}
-  <Hero
-    title="Raising the Standard in Fire Safety"
-    highlight="Standard"
-    subtitle="Our team of professionals delivers fire inspections and actionable insights to protect what matters most."
-    ctaLabel="Schedule Our Services"
-    ctaHref="/contact"
-    image="/images/Chevy-Truck_no-ng.png"
-    imageAlt="Red Rocks Fire Protection service truck"
-  />
+    <!-- ════════════════════════════════════════════════════════
+         1. HERO
+         ════════════════════════════════════════════════════════ -->
+    <section class="hero">
+      <div class="hero__spacer-top" aria-hidden="true"></div>
 
-  {/* 2. Three-beat word row on black band */}
-  <ThreeBeat beats={threeBeats} background="black" />
-
-  {/* 3. Split panel: Trusted Fire Protection Experts */}
-  <SplitPanel
-    eyebrow="About Red Rocks"
-    title="Trusted Fire Protection Experts in Colorado."
-    body="At Red Rocks Fire Protection, we are dedicated to delivering exceptional fire safety services across Colorado. We build strategic partnerships and leverage modern technology to revolutionize the fire protection industry — from detailed inspections to high-quality equipment installation."
-    ctaLabel="Learn More About Us"
-    ctaHref="/about"
-    image="/images/trusted-fire-protection.jpg"
-    imageAlt="Trusted fire protection services across Colorado"
-    background="light"
-    ctaVariant="arrow"
-  />
-
-  {/* 5. Split panel: Comprehensive coverage */}
-  <SplitPanel
-    eyebrow="Full Coverage"
-    title="Comprehensive Coverage for Every System."
-    body="Our comprehensive range of services ensures that every aspect of your life safety needs is covered — from installation and maintenance to monitoring and inspections. Wet and dry sprinkler systems, preaction and deluge, fire pumps, standpipe, kitchen suppression, portable extinguishers, backflow prevention, and 24/7 monitoring."
-    ctaLabel="Explore Our Services"
-    ctaHref="/services"
-    image="/images/jobsite.jpg"
-    imageAlt="Fire protection technicians working on a jobsite"
-    background="panel"
-    ctaVariant="arrow"
-    reverse={true}
-  />
-
-  {/* 5. Credential grid on photo background */}
-  <section class="rr-band relative text-rr-white overflow-hidden">
-    {/* Background image + dark overlay */}
-    <div
-      class="absolute inset-0 bg-rr-bg-panel"
-      style="background-image: url('/images/the-red-rocks-of-the-canyon.jpg'); background-size: cover; background-position: center;"
-      aria-hidden="true"
-    ></div>
-    <div class="absolute inset-0" style="background: var(--rr-overlay);" aria-hidden="true"></div>
-
-    <div class="rr-container relative z-10">
-      <div class="rr-reveal">
-        <p class="rr-eyebrow text-rr-grey-soft mb-5">Certifications & Compliance</p>
-        <h2
-          class="font-display font-black uppercase tracking-tight"
-          style="font-size: var(--rr-text-section); line-height: 0.95;"
-        >
-          Our Expertise and Experience.
-        </h2>
-        <p
-          class="mt-6 max-w-2xl text-rr-grey-soft"
-          style="font-size: var(--rr-text-lead);"
-        >
-          Choosing Red Rocks Fire Protection means working with a highly qualified team. Our professionals hold industry-leading certifications.
-        </p>
+      <div class="hero__eyebrow-row">
+        <h3 class="hero__eyebrow" data-fade-up><span>From Concept to Completion — We Build It Right</span></h3>
       </div>
 
-      <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        {credentials.map((c, i) => (
-          <div class="rr-reveal" data-reveal-delay={i * 100}>
-            <CredentialTile label={c.label} detail={c.detail} />
+      <div class="hero__spacer-mid" aria-hidden="true"></div>
+
+      <div class="hero__main-row">
+        <h1 class="hero__title" data-fade-up>
+          <span>We Build </span><span>the future</span>
+        </h1>
+
+        <div class="hero__counter-col">
+          <span class="av-delimiter av-delimiter--left" aria-hidden="true"></span>
+          <div class="hero__counter-box" data-fade-up>
+            <div class="hero__counter">
+              <div class="hero__counter-value">
+                <span data-counter data-counter-target="15">15</span><span class="hero__counter-suffix">+</span>
+              </div>
+              <h4 class="hero__counter-title">leading years in construction</h4>
+            </div>
+            <div class="hero__counter-spacer" aria-hidden="true"></div>
+            <a href="/about" class="av-wgl-btn hero__cta">
+              <span class="av-wgl-btn__text">get in touch</span>
+              <span class="av-wgl-btn__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          </div>
+          <span class="av-delimiter av-delimiter--right" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="hero__spacer-bottom" aria-hidden="true"></div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         2. STATEMENT — Building the Future
+         ════════════════════════════════════════════════════════ -->
+    <section class="statement">
+      <div class="statement__subtitle av-dblh__subtitle">
+        <span class="divider-icon" set:html={diamondIcon} />
+        <span>Building the Future</span>
+      </div>
+
+      <h2 class="statement__text" data-word-appear>
+        {statementWords.map((w) => <span class="statement__word">{w}</span>)}
+      </h2>
+
+      <a href="/about" class="av-wgl-btn av-wgl-btn--outline statement__cta">
+        <span class="av-wgl-btn__text">MORE ABOUT US</span>
+        <span class="av-wgl-btn__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+        </span>
+      </a>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         3.–6. wrapper with h1-2.webp parallax layer at its bottom
+         ════════════════════════════════════════════════════════ -->
+    <div class="midwrap">
+      <div class="midwrap__bg" aria-hidden="true">
+        <img src="/images/home/h1-2.webp" alt="" loading="lazy" />
+      </div>
+
+      <!-- 3. MARQUEE — outlined red stroke -->
+      <div class="marquee-spacer-top" aria-hidden="true"></div>
+      <div class="av-loop marquee" aria-hidden="true">
+        {[0, 1, 2].map(() => (
+          <div class="av-loop__track">
+            <h3 class="marquee__text">Your Vision, Our Build.&nbsp; Your Vision, Our Build.</h3>
           </div>
         ))}
       </div>
+      <div class="marquee-spacer-bottom" aria-hidden="true"></div>
+
+      <!-- 4. SOLUTIONS — dark section -->
+      <section class="solutions">
+        <div class="solutions__inner">
+          <div class="solutions__head">
+            <div class="solutions__head-left" data-fade-up>
+              <div class="av-dblh__subtitle">
+                <span class="divider-icon" set:html={diamondIcon} />
+                <span>From Design to Delivery</span>
+              </div>
+              <h3 class="av-dblh__title solutions__title">Comprehensive Solutions for Every Project</h3>
+            </div>
+            <div class="solutions__head-right" data-fade-up>
+              <a href="/services" class="av-wgl-btn av-wgl-btn--ghost-light">
+                <span class="av-wgl-btn__text">ALL SERVICES</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div class="solutions__spacer" aria-hidden="true"></div>
+
+          <div class="solutions__grid">
+            {solutions.map((s, i) => (
+              <a href="/about" class="infobox" data-fade-up>
+                <span class="infobox__bg" aria-hidden="true"></span>
+                <span class="infobox__icon" data-icon-slot={i} aria-hidden="true"></span>
+                <span class="infobox__content">
+                  <h4 class="infobox__title">{s.title}</h4>
+                  <span class="infobox__text">{s.body}</span>
+                </span>
+              </a>
+            ))}
+          </div>
+
+          <div class="solutions__spacer-bottom" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- 5. SERVICES — heading + pinned panels -->
+      <section class="svc">
+        <div class="svc__head" data-fade-up>
+          <div class="av-dblh__subtitle">
+            <span class="divider-icon svc__heart" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" fill="currentColor"><path d="M116.65 219.35a15.68 15.68 0 0 0 22.65 0l96.75-99.83c28.15-29 26.5-77.1-4.91-103.88C203.75-7.7 163-3.5 137.86 22.44L128 32.58l-9.85-10.14C93.05-3.5 52.25-7.7 24.86 15.64c-31.41 26.78-33 74.85-5 103.88zm143.92 100.49h-48l-7.08-14.24a27.39 27.39 0 0 0-25.66-17.78h-71.71a27.39 27.39 0 0 0-25.66 17.78l-7 14.24h-48A27.45 27.45 0 0 0 0 347.3v137.25A27.44 27.44 0 0 0 27.43 512h233.14A27.45 27.45 0 0 0 288 484.55V347.3a27.45 27.45 0 0 0-27.43-27.46zM144 468a52 52 0 1 1 52-52 52 52 0 0 1-52 52zm355.4-115.9h-60.58l22.36-50.75c2.1-6.65-3.93-13.21-12.18-13.21h-75.59c-6.3 0-11.66 3.9-12.5 9.1l-16.8 106.93c-1 6.3 4.88 11.89 12.5 11.89h62.31l-24.2 83c-1.89 6.65 4.2 12.9 12.23 12.9a13.26 13.26 0 0 0 10.92-5.25l92.4-138.91c4.88-6.91-1.16-15.7-10.87-15.7zM478.08.33L329.51 23.17C314.87 25.42 304 38.92 304 54.83V161.6a83.25 83.25 0 0 0-16-1.7c-35.35 0-64 21.48-64 48s28.65 48 64 48c35.2 0 63.73-21.32 64-47.66V99.66l112-17.22v47.18a83.25 83.25 0 0 0-16-1.7c-35.35 0-64 21.48-64 48s28.65 48 64 48c35.2 0 63.73-21.32 64-47.66V32c0-19.48-16-34.42-33.92-31.67z"></path></svg>
+            </span>
+            <span>End-to-End Construction Excellence</span>
+          </div>
+          <h3 class="av-dblh__title svc__title">Building Services You Can Rely On</h3>
+        </div>
+
+        <div class="svc__stack">
+          {services.map((s) => (
+            <div class="svc__panel-wrap" data-svc-panel>
+              <div class:list={['svc__panel', s.imageFirst && 'svc__panel--image-first']}>
+                <div class="svc__content">
+                  <div class="svc__dblh">
+                    <div class="svc__number">{s.number}</div>
+                    <h3 class="svc__panel-title">{s.title}</h3>
+                  </div>
+                  <div class="svc__divider" aria-hidden="true"></div>
+                  <p class="svc__body">{s.body}</p>
+                  <a href="/about" class="av-wgl-btn svc__more" aria-label={`More about ${s.title}`}>
+                    <span class="av-wgl-btn__icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                    </span>
+                  </a>
+                </div>
+                <div class="svc__image">
+                  <img src={s.image} alt={s.title} loading="lazy" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- 6. CLIENTS — masked logos over the parallax image -->
+        <div class="clients__spacer-top" aria-hidden="true"></div>
+        <div class="clients">
+          <div class="swiper clients__swiper">
+            <div class="swiper-wrapper">
+              {clients.map((src) => (
+                <div class="swiper-slide clients__slide">
+                  <span class="clients__logo" style={`--logo-url: url('${src}')`}>
+                    <img src={src} alt="Client logo" loading="lazy" />
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="clients__spacer-bottom" aria-hidden="true"></div>
+      </section>
     </div>
-  </section>
 
-  {/* 7. Dual CTA */}
-  <DualCTA items={dualCtas} background="white" />
+    <!-- ════════════════════════════════════════════════════════
+         7. PRESENTATION BAND — h1-3.webp
+         ════════════════════════════════════════════════════════ -->
+    <section class="band">
+      <div class="band__spacer-top" aria-hidden="true"></div>
+      <div class="band__divider" aria-hidden="true"></div>
 
+      <div class="band__row">
+        <span class="av-delimiter av-delimiter--left" aria-hidden="true"></span>
+
+        <div class="band__redbox">
+          <h2 class="band__heading">Precision.<br />Quality.<br />Innovation.</h2>
+        </div>
+
+        <div class="band__logo">
+          <img src="/images/home/about_logo.webp" alt="Red Rocks Fire Protection emblem" loading="lazy" />
+        </div>
+
+        <p class="band__text">We driven by a simple mission — to create spaces that inspire progress.</p>
+
+        <a href="/about" class="av-wgl-btn band__cta">
+          <span class="av-wgl-btn__text">watch the presentation</span>
+          <span class="av-wgl-btn__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Z"></path></svg>
+          </span>
+        </a>
+
+        <span class="av-delimiter av-delimiter--right" aria-hidden="true"></span>
+      </div>
+
+      <div class="band__divider" aria-hidden="true"></div>
+      <div class="band__spacer-bottom" aria-hidden="true"></div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         8. PORTFOLIO
+         ════════════════════════════════════════════════════════ -->
+    <section class="pf">
+      <div class="pf__head-wrap">
+        <div class="pf__spacer-top" aria-hidden="true"></div>
+        <div class="pf__head" data-fade-up>
+          <div class="pf__head-left">
+            <div class="av-dblh__subtitle">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>Proof in Every Project</span>
+            </div>
+            <h3 class="av-dblh__title">Case Studies of Quality and Innovation</h3>
+          </div>
+          <a href="/services" class="av-wgl-btn av-wgl-btn--outline pf__all">
+            <span class="av-wgl-btn__text">all projects</span>
+            <span class="av-wgl-btn__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pf__spacer-mid" aria-hidden="true"></div>
+
+      <div class="pf__carousel" data-fade-up>
+        <div class="swiper pf__swiper">
+          <div class="swiper-wrapper">
+            {projects.map((p) => (
+              <div class="swiper-slide">
+                <article class="pf-item">
+                  <a href="/services" class="pf-item__image" aria-label={p.title}>
+                    <img src={p.image} alt={p.title} loading="lazy" decoding="async" />
+                    <span class="pf-item__icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                    </span>
+                  </a>
+                  <div class="pf-item__description">
+                    <h5 class="pf-item__title"><a href="/services">{p.title}</a></h5>
+                    <div class="pf-item__cats">
+                      {p.cats.map((c) => <a href="/services" class="pf-item__cat">{c}</a>)}
+                    </div>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="pf__pagination-wrap">
+          <div class="pf__pagination"></div>
+        </div>
+      </div>
+
+      <div class="pf__spacer-bottom" aria-hidden="true"></div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         9. TESTIMONIALS
+         ════════════════════════════════════════════════════════ -->
+    <section class="tm">
+      <div class="av-loop tm__marquee" aria-hidden="true">
+        {[0, 1, 2].map(() => (
+          <div class="av-loop__track">
+            <h3 class="tm__marquee-text">
+              WHAT CLIENTS SAY ABOUT US&nbsp; WHAT CLIENTS SAY ABOUT US&nbsp; WHAT CLIENTS SAY ABOUT US&nbsp; WHAT CLIENTS SAY ABOUT US&nbsp;
+            </h3>
+          </div>
+        ))}
+      </div>
+
+      <div class="tm__row">
+        <div class="tm__image">
+          <img src="/images/home/h1-4.webp" alt="Construction site" loading="lazy" />
+        </div>
+
+        <div class="tm__col">
+          <div class="tm__carousel">
+            <div class="swiper tm__swiper">
+              <div class="swiper-wrapper">
+                {testimonials.map((t) => (
+                  <div class="swiper-slide">
+                    <div class="tm-item">
+                      <div class="tm-item__quote">{testimonialQuote}</div>
+                      <div class="tm-item__author">
+                        <h3 class="tm-item__name">{t.name}</h3>
+                        <span class="tm-item__position">{t.position}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="tm__nav">
+              <button type="button" class="tm__nav-btn tm__nav-prev">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" style="transform: scaleX(-1)" aria-hidden="true"><path d={arrowPath}></path></svg>
+                <span>PREV</span>
+              </button>
+              <button type="button" class="tm__nav-btn tm__nav-next">
+                <span>NEXT</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="tm__spacer" aria-hidden="true"></div>
+
+          <div class="tm__customers">
+            {[1, 2, 3].map((n) => (
+              <img
+                src={`/images/home/testimonials-logo-${n}.webp`}
+                alt=""
+                class="tm__avatar"
+                loading="lazy"
+              />
+            ))}
+            <h2 class="tm__customers-label">200+&nbsp;happy customers</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * 1. HERO
+   * ══════════════════════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background-image: url('/images/home/h1-1.webp');
+    background-position: center center;
+    background-size: cover;
+  }
+  .hero__spacer-top { height: 200px; }
+  .hero__spacer-mid { height: 333px; }
+  .hero__spacer-bottom { height: 69px; }
+
+  .hero__eyebrow-row {
+    padding-left: 3.1%;
+    padding-right: 3.6%;
+  }
+  .hero__eyebrow {
+    max-width: 400px;
+    font-size: 40px;
+    text-transform: uppercase;
+    line-height: 1em;
+    margin: 0;
+  }
+  .hero__eyebrow span { color: #ffffff; }
+
+  .hero__main-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ffffff66;
+    border-bottom: 1px solid #ffffff66;
+    padding-left: 3.1%;
+    padding-right: 3.6%;
+  }
+  .hero__title {
+    max-width: 1050px;
+    margin: 10px 0 0 0;
+    font-size: clamp(64px, 10.417vw, 200px);
+    text-transform: uppercase;
+    line-height: 0.8em;
+    letter-spacing: -0.05em;
+    color: #ffffff;
+  }
+  .hero__title span { display: block; color: #ffffff; }
+
+  .hero__counter-col {
+    position: relative;
+    width: 357px;
+    flex-shrink: 0;
+    align-self: stretch;
+    display: flex;
+  }
+  .hero__counter-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 359px;
+    margin: -1px 0;
+    padding: 16px 20px 20px 20px;
+    background-color: var(--av-primary);
+    position: relative;
+    z-index: 5;
+  }
+  .hero__counter-col .av-delimiter {
+    top: -500%;
+    bottom: auto;
+    height: 10000px;
+  }
+  .hero__counter-value {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+  }
+  .hero__counter-title {
+    max-width: 200px;
+    margin: -14px 0 0 0;
+    font-size: 24px;
+    line-height: 30px;
+    color: #ffffff;
+  }
+  .hero__counter-spacer { height: 50px; }
+
+  .hero__cta {
+    --av-wgl-btn-bg: var(--av-primary);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: #ffffff;
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: #0a0a0a;
+    --av-wgl-btn-border-hover: #0a0a0a;
+    width: 100%;
+  }
+  .hero__cta .av-wgl-btn__text {
+    flex: 1;
+    justify-content: space-evenly;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 2. STATEMENT
+   * ══════════════════════════════════════════════════════════ */
+  .statement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 150px;
+    background: #ffffff;
+  }
+  .statement__text {
+    max-width: 900px;
+    margin: 0;
+    font-size: 64px;
+    text-transform: uppercase;
+    line-height: 1.156em;
+  }
+  .statement__word { opacity: 0.1; transition: opacity 0.2s linear; }
+  .statement__word + .statement__word { margin-left: 0.22em; }
+  .statement__cta { margin-top: 35px; }
+
+  .av-wgl-btn--outline {
+    --av-wgl-btn-bg: #ffffff;
+    --av-wgl-btn-color: #0a0a0a;
+    --av-wgl-btn-border: #0a0a0a;
+    --av-wgl-btn-bg-hover: var(--av-primary);
+    --av-wgl-btn-color-hover: #ffffff;
+    --av-wgl-btn-border-hover: var(--av-primary);
+  }
+  .av-wgl-btn--ghost-light {
+    --av-wgl-btn-bg: transparent;
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: #ffffff;
+    --av-wgl-btn-bg-hover: var(--av-primary);
+    --av-wgl-btn-color-hover: #ffffff;
+    --av-wgl-btn-border-hover: #ffffff;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 3.–6. MIDWRAP + MARQUEE
+   * ══════════════════════════════════════════════════════════ */
+  .midwrap {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .midwrap__bg {
+    position: absolute;
+    top: 80%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: -1;
+  }
+  .midwrap__bg img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .marquee-spacer-top { height: 143px; }
+  .marquee-spacer-bottom { height: 104px; }
+  .marquee { --av-loop-gap: 50px; --av-loop-duration: 120s; }
+  .marquee__text {
+    margin: 0;
+    font-size: 170px;
+    text-transform: uppercase;
+    line-height: 1em;
+    color: transparent;
+    -webkit-text-stroke-width: 1.4px;
+    -webkit-text-stroke-color: var(--av-primary);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 4. SOLUTIONS (dark)
+   * ══════════════════════════════════════════════════════════ */
+  .solutions {
+    background-color: var(--av-secondary);
+  }
+  .solutions__inner {
+    max-width: 1600px;
+    margin-inline: auto;
+    padding: 150px 15px 160px;
+  }
+  .solutions__head {
+    max-width: 1170px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .solutions__head-left { max-width: 65%; }
+  .solutions__title { color: #ffffff; }
+  .solutions__head-right .av-wgl-btn { margin-bottom: 20px; }
+  .solutions__spacer { height: 50px; }
+
+  .solutions__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+  .infobox {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .infobox__bg {
+    position: absolute;
+    inset: 0;
+    border: 1px solid #ffffff34;
+    transition: 0.4s;
+    pointer-events: none;
+  }
+  .infobox:hover { background-color: var(--av-primary); }
+  .infobox:hover .infobox__bg { border-color: transparent; }
+  .infobox__icon {
+    display: inline-flex;
+    background-color: var(--av-primary);
+    padding: 16px;
+    transition: 0.4s;
+  }
+  .infobox__icon :global(svg) {
+    width: 50px;
+    height: 50px;
+    fill: #ffffff;
+  }
+  .infobox:hover .infobox__icon { background-color: var(--av-secondary); }
+  .infobox__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 306px;
+    padding: 51px 40px 30px 40px;
+  }
+  .infobox__title {
+    margin: 0;
+    font-size: 30px;
+    text-transform: uppercase;
+    line-height: 1.4em;
+    color: #ffffff;
+  }
+  .infobox__text {
+    padding-top: 16px;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.875;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 5. SERVICES (pinned stack)
+   * ══════════════════════════════════════════════════════════ */
+  .svc__head {
+    text-align: center;
+    padding-top: 150px;
+    padding-bottom: 52px;
+  }
+  .svc__heart svg { width: 20px; height: 20px; fill: currentColor; }
+  .svc__title { max-width: 700px; margin-inline: auto; }
+
+  .svc__stack { position: relative; }
+  .svc__panel-wrap {
+    position: sticky;
+    top: 0;
+  }
+  .svc__panel-wrap + .svc__panel-wrap { margin-top: 80px; }
+  .svc__panel {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 60px 0;
+  }
+  .svc__content {
+    width: 48.7%;
+    padding-left: 70px;
+    padding-right: 60px;
+    box-sizing: border-box;
+  }
+  .svc__image { width: 51.3%; }
+  .svc__panel--image-first { flex-direction: row-reverse; }
+  .svc__panel--image-first .svc__content { width: 48.7%; }
+  .svc__panel--image-first .svc__image { width: 51.3%; }
+  .svc__image img { width: 100%; height: auto; display: block; }
+
+  .svc__number {
+    color: var(--av-primary);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.25em;
+    letter-spacing: -0.02em;
+    margin-bottom: 11px;
+  }
+  .svc__panel-title {
+    margin: 0;
+    font-size: 48px;
+    text-transform: uppercase;
+    line-height: 1.208em;
+    padding-bottom: 5px;
+  }
+  .svc__divider {
+    border-bottom: 1px solid #00000033;
+    margin: 22px 0 31px;
+  }
+  .svc__body {
+    max-width: 410px;
+    margin: 0;
+  }
+  .svc__more {
+    margin-top: 15px;
+    --av-wgl-btn-bg: var(--av-primary);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: var(--av-primary);
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: #0a0a0a;
+    --av-wgl-btn-border-hover: #0a0a0a;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 6. CLIENTS
+   * ══════════════════════════════════════════════════════════ */
+  .clients__spacer-top { height: 215px; }
+  .clients__spacer-bottom { height: 132px; }
+  .clients { overflow: hidden; }
+  .clients :global(.swiper-wrapper) { transition-timing-function: linear; }
+  .clients__slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .clients__logo {
+    display: inline-block;
+    background-color: #0e2f3e;
+    -webkit-mask-image: var(--logo-url);
+    mask-image: var(--logo-url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: 0.4s;
+  }
+  .clients__logo:hover { background-color: #fb651b; }
+  .clients__logo img {
+    display: block;
+    visibility: hidden;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 7. PRESENTATION BAND
+   * ══════════════════════════════════════════════════════════ */
+  .band {
+    position: relative;
+    overflow: hidden;
+    background-image: url('/images/home/h1-3.webp');
+    background-position: center center;
+    background-size: cover;
+  }
+  .band__spacer-top { height: 99px; }
+  .band__spacer-bottom { height: 100px; }
+  .band__divider { border-top: 1px solid #ffffff66; }
+  .band__row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin: -1px 0;
+    z-index: 3;
+  }
+  .band__row .av-delimiter {
+    top: -100%;
+    bottom: auto;
+    height: 10000px;
+  }
+  .band__redbox {
+    width: 470px;
+    flex-shrink: 0;
+    background-color: var(--av-primary);
+    padding: 33px 20px 20px 18px;
+    display: flex;
+    justify-content: center;
+  }
+  .band__heading {
+    max-width: 315px;
+    margin: 0 0 33px 0;
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .band__logo img { display: block; width: 140px; height: auto; }
+  .band__text {
+    max-width: 415px;
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.6em;
+    color: #ffffff;
+  }
+  .band__cta {
+    margin-right: 3.5%;
+    --av-wgl-btn-bg: var(--av-primary);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: #ffffff;
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: #0a0a0a;
+    --av-wgl-btn-border-hover: #0a0a0a;
+  }
+  .band__cta .av-wgl-btn__text { justify-content: space-around; }
+
+  /* ══════════════════════════════════════════════════════════
+   * 8. PORTFOLIO
+   * ══════════════════════════════════════════════════════════ */
+  .pf { background: #ffffff; }
+  .pf__head-wrap {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+  }
+  .pf__spacer-top { height: 158px; }
+  .pf__spacer-mid { height: 108px; }
+  .pf__spacer-bottom { height: 112px; }
+  .pf__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .pf__head-left { max-width: 750px; margin-top: -8px; }
+  .pf__all { margin-bottom: 13px; }
+
+  .pf__carousel {
+    max-width: 1850px;
+    margin-inline: auto;
+    padding-inline: 15px;
+  }
+  .pf-item__image {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  .pf-item__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.8s;
+  }
+  .pf-item:hover .pf-item__image img { transform: scale(1.07); }
+  .pf-item__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--av-primary);
+    color: #ffffff;
+    opacity: 0;
+    transition: 0.4s;
+  }
+  .pf-item__icon svg { width: 16px; height: 14px; }
+  .pf-item:hover .pf-item__icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .pf-item__description {
+    margin: 0 0 20px 0;
+    padding: 20px 0 24px;
+    border-bottom: 2px solid #d41226;
+    text-align: left;
+  }
+  .pf-item__title {
+    margin: 0 0 4px 0;
+    font-size: 30px;
+    text-transform: uppercase;
+  }
+  .pf-item__title a {
+    color: #0a0a0a;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .pf-item__title a:hover { color: var(--av-primary); }
+  .pf-item__cat {
+    color: #626262;
+    font-size: 16px;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .pf-item__cat:hover { color: var(--av-primary); }
+  .pf-item__cat + .pf-item__cat::before {
+    content: '/ ';
+    margin: 0 2px 0 4px;
+    color: #626262;
+  }
+
+  .pf__pagination-wrap {
+    text-align: center;
+    margin-top: 14px;
+  }
+  .pf__pagination {
+    display: inline-flex;
+    position: static;
+    width: auto;
+  }
+  .pf__pagination :global(.swiper-pagination-bullet) {
+    width: auto;
+    height: auto;
+    padding: 6px;
+    margin: 0;
+    border-radius: 0;
+    background: none;
+    opacity: 1;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+  .pf__pagination :global(.swiper-pagination-bullet::before) {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 0;
+    background-color: rgba(10, 10, 10, 0.2);
+    transition: 0.4s;
+  }
+  .pf__pagination :global(.swiper-pagination-bullet:hover::before),
+  .pf__pagination :global(.swiper-pagination-bullet-active::before) {
+    background-color: var(--av-primary);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 9. TESTIMONIALS
+   * ══════════════════════════════════════════════════════════ */
+  .tm { background: #ffffff; overflow: hidden; }
+  .tm__marquee { --av-loop-gap: 60px; --av-loop-duration: 300s; }
+  .tm__marquee-text {
+    margin: 0;
+    font-size: 170px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #00000033;
+  }
+  .tm__row {
+    display: flex;
+    align-items: center;
+    margin-top: -77px;
+    margin-bottom: 119px;
+  }
+  .tm__image { width: 50%; }
+  .tm__image img {
+    width: 530px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  .tm__col { width: 50%; }
+  .tm__carousel {
+    padding: 28px 0 38px;
+    border-bottom: 1px solid #0a0a0a33;
+  }
+  .tm-item__quote {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.39em;
+    letter-spacing: -0.05em;
+    padding-right: 18px;
+    color: #0a0a0a;
+    margin-bottom: 40px;
+  }
+  .tm-item__name {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.3;
+  }
+  .tm-item__position {
+    font-size: 14px;
+    color: #626262;
+  }
+  .tm__nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 24px;
+    margin: 0 0 2px 0;
+  }
+  .tm__nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #0a0a0a;
+    transition: 0.4s;
+  }
+  .tm__nav-btn:hover { color: var(--av-primary); }
+  .tm__nav-btn svg { width: 16px; height: 14px; }
+  .tm__spacer { height: 48px; }
+
+  .tm__customers {
+    display: flex;
+    align-items: center;
+    margin-left: -3px;
+  }
+  .tm__avatar {
+    width: 60px;
+    height: 60px;
+    border: 3px solid #ffffff;
+    border-radius: 60px;
+    object-fit: cover;
+  }
+  .tm__avatar + .tm__avatar { margin-left: -9px; }
+  .tm__customers-label {
+    max-width: 100px;
+    margin: 0 0 0 19px;
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 18px;
+    color: #0a0a0a;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Fade-up initial state (GSAP animates in)
+   * ══════════════════════════════════════════════════════════ */
+  [data-fade-up] { opacity: 0; transform: translateY(40px); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-fade-up] { opacity: 1; transform: none; }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive — breakpoints straight from post-448.css
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1200px) {
+    .hero__spacer-top { height: 100px; }
+    .hero__spacer-mid { height: 70px; }
+    .hero__eyebrow { font-size: 38px; }
+    .hero__title { font-size: clamp(38px, 9vw, 110px); }
+    .hero__counter-col { width: 290px; }
+    .hero__counter-box { min-height: 290px; }
+    .hero__counter-value { font-size: 90px; }
+    .hero__counter-title { font-size: 20px; line-height: 24px; }
+    .hero__counter-spacer { height: 30px; }
+    .hero__spacer-bottom { height: 30px; }
+
+    .statement { padding-top: 90px; }
+    .statement__text { max-width: 530px; font-size: 38px; }
+
+    .marquee-spacer-top { height: 85px; }
+    .marquee-spacer-bottom { height: 85px; }
+    .marquee__text { font-size: 72px; }
+
+    .solutions__inner { padding-top: 90px; padding-bottom: 90px; }
+    .solutions__grid { grid-template-columns: repeat(2, 1fr); }
+    .infobox__content { min-height: 255px; padding: 31px 30px 20px 30px; }
+    .infobox__icon :global(svg) { width: 40px; height: 40px; }
+
+    .svc__head { padding-top: 90px; }
+    .svc__panel { padding: 40px 0; }
+    .svc__content { padding-left: 30px; padding-right: 30px; }
+    .svc__panel-title { font-size: 42px; }
+    .svc__panel-wrap + .svc__panel-wrap { margin-top: 60px; }
+
+    .clients__spacer-top { height: 70px; }
+    .clients__spacer-bottom { height: 70px; }
+
+    .band__spacer-top { height: 30px; }
+    .band__row { flex-wrap: wrap; padding: 20px 30px; }
+    .band__redbox { width: auto; }
+    .band__heading { font-size: 36px; line-height: 1.1em; }
+
+    .pf__spacer-top { height: 90px; }
+    .pf__spacer-mid { height: 40px; }
+    .pf__spacer-bottom { height: 50px; }
+    .pf__head-left { max-width: 64%; }
+
+    .tm__marquee-text { font-size: 100px; }
+    .tm__row { margin-top: -88px; margin-bottom: 50px; }
+    .tm__carousel { padding-bottom: 25px; }
+    .tm-item__quote { font-size: 28px; margin-bottom: 30px; }
+    .tm__spacer { height: 30px; }
+  }
+
+  @media (max-width: 767px) {
+    .hero__eyebrow { max-width: 302px; font-size: 28px; }
+    .hero__main-row { flex-wrap: wrap; }
+    .hero__counter-col { width: 100%; margin-top: 50px; }
+    .hero__cta .av-wgl-btn__text { font-size: 14px; padding: 17px 11px; }
+
+    .statement { padding-top: 70px; }
+    .statement__text { font-size: 28px; }
+
+    .marquee-spacer-top { height: 65px; }
+    .marquee-spacer-bottom { height: 65px; }
+    .marquee__text { font-size: 42px; }
+
+    .solutions__inner { padding-top: 70px; padding-bottom: 70px; }
+    .solutions__grid { grid-template-columns: 1fr; gap: 15px; }
+    .solutions__head-left { max-width: 100%; }
+
+    .svc__head { padding-top: 70px; }
+    .svc__panel { flex-wrap: wrap; padding: 30px 0 0; }
+    .svc__panel--image-first { flex-direction: row; }
+    .svc__content { width: 100%; padding: 0 15px 30px; }
+    .svc__image { width: 100%; }
+    .svc__panel-title { font-size: 28px; }
+
+    .clients__spacer-top { height: 50px; }
+    .clients__spacer-bottom { height: 50px; }
+
+    .band__spacer-top { height: 50px; }
+    .band__row { padding: 0 15px; gap: 20px; }
+    .band__redbox { padding: 40px 15px; width: 100%; }
+    .band__text { max-width: 100%; }
+    .band__cta .av-wgl-btn__text { font-size: 14px; padding: 17px 11px; }
+    .band__spacer-bottom { height: 50px; }
+
+    .pf__spacer-top { height: 80px; }
+    .pf__head-left { max-width: 100%; }
+    .pf__spacer-bottom { height: 60px; }
+
+    .tm__marquee-text { font-size: 60px; }
+    .tm__row { flex-wrap: wrap; margin-top: -15px; margin-bottom: 30px; }
+    .tm__image, .tm__col { width: 100%; }
+    .tm-item__quote { font-size: 24px; }
+    .tm__customers-label { margin-left: 15px; }
+  }
+</style>
+
+<script>
+  // ── Infobox icons (exact SVGs from the demo) ──
+  const INFOBOX_ICONS: string[] = [
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m11.11458 291.43856v-1.84743c-.000264-.0335-.007-.0667-.01963-.0977l-1.058334-2.64635c-.057-.14241-.1218348-.29766-.2387438-.4377-.09954-.11923-.246147-.2309-.436666-.24857l.150379-.45423c.0933-.28.200975-.51038.6139158-.75086l2.405538-1.51877c.141697-.0894.152486-.2558.07965-.36658-.07231-.10998-.227247-.16501-.361282-.0804l-2.3941698 1.51103c-.517789.30133-.734094.70263-.845944 1.03818l-.204121.61236h-2.080493l.345197-.96841c.169402-.4755.508222-.96606.972815-1.16919l4.7777498-1.95467c.0056.0186.0098.0372.01654.0558l2.211234 6.11022-2.294951 3.05925c-.131249.17422-.0071.42342.210841.42375h1.58799c1.021469 0 1.851049-.83009 1.851049-1.85157v-.52917c0-.35287-.529167-.35287-.529167 0v.52917c0 .73749-.584422 1.32242-1.321882 1.32242h-1.056784l1.982309-2.64532.66249-.00053c.165814-.00026.290486-.15131.259416-.31419l-1.263488-6.72259c-.109752-.5837-.68571-.98755-1.329634-.88883-.553384.0848-.886892.47992-.992188.88264l-4.9800538 2.03709c-.658577.28745-1.05851.9055-1.262451 1.47794l-.408244 1.14618h-.07648c-.479778 0-.695365.37852-.788072.74724l-.477493 1.89911h-3.4979803c-.43516 0-.794782.35808-.794782.79324v1.85363c0 .43516.359622.79272.794782.79272h.7927179v.55087c-.895823.12945-1.5880179.89937-1.5880179 1.83038 0 1.02147.832164 1.85104 1.8536329 1.85104h8.2015712c1.021479 0 1.851049-.82957 1.851049-1.85104 0-1.02148-.82957-1.85209-1.851049-1.85209h-.264068l.000264-.52916c.435464 0 .804828-.35685.795046-.79892zm3.500036-9.84436 1.205611 6.40995-.288872.00053-2.196764-6.06991c-.117182-.32385.120462-.72658.541827-.79919.360465-.0621.682048.15999.738198.45862zm-.591696.0599c-.146119 0-.264583.11847-.264583.26459s.118464.26458.264583.26458c.146129 0 .264583-.11845.264583-.26458s-.118454-.26459-.264583-.26459zm-3.703651 10.05417h-8.9958332c-.151159 0-.265615-.11239-.265615-.26355v-1.85363c0-.15115.114456-.26355.265615-.26355h3.7052014c.12183.00022.228071-.0828.25735-.20102l.531492-2.13372c.04985-.2001.119533-.31161.269491-.31161h3.176035c.0693 0 .08146.0117.128672.0682.0472.0565.102603.1653.154514.29508l1.0386958 2.59725v1.80584c.003.14696-.114488.2607-.265618.2607zm-3.7031318-4.49792c-.120057 0-.225073.0808-.255799.19689l-.423746 1.58595c-.04606.16858.08105.33471.255799.33435h1.21698v.79272c.000156.0523.0158.10335.04496.14675l.529166.79479c.04929.0736.132112.11759.220657.1173h1.58802c.145311-.00052.2629658-.11823.2635478-.26354v-1.05885c-.000216-.0356-.0076-.0707-.02169-.10335l-1.0020068-2.38125c-.04138-.0981-.137477-.1618-.243914-.16175zm.203089.52917h.590145v1.05833h-.873334zm1.119312 0h.673859l.914157 2.16989v.74053h-1.181841l-.406175-.60974v-.97824zm-6.0900684 2.11305c-.146124.002-.263192.12156-.261483.26769v.7953c-.0081.36078.537266.36078.529167 0v-.7953c.0019-.14856-.119134-.26942-.267684-.26769zm1.058849 0c-.1461241.002-.263192.12156-.261483.26769v.7953c-.0078.36047.536951.36047.529167 0v-.7953c.00191-.14856-.119134-.26942-.267684-.26769zm1.0567831 0c-.145516.003-.2616469.12216-.2599322.26769v.7953c.0078.34494.5214225.34494.5291675 0v-.7953c.0019-.14917-.120079-.27031-.2692353-.26769zm-1.3182661 2.38487h7.1442674v.52916h-1.324468c-.35312 0-.35312.52969 0 .52969h2.1177018c.73747 0 1.321882.58493 1.321882 1.3224 0 .73746-.584412 1.32188-1.321882 1.32188h-8.2015682c-.73746 0-1.323948-.58442-1.323948-1.32188 0-.73747.586488-1.3224 1.323948-1.3224h5.0276024c.353121 0 .353121-.52969 0-.52969h-4.7635354zm.2656179 1.58801c-.4352309 0-.7952999.358-.7952999.79324s.360058.79477.7952999.79478c.4352512 0 .792716-.35954.792716-.79478-.0000108-.43524-.3574759-.79324-.792716-.79324zm2.3807325 0c-.43524 0-.795301.358-.795301.79324s.360051.79478.795301.79478c.435239-.00001.792718-.35954.792718-.79478-.000011-.43524-.357479-.79324-.792718-.79324zm2.380734 0c-.43524 0-.792708.358-.792716.79324 0 .43524.357466.79478.792716.79478s.792715-.35954.792715-.79478c-.000007-.43524-.357475-.79324-.792715-.79324zm2.3807338 0c-.4352398 0-.7927068.358-.7927178.79324 0 .43524.357468.79478.7927178.79478.43525 0 .795301-.35954.795301-.79478s-.360061-.79324-.795301-.79324zm-7.1422003.52917c.1492602 0 .2635491.11481.2635491.26407s-.1142889.26562-.2635491.26562c-.1492618 0-.2656179-.11637-.2656179-.26562 0-.14926.1163561-.26406.2656179-.26407zm2.3807325 0c.149262.00001.263551.11481.263551.26407 0 .14925-.114289.26562-.263551.26562-.14926 0-.265626-.11636-.265615-.26562 0-.14926.116355-.26407.265615-.26407zm2.380734 0c.149259 0 .263549.11481.263549.26407s-.11429.26562-.263549.26562-.263549-.11636-.263549-.26562.11429-.26407.263549-.26407zm2.3807338 0c.149259 0 .265615.11481.265615.26407.000011.14926-.116356.26562-.265615.26562-.1492618 0-.2635508-.11636-.2635508-.26562s.114289-.26407.2635508-.26407z"></path></g></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m15.199595 280.5958c-.307505.00003-.616044.11667-.849561.34985l-4.4824162 4.49016c-.0392.0393-.06505.0899-.0739.1447l-.265613 1.58595c-.02971.17897.125399.33408.304374.30437l1.5880162-.26355c.05485-.009.105477-.035.144695-.0744l4.482412-4.49017c.467373-.46668.466861-1.23019 0-1.69705-.233426-.23343-.540507-.34988-.848007-.34985zm.000529.52503c.170749 0 .341371.0664.47439.19947.243599.2436.261443.61145.05891.87592l-.936377-.93431c.120406-.092.261094-.14108.403076-.14108zm-.782912.50746.289905.29042-3.859197 3.8592-.28732-.28784zm.664043.66508.283704.28422-3.855064 3.86178-.286803-.28681zm1.323432 2.80086c0-.43516-.359619-.7953-.794781-.7953h-.529168c-.345037.008-.345037.52151 0 .52917h.529168c.151158 0 .265615.11498.265615.26613v10.58488c0 .15496-.113322.26556-.264608.26458l-13.229659-.002c-.733806-.0001-1.3218829-.58863-1.3218829-1.3224 0-.73376.5881219-1.32395 1.3218829-1.32395s1.3223999.59019 1.3223999 1.32395c-.008.3607.5371729.3607.5291669 0v-10.05465c0-1.01974-.8318238-1.85157-1.8515668-1.85157-1.019744 0-1.85164697.83183-1.85156797 1.85157l.0007938 10.06786c0 1.01661.83997797 1.83825 1.85079197 1.83839h-.000018l13.2286512.002c.435364.002.794784-.35712.794782-.79375zm-14.023433-1.85157c.733761 0 1.3223999.58813 1.3223999 1.32189v8.76122c-.3365309-.34461-.8050527-.56017-1.3223999-.56017-.517335 0-.9853539.21558-1.3218829.56017v-8.76122c0-.73376.5881219-1.32189 1.3218829-1.32189zm2.6468668 1.05627c-.345037.008-.345037.52151 0 .52917h4.761466c.3450382-.008.3450382-.52151 0-.52917zm5.2399892 1.649.784451.78444-.940512.15658zm-4.7108222.46818c-.146928-.00055-.266179.11869-.265618.26562-.0092 2.65751 0 5.28188 0 7.9375.000529.14612.119497.26411.265618.26355h5.0033122c.01445.001.02896.001.04341 0h3.947047c.146322.00085.265548-.11723.266133-.26355v-7.40782c.000793-.14733-.118804-.26698-.266137-.26613h-2.115117c-.353119 0-.353119.52968 0 .52968h1.851569v2.64635h-3.439068v-1.32446c.0016-.14918-.1206-.27008-.26975-.26717-.145313.003-.261359.12184-.259932.26717v1.58801c-.00053.14612.11743.26504.263549.26562h3.705201v3.70313h-3.439068v-2.38073c.0019-.14937-.120393-.2706-.26975-.26768-.145517.003-.261647.12215-.259932.26768v2.38073h-4.4979182v-3.70313h2.909901v1.85157c0 .35312.529682.35312.529682 0v-2.11719c-.000529-.14533-.118215-.26301-.263548-.26355h-.529686v-1.85363c.0019-.14917-.120076-.2703-.269232-.26768-.145515.003-.261649.12215-.259934.26768v1.85363h-2.117183v-3.17603h2.909901c.360688.008.360688-.53717 0-.52917z"></path></g></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m5.9670767 284.32791c-.2090632.10454-.4738185.25266-.6774762.51004-.2036604.25738-.3472418.63019-.2532142 1.11311l1.2727887 3.57188-.4108265.41083c-.2596541.24937.1247617.63378.3741368.37413l1.953887-1.95388c.1461744-.13331.3257048-.0939.4196107 0 .1165913.11659.1194541.30016 0 .41961l-2.5755521 2.57555-.7617116-.76171c-.3077051-.3077-.8131546-.3077-1.1208623 0l-3.19928674 3.19722c-.6134399.61344-.61343805 1.61279 0 2.22622.61343704.61343 1.61329734.61344 2.22673654 0l3.1972224-3.19722c.2966456-.29665.3042735-.77726.028938-1.08727l2.5786556-2.57865c.3202782-.32028.3284326-.85598 0-1.16789-.3754702-.35658-.8620416-.29517-1.1678893 0l-1.1291279 1.12913-1.1689213-3.27319c-.044431-.32591.028699-.51544.1503786-.66921.1237086-.15634.3138355-.27267.4991947-.36535 2.4414665-1.22073 7.0727014-2.79884 9.1865184-3.5295.148021-.0512.236112-.0212.297656.0403.06154.0615.09147.14964.04031.29766-.730663 2.11384-2.308781 6.74507-3.529499 9.18651-.09268.18537-.208495.376-.364837.49972-.153474.12143-.342905.19425-.66766.15038l-2.5657335-.91623c-.3324542-.11886-.5107357.37982-.1782841.49868l2.6013906.92914c.01643.006.03339.01.05064.0124.457616.0671.830411-.0558 1.08779-.25941.257378-.20366.405513-.46893.510045-.678 1.258422-2.51686 2.826996-7.13997 3.556373-9.25008.104455-.3022.06308-.62822-.166399-.84491-.266007-.25118-.591831-.25294-.84491-.1664-2.110123.72937-6.7332302 2.29796-9.2500818 3.55637zm-1.218528 6.55205c.06703 0 .1336279.0267.1870684.0801l1.1038073 1.10381c.106889.10689.106889.26828 0 .37517l-3.1972198 3.19722c-.4126204.41262-1.0658476.41261-1.4784633 0-.41261805-.41262-.41261805-1.06429 0-1.47691l3.1972205-3.19929c.05344-.0534.1205574-.0801.1875869-.0801z"></path></g></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m16.121498 285.88745c-.396065-.002-.45098-.26458-1.040246-.26407-.633164.002-.596559.26407-1.058334.26356-.461774-.00053-.425169-.26267-1.058333-.26407-.633164.001-.596559.26355-1.058333.26407-.110244.00053-.180346-.0121-.238229-.0295-.328303-.0972-.492461.39109-.151929.50643.107482.0322.235818.0527.390158.0522.589266-.00053.644181-.2633 1.058333-.2651.414152.002.469066.26459 1.058333.2651.589267.00053.644441-.26227 1.049549-.26406.39128 0 .436632.17934.802535.24132v.55294h-5.027084c.0011-1.1467.00013-2.2934-.0016-3.4401-.0038-.13498-.09962-.26993-.28112-.26458-.396065-.002-.45098-.26458-1.040247-.26407-.6331634.002-.5965583.26407-1.0583329.26355-.4617747-.00053-.4251696-.26266-1.0583334-.26355-.6331638.002-.5965587.26381-1.0583333.26355-.4630552-.00025-.4243335-.26355-1.0629847-.26355-.3655589.0169-.3303667.53855.022728.52814.3960654.002.4509796.26484 1.0402464.2651.5892668.00025.6441811-.26279 1.0583334-.2651.4141522.001.4690665.26406 1.0583333.26458.5892668.00053.6439218-.26227 1.0490302-.26407.391399 0 .436727.1794.803053.24133v.55191h-5.820257v-2.38074c-.0005291-.14612-.1194964-.2641-.2656152-.26355h-2.9104176c-.4351591 0-.7927165.35756-.7927165.79272v2.11718c.0001474.15439.1318747.27587.2857706.26355h1.0361134v2.1177h-.7927174v-1.3224c.00295-.15018-.1195678-.2727-.2697508-.26975-.146131.003-.2622831.12362-.2594158.26975v8.99377c0 .43516.3575574.7953.7927165.7953h14.2869828c.43516 0 .7953-.36014.7953-.7953v-1.05627c-.0076-.34503-.521507-.34503-.529166 0v1.05627c0 .15115-.11498.26613-.266134.26613h-2.644283v-2.1177h3.151746c.154686.0136.28779-.10827.287837-.26355.000794-2.11691-.000529-4.23393-.0021-6.35051-.0038-.13499-.09963-.26994-.28112-.26459zm-14.7990968-3.7052h2.6468661v2.11719h-2.910416v-1.85157c0-.15116.1123958-.26562.2635499-.26562zm1.0588501 2.64635h3.7052013v2.1177h-3.7052013zm4.234368 0h3.7031327v2.1177h-3.7031327zm-5.556768 2.64687h2.910416v2.11718h-2.910416zm3.4395827 0h3.7031348v2.11718h-3.7031348zm4.2323015 0h1.8536335 1.851565v2.11718h-3.7051985zm4.2343655 0h2.910417v2.11718h-2.910417zm-11.9062497 2.64428h.7927174v2.11719h-.7927174zm1.3224 0h3.7052013v2.11719h-3.7052013zm4.234368 0h3.7031327v2.11719h-3.7031327zm4.2322987 0h3.705201v2.11719h-3.705201zm4.232299 0h.795301v2.11719h-.795301zm-14.0213657 2.64635h2.910416v2.1177h-2.6468661c-.1511541 0-.2635509-.11498-.2635499-.26613zm3.4395827 0h3.7031348v2.1177h-3.7031348zm4.2323015 0h3.7051985v2.1177h-3.7051985z"></path></g></svg>`,
+  ];
+
+  function injectInfoboxIcons() {
+    document.querySelectorAll<HTMLElement>('[data-icon-slot]').forEach((el) => {
+      const i = Number(el.dataset.iconSlot);
+      if (INFOBOX_ICONS[i] && !el.firstElementChild) el.innerHTML = INFOBOX_ICONS[i];
+    });
+  }
+
+  // ── GSAP: fade-ups, counter, word-appear, panel blur ──
+  declare const gsap: any;
+  declare const ScrollTrigger: any;
+
+  function initHomeMotion() {
+    injectInfoboxIcons();
+
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll<HTMLElement>('[data-fade-up]').forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      document.querySelectorAll<HTMLElement>('.statement__word').forEach((el) => {
+        el.style.opacity = '1';
+      });
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('[data-fade-up]').forEach((el) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+      });
+    });
+
+    // Hero counter 0 → 15
+    const counterEl = document.querySelector('[data-counter]');
+    if (counterEl) {
+      const target = parseInt(counterEl.getAttribute('data-counter-target') || '15', 10);
+      const obj = { val: 0 };
+      counterEl.textContent = '0';
+      gsap.to(obj, {
+        val: target,
+        duration: 2,
+        ease: 'power2.out',
+        delay: 0.4,
+        onUpdate: () => { counterEl.textContent = String(Math.floor(obj.val)); },
+      });
+    }
+
+    // Statement words: opacity 0.1 → 1, scrubbed
+    const words = document.querySelectorAll('[data-word-appear] .statement__word');
+    if (words.length) {
+      gsap.to(words, {
+        opacity: 1,
+        stagger: 0.15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '[data-word-appear]',
+          start: 'top 85%',
+          end: 'bottom 45%',
+          scrub: true,
+        },
+      });
+    }
+
+    // Pinned service panels: blur the covered panel (demo's layered effect:
+    // brightness 88% contrast 109% blur 5.2px)
+    const panels = Array.from(document.querySelectorAll('[data-svc-panel]'));
+    panels.forEach((panel, i) => {
+      const next = panels[i + 1];
+      if (!next) return;
+      gsap.fromTo(
+        panel.querySelector('.svc__panel'),
+        { filter: 'brightness(100%) contrast(100%) blur(0px)' },
+        {
+          filter: 'brightness(88%) contrast(109%) blur(5.2px)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: next,
+            start: 'top 90%',
+            end: 'top 20%',
+            scrub: true,
+          },
+        }
+      );
+    });
+
+    ScrollTrigger.refresh();
+  }
+
+  document.addEventListener('astro:page-load', initHomeMotion);
+  if (document.readyState !== 'loading') {
+    let tries = 0;
+    const tick = () => {
+      if (typeof gsap !== 'undefined') initHomeMotion();
+      else if (tries++ < 50) setTimeout(tick, 100);
+    };
+    tick();
+  }
+</script>
+
+<!-- Swiper 11 (CDN) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script is:inline src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  declare const Swiper: any;
+
+  function initHomeSwipers() {
+    if (typeof Swiper === 'undefined') return;
+
+    // Clients — 6 logos, continuous slow loop
+    const clientsEl = document.querySelector('.clients__swiper') as any;
+    if (clientsEl && !clientsEl.swiper) {
+      new Swiper(clientsEl, {
+        slidesPerView: 2,
+        spaceBetween: 30,
+        loop: true,
+        speed: 5000,
+        allowTouchMove: false,
+        autoplay: { delay: 0, disableOnInteraction: false },
+        breakpoints: {
+          576: { slidesPerView: 3 },
+          768: { slidesPerView: 4 },
+          1025: { slidesPerView: 6 },
+        },
+      });
+    }
+
+    // Portfolio — 3 columns, 40px gap, square pagination
+    const pfEl = document.querySelector('.pf__swiper') as any;
+    if (pfEl && !pfEl.swiper) {
+      new Swiper(pfEl, {
+        slidesPerView: 1,
+        spaceBetween: 40,
+        loop: true,
+        speed: 800,
+        grabCursor: true,
+        pagination: {
+          el: '.pf__pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          768: { slidesPerView: 2 },
+          1025: { slidesPerView: 3 },
+        },
+      });
+    }
+
+    // Testimonials — 1 per view with PREV / NEXT
+    const tmEl = document.querySelector('.tm__swiper') as any;
+    if (tmEl && !tmEl.swiper) {
+      new Swiper(tmEl, {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        speed: 800,
+        navigation: {
+          prevEl: '.tm__nav-prev',
+          nextEl: '.tm__nav-next',
+        },
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initHomeSwipers);
+  let swTries = 0;
+  const swTick = () => {
+    if (typeof Swiper !== 'undefined') initHomeSwipers();
+    else if (swTries++ < 50) setTimeout(swTick, 100);
+  };
+  swTick();
+</script>

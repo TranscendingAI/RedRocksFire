@@ -29,6 +29,14 @@ const { title, description = 'Red Rocks Fire Protection — Colorado fire safety
     </main>
     <Footer />
 
+    {/* GSAP + ScrollTrigger — loaded on every page so sections that want
+     * scroll-triggered reveals work without each page re-loading them.
+     * is:inline keeps them as plain <script src> tags (not bundled) so
+     * they execute before any module scripts that depend on `gsap`.
+     */}
+    <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
     {/* Reveal-on-scroll observer — design.md §5
  * Re-runs on every astro:page-load event so SPA-navigated pages
  * (via ClientRouter) also get their content revealed.

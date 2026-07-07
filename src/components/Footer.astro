@@ -1,104 +1,217 @@
 ---
 /**
- * Footer — design.md §4.9
+ * Footer — 1:1 replica of the Avelon demo footer (Elementor template 1422).
  *
- * Black band. Left: large wordmark + "Have questions? → email" (email in --rr-red) + phone + address.
- * Right: link columns. Bottom bar: copyright + socials + legal.
+ * bg footer-bg.webp · divider · [ red "get in touch" box (42.5%) with
+ * email/phone (36px bold) + socials | COMPANY links | SERVICES links ]
+ * · divider · © line · giant gradient "RED ROCKS FIRE PROTECTION" (180px,
+ * transparent→white vertical gradient).
  */
 
-const year = new Date().getFullYear();
-
-const linkColumns = [
-  {
-    heading: 'Company',
-    links: [
-      { href: '/about', label: 'About' },
-      { href: '/services', label: 'Services' },
-      { href: '/contact', label: 'Contact' },
-    ],
-  },
-  {
-    heading: 'Services',
-    links: [
-      { href: '/services#sprinkler', label: 'Fire Sprinklers' },
-      { href: '/services#monitoring', label: '24/7 Monitoring' },
-      { href: '/services#inspections', label: 'Inspections' },
-    ],
-  },
+const companyLinks = ['Company', 'Our Team', 'Features', 'FAQs', 'Getting Started'];
+const serviceLinks = [
+  'General Contracting',
+  'Design & Build',
+  'Project Management',
+  'Residential Construction',
+  'Commercial Construction',
 ];
 
 const socials = [
-  { href: '#', label: 'Facebook' },
-  { href: '#', label: 'LinkedIn' },
-  { href: '#', label: 'Instagram' },
+  {
+    href: 'https://x.com/', label: 'X-twitter',
+    path: 'M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z',
+    viewBox: '0 0 512 512',
+  },
+  {
+    href: 'https://www.facebook.com/', label: 'Facebook',
+    path: 'M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z',
+    viewBox: '0 0 320 512',
+  },
+  {
+    href: 'https://www.instagram.com/', label: 'Instagram',
+    path: 'M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z',
+    viewBox: '0 0 448 512',
+  },
+  {
+    href: 'https://linkedin.com/', label: 'Linkedin',
+    path: 'M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z',
+    viewBox: '0 0 448 512',
+  },
 ];
 ---
 
-<footer class="bg-rr-black text-rr-white rr-band--reveal-top">
-  <div class="rr-container py-16 md:py-20">
-    <div class="grid gap-12 lg:gap-16 lg:grid-cols-2">
-      {/* Left: wordmark + contact */}
-      <div>
-        <h2 class="font-display font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none">
-          Red Rocks<br/>Fire Protection.
-        </h2>
+<footer class="avf">
+  <div class="avf__spacer-top" aria-hidden="true"></div>
+  <div class="avf__divider" aria-hidden="true"></div>
 
-        <div class="mt-10 space-y-4 text-rr-grey-soft">
-          <p class="text-lg">
-            Have questions? Reach out —
-            <a href="mailto:info@rrfps.com" class="text-rr-red hover:text-rr-red-hover font-semibold">
-              info@rrfps.com
-            </a>
-          </p>
-
-          <p>
-            <a href="tel:+17207338050" class="hover:text-rr-white transition-colors">
-              (720) 733-8050
-            </a>
-          </p>
-
-          <p>
-            <a
-              href="https://maps.google.com/?q=7076+S.+Alton+Way,+Suite+G2,+Centennial,+CO+80112"
-              target="_blank"
-              rel="noopener"
-              class="hover:text-rr-white transition-colors"
-            >
-              7076 S. Alton Way, Suite G2<br/>Centennial, CO 80112
-            </a>
-          </p>
-        </div>
-      </div>
-
-      {/* Right: link columns */}
-      <div class="grid grid-cols-2 gap-8 lg:justify-self-end lg:gap-16">
-        {linkColumns.map((col) => (
-          <div>
-            <h3 class="rr-eyebrow text-rr-grey-soft mb-5">{col.heading}</h3>
-            <ul class="space-y-3">
-              {col.links.map((link) => (
-                <li>
-                  <a href={link.href} class="text-rr-white hover:text-rr-red transition-colors">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+  <div class="avf__main">
+    <div class="avf__contact">
+      <h3 class="avf__col-heading">get in touch</h3>
+      <a href="mailto:info@rrfps.com" class="avf__big-link">info@rrfps.com</a>
+      <a href="tel:+17207338050" class="avf__big-link avf__big-link--phone">(720) 733-8050</a>
+      <div class="avf__contact-spacer" aria-hidden="true"></div>
+      <div class="avf__socials">
+        {socials.map((s) => (
+          <a href={s.href} aria-label={s.label} class="avf__social" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox={s.viewBox} fill="currentColor" aria-hidden="true">
+              <path d={s.path}></path>
+            </svg>
+          </a>
         ))}
       </div>
     </div>
 
-    {/* Bottom bar */}
-    <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-rr-grey-soft">
-      <p>&copy; {year} Red Rocks Fire Protection. All rights reserved.</p>
-      <ul class="flex gap-5">
-        {socials.map((s) => (
-          <li>
-            <a href={s.href} class="hover:text-rr-white transition-colors">{s.label}</a>
-          </li>
+    <div class="avf__col">
+      <h3 class="avf__col-heading">company</h3>
+      <ul class="avf__links">
+        {companyLinks.map((label) => (
+          <li><a href="/contact" class="avf__link">{label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="avf__col">
+      <h3 class="avf__col-heading">services</h3>
+      <ul class="avf__links">
+        {serviceLinks.map((label) => (
+          <li><a href="/contact" class="avf__link">{label}</a></li>
         ))}
       </ul>
     </div>
   </div>
+
+  <div class="avf__spacer-mid" aria-hidden="true"></div>
+  <div class="avf__divider" aria-hidden="true"></div>
+  <div class="avf__spacer-small" aria-hidden="true"></div>
+
+  <p class="avf__copyright">© 2026 Red Rocks Fire Protection. All Rights Reserved</p>
+
+  <div class="avf__divider" aria-hidden="true"></div>
+
+  <h3 class="avf__giant" aria-hidden="true">
+    <span>Red Rocks </span><span>Fire Protection</span>
+  </h3>
+  <div class="avf__spacer-bottom" aria-hidden="true"></div>
 </footer>
+
+<style>
+  .avf {
+    background-color: #0d0d0b;
+    background-image: url('/images/home/footer-bg.webp');
+    background-position: center center;
+    background-size: cover;
+    overflow: hidden;
+  }
+  .avf__spacer-top { height: 99px; }
+  .avf__spacer-mid { height: 77px; }
+  .avf__spacer-small { height: 30px; }
+  .avf__spacer-bottom { height: 84px; }
+  .avf__divider { border-top: 1px solid #ffffff66; }
+
+  .avf__main {
+    display: flex;
+    gap: 30px;
+    margin: -1px 0;
+  }
+  .avf__contact {
+    width: 42.5%;
+    background-color: #d41226;
+    padding: 78px 67px 30px;
+    box-sizing: border-box;
+  }
+  .avf__col {
+    flex: 1;
+    padding-top: 78px;
+  }
+  .avf__col-heading {
+    margin: 0;
+    font-size: 20px;
+    text-transform: uppercase;
+    line-height: 1em;
+    color: #ffffff;
+  }
+  .avf__big-link {
+    display: inline-block;
+    margin-top: 31px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1em;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: 0.4s;
+  }
+  .avf__big-link--phone { display: block; margin-top: 18px; }
+  .avf__big-link:hover { border-bottom-color: #ffffff; }
+  .avf__contact-spacer { height: 52px; }
+  .avf__socials { display: flex; }
+  .avf__social {
+    color: #ffffff;
+    display: inline-flex;
+    transition: 0.4s;
+  }
+  .avf__social:not(:last-child) { margin-right: 22px; }
+  .avf__social:hover { color: #ffffff66; }
+
+  .avf__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .avf__link {
+    display: inline-block;
+    margin-top: 19px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1em;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: 0.4s;
+  }
+  .avf__link:hover { border-bottom-color: #ffffff; }
+
+  .avf__copyright {
+    margin: 0 0 30px;
+    padding-left: 15px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .avf__giant {
+    margin: 0;
+    text-align: center;
+    font-size: 180px;
+    text-transform: uppercase;
+    line-height: 0.8em;
+    letter-spacing: -0.04em;
+    padding-bottom: 5px;
+    background-image: linear-gradient(180deg, #ffffff00 0%, #ffffff 76%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .avf__giant span { white-space: nowrap; }
+
+  @media (max-width: 1200px) {
+    .avf__spacer-top { height: 30px; }
+    .avf__spacer-mid { height: 40px; }
+    .avf__giant { font-size: 110px; }
+    .avf__spacer-bottom { height: 20px; }
+    .avf__contact { width: 37%; padding: 50px 40px 30px; }
+    .avf__big-link { font-size: 28px; }
+  }
+  @media (max-width: 767px) {
+    .avf__main { flex-wrap: wrap; gap: 40px; }
+    .avf__contact { width: 100%; padding: 40px 20px 30px; }
+    .avf__col { padding-top: 0; padding-left: 20px; }
+    .avf__contact-spacer { height: 30px; }
+    .avf__giant { font-size: 48px; }
+  }
+</style>
