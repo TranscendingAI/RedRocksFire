@@ -104,3 +104,32 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Stagger 80ms — applied via inline style in markup */
+
+/* ── View Transitions (Astro ClientRouter) ──────────────────
+ * Subtle blur-and-fade between pages. Total ~400ms. The fixed
+ * <Header> uses transition:persist so it stays sharp across
+ * navigations; the blur only affects the page content underneath.
+ * @media (prefers-reduced-motion: reduce) disables it entirely.
+ */
+@keyframes rr-blur-out {
+  from { filter: blur(0);    opacity: 1; }
+  to   { filter: blur(10px); opacity: 0; }
+}
+@keyframes rr-blur-in {
+  from { filter: blur(10px); opacity: 0; }
+  to   { filter: blur(0);    opacity: 1; }
+}
+
+::view-transition-old(root) {
+  animation: rr-blur-out 0.28s ease both;
+}
+::view-transition-new(root) {
+  animation: rr-blur-in 0.40s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

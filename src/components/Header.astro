@@ -19,7 +19,7 @@ const navItems = [
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
-<header class="fixed top-0 inset-x-0 z-50 px-4 pt-4 md:px-6 md:pt-6">
+<header transition:persist class="fixed top-0 inset-x-0 z-50 px-4 pt-4 md:px-6 md:pt-6">
   <div class="rr-container flex items-center justify-between gap-4">
     {/* Logo + wordmark — OUTSIDE the pill */}
     <a href="/" class="flex items-center gap-2 text-rr-black shrink-0" aria-label="Red Rocks Fire Protection home">
@@ -107,10 +107,12 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <div class="h-20 md:h-24" aria-hidden="true"></div>
 
 <script>
-  const trigger = document.querySelector('[data-menu-trigger]');
-  const overlay = document.querySelector('[data-menu-overlay]');
+  function initMobileMenu() {
+    const trigger = document.querySelector('[data-menu-trigger]');
+    const overlay = document.querySelector('[data-menu-overlay]');
 
-  if (trigger && overlay) {
+    if (!trigger || !overlay) return;
+
     let open = false;
     const toggle = () => {
       open = !open;
@@ -123,4 +125,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     trigger.addEventListener('click', toggle);
     overlay.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { if (open) toggle(); }));
   }
+
+  // Re-run on every ClientRouter navigation so listeners stay bound.
+  document.addEventListener('astro:page-load', initMobileMenu);
 </script>
