@@ -1,0 +1,74 @@
+---
+/**
+ * Button — design.md §4.2
+ *
+ * Variants:
+ *   - primary-on-light:  bg #000, text #fff  (default)
+ *   - primary-on-black:  bg --rr-red, text #fff  (use `band="dark"`)
+ *   - secondary:         transparent + 1px border
+ *   - arrow:             label + "→"
+ *
+ * Size: "md" (default) | "lg"
+ */
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'arrow';
+  band?: 'light' | 'dark';
+  size?: 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  band = 'light',
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+
+// Color logic per design.md §4.2 + §4.1
+const colorClasses = (() => {
+  if (variant === 'primary') {
+    return band === 'dark'
+      ? 'bg-rr-red text-rr-white hover:bg-rr-red-hover'
+      : 'bg-rr-black text-rr-white hover:bg-rr-red';
+  }
+  if (variant === 'secondary') {
+    return band === 'dark'
+      ? 'bg-transparent text-rr-white border border-white/20 hover:bg-white/10'
+      : 'bg-transparent text-rr-black border border-black/15 hover:bg-black/5';
+  }
+  // arrow
+  return band === 'dark'
+    ? 'text-rr-white hover:text-rr-red'
+    : 'text-rr-black hover:text-rr-red';
+})();
+
+const sizeClasses = size === 'lg' ? 'px-8 py-4 text-base' : 'px-7 py-3.5 text-sm';
+
+const baseClasses = [
+  'inline-flex items-center justify-center gap-2',
+  'font-semibold tracking-tight',
+  variant === 'arrow' ? 'rounded-none' : 'rounded-full',
+  'transition-colors duration-150',
+  'focus-visible:outline-2 focus-visible:outline-rr-red',
+  sizeClasses,
+  colorClasses,
+  className,
+];
+
+const Tag = href ? 'a' : 'button';
+---
+
+{href ? (
+  <a href={href} class:list={baseClasses}>
+    <slot />
+    {variant === 'arrow' && <span aria-hidden="true">→</span>}
+  </a>
+) : (
+  <button type="button" class:list={baseClasses}>
+    <slot />
+    {variant === 'arrow' && <span aria-hidden="true">→</span>}
+  </button>
+)}

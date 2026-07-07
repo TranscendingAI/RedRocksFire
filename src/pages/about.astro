@@ -1,0 +1,131 @@
+---
+/**
+ * About — composed of 4 sections pulled from rrfps.com/about/.
+ * Lighter layout than home: Hero (split) → Core Values (SplitPanel)
+ * → Benefits (inline 4-card grid) → Reach Out (DualCTA).
+ *
+ * Images are placeholders — replace each <img src="/images/..." /> when
+ * the real assets are available.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SplitPanel from '../components/SplitPanel.astro';
+import DualCTA from '../components/DualCTA.astro';
+
+const benefits = [
+  {
+    title: 'Extensive Experience',
+    body: 'With 100+ years of experience and credentials like NICET, CSA, and Colorado licensing, we deliver precise, standards-compliant fire protection services.',
+  },
+  {
+    title: 'Prompt Response',
+    body: 'We provide 24-hour emergency service with a 1-hour response window within the metro area, ensuring swift communication and action when you need us most.',
+  },
+  {
+    title: 'Customer-Centric Approach',
+    body: 'We prioritize our clients’ needs and work diligently to maintain strong, lasting relationships.',
+  },
+  {
+    title: 'Comprehensive Services',
+    body: 'From inspections to monitoring, we provide a full range of fire protection services to safeguard your occupants and property.',
+  },
+];
+
+const reachOut = [
+  {
+    title: 'Reach Out Today.',
+    descriptor: 'Feel free to reach out to learn more about our services. We’re excited to connect with you and assist with your needs.',
+    href: '/contact',
+    label: 'Get in touch',
+  },
+  {
+    title: 'See Our Services.',
+    descriptor: 'From sprinklers to monitoring — explore the full range of fire protection services we provide across Colorado.',
+    href: '/services',
+    label: 'Browse services',
+  },
+];
+---
+
+<BaseLayout
+  title="About | Red Rocks Fire Protection"
+  description="Family-owned fire protection company established in 2010. 100+ years of combined experience. NICET and CSA certified. Serving Colorado."
+>
+
+  {/* 1. Hero intro — split layout, light bg, placeholder image on right */}
+  <Hero
+    title="Expert Fire Protection Services"
+    highlight="Expert"
+    subtitle="We are Red Rocks Fire Protection, a family-owned fire inspection service company established in 2010. Our team is like a family, and we treat our customers as part of that family. With over 100 years of combined experience, we are dedicated to honesty, trust, and accountability."
+    ctaLabel="Schedule Our Services"
+    ctaHref="/contact"
+    image="/images/about-hero-placeholder.png"
+    imageAlt="Red Rocks Fire Protection team"
+  />
+
+  {/* 2. Core Values — split panel on black band with placeholder image */}
+  <SplitPanel
+    eyebrow="Who We Are"
+    title="Our Core Values."
+    body="At Red Rocks Fire Protection, delivering exceptional service goes beyond competitive pricing. We are committed to upholding the principles of honesty, trust, and accountability in everything we do, ensuring our clients receive reliable and high-quality fire protection solutions."
+    ctaLabel="Learn About Our Services"
+    ctaHref="/services"
+    image="/images/our-core-values.jpg"
+    imageAlt="Red Rocks Fire Protection team values"
+    background="black"
+    ctaVariant="arrow"
+  />
+
+  {/* 3. Benefits grid — 4 cards on photo background */}
+  <section class="rr-band relative text-rr-white overflow-hidden">
+    {/* Background image + dark overlay */}
+    <div
+      class="absolute inset-0 bg-rr-bg-panel"
+      style="background-image: url('/images/why-choose-us-bg.jpg'); background-size: cover; background-position: center;"
+      aria-hidden="true"
+    ></div>
+    <div class="absolute inset-0" style="background: var(--rr-overlay);" aria-hidden="true"></div>
+
+    <div class="rr-container relative z-10">
+      <div class="rr-reveal max-w-3xl mb-12 md:mb-16">
+        <p class="rr-eyebrow text-rr-grey-soft mb-5">Why Choose Us</p>
+        <h2
+          class="font-display font-black uppercase tracking-tight"
+          style="font-size: var(--rr-text-section); line-height: 0.95;"
+        >
+          Benefits of Choosing Our Services.
+        </h2>
+        <p
+          class="mt-6 text-rr-grey-soft"
+          style="font-size: var(--rr-text-lead);"
+        >
+          We offer unmatched fire safety products and customer service. Here are four reasons to choose us:
+        </p>
+      </div>
+
+      <div class="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {benefits.map((b, i) => (
+          <article
+            class="rr-reveal bg-white/10 border border-white/30 rounded-rr-card p-7 flex flex-col"
+            data-reveal-delay={i * 100}
+          >
+            <h3
+              class="font-display font-bold tracking-tight text-rr-white"
+              style="font-size: var(--rr-text-card); line-height: 1.05;"
+            >
+              {b.title}
+            </h3>
+            <p class="mt-3 text-sm text-rr-grey-soft leading-relaxed flex-1">
+              {b.body}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* 4. Reach Out — dual CTA, white background like home's final band */}
+  <DualCTA items={reachOut} background="white" />
+
+</BaseLayout>

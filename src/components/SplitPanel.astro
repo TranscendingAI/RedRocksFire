@@ -1,0 +1,105 @@
+---
+/**
+ * SplitPanel — design.md §4.5
+ *
+ * 50/50 text + image. Big uppercase title, body copy, optional CTA.
+ * Image and text sides can be reversed. Used as the spotlight block.
+ */
+import Button from './Button.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  image: string;
+  imageAlt: string;
+  reverse?: boolean;
+  background?: 'light' | 'panel' | 'white' | 'black';
+  ctaVariant?: 'arrow' | 'primary';
+}
+
+const {
+  eyebrow,
+  title,
+  body,
+  ctaLabel,
+  ctaHref,
+  image,
+  imageAlt,
+  reverse = false,
+  background = 'light',
+  ctaVariant = 'arrow',
+} = Astro.props;
+
+const bgClass =
+  background === 'panel' ? 'bg-rr-bg-panel'
+  : background === 'white' ? 'bg-rr-white'
+  : background === 'black' ? 'bg-rr-black text-rr-white'
+  : 'bg-rr-bg-light';
+
+const bodyClass = background === 'black' ? 'text-rr-grey-soft' : 'text-rr-grey';
+const eyebrowClass = background === 'black' ? 'text-rr-grey-soft' : 'text-rr-grey';
+const imageBgClass = background === 'black' ? 'bg-rr-black' : 'bg-rr-bg-panel';
+const ctaBand = background === 'black' ? 'dark' : 'light';
+---
+
+<section class:list={['rr-band rr-band--reveal-top', bgClass]}>
+  <div class="rr-container">
+    <div
+      class:list={[
+        'grid gap-10 md:gap-12 lg:gap-16 items-center',
+        'md:grid-cols-2',
+      ]}
+    >
+      {/* Text column */}
+      <div
+        class:list={[
+          'order-2',
+          reverse ? 'md:order-2' : 'md:order-1',
+        ]}
+      >
+        {eyebrow && <p class:list={['rr-eyebrow mb-5', eyebrowClass]}>{eyebrow}</p>}
+        <h2
+          class="font-display font-black uppercase tracking-tight rr-reveal"
+          style="font-size: var(--rr-text-section); line-height: 0.95;"
+        >
+          {title}
+        </h2>
+        <p
+          class:list={['mt-6 rr-reveal', bodyClass]}
+          style="font-size: var(--rr-text-lead);"
+          data-reveal-delay="120"
+        >
+          {body}
+        </p>
+        {ctaLabel && ctaHref && (
+          <div class="mt-8 rr-reveal" data-reveal-delay="240">
+            <Button href={ctaHref} variant={ctaVariant} band={ctaBand}>
+              {ctaLabel}
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Image column */}
+      <div
+        class:list={[
+          'order-1',
+          reverse ? 'md:order-1' : 'md:order-2',
+        ]}
+      >
+        <div class:list={['overflow-hidden rounded-rr-card aspect-[4/3]', imageBgClass]}>
+          <img
+            src={image}
+            alt={imageAlt}
+            loading="lazy"
+            decoding="async"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

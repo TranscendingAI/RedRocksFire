@@ -1,0 +1,147 @@
+---
+/**
+ * Home — composed from design.md §7 element list.
+ * Real content from rrfps.com (Home, Services, About pages).
+ *
+ * Band order (7 total, alternating per design.md):
+ *   1. Hero (full-bleed photo) — "Raising the Standard in Fire Safety"
+ *   2. Black band — ThreeBeat: Experience / Compliance / Response
+ *   3. Light band — SplitPanel: "Trusted Fire Protection Experts in Colorado" + team photo
+ *   4. Light band — SplitPanel: "Comprehensive Coverage" + jobsite photo
+ *   5. Photo band — Big title + 4 CredentialTiles (NICET / CSA / Colorado / NFPA)
+ *   6. White band — DualCTA: Schedule / About
+ *   7. (footer is in BaseLayout)
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ThreeBeat from '../components/ThreeBeat.astro';
+import SplitPanel from '../components/SplitPanel.astro';
+import CredentialTile from '../components/CredentialTile.astro';
+import DualCTA from '../components/DualCTA.astro';
+
+const threeBeats = [
+  {
+    word: 'Experience.',
+    body: 'Over 100 years of combined expertise. NICET-certified, CSA-certified, and Colorado-licensed professionals led by Brian Kakac.',
+  },
+  {
+    word: 'Compliance.',
+    body: 'Standards-driven NFPA inspections with detailed written reports. Every system tested, every result documented.',
+  },
+  {
+    word: 'Response.',
+    body: '24-hour emergency service with a 1-hour metro response window. We answer the phone when you call.',
+  },
+];
+
+const credentials = [
+  { label: 'NICET', detail: 'Certified' },
+  { label: 'CSA', detail: 'Certified' },
+  { label: 'Colorado', detail: 'Licensed' },
+  { label: 'NFPA', detail: 'Compliant' },
+];
+
+const dualCtas = [
+  {
+    title: 'Schedule Our Services.',
+    descriptor: 'Book an inspection or service visit — our team responds within one hour across the Denver metro area.',
+    href: '/contact',
+    label: 'Schedule a visit',
+  },
+  {
+    title: 'Learn About Us.',
+    descriptor: 'Family-owned since 2010. 100+ years of combined experience. Meet the team behind the inspections.',
+    href: '/about',
+    label: 'Read our story',
+  },
+];
+---
+
+<BaseLayout
+  title="Red Rocks Fire Protection | Colorado Fire Safety Experts"
+  description="Red Rocks Fire Protection — Colorado fire safety inspections, sprinkler systems, and 24/7 monitoring. NICET and CSA certified. Schedule our services."
+>
+
+  {/* 1. Hero */}
+  <Hero
+    title="Raising the Standard in Fire Safety"
+    highlight="Standard"
+    subtitle="Our team of professionals delivers fire inspections and actionable insights to protect what matters most."
+    ctaLabel="Schedule Our Services"
+    ctaHref="/contact"
+    image="/images/Chevy-Truck_no-ng.png"
+    imageAlt="Red Rocks Fire Protection service truck"
+  />
+
+  {/* 2. Three-beat word row on black band */}
+  <ThreeBeat beats={threeBeats} background="black" />
+
+  {/* 3. Split panel: Trusted Fire Protection Experts */}
+  <SplitPanel
+    eyebrow="About Red Rocks"
+    title="Trusted Fire Protection Experts in Colorado."
+    body="At Red Rocks Fire Protection, we are dedicated to delivering exceptional fire safety services across Colorado. We build strategic partnerships and leverage modern technology to revolutionize the fire protection industry — from detailed inspections to high-quality equipment installation."
+    ctaLabel="Learn More About Us"
+    ctaHref="/about"
+    image="/images/trusted-fire-protection.jpg"
+    imageAlt="Trusted fire protection services across Colorado"
+    background="light"
+    ctaVariant="arrow"
+  />
+
+  {/* 5. Split panel: Comprehensive coverage */}
+  <SplitPanel
+    eyebrow="Full Coverage"
+    title="Comprehensive Coverage for Every System."
+    body="Our comprehensive range of services ensures that every aspect of your life safety needs is covered — from installation and maintenance to monitoring and inspections. Wet and dry sprinkler systems, preaction and deluge, fire pumps, standpipe, kitchen suppression, portable extinguishers, backflow prevention, and 24/7 monitoring."
+    ctaLabel="Explore Our Services"
+    ctaHref="/services"
+    image="/images/jobsite.jpg"
+    imageAlt="Fire protection technicians working on a jobsite"
+    background="panel"
+    ctaVariant="arrow"
+    reverse={true}
+  />
+
+  {/* 5. Credential grid on photo background */}
+  <section class="rr-band relative text-rr-white overflow-hidden">
+    {/* Background image + dark overlay */}
+    <div
+      class="absolute inset-0 bg-rr-bg-panel"
+      style="background-image: url('/images/the-red-rocks-of-the-canyon.jpg'); background-size: cover; background-position: center;"
+      aria-hidden="true"
+    ></div>
+    <div class="absolute inset-0" style="background: var(--rr-overlay);" aria-hidden="true"></div>
+
+    <div class="rr-container relative z-10">
+      <div class="rr-reveal">
+        <p class="rr-eyebrow text-rr-grey-soft mb-5">Certifications & Compliance</p>
+        <h2
+          class="font-display font-black uppercase tracking-tight"
+          style="font-size: var(--rr-text-section); line-height: 0.95;"
+        >
+          Our Expertise and Experience.
+        </h2>
+        <p
+          class="mt-6 max-w-2xl text-rr-grey-soft"
+          style="font-size: var(--rr-text-lead);"
+        >
+          Choosing Red Rocks Fire Protection means working with a highly qualified team. Our professionals hold industry-leading certifications.
+        </p>
+      </div>
+
+      <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {credentials.map((c, i) => (
+          <div class="rr-reveal" data-reveal-delay={i * 100}>
+            <CredentialTile label={c.label} detail={c.detail} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* 7. Dual CTA */}
+  <DualCTA items={dualCtas} background="white" />
+
+</BaseLayout>

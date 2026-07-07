@@ -1,0 +1,104 @@
+---
+/**
+ * Footer — design.md §4.9
+ *
+ * Black band. Left: large wordmark + "Have questions? → email" (email in --rr-red) + phone + address.
+ * Right: link columns. Bottom bar: copyright + socials + legal.
+ */
+
+const year = new Date().getFullYear();
+
+const linkColumns = [
+  {
+    heading: 'Company',
+    links: [
+      { href: '/about', label: 'About' },
+      { href: '/services', label: 'Services' },
+      { href: '/contact', label: 'Contact' },
+    ],
+  },
+  {
+    heading: 'Services',
+    links: [
+      { href: '/services#sprinkler', label: 'Fire Sprinklers' },
+      { href: '/services#monitoring', label: '24/7 Monitoring' },
+      { href: '/services#inspections', label: 'Inspections' },
+    ],
+  },
+];
+
+const socials = [
+  { href: '#', label: 'Facebook' },
+  { href: '#', label: 'LinkedIn' },
+  { href: '#', label: 'Instagram' },
+];
+---
+
+<footer class="bg-rr-black text-rr-white rr-band--reveal-top">
+  <div class="rr-container py-16 md:py-20">
+    <div class="grid gap-12 lg:gap-16 lg:grid-cols-2">
+      {/* Left: wordmark + contact */}
+      <div>
+        <h2 class="font-display font-black uppercase text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none">
+          Red Rocks<br/>Fire Protection.
+        </h2>
+
+        <div class="mt-10 space-y-4 text-rr-grey-soft">
+          <p class="text-lg">
+            Have questions? Reach out —
+            <a href="mailto:info@rrfps.com" class="text-rr-red hover:text-rr-red-hover font-semibold">
+              info@rrfps.com
+            </a>
+          </p>
+
+          <p>
+            <a href="tel:+17207338050" class="hover:text-rr-white transition-colors">
+              (720) 733-8050
+            </a>
+          </p>
+
+          <p>
+            <a
+              href="https://maps.google.com/?q=7076+S.+Alton+Way,+Suite+G2,+Centennial,+CO+80112"
+              target="_blank"
+              rel="noopener"
+              class="hover:text-rr-white transition-colors"
+            >
+              7076 S. Alton Way, Suite G2<br/>Centennial, CO 80112
+            </a>
+          </p>
+        </div>
+      </div>
+
+      {/* Right: link columns */}
+      <div class="grid grid-cols-2 gap-8 lg:justify-self-end lg:gap-16">
+        {linkColumns.map((col) => (
+          <div>
+            <h3 class="rr-eyebrow text-rr-grey-soft mb-5">{col.heading}</h3>
+            <ul class="space-y-3">
+              {col.links.map((link) => (
+                <li>
+                  <a href={link.href} class="text-rr-white hover:text-rr-red transition-colors">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Bottom bar */}
+    <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-rr-grey-soft">
+      <p>&copy; {year} Red Rocks Fire Protection. All rights reserved.</p>
+      <ul class="flex gap-5">
+        {socials.map((s) => (
+          <li>
+            <a href={s.href} class="hover:text-rr-white transition-colors">{s.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>

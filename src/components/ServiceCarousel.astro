@@ -1,0 +1,105 @@
+---
+/**
+ * ServiceCarousel — design.md §4.6
+ *
+ * Large cards in a horizontal scroll-snap row. ~3 visible on desktop with
+ * the 4th bleeding off the right edge. Mobile: one card per view, next peeking.
+ * Circular arrow controls advance by one card at a time.
+ */
+import ServiceCard from './ServiceCard.astro';
+
+interface Service {
+  title: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  services: Service[];
+}
+
+const { eyebrow, title, services } = Astro.props;
+---
+
+<section class="rr-band rr-band--reveal-top bg-rr-white">
+  <div class="rr-container">
+    <div class="rr-reveal">
+      {eyebrow && <p class="rr-eyebrow mb-5">{eyebrow}</p>}
+      <h2
+        class="font-display font-black uppercase tracking-tight"
+        style="font-size: var(--rr-text-section); line-height: 0.95;"
+      >
+        {title}
+      </h2>
+    </div>
+  </div>
+
+  {/* Edge-to-edge carousel — viewport bleed on the right */}
+  <div class="relative mt-12 md:mt-16">
+    <div
+      class="carousel-track flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mr-[15vw] pr-[15vw]"
+      style="padding-left: var(--rr-gutter-mobile);"
+      data-carousel
+    >
+      {services.map((svc) => (
+        <div class="snap-start flex-shrink-0">
+          <ServiceCard
+            title={svc.title}
+            body={svc.body}
+            image={svc.image}
+            imageAlt={svc.imageAlt}
+          />
+        </div>
+      ))}
+      {/* Spacer so the last card can sit flush against the viewport edge */}
+      <div class="flex-shrink-0 w-[1px]" aria-hidden="true"></div>
+    </div>
+
+    {/* Arrow controls */}
+    <div class="rr-container mt-8 flex justify-center gap-3">
+      <button
+        type="button"
+        class="w-12 h-12 rounded-full border border-rr-border-lt flex items-center justify-center text-rr-black hover:bg-rr-black hover:text-rr-white transition-colors duration-150"
+        aria-label="Previous service"
+        data-carousel-prev
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="w-12 h-12 rounded-full border border-rr-border-lt flex items-center justify-center text-rr-black hover:bg-rr-black hover:text-rr-white transition-colors duration-150"
+        aria-label="Next service"
+        data-carousel-next
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-carousel]').forEach((track) => {
+    const prev = track.parentElement?.querySelector('[data-carousel-prev]');
+    const next = track.parentElement?.querySelector('[data-carousel-next]');
+
+    const step = () => {
+      // Scroll by one card width (first child's width + gap)
+      const first = track.querySelector('div > article, div > .snap-start > article');
+      const child = track.querySelector('.snap-start');
+      if (!child) return 320;
+      const card = child.querySelector('article');
+      const gap = 24; // --rr-space-6
+      return (card?.offsetWidth ?? 320) + gap;
+    };
+
+    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  });
+</script>

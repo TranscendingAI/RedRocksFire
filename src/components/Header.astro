@@ -1,0 +1,126 @@
+---
+/**
+ * Header — design.md §4.1
+ *
+ * Three zones on one row:
+ *   [logo + wordmark]   (pill: Home · About · Services · Contact Us)   [CTA]
+ *
+ * Logo OUTSIDE the pill. CTA is separate.
+ * Fixed to top with backdrop blur.
+ */
+
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact Us' },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="fixed top-0 inset-x-0 z-50 px-4 pt-4 md:px-6 md:pt-6">
+  <div class="rr-container flex items-center justify-between gap-4">
+    {/* Logo + wordmark — OUTSIDE the pill */}
+    <a href="/" class="flex items-center gap-2 text-rr-black shrink-0" aria-label="Red Rocks Fire Protection home">
+      <img
+        src="/images/rrfp-logo.png"
+        alt="Red Rocks Fire Protection"
+        class="h-9 sm:h-10 w-auto"
+      />
+    </a>
+
+    {/* Pill nav — desktop */}
+    <nav aria-label="Primary" class="hidden md:block bg-rr-pill rounded-full px-2 py-1.5">
+      <ul class="flex items-center gap-1">
+        {navItems.map((item) => {
+          const itemPath = item.href.replace(/\/$/, '') || '/';
+          const isActive = currentPath === itemPath;
+          return (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  'block px-4 py-2 rounded-full text-sm font-medium transition-colors duration-150',
+                  'hover:bg-rr-white',
+                  isActive && 'bg-rr-black text-rr-white hover:bg-rr-black',
+                ]}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    {/* CTA — separate, right side */}
+    <a
+      href="/contact"
+      class="hidden md:inline-flex shrink-0 items-center gap-2 bg-rr-black text-rr-white hover:bg-rr-red rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-150"
+    >
+      Schedule Our Services
+    </a>
+
+    {/* Mobile: hamburger */}
+    <button
+      type="button"
+      class="md:hidden p-2 rounded-full bg-rr-pill"
+      aria-label="Open menu"
+      aria-expanded="false"
+      data-menu-trigger
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  {/* Mobile menu overlay */}
+  <div
+    class="md:hidden fixed inset-0 bg-rr-black text-rr-white z-40 translate-x-full transition-transform duration-300 ease-out"
+    data-menu-overlay
+    aria-hidden="true"
+  >
+    <div class="flex flex-col h-full pt-24 px-8">
+      <nav aria-label="Mobile primary">
+        <ul class="flex flex-col gap-6 text-3xl font-display font-black uppercase tracking-tight">
+          {navItems.map((item) => (
+            <li>
+              <a href={item.href} class="hover:text-rr-red">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <a
+        href="/contact"
+        class="mt-12 inline-flex items-center justify-center gap-2 bg-rr-red text-rr-white rounded-full px-6 py-4 text-base font-semibold"
+      >
+        Schedule Our Services
+      </a>
+    </div>
+  </div>
+</header>
+
+{/* Spacer to offset the fixed header */}
+<div class="h-20 md:h-24" aria-hidden="true"></div>
+
+<script>
+  const trigger = document.querySelector('[data-menu-trigger]');
+  const overlay = document.querySelector('[data-menu-overlay]');
+
+  if (trigger && overlay) {
+    let open = false;
+    const toggle = () => {
+      open = !open;
+      overlay.setAttribute('aria-hidden', String(!open));
+      trigger.setAttribute('aria-expanded', String(open));
+      overlay.classList.toggle('translate-x-full', !open);
+      overlay.classList.toggle('translate-x-0', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    trigger.addEventListener('click', toggle);
+    overlay.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { if (open) toggle(); }));
+  }
+</script>

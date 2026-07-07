@@ -1,0 +1,46 @@
+---
+/**
+ * ThreeBeat — design.md §4.7
+ *
+ * Three large uppercase words across the top of a band, each with a short
+ * body line beneath. Designed for black bands (reveal-three one at a time).
+ */
+
+interface Props {
+  beats: Array<{
+    word: string;
+    body: string;
+  }>;
+  background?: 'black' | 'light' | 'white';
+}
+
+const { beats, background = 'black' } = Astro.props;
+const bgClass =
+  background === 'black' ? 'bg-rr-black text-rr-white'
+  : background === 'white' ? 'bg-rr-white text-rr-black'
+  : 'bg-rr-bg-light text-rr-black';
+const bodyClass = background === 'black' ? 'text-rr-grey-soft' : 'text-rr-grey';
+---
+
+<section class:list={['rr-band rr-band--reveal-top', bgClass]}>
+  <div class="rr-container">
+    <div class="grid gap-12 md:gap-8 md:grid-cols-3">
+      {beats.map((beat, i) => (
+        <div
+          class="rr-reveal"
+          data-reveal-delay={i * 160}
+        >
+          <h3
+            class="font-display font-black uppercase tracking-tight"
+            style="font-size: var(--rr-text-statement); line-height: 0.95;"
+          >
+            {beat.word}
+          </h3>
+          <p class:list={['mt-6 max-w-sm', bodyClass]} style="font-size: var(--rr-text-lead);">
+            {beat.body}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
