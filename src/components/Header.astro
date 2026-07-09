@@ -1,25 +1,91 @@
 ---
 /**
- * Header — 1:1 replica of the Avelon demo header (Elementor template 473).
+ * Header — 1:1 replica of the Avelon demo header (Elementor template 473),
+ * with one addition: SERVICES is now a hover/click dropdown trigger (no
+ * own-page navigation). Its dropdown menu lists "Services Overview"
+ * (-> /services) and "Inspections" (-> /inspections).
  *
- * Desktop:
- *   [ red logo box max(251px, 16.1%) ] [ right column:
- *       row 1 — social icons (left) · "Mon - Sat: 7.00am - 19.00pm" (right)
- *       row 2 — nav (94px tall, Space Grotesk 700 16px white) · CART · SEARCH ]
- * Transparent, absolutely positioned over the hero (header_overlap),
- * hairline #FFFFFF66 borders.
+ * Existing structure preserved:
+ *   Desktop:
+ *     [ red logo box max(251px, 16.1%) ] [ right column:
+ *         row 1 — social icons (left) · "Mon - Sat: 7.00am - 19.00pm" (right)
+ *         row 2 — nav (94px tall, Space Grotesk 700 16px white) · CART · SEARCH ]
+ *   Mobile (<1025px): 70px bar — logo left, white round hamburger right.
  *
- * Mobile (<1025px): 70px bar — logo left, white round hamburger right.
+ * Source of truth for nav data lives HERE so future nav edits are 1 place.
  */
 
-const navItems = [
-  { href: '/', label: 'HOME' },
-  { href: '/about', label: 'PAGES' },
+interface SubItem {
+  href: string;
+  label: string;
+}
+
+interface NavItem {
+  href?: string;
+  label: string;
+  /** If set, this nav item opens a dropdown of children instead of linking anywhere. */
+  children?: SubItem[];
+}
+
+/**
+ * Industries We Serve dropdown — 14 sub-pages, one per vertical named in
+ * the Brand Strategy §5.5. Pages all exist as light placeholders (or in
+ * the case of /multi-family, a fully-built landing page); when each one's
+ * full content lands, no nav change is needed.
+ */
+const industriesNav = [
+  { href: '/multi-family',                       label: 'Multi-Family Management' },
+  { href: '/commercial-property',                label: 'Commercial Property' },
+  { href: '/religious-institutions',             label: 'Religious Institutions' },
+  { href: '/assisted-living',                   label: 'Assisted Living' },
+  { href: '/education',                         label: 'Education / Universities' },
+  { href: '/warehouse-industrial',               label: 'Warehouse / Industrial' },
+  { href: '/hoa-management',                    label: 'HOA Management' },
+  { href: '/hotels-hospitality',                label: 'Hotels & Hospitality' },
+  { href: '/retail',                            label: 'Retail & Shopping Centers' },
+  { href: '/restaurants',                        label: 'Restaurants & Food Trucks' },
+  { href: '/financial',                         label: 'Financial Institutions' },
+  { href: '/automotive',                        label: 'Automotive Dealerships' },
+  { href: '/data-centers',                      label: 'Data Centers' },
+  { href: '/general-contractors',               label: 'General Contractors' },
+] as const satisfies ReadonlyArray<SubItem>;
+
+const navItems: NavItem[] = [
+  { href: '/about', label: 'ABOUT' },
+  {
+    label: 'SERVICES',
+    children: [
+      { href: '/services', label: 'Services Overview' },
+      { href: '/inspections', label: 'Inspections' },
+    ],
+  },
+  {
+    label: 'INDUSTRIES WE SERVE',
+    children: [...industriesNav],
+  },
+  { href: '/testimonials', label: 'TESTIMONIALS' },
+  { href: '/service-areas', label: 'SERVICE AREAS' },
   { href: '/blog', label: 'BLOG' },
-  { href: '/portfolio', label: 'PORTFOLIO' },
-  { href: '/shop', label: 'SHOP' },
-  { href: '/contact', label: 'CONTACTS' },
+  { href: '/contact', label: 'CONTACT' },
 ];
+
+const currentPath = typeof Astro !== 'undefined' ? Astro.url.pathname : '/';
+
+/**
+ * Match logic
+ *  - Plain href items: current iff currentPath === href
+ *  - Items with children: current iff currentPath matches any child href
+ *    (so highlighting rolls up to the parent). This lets a top-level item
+ *    styled as "active" stay active across /services, /inspections, etc.
+ */
+function isCurrent(item: NavItem): boolean {
+  if (item.children && item.children.length) {
+    return item.children.some((c) => currentPath === c.href || currentPath.startsWith(c.href + '/'));
+  }
+  if (!item.href) return false;
+  if (item.href === '/') return currentPath === '/' || currentPath === '';
+  return currentPath === item.href || currentPath.startsWith(item.href + '/');
+}
 
 const socials = [
   {
@@ -51,7 +117,7 @@ const socials = [
     <div class="avh__logo-box">
       <a href="/" aria-label="Red Rocks Fire Protection home">
         <img
-          src="/images/home/Red-Rocks-Fire-Protection-2048x900-1.png"
+          src="/images/RRFPS Logo_white-black.png"
           alt="Red Rocks Fire Protection"
           class="avh__logo"
         />
@@ -75,31 +141,58 @@ const socials = [
       <div class="avh__navrow">
         <nav aria-label="Primary" class="avh__nav">
           <ul>
-            {navItems.map((item, i) => (
-              <li>
-                <a
-                  href={item.href}
-                  class:list={['avh__link', i === 0 && 'avh__link--current']}
-                  aria-current={i === 0 ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
+            {navItems.map((item) => (
+              <li class:list={['avh__item', item.children && 'avh__item--has-children']}>
+                {item.children ? (
+                  /* Dropdown trigger — button, not <a>, since it doesn't navigate */
+                  <>
+                    <button
+                      type="button"
+                      class:list={['avh__link', 'avh__link--trigger', isCurrent(item) && 'avh__link--current']}
+                      aria-haspopup="menu"
+                      aria-expanded="false"
+                      data-dropdown-trigger
+                      aria-current={isCurrent(item) ? 'page' : undefined}
+                    >
+                      <span>{item.label}</span>
+                      <svg class="avh__caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <ul class="avh__submenu" role="menu" data-dropdown-menu>
+                      {item.children.map((child) => {
+                        const isChildCurrent = currentPath === child.href || currentPath.startsWith(child.href + '/');
+                        return (
+                          <li role="none">
+                            <a
+                              href={child.href}
+                              role="menuitem"
+                              class:list={['avh__sublink', isChildCurrent && 'avh__sublink--current']}
+                              aria-current={isChildCurrent ? 'page' : undefined}
+                            >
+                              {child.label}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </>
+                ) : (
+                  <a
+                    href={item.href}
+                    class:list={['avh__link', isCurrent(item) && 'avh__link--current']}
+                    aria-current={isCurrent(item) ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
         </nav>
 
         <div class="avh__tools">
-          <a href="/cart" class="avh__tool avh__cart">
-            <span>CART</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-          </a>
           <button type="button" class="avh__tool avh__search" aria-label="Search">
-            <span>SEARCH</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -114,7 +207,7 @@ const socials = [
   <div class="avh__mobile">
     <a href="/" aria-label="Red Rocks Fire Protection home">
       <img
-        src="/images/home/Red-Rocks-Fire-Protection-2048x900-1.png"
+        src="/images/RRFPS Logo_white-black.png"
         alt="Red Rocks Fire Protection"
         class="avh__logo avh__logo--mobile"
       />
@@ -137,7 +230,31 @@ const socials = [
     <nav aria-label="Mobile primary">
       <ul>
         {navItems.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+          <li>
+            {item.children ? (
+              /* Mobile: parent is a non-navigating header, children indented. */
+              <>
+                <span class="avh__drawer-parent">{item.label}</span>
+                <ul class="avh__drawer-sub">
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class:list={[
+                          currentPath === child.href && 'avh__drawer-link--current',
+                        ]}
+                        aria-current={currentPath === child.href ? 'page' : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <a href={item.href} aria-current={isCurrent(item) ? 'page' : undefined}>{item.label}</a>
+            )}
+          </li>
         ))}
       </ul>
     </nav>
@@ -230,6 +347,15 @@ const socials = [
     margin: 0;
     padding: 0;
   }
+
+  /* Each top-level nav item is a positioned <li>; dropdowns hang off it. */
+  .avh__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
   .avh__link {
     display: flex;
     align-items: center;
@@ -242,10 +368,114 @@ const socials = [
     color: #ffffff;
     text-decoration: none;
     transition: 0.5s ease-in-out;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font: inherit; /* button reset; keep nav typography */
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0;
   }
+  /* buttons should still match anchor line-height / color rules */
+  button.avh__link { line-height: 30px; color: #ffffff; }
+
   .avh__nav li:first-child .avh__link { margin-left: 0; }
   .avh__link:hover,
   .avh__link--current { color: #d41226; }
+
+  /* Caret + spacing inside the trigger */
+  .avh__link--trigger { gap: 8px; }
+  .avh__caret {
+    transition: transform 250ms ease;
+  }
+  .avh__item--has-children.is-open .avh__caret { transform: rotate(180deg); }
+
+  /* ── Submenu (desktop) ────────────────────────────────────────
+   * Hidden by default; revealed on hover of the parent <li>, OR on
+   * focus-within (keyboard nav), OR when JS has added `is-open`
+   * via the trigger click. Anchored to the bottom of the parent.
+   *
+   * Vertical-list layout: a simple single-column stack, one item
+   * per row, reading top-to-bottom. No grid columns, no horizontal
+   * rows — items 1, 2, 3, … stack vertically. Each list item is
+   * its own line.
+   *
+   * The panel is a flex column itself so its <li> children stack
+   * vertically. `width: max-content` makes the panel hug the widest
+   * child, while `max-width: 320px` caps it before the panel starts
+   * eating horizontal space on the page. */
+  .avh__submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: max-content;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 10px 0;
+    list-style: none;
+    background: #D31126;          /* red panel — all dropdown menus */
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 200ms ease, transform 200ms ease, visibility 200ms;
+    z-index: 50;
+  }
+  /* Each <li> inside the submenu is just a normal block — no flex on
+     the list items themselves, so they don't introduce horizontal gaps. */
+  .avh__submenu > li { width: 100%; display: block; }
+
+  /* Open on hover, focus-within, or programmatic .is-open */
+  .avh__item--has-children:hover > .avh__submenu,
+  .avh__item--has-children:focus-within > .avh__submenu,
+  .avh__item--has-children.is-open > .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  /* Hovering the trigger button keeps the menu open */
+  .avh__link--trigger:hover + .avh__submenu,
+  .avh__link--trigger:focus-visible + .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .avh__sublink {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 22px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #D31126;    /* each item is a colored row matching the panel */
+    transition: background 150ms ease, color 150ms ease;
+    white-space: nowrap;
+  }
+  .avh__sublink:hover {
+    /* darker red on hover so the active affordance reads against the new base */
+    background-color: #a70d1e;
+    color: #ffffff;
+  }
+  /* Currently-active item gets a brighter top edge so the user sees
+     where they are inside the dropdown. Replaces the prior subtle
+     white-tint, which read as "missing" against the red rows. */
+  .avh__sublink--current {
+    background-color: #D31126;
+    box-shadow: inset 4px 0 0 0 #ffffff;
+  }
+  .avh__sublink--current:hover {
+    background-color: #a70d1e;
+  }
 
   .avh__tools {
     display: flex;
@@ -295,16 +525,20 @@ const socials = [
     cursor: pointer;
   }
 
+  /* ── Drawer ── */
   .avh__drawer {
     display: none;
     background: #0d0d0b;
     padding: 20px 15px 40px;
   }
   .avh__drawer.is-open { display: block; }
-  .avh__drawer ul {
+  .avh__drawer > nav > ul {
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .avh__drawer > nav > ul > li {
+    border-bottom: 1px solid #ffffff1a;
   }
   .avh__drawer a {
     display: block;
@@ -314,9 +548,35 @@ const socials = [
     font-size: 18px;
     color: #ffffff;
     text-decoration: none;
-    border-bottom: 1px solid #ffffff1a;
   }
   .avh__drawer a:hover { color: #d41226; }
+
+  /* Parent label (Services) — non-navigating heading in mobile drawer */
+  .avh__drawer-parent {
+    display: block;
+    padding: 12px 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffffff;
+    opacity: 0.55;
+    letter-spacing: 0.04em;
+  }
+  .avh__drawer-sub {
+    list-style: none;
+    margin: 0 0 8px 16px;
+    padding: 0 0 8px 0;
+    border-left: 1px solid #ffffff1f;
+  }
+  .avh__drawer-sub a {
+    padding: 8px 0 8px 14px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .avh__drawer-link--current {
+    color: #D31126 !important;
+  }
 </style>
 
 <script>
@@ -333,5 +593,96 @@ const socials = [
       trigger.setAttribute('aria-expanded', String(open));
     });
   }
-  document.addEventListener('astro:page-load', initMobileMenu);
+
+  /**
+   * Dropdown behavior — runs alongside initMobileMenu but is independent.
+   * On desktop, hover opens natively (CSS). On touch devices without
+   * hover, click the trigger to toggle. Outside-click closes. Esc closes.
+   */
+  function initDropdowns() {
+    const items = Array.from(document.querySelectorAll<HTMLElement>('.avh__item--has-children'));
+    if (!items.length) return;
+
+    const isCoarse = window.matchMedia('(hover: none)').matches;
+
+    items.forEach((item) => {
+      const button = item.querySelector<HTMLButtonElement>('[data-dropdown-trigger]');
+      const menu = item.querySelector<HTMLElement>('[data-dropdown-menu]');
+      if (!button || !menu) return;
+
+      const open = () => {
+        // Close any sibling dropdowns first
+        items.forEach((other) => {
+          if (other !== item) {
+            other.classList.remove('is-open');
+            other.querySelector<HTMLButtonElement>('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+        item.classList.add('is-open');
+        button.setAttribute('aria-expanded', 'true');
+      };
+      const close = () => {
+        item.classList.remove('is-open');
+        button.setAttribute('aria-expanded', 'false');
+      };
+      const toggle = () => {
+        if (item.classList.contains('is-open')) close();
+        else open();
+      };
+
+      // Touch/click — always wire so keyboard users + coarse pointer can open.
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggle();
+      });
+
+      // Keyboard — Enter / Space already triggers click; Escape closes from item.
+      button.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          close();
+          button.focus();
+        }
+      });
+
+      // On coarse pointers (touch), also prevent CSS-only hover-open from
+      // getting stuck open after a tap elsewhere.
+      if (isCoarse) {
+        // close on blur when focus leaves the whole subtree
+        item.addEventListener('focusout', (e) => {
+          const next = e.relatedTarget as Node | null;
+          if (!next || !item.contains(next)) close();
+        });
+      }
+    });
+
+    // Outside click closes any open dropdown
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      items.forEach((item) => {
+        if (!item.contains(target)) {
+          item.classList.remove('is-open');
+          item.querySelector<HTMLButtonElement>('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+    // Esc at top level also closes any open dropdown
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        items.forEach((item) => {
+          item.classList.remove('is-open');
+          item.querySelector<HTMLButtonElement>('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  }
+
+  function initAll() {
+    initMobileMenu();
+    initDropdowns();
+  }
+  document.addEventListener('astro:page-load', initAll);
+  if (document.readyState !== 'loading') initAll();
 </script>

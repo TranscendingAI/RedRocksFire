@@ -1,0 +1,337 @@
+---
+/**
+ * Blog index (/blog) — RRFPS blog landing page.
+ *
+ * Mirrors the hero treatment from inspections.astro:
+ *   • full-bleed ptbanner (96px H1, breadcrumbs, breadcrumb current "BLOG")
+ *   • intro section (eyebrow + lead copy)
+ *   • 2-up / 3-up card grid of all posts in the `blog` content collection
+ *
+ * Posts are pulled live from src/content/blog/*.md via `getCollection('blog')`,
+ * sorted newest-first. Each card links to /blog/<slug>, which is served by
+ * src/pages/blog/[slug].astro.
+ *
+ * The hero CSS is copied from inspections.astro verbatim — same visual
+ * DNA, no need to factor a single component for two callers yet.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const fallbackTitle =
+  'RRFPS Field Notes | Fire Protection Insights for Colorado Property Teams';
+const fallbackDescription =
+  'Practical fire-safety insights for Colorado property teams — inspection cadence, NFPA code changes, multi-family compliance, and what an RRFPS inspection report actually contains.';
+
+const seoTitle = fallbackTitle;
+const seoDescription = fallbackDescription;
+
+// Pull the blog collection, newest first.
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+// Date helper — "January 9, 2026" formatting.
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+>
+
+  <!-- HERO — same pattern as inspections.astro (section 0).
+       Single source of truth here; if it diverges from
+       inspections.astro, update both. -->
+  <div
+    class="ptbanner"
+    style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.jpg');"
+  >
+    <div class="ptbanner__inner">
+      <h1 class="ptbanner__title">Field Notes</h1>
+      <div class="ptbanner__breadcrumbs">
+        <a href="/">Home</a>
+        <span class="ptbanner__divider">-</span>
+        <span class="ptbanner__current">BLOG</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="rr-band" style="background: var(--rr-bg-light);">
+    <div class="rr-container">
+      <div class="max-w-3xl rr-reveal">
+        <p class="rr-eyebrow text-rr-grey mb-5">From the RRFPS team</p>
+        <h2
+          class="font-display font-black uppercase tracking-tight text-rr-black"
+          style="font-size: var(--rr-text-section); line-height: 0.95;"
+        >
+          Practical fire-safety insights for Colorado property teams.
+        </h2>
+        <p
+          class="mt-6 text-rr-grey"
+          style="font-size: var(--rr-text-lead);"
+        >
+          Inspection cadence, NFPA code changes, multi-family compliance,
+          and what an RRFPS report actually contains. Written for the
+          people who carry the responsibility — property managers, regional
+          directors, and facility teams across the Denver Front Range.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POST GRID -->
+  <section class="rr-band" style="background: var(--rr-white);">
+    <div class="rr-container">
+      <div class="flex items-end justify-between mb-10 md:mb-14 flex-wrap gap-4 rr-reveal">
+        <h3
+          class="font-display font-black uppercase tracking-tight text-rr-black"
+          style="font-size: var(--rr-text-statement); line-height: 0.95;"
+        >
+          Latest Posts
+        </h3>
+        <p class="text-rr-grey" style="font-size: 0.9375rem;">
+          {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+        </p>
+      </div>
+
+      {posts.length === 0 ? (
+        <div class="rr-reveal" style="background: var(--rr-bg-light); border-radius: var(--rr-radius-card); padding: 2rem;">
+          <p class="text-rr-grey">No posts yet. Check back soon.</p>
+        </div>
+      ) : (
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post, i) => (
+            <li class="rr-reveal" data-reveal-delay={i * 60}>
+              <a
+                href={`/blog/${post.id}/`}
+                class="rrf__card-link"
+                aria-label={`Read: ${post.data.title}`}
+              >
+                <article class="rrf__card">
+                  <div class="rrf__card-image-wrap">
+                    <img
+                      src={post.data.featuredImage}
+                      alt={post.data.featuredImageAlt}
+                      loading="lazy"
+                      decoding="async"
+                      class="rrf__card-image"
+                    />
+                  </div>
+
+                  <div class="rrf__card-body">
+                    <p class="rrf__card-category">{post.data.category}</p>
+
+                    <h4 class="rrf__card-title">{post.data.title}</h4>
+
+                    <p class="rrf__card-excerpt">{post.data.excerpt}</p>
+
+                    <p class="rrf__card-meta">
+                      <time datetime={post.data.publishDate.toISOString()}>
+                        {formatDate(post.data.publishDate)}
+                      </time>
+                      {post.data.readMinutes && (
+                        <span> · {post.data.readMinutes} min read</span>
+                      )}
+                    </p>
+                  </div>
+                </article>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <!-- DUAL CTA — parity with the rest of the site -->
+  <section class="rr-band" style="background: var(--rr-white);">
+    <div class="rr-container">
+      <div class="grid gap-12 md:grid-cols-2 md:gap-0 md:divide-x" style="--tw-divide-opacity:1;">
+        <a href="/services" class="group block relative" style="padding: 1rem 0 1.5rem;">
+          <span class="absolute top-0 right-0" style="font-size: 2rem;" aria-hidden="true">↗</span>
+          <h3
+            class="font-display font-black uppercase tracking-tight text-rr-black"
+            style="font-size: var(--rr-text-statement); line-height: 0.95;"
+          >
+            See Our Services.
+          </h3>
+          <p class="mt-5 max-w-md text-rr-grey" style="font-size: var(--rr-text-lead);">
+            From sprinklers to monitoring — explore the full range of fire protection services we provide across Colorado.
+          </p>
+          <div class="mt-6 text-sm font-semibold uppercase tracking-wider opacity-70 group-hover:opacity-100">
+            Browse services →
+          </div>
+        </a>
+        <a href="/contact" class="group block relative" style="padding: 1rem 0 1.5rem; padding-left: 3rem;">
+          <span class="absolute top-0 right-0" style="font-size: 2rem;" aria-hidden="true">↗</span>
+          <h3
+            class="font-display font-black uppercase tracking-tight text-rr-black"
+            style="font-size: var(--rr-text-statement); line-height: 0.95;"
+          >
+            Reach Out Today.
+          </h3>
+          <p class="mt-5 max-w-md text-rr-grey" style="font-size: var(--rr-text-lead);">
+            Talk to the team that protects property owners and managers across the Colorado Front Range.
+          </p>
+          <div class="mt-6 text-sm font-semibold uppercase tracking-wider opacity-70 group-hover:opacity-100">
+            Get in touch →
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* HERO — same CSS as inspections.astro (verbatim). Update both together. */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ── Card grid styles ─────────────────────────────────────── */
+  .rrf__card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+  .rrf__card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--rr-white);
+    border: 1px solid var(--rr-border-lt);
+    border-radius: var(--rr-radius-card);
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .rrf__card-link:hover .rrf__card {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+  }
+
+  .rrf__card-image-wrap {
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: var(--rr-bg-panel);
+  }
+  .rrf__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms ease;
+    display: block;
+  }
+  .rrf__card-link:hover .rrf__card-image {
+    transform: scale(1.04);
+  }
+
+  .rrf__card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 1.75rem;
+  }
+  .rrf__card-category {
+    font-family: var(--rr-font-display);
+    font-weight: 700;
+    color: var(--rr-red);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .rrf__card-title {
+    font-family: var(--rr-font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--rr-black);
+    font-size: 1.375rem;
+    line-height: 1.15;
+    margin: 0.75rem 0 0;
+  }
+  .rrf__card-excerpt {
+    margin-top: 0.875rem;
+    color: var(--rr-grey);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    flex: 1;
+  }
+  .rrf__card-meta {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rr-border-lt);
+    color: var(--rr-grey);
+    font-size: 0.8125rem;
+    margin-bottom: 0;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+  }
+</style>

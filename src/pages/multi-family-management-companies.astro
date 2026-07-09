@@ -1,0 +1,612 @@
+---
+/**
+ * Multi-Family Management Companies — RRFPS landing page for
+ * /multi-family-management-companies/.
+ *
+ * (Reachable as /multi-family-management-companies/. The shorter
+ * /multi-family/ URL redirects here via src/pages/multi-family.astro so
+ * any inbound links to the prior short URL keep working.)
+ *
+ * Layout variation vs. inspections.astro (intentional, per Zack):
+ *   inspections.astro     →     multi-family-management-companies.astro
+ *   ptbanner               →     ptbanner                    (industry.astro §0)
+ *   2×2 ibox grid          →     SplitPanel hero             (about.astro §2)
+ *   Why Inspections band    →     "Multi-Family Challenges"   (industry.astro §2)
+ *                                  accordion + bg image
+ *   Our Inspection Process →     3-photo slider               (industry.astro §3)
+ *      SplitPanel
+ *   (none)                 →     Advocacy bridge SplitPanel   (about.astro §2)
+ *   (none)                 →     2×2 Testimonial grid         (about.astro §3)
+ *   DualCTA                →     DualCTA                      (about.astro §4)
+ *
+ * Cohesion comes from repeating components from the same library the
+ * site already uses (ptbanner, SplitPanel, DualCTA, ibox, accordion,
+ * slider). Variation comes from the *order* and *shape* of those
+ * components — three panels in a vertical slide instead of a sticky 2×2
+ * grid; an accordion Q&A instead of bullet copy; a brand-positioning
+ * bridge section that's nowhere else on the site.
+ *
+ * Source of truth for copy: src/data/site.ts → `multiFamilyPage`.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SplitPanel from '../components/SplitPanel.astro';
+import DualCTA from '../components/DualCTA.astro';
+import { multiFamilyPage, testimonials } from '../data/site';
+
+// Arrow + diamond icons used by the page-title banner and any matching
+// dblh eyebrow. Same path data as the demo so visual rhythm matches the
+// other pages 1:1.
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941 14.3396 0.939992Z"></path></svg>';
+
+// Per-page local data shortcuts
+const bannerImage = multiFamilyPage.banner.backgroundImage;
+const accordionBody = multiFamilyPage.challenges.body;
+const accordionIntro = multiFamilyPage.challenges.intro;
+const accordionPanels = multiFamilyPage.challenges.panels;
+const sliderPanels = multiFamilyPage.slider.panels;
+---
+
+<BaseLayout
+  title={multiFamilyPage.seo.title}
+  description={multiFamilyPage.seo.description}
+>
+  <div class="av-page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         0. PAGE-TITLE BANNER (industry.astro §0, replicated)
+         ══════════════════════════════════════════════════════════ -->
+    <div
+      class="ptbanner"
+      style={`background-image: url('${bannerImage}');`}
+    >
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">{multiFamilyPage.banner.title}</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">{multiFamilyPage.banner.subtitle}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         1. HERO — SplitPanel pattern (about.astro §2), talking to the
+            property manager directly. bg uses the panel token, image on
+            the right.
+         ══════════════════════════════════════════════════════════ -->
+    <SplitPanel
+      eyebrow={multiFamilyPage.hero.eyebrow}
+      title={multiFamilyPage.hero.title}
+      body={multiFamilyPage.hero.body}
+      ctaLabel={multiFamilyPage.hero.ctaLabel}
+      ctaHref={multiFamilyPage.hero.ctaHref}
+      image={multiFamilyPage.hero.image}
+      imageAlt={multiFamilyPage.hero.imageAlt}
+      background="white"
+      revealTop={false}
+    />
+
+    <!-- ══════════════════════════════════════════════════════════
+         2. CHALLENGES — bg-image band with a 5-panel accordion
+            (industry.astro §2 pattern). Helps the page read like a
+            problems-and-answers document for SEO long-tail.
+         ══════════════════════════════════════════════════════════ -->
+    <section class="mf-challenges">
+      <div class="mf-challenges__bg" aria-hidden="true"></div>
+
+      <div class="mf-challenges__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>{multiFamilyPage.challenges.eyebrow}</span>
+        </div>
+        <h3 class="mf-challenges__title">{multiFamilyPage.challenges.title}</h3>
+
+        <div class="mf-challenges__layout">
+          <div class="mf-challenges__left">
+            <p class="mf-challenges__intro">{accordionIntro}</p>
+          </div>
+
+          <div class="acc mf-challenges__right">
+            {accordionPanels.map((p) => (
+              <div class:list={['acc__panel', p.open && 'is-active']} data-acc-panel>
+                <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>
+                  <span class="acc__icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                  </span>
+                  <span class="acc__title">{p.title}</span>
+                </button>
+                <div class="acc__content" hidden={!p.open}>
+                  <p>{p.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         3. SLIDER — 3 full-bleed photo columns (industry.astro §3
+            pattern). Three columns of multi-family-specific services.
+         ══════════════════════════════════════════════════════════ -->
+    <section class="mf-slider">
+      <div class="av-dblh__subtitle mf-slider__subtitle">
+        <span class="divider-icon" set:html={diamondIcon} />
+        <span>{multiFamilyPage.slider.eyebrow}</span>
+      </div>
+      <h2 class="mf-slider__title">{multiFamilyPage.slider.title}</h2>
+
+      <div class="mf-slider__strip">
+        {sliderPanels.map((p) => (
+          <div class="slider__col" style={`--slider-bg: url('${p.image}');`}>
+            <span class="slider__overlay" aria-hidden="true"></span>
+            <span class="slider__content">
+              <span class="slider__number">{p.number}</span>
+              <span class="slider__title">{p.title}</span>
+              <span class="slider__desc">{p.body}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         4. ADVOCACY BRIDGE — black-bg SplitPanel (about.astro §2 pattern)
+            with no rounded top, talking about advocacy as the brand
+            differentiator for multi-family.
+         ══════════════════════════════════════════════════════════ -->
+    <SplitPanel
+      eyebrow={multiFamilyPage.advocacy.eyebrow}
+      title={multiFamilyPage.advocacy.title}
+      body={multiFamilyPage.advocacy.body}
+      image={multiFamilyPage.advocacy.image}
+      imageAlt={multiFamilyPage.advocacy.imageAlt}
+      background="black"
+      revealTop={false}
+    />
+
+    <!-- ══════════════════════════════════════════════════════════
+         5. TESTIMONIALS — 2×2 grid of cards. Reuses the 4 named
+            testimonials from site.ts (all multi-family property
+            management roles).
+         ══════════════════════════════════════════════════════════ -->
+    <section class="mf-tm">
+      <div class="mf-tm__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>{multiFamilyPage.testimonials.eyebrow}</span>
+        </div>
+        <h3 class="mf-tm__title">{multiFamilyPage.testimonials.title}</h3>
+
+        <div class="mf-tm__grid">
+          {testimonials.map((t) => (
+            <article class="mf-tm__card">
+              <p class="mf-tm__headline">&ldquo;{t.headline}&rdquo;</p>
+              <p class="mf-tm__quote">{t.quote}</p>
+              <p class="mf-tm__attribution">
+                <strong>{t.attribution.name}</strong>
+                <span>
+                  {t.attribution.title}{t.attribution.company ? `, ${t.attribution.company}` : ''}
+                </span>
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         6. CLOSING — DualCTA on white band, same pattern as
+            inspections.astro / about.astro.
+         ══════════════════════════════════════════════════════════ -->
+    <DualCTA items={multiFamilyPage.ctaPair} background="white" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * 0. Page-title banner — duplicated from industry.astro so the
+   * visual language matches 1:1 without coupling to industry.astro's
+   * stylesheet scope.
+   * ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 2. Challenges — bg-band + accordion, adapted from
+   *    industry.astro §2 prio block. Uses a dark job-site photo as
+   *    the background with a heavy overlay, so the accordion heading
+   *    reads white but the accordion rows are dark.
+   * ══════════════════════════════════════════════════════════ */
+  .mf-challenges {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 110px;
+    background-color: #0d0d0b;
+  }
+  .mf-challenges__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/red-rocks-fire-protection-the-multi-family-problem.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.35);
+    z-index: -2;
+  }
+  /* Uniform dark overlay replacing the prior light-grey gradient veil.
+   *  The .mf-challenges__bg brightness filter handles the image darkening;
+   *  this overlay sits on top to deepen the whole panel uniformly so the
+   *  accordion text reads white regardless of where it sits on the bg. */
+  .mf-challenges::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  .mf-challenges__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .mf-challenges__inner { padding-inline: 2.5rem; }
+  }
+  .mf-challenges .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .mf-challenges__title {
+    margin: 0 0 60px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .mf-challenges__layout {
+    display: grid;
+    gap: 48px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 1024px) {
+    .mf-challenges__layout { grid-template-columns: 5fr 7fr; gap: 80px; }
+  }
+  .mf-challenges__intro {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  /* Accordion container colors sit on top of the dark band, so the
+     borders and text are tuned for low-contrast bg. */
+  .acc {
+    max-width: 720px;
+  }
+  .acc__panel {
+    overflow: hidden;
+    padding: 15px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    transition: border-color 0.4s;
+  }
+  .acc__panel:first-child { border-top: none; }
+  .acc__panel:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
+  .acc__panel:hover,
+  .acc__panel.is-active,
+  .acc__panel:hover + .acc__panel,
+  .acc__panel.is-active + .acc__panel { border-top-color: #d41226; }
+  .acc__panel.is-active:last-child,
+  .acc__panel:hover:last-child { border-bottom-color: #d41226; }
+  .acc__header {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 13px 0;
+    cursor: pointer;
+    text-align: left;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+  .acc__icon {
+    display: inline-flex;
+    align-self: flex-start;
+    margin: 8px 18px -15px 2px;
+    color: #d41226;
+    transform: rotate(90deg);
+    transition: transform 0.4s;
+  }
+  .acc__panel.is-active .acc__icon { transform: rotate(-90deg); }
+  .acc__icon svg { width: 18px; height: 16px; }
+  .acc__content {
+    padding: 6px 5px 14px 39px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .acc__content p { margin: 0; }
+
+  /* ══════════════════════════════════════════════════════════
+   * 3. Slider — 3 stacked-bleed image columns (industry.astro §3
+   *    pattern, 800px tall on desktop). Image each column uses lives
+   *    in site.ts → sliderPanels.
+   * ══════════════════════════════════════════════════════════ */
+  .mf-slider {
+    padding: 110px 0 0;
+    background: #ffffff;
+  }
+  @media (min-width: 768px) { .mf-slider { padding-top: 150px; } }
+  .mf-slider__subtitle {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto 23px;
+    padding-inline: 1.25rem;
+    display: flex;
+  }
+  @media (min-width: 768px) {
+    .mf-slider__subtitle { padding-inline: 2.5rem; }
+  }
+  .mf-slider__title {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-inline: 1.25rem;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 60px;
+  }
+  @media (min-width: 768px) {
+    .mf-slider__title { padding-inline: 2.5rem; }
+  }
+  .mf-slider__strip {
+    display: flex;
+    height: 520px;
+    margin-top: 8px;
+  }
+  .slider__col {
+    position: relative;
+    width: 33.3333%;
+    background-image: var(--slider-bg);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    display: flex;
+  }
+  .slider__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.05) 100%);
+  }
+  .slider__content {
+    position: relative;
+    z-index: 1;
+    align-self: flex-end;
+    padding: 32px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+  }
+  .slider__number {
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+  .slider__title {
+    font-family: "Inter", sans-serif;
+    font-size: clamp(20px, 1.9vw, 26px);
+    font-weight: 700;
+    line-height: 1.15;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .slider__desc {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 5. Testimonials — 2×2 grid on a light-elevated panel.
+   * ══════════════════════════════════════════════════════════ */
+  .mf-tm {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .mf-tm { padding-block: 150px; } }
+  .mf-tm__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .mf-tm__inner { padding-inline: 2.5rem; }
+  }
+  .mf-tm__inner .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+  }
+  .mf-tm__title {
+    margin: 0 0 56px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .mf-tm__grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 768px) { .mf-tm__grid { grid-template-columns: 1fr 1fr; } }
+  .mf-tm__card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 24px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .mf-tm__headline {
+    margin: 0 0 12px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    color: #d41226;
+  }
+  .mf-tm__quote {
+    margin: 0 0 20px;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: #0a0a0a;
+    flex: 1;
+  }
+  .mf-tm__attribution {
+    margin: 0;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.10);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mf-tm__attribution strong { font-weight: 700; }
+  .mf-tm__attribution span { color: #626262; font-weight: 400; }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive — breakpoints roughly matching inspections.astro
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+    .mf-slider { padding-top: 90px; }
+    .mf-slider__strip { height: 460px; }
+    .mf-tm { padding-block: 90px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .mf-challenges { padding-block: 70px; }
+    .mf-challenges__layout { gap: 32px; }
+    .mf-challenges__title { font-size: 28px; margin-bottom: 40px; }
+    .mf-slider { padding-top: 70px; }
+    .mf-slider__strip { flex-direction: column; height: auto; }
+    .slider__col { width: 100%; height: 320px; }
+    .mf-tm { padding-block: 70px; }
+    .mf-tm__title { font-size: 28px; margin-bottom: 36px; }
+  }
+</style>
+
+<script>
+  /**
+   * Accordion toggle for the "Multi-Family Challenges" section.
+   * Mirrors industry.astro's behaviour: one panel open at a time,
+   * clicking the open one closes it. Keyboard- and click-friendly.
+   */
+  function initMultiFamilyAccordion() {
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-acc-panel]'));
+    if (!panels.length) return;
+    panels.forEach((panel) => {
+      const header = panel.querySelector<HTMLElement>('.acc__header');
+      const content = panel.querySelector<HTMLElement>('.acc__content');
+      if (!header || !content) return;
+      header.addEventListener('click', () => {
+        const wasOpen = panel.classList.contains('is-active');
+        panels.forEach((p) => {
+          p.classList.remove('is-active');
+          p.querySelector<HTMLElement>('.acc__header')?.setAttribute('aria-expanded', 'false');
+          const c = p.querySelector<HTMLElement>('.acc__content');
+          if (c) c.hidden = true;
+        });
+        if (!wasOpen) {
+          panel.classList.add('is-active');
+          header.setAttribute('aria-expanded', 'true');
+          content.hidden = false;
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initMultiFamilyAccordion);
+  if (document.readyState !== 'loading') initMultiFamilyAccordion();
+</script>

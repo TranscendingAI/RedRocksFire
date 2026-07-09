@@ -1,0 +1,480 @@
+---
+/**
+ * Inspections — RRFPS landing page for /inspections.
+ *
+ * Design DNA pulled from existing pages so the layout feels cohesive:
+ *   • industry.astro  — ptbanner (full-bleed hero + 96px title + breadcrumbs),
+ *                       2×2 ibox grid (red icon corner + hover-to-orange).
+ *   • about.astro     — SplitPanel-style intro band (text + supporting image
+ *                       with overlay), DualCTA in the white footer pattern.
+ *   • index.astro     — diamond subtitle eyebrow, marquee text style for
+ *                       the closing band.
+ *
+ * Sections, in order (kept small/medium per Zack's direction):
+ *   0. Page-title banner (industry.astro §0)
+ *   1. Solutions grid — 2×2 ibox of inspection categories (industry.astro §1)
+ *   2. Why inspections — bg-image intro panel with photo overlay (about.astro §3
+ *      meets industry.astro §2 split-half layout), but lighter than the
+ *      priority/accordion block so the page stays small.
+ *   3. Inspection process — black-bg SplitPanel with new copy (modeled on
+ *      about.astro's "Our Core Values" section). Same image placeholder.
+ *   4. Closing marquee + DualCTA.
+ *
+ * All copy comes from src/data/site.ts → `inspectionsPage`.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SplitPanel from '../components/SplitPanel.astro';
+import DualCTA from '../components/DualCTA.astro';
+import { inspectionsPage } from '../data/site';
+
+// Same arrow path & diamond icon used across the demo pages — keep them here
+// for visual cohesion (one source per page).
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+// Page-title banner image — reuse the same pt-philosophy.webp that industry.astro
+// uses (it's wide, on-brand dark, and the only banner candidate in the repo).
+const bannerImage = inspectionsPage.banner.backgroundImage;
+
+// Intro panel — dedicated inspection-jobsite photo for the Why Inspections
+// band. Replaces the previous jobsite.jpg placeholder with a fully on-topic
+// image so the overlay text reads against inspected-system content rather
+// than generic trade work.
+const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
+---
+
+<BaseLayout
+  title={inspectionsPage.seo.title}
+  description={inspectionsPage.seo.description}
+>
+  <div class="av-page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         0. PAGE-TITLE BANNER (industry.astro §0, replicated)
+         ══════════════════════════════════════════════════════════ -->
+    <div
+      class="ptbanner"
+      style={`background-image: url('${bannerImage}');`}
+    >
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">{inspectionsPage.banner.title}</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">{inspectionsPage.banner.subtitle}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         1. SOLUTIONS GRID — 2×2 of inspection categories
+            (industry.astro §1 pattern: sticky headline left + ibox grid right)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="sol">
+      <div class="sol__left">
+        <div class="sol__sticky">
+          <div class="av-dblh__subtitle">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>What an Inspection Covers</span>
+          </div>
+          <h2 class="sol__title">
+            <span>Every</span>
+            <span>System We Touch,</span>
+            <span>Inspected Right.</span>
+          </h2>
+          <div class="sol__spacer" aria-hidden="true"></div>
+          <div class="sol__cta">
+            <a href="/contact" class="av-wgl-btn av-wgl-btn--outline">
+              <span class="av-wgl-btn__text">schedule a walk-through</span>
+              <span class="av-wgl-btn__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sol__grid">
+        {inspectionsPage.categories.map((c, i) => (
+          <a href="/contact" class="ibox" data-icon-slot={i}>
+            <span class="ibox__bg" aria-hidden="true"></span>
+            <span class="ibox__icon" aria-hidden="true"></span>
+            <span class="ibox__content">
+              <h3 class="ibox__title">{c.title}</h3>
+              <span class="ibox__text">{c.body}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         2. WHY INSPECTIONS — bg-image intro with dark overlay
+            (about.astro §3 benefits grid BG + a split two-column layout,
+             simpler than the priority/accordion block from industry.astro)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="rr-why">
+      <div
+        class="rr-why__bg"
+        style={`background-image: url('${introImage}');`}
+        aria-hidden="true"
+      ></div>
+      <div class="rr-why__overlay" aria-hidden="true"></div>
+
+      <div class="rr-container">
+        <div class="rr-why__grid">
+          <div class="rr-why__left">
+            <p class="rr-eyebrow rr-eyebrow--light mb-5">{inspectionsPage.intro.eyebrow}</p>
+            <h2
+              class="font-display font-black uppercase tracking-tight"
+              style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em;"
+            >
+              {inspectionsPage.intro.title}
+            </h2>
+          </div>
+
+          <div class="rr-why__right text-rr-white">
+            <p style="font-size: var(--av-text-lead, 18px); line-height: 1.7; color: rgba(255,255,255,0.85); margin-top: 0;">
+              {inspectionsPage.intro.body}
+            </p>
+            <p style="font-size: var(--av-text-lead, 18px); line-height: 1.7; color: rgba(255,255,255,0.85); margin-top: 1.25rem;">
+              {inspectionsPage.intro.body2}
+            </p>
+
+            <ul class="rr-why__bullets">
+              {inspectionsPage.intro.bullets.map((b) => (
+                <li class="rr-why__bullet">
+                  <span class="rr-why__bullet-mark" aria-hidden="true">▸</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         3. INSPECTION PROCESS — black-bg split panel, modeled on
+            about.astro's "Our Core Values" section. Same component
+            (SplitPanel), same placeholder image, but new INSPECTION-
+            SPECIFIC copy from src/data/site.ts → `process`.
+         ══════════════════════════════════════════════════════════ -->
+    <SplitPanel
+      eyebrow={inspectionsPage.process.eyebrow}
+      title={inspectionsPage.process.title}
+      body={inspectionsPage.process.body}
+      ctaLabel={inspectionsPage.process.ctaLabel}
+      ctaHref={inspectionsPage.process.ctaHref}
+      image={inspectionsPage.process.image}
+      imageAlt={inspectionsPage.process.imageAlt}
+      background="black"
+      ctaVariant="arrow"
+      revealTop={false}
+    />
+
+    <!-- ══════════════════════════════════════════════════════════
+         4. CLOSING — marquee band (index.astro testiominal-marquee style,
+            but smaller) + DualCTA in a white band.
+         ══════════════════════════════════════════════════════════ -->
+    <DualCTA items={inspectionsPage.ctaPair} background="white" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * Reused from industry.astro (page-title banner + ibox grid)
+   * so the visual language matches that page 1:1.
+   * ══════════════════════════════════════════════════════════ */
+
+  /* ---- 0. Page-title banner ---- */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ---- 1. Solutions + ibox grid ---- */
+  .sol {
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto 80px;
+  }
+  .sol__left { width: 50%; }
+  .sol__sticky {
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 0;
+  }
+  .sol__sticky > * { width: 100%; max-width: 585px; }
+  .sol__sticky .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+  }
+  .sol__title {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.178em;
+    padding-bottom: 5px;
+    color: #0a0a0a;
+  }
+  .sol__title span { display: inline-block; }
+  .sol__spacer { height: 34px; }
+  .sol__cta .av-wgl-btn { display: inline-flex; }
+  .sol__cta .av-wgl-btn__text { padding: 17px 35px; }
+
+  .sol__grid {
+    width: 50%;
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 30px;
+  }
+  .sol__grid .ibox { width: 50%; }
+
+  .ibox {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ibox__bg {
+    position: absolute;
+    inset: 0;
+    border: 1px solid #0a0a0a26;
+    transition: 0.4s;
+    pointer-events: none;
+  }
+  .ibox:hover { background-color: #fb651b; }
+  .ibox:hover .ibox__bg { border-color: transparent; }
+  .ibox__icon {
+    display: inline-flex;
+    background-color: #d41226;
+    padding: 16px;
+    transition: 0.4s;
+  }
+  .ibox__icon :global(svg) {
+    width: 50px;
+    height: 50px;
+    fill: #ffffff;
+    transition: 0.4s;
+  }
+  .ibox:hover .ibox__icon { background-color: #ffffff; }
+  .ibox:hover .ibox__icon :global(svg) { fill: #0a0a0a; }
+  .ibox__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 306px;
+    padding: 51px 40px 30px 40px;
+  }
+  .ibox__title {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(26px, 1.9vw, 30px);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.4em;
+    color: #0a0a0a;
+    transition: 0.4s;
+  }
+  .ibox__text {
+    padding-top: 16px;
+    color: #626262;
+    font-size: 16px;
+    line-height: 1.875;
+    transition: 0.4s;
+  }
+  .ibox:hover .ibox__title,
+  .ibox:hover .ibox__text { color: #ffffff; }
+
+  /* ---- 2. Why-inspections band ----
+   * about.astro uses a full-bleed photo + dark overlay under its Benefits
+   * grid. We adapt that pattern: same bg+overlay, but inside it sit two
+   * text columns (eyebrow + headline left, copy + bullets right) instead
+   * of a 4-card grid — lighter, more editorial.
+   */
+  .rr-why {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 96px;
+    color: #ffffff;
+    background-color: #0d0d0b;
+  }
+  @media (min-width: 768px) {
+    .rr-why { padding-block: 128px; }
+  }
+  .rr-why__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .rr-why__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.65) 100%);
+    z-index: -1;
+  }
+  .rr-why__grid {
+    display: grid;
+    gap: 48px;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .rr-why__grid {
+      gap: 80px;
+      grid-template-columns: 5fr 7fr;
+    }
+  }
+  .rr-why__left h2 { color: #ffffff; max-width: 16ch; }
+  .rr-why__left .rr-eyebrow--light {
+    color: rgba(255,255,255,0.7) !important;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .rr-why__bullets {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .rr-why__bullet {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    align-items: baseline;
+    gap: 4px;
+    color: rgba(255,255,255,0.92);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  .rr-why__bullet-mark {
+    color: #d41226;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+    .sol { margin-top: 0; padding: 0 30px; flex-wrap: wrap; }
+    .sol__left { width: 100%; }
+    .sol__sticky { position: sticky; top: 30px; align-items: flex-start; }
+    .sol__sticky > * { max-width: 340px; }
+    .sol__title { font-size: 42px; }
+    .sol__title span { display: inline; }
+    .sol__grid { width: 100%; margin-top: 30px; }
+    .sol__grid .ibox { width: 100%; }
+    .ibox__content { min-height: 235px; padding: 31px 30px 20px 30px; }
+    .ibox__icon :global(svg) { width: 40px; height: 40px; }
+    .ibox__title { font-size: 26px; }
+    .rr-why { padding-block: 96px; }
+  }
+
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .sol { padding: 0; row-gap: 30px; }
+    .sol__sticky { position: relative; top: 0; padding: 0 15px; }
+    .sol__title { font-size: 28px; }
+    .sol__grid { padding: 0 15px; }
+    .ibox__content { min-height: 180px; }
+    .rr-why { padding-block: 64px; }
+    .rr-why__bullets { gap: 12px; }
+    .rr-why__bullet { font-size: 16px; }
+  }
+</style>
+
+<script>
+  /* Inject the four ibox SVG icons from the industry.astro reference. Keeping
+   * them inline rather than referencing industry.astro directly because each
+   * page is self-contained in this repo (every page carries its own scoped
+   * styles and SVG IDs). Reusing the exact same path data guarantees a
+   * 1:1 visual match with the other reference pages. */
+  const IBOX_ICONS: string[] = [
+    /* 0 — clipboard / annual NFPA inspection document */
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m11.11458 291.43856v-1.84743c-.000264-.0335-.007-.0667-.01963-.0977l-1.058334-2.64635c-.057-.14241-.1218348-.29766-.2387438-.4377-.09954-.11923-.246147-.2309-.436666-.24857l.150379-.45423c.0933-.28.200975-.51038.6139158-.75086l2.405538-1.51877c.141697-.0894.152486-.2558.07965-.36658-.07231-.10998-.227247-.16501-.361282-.0804l-2.3941698 1.51103c-.517789.30133-.734094.70263-.845944 1.03818l-.204121.61236h-2.080493l.345197-.96841c.169402-.4755.508222-.96606.972815-1.16919l4.7777498-1.95467c.0056.0186.0098.0372.01654.0558l2.211234 6.11022-2.294951 3.05925c-.131249.17422-.0071.42342.210841.42375h1.58799c1.021469 0 1.851049-.83009 1.851049-1.85157v-.52917c0-.35287-.529167-.35287-.529167 0v.52917c0 .73749-.584422 1.32242-1.321882 1.32242h-1.056784l1.982309-2.64532.66249-.00053c.165814-.00026.290486-.15131.259416-.31419l-1.263488-6.72259c-.109752-.5837-.68571-.98755-1.329634-.88883-.553384.0848-.886892.47992-.992188.88264l-4.9800538 2.03709c-.658577.28745-1.05851.9055-1.262451 1.47794l-.408244 1.14618h-.07648c-.479778 0-.695365.37852-.788072.74724l-.477493 1.89911h-3.4979803c-.43516 0-.794782.35808-.794782.79324v1.85363c0 .43516.359622.79272.794782.79272h.7927179v.55087c-.895823.12945-1.5880179.89937-1.5880179 1.83038 0 1.02147.832164 1.85104 1.8536329 1.85104h8.2015712c1.021479 0 1.851049-.82957 1.851049-1.85104 0-1.02148-.82957-1.85209-1.851049-1.85209h-.264068l.000264-.52916c.435464 0 .804828-.35685.795046-.79892zm3.500036-9.84436 1.205611 6.40995-.288872.00053-2.196764-6.06991c-.117182-.32385.120462-.72658.541827-.79919.360465-.0621.682048.15999.738198.45862zm-.591696.0599c-.146119 0-.264583.11847-.264583.26459s.118464.26458.264583.26458c.146129 0 .264583-.11845.264583-.26458s-.118454-.26459-.264583-.26459zm-3.703651 10.05417h-8.9958332c-.151159 0-.265615-.11239-.265615-.26355v-1.85363c0-.15115.114456-.26355.265615-.26355h3.7052014c.12183.00022.228071-.0828.25735-.20102l.531492-2.13372c.04985-.2001.119533-.31161.269491-.31161h3.176035c.0693 0 .08146.0117.128672.0682.0472.0565.102603.1653.154514.29508l1.0386958 2.59725v1.80584c.003.14696-.114488.2607-.265618.2607zm-3.7031318-4.49792c-.120057 0-.225073.0808-.255799.19689l-.423746 1.58595c-.04606.16858.08105.33471.255799.33435h1.21698v.79272c.000156.0523.0158.10335.04496.14675l.529166.79479c.04929.0736.132112.11759.220657.1173h1.58802c.145311-.00052.2629658-.11823.2635478-.26354v-1.05885c-.000216-.0356-.0076-.0707-.02169-.10335l-1.0020068-2.38125c-.04138-.0981-.137477-.1618-.243914-.16175zm.203089.52917h.590145v1.05833h-.873334zm1.119312 0h.673859l.914157 2.16989v.74053h-1.181841l-.406175-.60974v-.97824zm-6.0900684 2.11305c-.146124.002-.263192.12156-.261483.26769v.7953c-.0081.36078.537266.36078.529167 0v-.7953c.0019-.14856-.119134-.26942-.267684-.26769zm1.058849 0c-.1461241.002-.263192.12156-.261483.26769v.7953c-.0078.36047.536951.36047.529167 0v-.7953c.00191-.14856-.119134-.26942-.267684-.26769zm1.0567831 0c-.145516.003-.2616469.12216-.2599322.26769v.7953c.0078.34494.5214225.34494.5291675 0v-.7953c.0019-.14917-.120079-.27031-.2692353-.26769zm-1.3182661 2.38487h7.1442674v.52916h-1.324468c-.35312 0-.35312.52969 0 .52969h2.1177018c.73747 0 1.321882.58493 1.321882 1.3224 0 .73746-.584412 1.32188-1.321882 1.32188h-8.2015682c-.73746 0-1.323948-.58442-1.323948-1.32188 0-.73747.586488-1.3224 1.323948-1.3224h5.0276024c.353121 0 .353121-.52969 0-.52969h-4.7635354zm.2656179 1.58801c-.4352309 0-.7952999.358-.7952999.79324s.360058.79477.7952999.79478c.4352512 0 .792716-.35954.792716-.79478-.0000108-.43524-.3574759-.79324-.792716-.79324zm2.3807325 0c-.43524 0-.795301.358-.795301.79324s.360051.79478.795301.79478c.435239-.00001.792718-.35954.792718-.79478-.000011-.43524-.357479-.79324-.792718-.79324zm2.380734 0c-.43524 0-.792708.358-.792716.79324 0 .43524.357466.79478.792716.79478s.792715-.35954.792715-.79478c-.000007-.43524-.357475-.79324-.792715-.79324zm2.3807338 0c-.4352398 0-.7927068.358-.7927178.79324 0 .43524.357468.79478.7927178.79478.43525 0 .795301-.35954.795301-.79478s-.360061-.79324-.795301-.79324zm-7.1422003.52917c.1492602 0 .2635491.11481.2635491.26407s-.1142889.26562-.2635491.26562c-.1492618 0-.2656179-.11637-.2656179-.26562 0-.14926.1163561-.26407.2656179-.26407zm2.3807325 0c.149262.00001.263551.11481.263551.26407 0 .14925-.114289.26562-.263551.26562-.14926 0-.265626-.11636-.265615-.26562 0-.14926.116355-.26407.265615-.26407zm2.380734 0c.149259 0 .263549.11481.263549.26407s-.11429.26562-.263549.26562-.263549-.11636-.263549-.26562.11429-.26407.263549-.26407zm2.3807338 0c.149259 0 .265615.11481.265615.26407.000011.14926-.116356.26562-.265615.26562-.1492618 0-.2635508-.11636-.2635508-.26562s.114289-.26407.2635508-.26407z"></path></g></svg>`,
+    /* 1 — fire alarm bell / signaling */
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m15.199595 280.5958c-.307505.00003-.616044.11667-.849561.34985l-4.4824162 4.49016c-.0392.0393-.06505.0899-.0739.1447l-.265613 1.58595c-.02971.17897.125399.33408.304374.30437l1.5880162-.26355c.05485-.009.105477-.035.144695-.0744l4.482412-4.49017c.467373-.46668.466861-1.23019 0-1.69705-.233426-.23343-.540507-.34988-.848007-.34985zm.000529.52503c.170749 0 .341371.0664.47439.19947.243599.2436.261443.61145.05891.87592l-.936377-.93431c.120406-.092.261094-.14108.403076-.14108zm-.782912.50746.289905.29042-3.859197 3.8592-.28732-.28784zm.664043.66508.283704.28422-3.855064 3.86178-.286803-.28681zm1.323432 2.80086c0-.43516-.359619-.7953-.794781-.7953h-.529168c-.345037.008-.345037.52151 0 .52917h.529168c.151158 0 .265615.11498.265615.26613v10.58488c0 .15496-.113322.26556-.264608.26458l-13.229659-.002c-.733806-.0001-1.3218829-.58863-1.3218829-1.3224 0-.73376.5881219-1.32395 1.3218829-1.32395s1.3223999.59019 1.3223999 1.32395c-.008.3607.5371729.3607.5291669 0v-10.05465c0-1.01974-.8318238-1.85157-1.8515668-1.85157-1.019744 0-1.85164697.83183-1.85156797 1.85157l.0007938 10.06786c0 1.01661.83997797 1.83825 1.85079197 1.83839h-.000018l13.2286512.002c.435364.002.794784-.35712.794782-.79375zm-14.023433-1.85157c.733761 0 1.3223999.58813 1.3223999 1.32189v8.76122c-.3365309-.34461-.8050527-.56017-1.3223999-.56017-.517335 0-.9853539.21558-1.3218829.56017v-8.76122c0-.73376.5881219-1.32189 1.3218829-1.32189zm2.6468668 1.05627c-.345037.008-.345037.52151 0 .52917h4.761466c.3450382-.008.3450382-.52151 0-.52917zm5.2399892 1.649.784451.78444-.940512.15658zm-4.7108222.46818c-.146928-.00055-.266179.11869-.265618.26562-.0092 2.65751 0 5.28188 0 7.9375.000529.14612.119497.26411.265618.26355h5.0033122c.01445.001.02896.001.04341 0h3.947047c.146322.00085.265548-.11723.266133-.26355v-7.40782c.000793-.14733-.118804-.26698-.266137-.26613h-2.115117c-.353119 0-.353119.52968 0 .52968h1.851569v2.64635h-3.439068v-1.32446c.0016-.14918-.1206-.27008-.26975-.26717-.145313.003-.261359.12184-.259932.26717v1.58801c-.00053.14612.11743.26504.263549.26562h3.705201v3.70313h-3.439068v-2.38073c.0019-.14937-.120393-.2706-.26975-.26768-.145517.003-.261647.12215-.259932.26768v2.38073h-4.4979182v-3.70313h2.909901v1.85157c0 .35312.529682.35312.529682 0v-2.11719c-.000529-.14533-.118215-.26301-.263548-.26355h-.529686v-1.85363c.0019-.14917-.120076-.2703-.269232-.26768-.145515.003-.261649.12215-.259934.26768v1.85363h-2.117183v-3.17603h2.909901c.360688.008.360688-.53717 0-.52917z"></path></g></svg>`,
+    /* 2 — wrench / sprinkler service */
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m5.9670767 284.32791c-.2090632.10454-.4738185.25266-.6774762.51004-.2036604.25738-.3472418.63019-.2532142 1.11311l1.2727887 3.57188-.4108265.41083c-.2596541.24937.1247617.63378.3741368.37413l1.953887-1.95388c.1461744-.13331.3257048-.0939.4196107 0 .1165913.11659.1194541.30016 0 .41961l-2.5755521 2.57555-.7617116-.76171c-.3077051-.3077-.8131546-.3077-1.1208623 0l-3.19928674 3.19722c-.6134399.61344-.61343805 1.61279 0 2.22622.61343704.61343 1.61329734.61344 2.22673654 0l3.1972224-3.19722c.2966456-.29665.3042735-.77726.028938-1.08727l2.5786556-2.57865c.3202782-.32028.3284326-.85598 0-1.16789-.3754702-.35658-.8620416-.29517-1.1678893 0l-1.1291279 1.12913-1.1689213-3.27319c-.044431-.32591.028699-.51544.1503786-.66921.1237086-.15634.3138355-.27267.4991947-.36535 2.4414665-1.22073 7.0727014-2.79884 9.1865184-3.5295.148021-.0512.236112-.0212.297656.0403.06154.0615.09147.14964.04031.29766-.730663 2.11384-2.308781 6.74507-3.529499 9.18651-.09268.18537-.208495.376-.364837.49972-.153474.12143-.342905.19425-.66766.15038l-2.5657335-.91623c-.3324542-.11886-.5107357.37982-.1782841.49868l2.6013906.92914c.01643.006.03339.01.05064.0124.457616.0671.830411-.0558 1.08779-.25941.257378-.20366.405513-.46893.510045-.678 1.258422-2.51686 2.826996-7.13997 3.556373-9.25008.104455-.3022.06308-.62822-.166399-.84491-.266007-.25118-.591831-.25294-.84491-.1664-2.110123.72937-6.7332302 2.29796-9.2500818 3.55637zm-1.218528 6.55205c.06703 0 .1336279.0267.1870684.0801l1.1038073 1.10381c.106889.10689.106889.26828 0 .37517l-3.1972198 3.19722c-.4126204.41262-1.0658476.41261-1.4784633 0-.41261805-.41262-.41261805-1.06429 0-1.47691l3.1972205-3.19929c.05344-.0534.1205574-.0801.1875869-.0801z"></path></g></svg>`,
+    /* 3 — extinguisher */
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.933333 16.933334"><g transform="translate(0 -280.067)"><path d="m16.121498 285.88745c-.396065-.002-.45098-.26458-1.040246-.26407-.633164.002-.596559.26407-1.058334.26356-.461774-.00053-.425169-.26267-1.058333-.26407-.633164.001-.596559.26355-1.058333.26407-.110244.00053-.180346-.0121-.238229-.0295-.328303-.0972-.492461.39109-.151929.50643.107482.0322.235818.0527.390158.0522.589266-.00053.644181-.2633 1.058333-.2651.414152.002.469066.26459 1.058333.2651.589267.00053.644441-.26227 1.049549-.26406.39128 0 .436632.17934.802535.24132v.55294h-5.027084c.0011-1.1467.00013-2.2934-.0016-3.4401-.0038-.13498-.09962-.26993-.28112-.26458-.396065-.002-.45098-.26458-1.040247-.26407-.6331634.002-.5965583.26407-1.0583329.26355-.4617747-.00053-.4251696-.26266-1.0583334-.26355-.6331638.002-.5965587.26381-1.0583333.26355-.4630552-.00025-.4243335-.26355-1.0629847-.26355-.3655589.0169-.3303667.53855.022728.52814.3960654.002.4509796.26484 1.0402464.2651.5892668.00025.6441811-.26279 1.0583334-.2651.4141522.001.4690665.26406 1.0583333.26458.5892668.00053.6439218-.26227 1.0490302-.26407.391399 0 .436727.1794.803053.24133v.55191h-5.820257v-2.38074c-.0005291-.14612-.1194964-.2641-.2656152-.26355h-2.9104176c-.4351591 0-.7927165.35756-.7927165.79272v2.11718c.0001474.15439.1318747.27587.2857706.26355h1.0361134v2.1177h-.7927174v-1.3224c.00295-.15018-.1195678-.2727-.2697508-.26975-.146131.003-.2622831.12362-.2594158.26975v8.99377c0 .43516.3575574.7953.7927165.7953h14.2869828c.43516 0 .7953-.36014.7953-.7953v-1.05627c-.0076-.34503-.521507-.34503-.529166 0v1.05627c0 .15115-.11498.26613-.266134.26613h-2.644283v-2.1177h3.151746c.154686.0136.28779-.10827.287837-.26355.000794-2.11691-.000529-4.23393-.0021-6.35051-.0038-.13499-.09963-.26994-.28112-.26459zm-14.7990968-3.7052h2.6468661v2.11719h-2.910416v-1.85157c0-.15116.1123958-.26562.2635499-.26562zm1.0588501 2.64635h3.7052013v2.1177h-3.7052013zm4.234368 0h3.7031327v2.1177h-3.7031327zm-5.556768 2.64687h2.910416v2.11718h-2.910416zm3.4395827 0h3.7031348v2.11718h-3.7031348zm4.2323015 0h1.8536335 1.851565v2.11718h-3.7051985zm4.2343655 0h2.910417v2.11718h-2.910417zm-11.9062497 2.64428h.7927174v2.11719h-.7927174zm1.3224 0h3.7052013v2.11719h-3.7052013zm4.234368 0h3.7031327v2.11719h-3.7031327zm4.2322987 0h3.705201v2.11719h-3.705201zm4.232299 0h.795301v2.11719h-.795301zm-14.0213657 2.64635h2.910416v2.1177h-2.6468661c-.1511541 0-.2635509-.11498-.2635499-.26613zm3.4395827 0h3.7031348v2.1177h-3.7031348zm4.2323015 0h3.7051985v2.1177h-3.7051985z"></path></g></svg>`,
+  ];
+
+  function initInspectionsPage() {
+    // Inject ibox icons (same pattern as industry.astro)
+    document.querySelectorAll<HTMLElement>('.ibox[data-icon-slot]').forEach((box) => {
+      const slot = box.querySelector('.ibox__icon');
+      const i = Number(box.dataset.iconSlot);
+      if (slot && IBOX_ICONS[i] && !slot.firstElementChild) {
+        slot.innerHTML = IBOX_ICONS[i];
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initInspectionsPage);
+  if (document.readyState !== 'loading') initInspectionsPage();
+</script>

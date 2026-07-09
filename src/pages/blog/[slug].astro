@@ -1,0 +1,338 @@
+---
+/**
+ * Blog post template — `/blog/<slug>`.
+ *
+ * Pulls each post from the `blog` content collection (defined in
+ * src/content.config.ts). Uses the same hero treatment as the index page
+ * so /blog and /blog/<slug> feel like one continuous experience.
+ *
+ * SEO:
+ *   - `<title>`, `<meta name="description">`, OpenGraph + Twitter card
+ *     tags pulled from the post frontmatter (`seoTitle`, `seoDescription`,
+ *     `featuredImage`).
+ *   - Schema.org `BlogPosting` JSON-LD so search engines can render rich
+ *     snippets.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+// Build static paths at build time. In Astro 7 the `glob()` loader
+// exposes entries as `{ id, data, ... }` — `id` is the auto-derived
+// slug from the filename (e.g. `fire-sprinkler-systems-in-multi-family-properties`).
+// The legacy `entry.slug` field no longer exists on glob-loaded entries
+// in Astro 7, which is why an earlier `params: { slug: post.slug }`
+// triggered a "Missing parameter" error from the routing generator.
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+// `post.id` is the Astro 7 glob-loader slug (filename minus extension).
+// In theory an entry always has `id`, but the fallback keeps the canonical
+// URL correct if a future loader (e.g. live data) omits it.
+const slug = post.id;
+
+const fmtDate = post.data.publishDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const isoDate = post.data.publishDate.toISOString();
+const canonical = new URL(`/blog/${slug}/`, Astro.site ?? 'http://localhost:4321').toString();
+const ogImage = new URL(post.data.featuredImage, Astro.site ?? 'http://localhost:4321').toString();
+
+// JSON-LD payload — single string passed into <Fragment set:html>.
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.seoTitle,
+  description: post.data.seoDescription,
+  image: ogImage,
+  datePublished: isoDate,
+  author: { '@type': 'Organization', name: post.data.author },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Red Rocks Fire Protection Services',
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/images/RRFPS Logo_white-black.png', Astro.site ?? 'http://localhost:4321').toString(),
+    },
+  },
+  mainEntityOfPage: canonical,
+  keywords: (post.data.tags ?? []).join(', '),
+  articleSection: post.data.category,
+});
+---
+
+<BaseLayout
+  title={post.data.seoTitle}
+  description={post.data.seoDescription}
+  image={post.data.featuredImage}
+  type="article"
+  publishDate={isoDate}
+  author={post.data.author}
+  canonical={canonical}
+  schema={jsonLd}
+>
+
+  <!-- HERO — same pattern as /blog/index.astro and /inspections.
+       Uses the post's featured image as the bg. The title comes from
+       the post, not a hardcoded constant. -->
+  <div
+    class="ptbanner"
+    style={`background-image: url('${post.data.featuredImage}');`}
+  >
+    <div class="ptbanner__inner">
+      <h1 class="ptbanner__title">{post.data.title}</h1>
+      <div class="ptbanner__breadcrumbs">
+        <a href="/">Home</a>
+        <span class="ptbanner__divider">-</span>
+        <a href="/blog/">Field Notes</a>
+        <span class="ptbanner__divider">-</span>
+        <span class="ptbanner__current">{post.data.category}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST HEADER — category eyebrow, byline + date + read time -->
+  <section class="rr-band" style="background: var(--rr-bg-light);">
+    <div class="rr-container">
+      <div class="max-w-3xl mx-auto rr-reveal">
+        <p class="rr-eyebrow text-rr-grey mb-5">{post.data.category}</p>
+
+        <div
+          class="flex flex-wrap items-center gap-x-4 gap-y-2 text-rr-grey pb-6"
+          style="font-size: 0.9375rem; border-bottom: 1px solid var(--rr-border-lt);"
+        >
+          <span>
+            By
+            <strong class="text-rr-black font-semibold">{post.data.author}</strong>
+          </span>
+          <span aria-hidden="true">·</span>
+          <time datetime={isoDate}>{fmtDate}</time>
+          {post.data.readMinutes && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{post.data.readMinutes} min read</span>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY — rendered from the markdown file via the Content component -->
+  <article class="rr-band" style="background: var(--rr-white);">
+    <div class="rr-container">
+      <div class="max-w-3xl mx-auto rr-blog-body">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <!-- TAGS — render only if any are set, so empty arrays don't show -->
+  {post.data.tags && post.data.tags.length > 0 && (
+    <section style="background: var(--rr-bg-light);">
+      <div class="rr-container" style="padding-block: 2rem;">
+        <div class="max-w-3xl mx-auto flex flex-wrap items-center gap-2">
+          <span class="text-rr-grey mr-2" style="font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;">Filed under</span>
+          {post.data.tags.map((tag) => (
+            <span
+              class="inline-flex items-center"
+              style="background: var(--rr-white); border: 1px solid var(--rr-border-lt); border-radius: var(--rr-radius-pill); padding: 0.4rem 0.875rem; color: var(--rr-black); font-size: 0.8125rem;"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- DUAL CTA — stay consistent with /blog/index.astro -->
+  <section class="rr-band" style="background: var(--rr-white);">
+    <div class="rr-container">
+      <div class="max-w-3xl mx-auto" style="text-align: center;">
+        <p class="rr-eyebrow text-rr-grey mb-5">Take the next step</p>
+        <h2
+          class="font-display font-black uppercase tracking-tight text-rr-black"
+          style="font-size: var(--rr-text-statement); line-height: 0.95;"
+        >
+          Need this on your property?
+        </h2>
+        <p class="mt-6 text-rr-grey" style="font-size: var(--rr-text-lead);">
+          Tell us about your building — type, size, last inspection date —
+          and we'll route the right technician.
+        </p>
+        <div class="mt-10 flex justify-center gap-4 flex-wrap">
+          <a href="/contact" class="rr-btn rr-btn--primary rr-btn--lg">
+            Schedule an Inspection
+          </a>
+          <a href="/blog/" class="rr-btn rr-btn--ghost rr-btn--lg">
+            Read More Posts
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style is:global>
+  /*
+   * Markdown -> HTML styling for .rr-blog-body.
+   *
+   * Tailwind v4's preflight resets heading margins, list bullets, etc.
+   * We restore readable typography here without touching preflight.
+   */
+  .rr-blog-body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--rr-black);
+  }
+  .rr-blog-body > * + * { margin-top: 1.25em; }
+  .rr-blog-body h2 {
+    font-family: var(--rr-font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--rr-black);
+    font-size: 1.875rem;
+    line-height: 1.15;
+    margin-top: 2em;
+  }
+  .rr-blog-body h3 {
+    font-family: var(--rr-font-display);
+    font-weight: 700;
+    color: var(--rr-black);
+    font-size: 1.375rem;
+    line-height: 1.2;
+    margin-top: 1.75em;
+  }
+  .rr-blog-body p { color: var(--rr-black); }
+  .rr-blog-body ul,
+  .rr-blog-body ol {
+    margin: 1.25em 0 1.25em 1.5em;
+  }
+  .rr-blog-body ul { list-style: disc; }
+  .rr-blog-body ol { list-style: decimal; }
+  .rr-blog-body li { margin: 0.5em 0; }
+  .rr-blog-body li::marker { color: var(--rr-red); }
+  .rr-blog-body a {
+    color: var(--rr-red);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .rr-blog-body a:hover { color: var(--rr-red-hover); }
+  .rr-blog-body blockquote {
+    border-left: 4px solid var(--rr-red);
+    padding: 0.5em 1.25em;
+    margin: 1.5em 0;
+    background: var(--rr-bg-light);
+    color: var(--rr-black);
+    font-style: italic;
+  }
+  .rr-blog-body code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.95em;
+    background: var(--rr-bg-light);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+  .rr-blog-body pre {
+    background: var(--rr-bg-panel);
+    color: var(--rr-black);
+    padding: 1em 1.25em;
+    border-radius: var(--rr-radius-card);
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.55;
+  }
+  .rr-blog-body pre code { background: transparent; padding: 0; }
+  .rr-blog-body hr {
+    border: 0;
+    border-top: 1px solid var(--rr-border-lt);
+    margin: 2em 0;
+  }
+  .rr-blog-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--rr-radius-card);
+  }
+  .rr-blog-body strong { font-weight: 700; }
+</style>
+
+<!--
+  Hero CSS — duplicated from inspections.astro and blog/index.astro
+  for visual cohesion. If you change one, change all three.
+-->
+<style>
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 64px; /* post titles are long — clamp at 64 so they fit on one line per visual chunk */
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    max-width: 16ch;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 48px; line-height: 56px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 32px; line-height: 38px; }
+    .ptbanner__breadcrumbs { font-size: 14px; }
+  }
+</style>

@@ -18,6 +18,13 @@ interface Props {
   reverse?: boolean;
   background?: 'light' | 'panel' | 'white' | 'black';
   ctaVariant?: 'arrow' | 'primary';
+  /**
+   * When true (default), the section gets the rounded-top-corner band reveal
+   * (design.md §4.3) via the `.rr-band--reveal-top` class. Pass `false` to opt
+   * out — useful when the panel sits between two non-revealing sections and
+   * the rounded corners would create a visual seam rather than a reveal.
+   */
+  revealTop?: boolean;
 }
 
 const {
@@ -31,6 +38,7 @@ const {
   reverse = false,
   background = 'light',
   ctaVariant = 'arrow',
+  revealTop = true,
 } = Astro.props;
 
 const bgClass =
@@ -43,9 +51,25 @@ const bodyClass = background === 'black' ? 'text-rr-grey-soft' : 'text-rr-grey';
 const eyebrowClass = background === 'black' ? 'text-rr-grey-soft' : 'text-rr-grey';
 const imageBgClass = background === 'black' ? 'bg-rr-black' : 'bg-rr-bg-panel';
 const ctaBand = background === 'black' ? 'dark' : 'light';
+/**
+ * Inline color override for the H2 title and body paragraph.
+ *
+ * Tailwind's preflight + the `.av-page h1, .av-page h2 …` rule from
+ * avelon.css force all headings inside `.av-page` to `color: #0a0a0a`
+ * (black). The parent section's `text-rr-white` class would inherit
+ * down, but the `.av-page h2` rule wins on specificity and color is
+ * never re-applied by `.text-rr-white` (which only acts as a fallback
+ * color on elements that don't have a more specific rule).
+ *
+ * On a black background, that produces unreadable black-on-black text.
+ * We force white here, only when `background === 'black'`. The override
+ * is inline (highest specificity) so it always wins, regardless of any
+ * future Tailwind preflight changes.
+ */
+const textColorOnDark = background === 'black' ? '#fff' : undefined;
 ---
 
-<section class:list={['rr-band rr-band--reveal-top', bgClass]}>
+<section class:list={['rr-band', revealTop && 'rr-band--reveal-top', bgClass]}>
   <div class="rr-container">
     <div
       class:list={[
@@ -63,13 +87,13 @@ const ctaBand = background === 'black' ? 'dark' : 'light';
         {eyebrow && <p class:list={['rr-eyebrow mb-5', eyebrowClass]}>{eyebrow}</p>}
         <h2
           class="font-display font-black uppercase tracking-tight rr-reveal"
-          style="font-size: var(--rr-text-section); line-height: 0.95;"
+          style={`font-size: var(--rr-text-section); line-height: 0.95;${textColorOnDark ? ` color: ${textColorOnDark};` : ''}`}
         >
           {title}
         </h2>
         <p
           class:list={['mt-6 rr-reveal', bodyClass]}
-          style="font-size: var(--rr-text-lead);"
+          style={`font-size: var(--rr-text-lead);${textColorOnDark ? ` color: ${textColorOnDark}; opacity: 0.9;` : ''}`}
           data-reveal-delay="120"
         >
           {body}
