@@ -32,73 +32,88 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 // Diamond divider icon used in double-heading subtitles
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-const statementWords = 'we build more than structures — we build trust, innovation, and enduring value'.split(' ');
+const statementWords = 'we are more than a fire protection company — we are your trusted partner in protecting lives, property, and peace of mind'.split(' ');
 
 const solutions = [
   {
-    title: 'General Contracting',
-    body: 'Comprehensive management and execution of construction projects from start to finish.',
+    title: 'Inspections',
+    body: 'Code-required annual testing of every life safety system, with comprehensive reports and correction summaries built for your jurisdiction.',
   },
   {
-    title: 'Design & Build',
-    body: 'An integrated approach that combines architectural design, engineering, and construction under one roof.',
+    title: 'Fire Sprinkler Systems',
+    body: 'Design, installation, service, and repair of wet, dry, preaction, and standpipe systems, plus fire pumps and retrofits.',
   },
   {
-    title: 'Project Management',
-    body: 'Professional planning, scheduling, budgeting, and oversight to keep every project on track.',
+    title: 'Fire Alarm Systems',
+    body: 'Fire alarm service and systems backed by 24/7 monitoring, so a problem never goes unnoticed and help is always on the way.',
   },
   {
-    title: 'building construction',
-    body: 'From modern homes to apartment complexes, we bring residential visions to life with precision.',
+    title: 'One Vendor Solution',
+    body: 'One coordinated team responsible for every life safety system in your building — no gaps, no juggling vendors, no surprises.',
   },
 ];
 
 const services = [
   {
     number: '01',
-    title: 'Residential Construction',
-    body: 'From modern homes to apartment complexes, we bring residential visions to life with precision and quality craftsmanship.',
-    image: '/images/home/h1-s1.webp',
+    title: 'Inspections & Compliance',
+    body: 'By code, fire systems must be tested annually. We thoroughly evaluate every component and deliver the reports jurisdictions require — keeping you compliant and ahead of issues.',
+    image: '/images/red-rocks-fire-protection-compliance.jpg',
     imageFirst: false,
   },
   {
     number: '02',
-    title: 'Commercial Construction',
-    body: 'We build functional, aesthetic spaces for offices, retail, and business environments — designed to inspire productivity and growth.',
-    image: '/images/home/h1-s2.webp',
+    title: 'Fire Sprinkler Service & Systems',
+    body: 'From wet and dry systems to fire pumps, standpipes, and retrofits, our licensed team keeps the systems that protect your property reliable and ready.',
+    image: '/images/reed-rocks-fire-protection-fire-sprinkler-service-systems.jpg',
     imageFirst: true,
+    light: true,
   },
   {
     number: '03',
-    title: 'Industrial Construction',
-    body: 'High-performance facilities built to meet the unique needs of manufacturing, logistics, and energy sectors.',
-    image: '/images/home/h1-s3.webp',
+    title: 'Fire Alarm & 24/7 Monitoring',
+    body: 'We install and service fire alarm systems backed by around-the-clock monitoring of alarms, security systems, elevators, and areas of refuge.',
+    image: '/images/red-rocks-fire-alarm-safety.jpg',
     imageFirst: false,
   },
 ];
 
-const clients = [1, 2, 3, 4, 5, 6].map((n) => `/images/home/clients-${n}.webp`);
 
 const projects = [
-  { title: 'LUXURY GARDEN ESTATE', cats: ['building', 'residential'], image: '/images/home/pf-0-1160x820.webp' },
-  { title: 'URBAN OFFICE COMPLEX', cats: ['architecture', 'commercial'], image: '/images/home/pf-1-1160x820.webp' },
-  { title: 'THE CORE CENTER', cats: ['building', 'design'], image: '/images/home/pf-2-1160x820.webp' },
-  { title: 'WORKSPACE REDEFINED', cats: ['architecture', 'residential'], image: '/images/home/pf-3-1160x820.webp' },
-  { title: 'URBAN FAMILY HOME', cats: ['commercial', 'design'], image: '/images/home/pf-4-1160x820.webp' },
+  { title: 'MULTI-FAMILY COMMUNITIES', cats: ['inspections', 'monitoring'], image: '/images/red-rocks-fire-protectionmulti-family-communities.jpg' },
+  { title: 'COMMERCIAL FACILITIES', cats: ['sprinklers', 'alarms'], image: '/images/red-rocks-fire-protection-commercial-facilities.jpg' },
+  { title: 'HEALTHCARE & ASSISTED LIVING', cats: ['compliance', 'monitoring'], image: '/images/red-rocks-fire-protection-healthcare-assited-living.jpg' },
+  { title: 'RETAIL & SHOPPING CENTERS', cats: ['inspections', 'backflow'], image: '/images/home/pf-3-1160x820.webp' },
+  { title: 'HOTELS & HOSPITALITY', cats: ['alarms', 'suppression'], image: '/images/home/pf-4-1160x820.webp' },
 ];
 
-const testimonialQuote = '“From branding to website development, this team exceeded our expectations. Their creativity and technical expertise brought our vision to life seamlessly.”';
 const testimonials = [
-  { name: 'Christian Grant', position: 'Company client' },
-  { name: 'Matey Grant', position: 'Company client' },
-  { name: 'Marry Parton', position: 'Company client' },
-  { name: 'Luis Vireon', position: 'Company client' },
+  {
+    name: 'Brandon Cox',
+    position: 'Director of Maintenance, Bell Partners, Inc.',
+    quote: '“Consistently, they have proven to be honest, reliable, and professional in every aspect of their work. I trust them to do the right thing, not just the easy thing, and that level of integrity is hard to find.”',
+  },
+  {
+    name: 'Melissa Malley',
+    position: 'Business Manager, Greystar Residential',
+    quote: '“Red Rocks Fire Protection is my preferred and trusted vendor. Their employees are always professional, responsive in a timely manner, and complete all work with 100% satisfaction.”',
+  },
+  {
+    name: 'Jorge Rene Lopez',
+    position: 'Maintenance Supervisor',
+    quote: '“I have had the pleasure of working with your team for years, and you have always offered the highest level of professionalism. I continue to be satisfied by your services and refer you to others in the industry.”',
+  },
+  {
+    name: 'Alex Martinez',
+    position: 'Senior Construction Manager, Greystar',
+    quote: '“Their team takes ownership of their work, communicates clearly, and follows through on commitments. They always act with integrity, ensuring the job is done right the first time.”',
+  },
 ];
 ---
 
 <BaseLayout
-  title="Red Rocks Fire Protection"
-  description="Red Rocks Fire Protection — from concept to completion, we build it right."
+  title="Red Rocks Fire Protection Services | One Vendor Life Safety Solution | Colorado"
+  description="Colorado's family-owned life safety partner since 2010. One vendor for fire inspections, sprinklers, alarms, monitoring, and compliance across the Denver Front Range."
 >
   <div class="av-page">
 
@@ -109,14 +124,14 @@ const testimonials = [
       <div class="hero__spacer-top" aria-hidden="true"></div>
 
       <div class="hero__eyebrow-row">
-        <h3 class="hero__eyebrow" data-fade-up><span>From Concept to Completion — We Build It Right</span></h3>
+        <h3 class="hero__eyebrow" data-fade-up><span>Your One Vendor Life Safety Solution</span></h3>
       </div>
 
       <div class="hero__spacer-mid" aria-hidden="true"></div>
 
       <div class="hero__main-row">
         <h1 class="hero__title" data-fade-up>
-          <span>We Build </span><span>the future</span>
+          <span>Raising the </span><span>Standard in Fire Safety</span>
         </h1>
 
         <div class="hero__counter-col">
@@ -124,9 +139,9 @@ const testimonials = [
           <div class="hero__counter-box" data-fade-up>
             <div class="hero__counter">
               <div class="hero__counter-value">
-                <span data-counter data-counter-target="15">15</span><span class="hero__counter-suffix">+</span>
+                <span data-counter data-counter-target="200">200</span><span class="hero__counter-suffix">+</span>
               </div>
-              <h4 class="hero__counter-title">leading years in construction</h4>
+              <h4 class="hero__counter-title">years of combined experience</h4>
             </div>
             <div class="hero__counter-spacer" aria-hidden="true"></div>
             <a href="/about" class="av-wgl-btn hero__cta">
@@ -149,11 +164,11 @@ const testimonials = [
     <section class="statement">
       <div class="statement__subtitle av-dblh__subtitle">
         <span class="divider-icon" set:html={diamondIcon} />
-        <span>Building the Future</span>
+        <span>Your Partner in Life Safety</span>
       </div>
 
       <h2 class="statement__text" data-word-appear>
-        {statementWords.map((w) => <span class="statement__word">{w}</span>)}
+        {statementWords.map((w) => <span class="statement__word">{w}{' '}</span>)}
       </h2>
 
       <a href="/about" class="av-wgl-btn av-wgl-btn--outline statement__cta">
@@ -168,16 +183,13 @@ const testimonials = [
          3.–6. wrapper with h1-2.webp parallax layer at its bottom
          ════════════════════════════════════════════════════════ -->
     <div class="midwrap">
-      <div class="midwrap__bg" aria-hidden="true">
-        <img src="/images/home/h1-2.webp" alt="" loading="lazy" />
-      </div>
 
       <!-- 3. MARQUEE — outlined red stroke -->
       <div class="marquee-spacer-top" aria-hidden="true"></div>
       <div class="av-loop marquee" aria-hidden="true">
         {[0, 1, 2].map(() => (
           <div class="av-loop__track">
-            <h3 class="marquee__text">Your Vision, Our Build.&nbsp; Your Vision, Our Build.</h3>
+            <h3 class="marquee__text">One Vendor. Total Life Safety Confidence.&nbsp; One Vendor. Total Life Safety Confidence.</h3>
           </div>
         ))}
       </div>
@@ -190,9 +202,9 @@ const testimonials = [
             <div class="solutions__head-left" data-fade-up>
               <div class="av-dblh__subtitle">
                 <span class="divider-icon" set:html={diamondIcon} />
-                <span>From Design to Delivery</span>
+                <span>One Vendor, Total Coverage</span>
               </div>
-              <h3 class="av-dblh__title solutions__title">Comprehensive Solutions for Every Project</h3>
+              <h3 class="av-dblh__title solutions__title">Comprehensive Life Safety, One Trusted Partner</h3>
             </div>
             <div class="solutions__head-right" data-fade-up>
               <a href="/services" class="av-wgl-btn av-wgl-btn--ghost-light">
@@ -230,15 +242,15 @@ const testimonials = [
             <span class="divider-icon svc__heart" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" fill="currentColor"><path d="M116.65 219.35a15.68 15.68 0 0 0 22.65 0l96.75-99.83c28.15-29 26.5-77.1-4.91-103.88C203.75-7.7 163-3.5 137.86 22.44L128 32.58l-9.85-10.14C93.05-3.5 52.25-7.7 24.86 15.64c-31.41 26.78-33 74.85-5 103.88zm143.92 100.49h-48l-7.08-14.24a27.39 27.39 0 0 0-25.66-17.78h-71.71a27.39 27.39 0 0 0-25.66 17.78l-7 14.24h-48A27.45 27.45 0 0 0 0 347.3v137.25A27.44 27.44 0 0 0 27.43 512h233.14A27.45 27.45 0 0 0 288 484.55V347.3a27.45 27.45 0 0 0-27.43-27.46zM144 468a52 52 0 1 1 52-52 52 52 0 0 1-52 52zm355.4-115.9h-60.58l22.36-50.75c2.1-6.65-3.93-13.21-12.18-13.21h-75.59c-6.3 0-11.66 3.9-12.5 9.1l-16.8 106.93c-1 6.3 4.88 11.89 12.5 11.89h62.31l-24.2 83c-1.89 6.65 4.2 12.9 12.23 12.9a13.26 13.26 0 0 0 10.92-5.25l92.4-138.91c4.88-6.91-1.16-15.7-10.87-15.7zM478.08.33L329.51 23.17C314.87 25.42 304 38.92 304 54.83V161.6a83.25 83.25 0 0 0-16-1.7c-35.35 0-64 21.48-64 48s28.65 48 64 48c35.2 0 63.73-21.32 64-47.66V99.66l112-17.22v47.18a83.25 83.25 0 0 0-16-1.7c-35.35 0-64 21.48-64 48s28.65 48 64 48c35.2 0 63.73-21.32 64-47.66V32c0-19.48-16-34.42-33.92-31.67z"></path></svg>
             </span>
-            <span>End-to-End Construction Excellence</span>
+            <span>End-to-End Life Safety Service</span>
           </div>
-          <h3 class="av-dblh__title svc__title">Building Services You Can Rely On</h3>
+          <h3 class="av-dblh__title svc__title">Life Safety Services You Can Rely On</h3>
         </div>
 
         <div class="svc__stack">
           {services.map((s) => (
             <div class="svc__panel-wrap" data-svc-panel>
-              <div class:list={['svc__panel', s.imageFirst && 'svc__panel--image-first']}>
+              <div class:list={['svc__panel', s.imageFirst && 'svc__panel--image-first', s.light && 'svc__panel--light']}>
                 <div class="svc__content">
                   <div class="svc__dblh">
                     <div class="svc__number">{s.number}</div>
@@ -260,22 +272,6 @@ const testimonials = [
           ))}
         </div>
 
-        <!-- 6. CLIENTS — masked logos over the parallax image -->
-        <div class="clients__spacer-top" aria-hidden="true"></div>
-        <div class="clients">
-          <div class="swiper clients__swiper">
-            <div class="swiper-wrapper">
-              {clients.map((src) => (
-                <div class="swiper-slide clients__slide">
-                  <span class="clients__logo" style={`--logo-url: url('${src}')`}>
-                    <img src={src} alt="Client logo" loading="lazy" />
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div class="clients__spacer-bottom" aria-hidden="true"></div>
       </section>
     </div>
 
@@ -290,17 +286,17 @@ const testimonials = [
         <span class="av-delimiter av-delimiter--left" aria-hidden="true"></span>
 
         <div class="band__redbox">
-          <h2 class="band__heading">Precision.<br />Quality.<br />Innovation.</h2>
+          <h2 class="band__heading">Safety.<br />Advocacy.<br />Trust.</h2>
         </div>
 
         <div class="band__logo">
           <img src="/images/home/about_logo.webp" alt="Red Rocks Fire Protection emblem" loading="lazy" />
         </div>
 
-        <p class="band__text">We driven by a simple mission — to create spaces that inspire progress.</p>
+        <p class="band__text">We exist to protect lives and property — proactively, accountably, and through one trusted partner responsible for it all.</p>
 
         <a href="/about" class="av-wgl-btn band__cta">
-          <span class="av-wgl-btn__text">watch the presentation</span>
+          <span class="av-wgl-btn__text">read our story</span>
           <span class="av-wgl-btn__icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Z"></path></svg>
           </span>
@@ -323,12 +319,12 @@ const testimonials = [
           <div class="pf__head-left">
             <div class="av-dblh__subtitle">
               <span class="divider-icon" set:html={diamondIcon} />
-              <span>Proof in Every Project</span>
+              <span>Who We Serve</span>
             </div>
-            <h3 class="av-dblh__title">Case Studies of Quality and Innovation</h3>
+            <h3 class="av-dblh__title">Protecting Communities and Businesses Across Colorado</h3>
           </div>
           <a href="/services" class="av-wgl-btn av-wgl-btn--outline pf__all">
-            <span class="av-wgl-btn__text">all projects</span>
+            <span class="av-wgl-btn__text">all services</span>
             <span class="av-wgl-btn__icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
             </span>
@@ -385,7 +381,7 @@ const testimonials = [
 
       <div class="tm__row">
         <div class="tm__image">
-          <img src="/images/home/h1-4.webp" alt="Construction site" loading="lazy" />
+          <img src="/images/home/h1-4.webp" alt="Red Rocks Fire Protection technician on site" loading="lazy" />
         </div>
 
         <div class="tm__col">
@@ -395,7 +391,7 @@ const testimonials = [
                 {testimonials.map((t) => (
                   <div class="swiper-slide">
                     <div class="tm-item">
-                      <div class="tm-item__quote">{testimonialQuote}</div>
+                      <div class="tm-item__quote">{t.quote}</div>
                       <div class="tm-item__author">
                         <h3 class="tm-item__name">{t.name}</h3>
                         <span class="tm-item__position">{t.position}</span>
@@ -428,7 +424,7 @@ const testimonials = [
                 loading="lazy"
               />
             ))}
-            <h2 class="tm__customers-label">200+&nbsp;happy customers</h2>
+            <h2 class="tm__customers-label">trusted across Colorado</h2>
           </div>
         </div>
       </div>
@@ -444,10 +440,21 @@ const testimonials = [
   .hero {
     position: relative;
     overflow: hidden;
-    background-image: url('/images/home/h1-1.webp');
+    background-image: url('/images/red-rocks-fire-protection-home-hero.jpg');
     background-position: center center;
     background-size: cover;
   }
+  /* Subtle dark overlay to lift the white text off the image */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero__eyebrow-row,
+  .hero__main-row { position: relative; z-index: 2; }
   .hero__spacer-top { height: 200px; }
   .hero__spacer-mid { height: 333px; }
   .hero__spacer-bottom { height: 69px; }
@@ -559,7 +566,6 @@ const testimonials = [
     line-height: 1.156em;
   }
   .statement__word { opacity: 0.1; transition: opacity 0.2s linear; }
-  .statement__word + .statement__word { margin-left: 0.22em; }
   .statement__cta { margin-top: 35px; }
 
   .av-wgl-btn--outline {
@@ -586,21 +592,6 @@ const testimonials = [
     position: relative;
     z-index: 0;
     overflow: hidden;
-  }
-  .midwrap__bg {
-    position: absolute;
-    top: 80%;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    z-index: -1;
-  }
-  .midwrap__bg img {
-    width: 100%;
-    height: auto;
-    display: block;
   }
 
   .marquee-spacer-top { height: 143px; }
@@ -723,6 +714,7 @@ const testimonials = [
     box-sizing: border-box;
   }
   .svc__image { width: 51.3%; }
+  .svc__panel--light { background-color: #ffffff; }
   .svc__panel--image-first { flex-direction: row-reverse; }
   .svc__panel--image-first .svc__content { width: 48.7%; }
   .svc__panel--image-first .svc__image { width: 51.3%; }
@@ -763,47 +755,23 @@ const testimonials = [
   }
 
   /* ══════════════════════════════════════════════════════════
-   * 6. CLIENTS
-   * ══════════════════════════════════════════════════════════ */
-  .clients__spacer-top { height: 215px; }
-  .clients__spacer-bottom { height: 132px; }
-  .clients { overflow: hidden; }
-  .clients :global(.swiper-wrapper) { transition-timing-function: linear; }
-  .clients__slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .clients__logo {
-    display: inline-block;
-    background-color: #0e2f3e;
-    -webkit-mask-image: var(--logo-url);
-    mask-image: var(--logo-url);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    transition: 0.4s;
-  }
-  .clients__logo:hover { background-color: #fb651b; }
-  .clients__logo img {
-    display: block;
-    visibility: hidden;
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* ══════════════════════════════════════════════════════════
    * 7. PRESENTATION BAND
    * ══════════════════════════════════════════════════════════ */
   .band {
     position: relative;
     overflow: hidden;
-    background-image: url('/images/home/h1-3.webp');
+    background-image: url('/images/red-rocks-fire-protection-safety-advocacy-trust.jpg');
     background-position: center center;
     background-size: cover;
+  }
+  /* Subtle dark overlay to lift the white text off the bright image */
+  .band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
   }
   .band__spacer-top { height: 99px; }
   .band__spacer-bottom { height: 100px; }
@@ -1118,9 +1086,6 @@ const testimonials = [
     .svc__panel-title { font-size: 42px; }
     .svc__panel-wrap + .svc__panel-wrap { margin-top: 60px; }
 
-    .clients__spacer-top { height: 70px; }
-    .clients__spacer-bottom { height: 70px; }
-
     .band__spacer-top { height: 30px; }
     .band__row { flex-wrap: wrap; padding: 20px 30px; }
     .band__redbox { width: auto; }
@@ -1161,9 +1126,6 @@ const testimonials = [
     .svc__content { width: 100%; padding: 0 15px 30px; }
     .svc__image { width: 100%; }
     .svc__panel-title { font-size: 28px; }
-
-    .clients__spacer-top { height: 50px; }
-    .clients__spacer-bottom { height: 50px; }
 
     .band__spacer-top { height: 50px; }
     .band__row { padding: 0 15px; gap: 20px; }
@@ -1268,11 +1230,16 @@ const testimonials = [
     panels.forEach((panel, i) => {
       const next = panels[i + 1];
       if (!next) return;
+      const inner = panel.querySelector('.svc__panel');
+      // The white (--light) panel must never darken to grey — blur only, no brightness/contrast shift.
+      const isLight = inner?.classList.contains('svc__panel--light');
       gsap.fromTo(
-        panel.querySelector('.svc__panel'),
+        inner,
         { filter: 'brightness(100%) contrast(100%) blur(0px)' },
         {
-          filter: 'brightness(88%) contrast(109%) blur(5.2px)',
+          filter: isLight
+            ? 'brightness(100%) contrast(100%) blur(5.2px)'
+            : 'brightness(88%) contrast(109%) blur(5.2px)',
           ease: 'none',
           scrollTrigger: {
             trigger: next,
@@ -1306,24 +1273,6 @@ const testimonials = [
 
   function initHomeSwipers() {
     if (typeof Swiper === 'undefined') return;
-
-    // Clients — 6 logos, continuous slow loop
-    const clientsEl = document.querySelector('.clients__swiper') as any;
-    if (clientsEl && !clientsEl.swiper) {
-      new Swiper(clientsEl, {
-        slidesPerView: 2,
-        spaceBetween: 30,
-        loop: true,
-        speed: 5000,
-        allowTouchMove: false,
-        autoplay: { delay: 0, disableOnInteraction: false },
-        breakpoints: {
-          576: { slidesPerView: 3 },
-          768: { slidesPerView: 4 },
-          1025: { slidesPerView: 6 },
-        },
-      });
-    }
 
     // Portfolio — 3 columns, 40px gap, square pagination
     const pfEl = document.querySelector('.pf__swiper') as any;

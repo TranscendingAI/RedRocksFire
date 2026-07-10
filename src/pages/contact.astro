@@ -1,10 +1,571 @@
 ---
+/**
+ * Contact — RRFPS contact page for /contact.
+ *
+ * Kept intentionally small (per Zack): three parts only —
+ *   0. Page-title banner  (identical pattern to inspections.astro §0 /
+ *      industry.astro §0 — full-bleed hero, 96px title, breadcrumbs).
+ *   1. Contact section     — two columns: contact information + "what to
+ *      expect" on the left, a lead form on the right. Uses the shared
+ *      diamond eyebrow (av-dblh__subtitle) and Avelon button so it reads
+ *      as part of the same system as the rest of the site.
+ *
+ * Copy/data source of truth: src/data/site.ts → `contact`, `contactPage`,
+ * `company`.
+ *
+ * Form delivery: this is a static build with no server. The form is
+ * progressively enhanced — on submit it composes a pre-filled email to
+ * info@rrfps.com via the visitor's mail client (works with zero backend).
+ * To route submissions to a service instead (Formspree, Netlify Forms,
+ * etc.), set a real `action`/endpoint on the <form> and remove the
+ * data-mailto-form hook.
+ */
+
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { contact, contactPage, company } from '../data/site';
+
+// Shared arrow + diamond icons — same path data as the other pages so the
+// visual rhythm matches 1:1.
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
 ---
 
-<BaseLayout title="Contact Us | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">Contact Us</h1>
-    <p class="text-lg text-gray-700">Placeholder contact page — form coming soon.</p>
-  </section>
+<BaseLayout
+  title={contactPage.seo.title}
+  description={contactPage.seo.description}
+>
+  <div class="av-page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         0. PAGE-TITLE BANNER (inspections.astro §0, replicated)
+         ══════════════════════════════════════════════════════════ -->
+    <div
+      class="ptbanner"
+      style={`background-image: url('${bannerImage}');`}
+    >
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Contact Us</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Contact</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         1. CONTACT — info (left) + lead form (right)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="cf">
+      <div class="cf__inner rr-container">
+        <div class="cf__grid">
+
+          <!-- ---- LEFT: contact information ---- -->
+          <div class="cf__info">
+            <div class="av-dblh__subtitle">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>Get In Touch</span>
+            </div>
+            <h2 class="cf__heading">Let&rsquo;s Build a Safer Property Together.</h2>
+            <p class="cf__lead">{contactPage.hero.body}</p>
+
+            <ul class="cf__details">
+              <li class="cf__detail">
+                <span class="cf__detail-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor"><path d="M215.7 499.2C267 435 384 279.4 384 192 384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2 12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+                </span>
+                <span class="cf__detail-text">
+                  <span class="cf__detail-label">Office</span>
+                  <a href={contact.mapsUrl} target="_blank" rel="noopener noreferrer">
+                    {contact.address.line1}<br />
+                    {contact.address.city}, {contact.address.state} {contact.address.zip}
+                  </a>
+                </span>
+              </li>
+
+              <li class="cf__detail">
+                <span class="cf__detail-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
+                </span>
+                <span class="cf__detail-text">
+                  <span class="cf__detail-label">Phone</span>
+                  <a href={contact.phoneHref}>{contact.phone}</a>
+                </span>
+              </li>
+
+              <li class="cf__detail">
+                <span class="cf__detail-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+                </span>
+                <span class="cf__detail-text">
+                  <span class="cf__detail-label">Email</span>
+                  <a href={contact.emailHref}>{contact.email}</a>
+                </span>
+              </li>
+
+              <li class="cf__detail">
+                <span class="cf__detail-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
+                </span>
+                <span class="cf__detail-text">
+                  <span class="cf__detail-label">Office Hours</span>
+                  <span class="cf__detail-plain">{contact.officeHours}<br />{contact.officeClosed}</span>
+                </span>
+              </li>
+            </ul>
+
+            <div class="cf__emergency">
+              <span class="cf__emergency-tag">24/7</span>
+              <p class="cf__emergency-text">
+                <strong>Field service runs around the clock.</strong>
+                {contact.serviceAvailability} — {contact.emergencyResponseMetro}.
+              </p>
+            </div>
+
+            <ul class="cf__expect">
+              {contactPage.whatToExpect.map((item) => (
+                <li class="cf__expect-item">
+                  <span class="cf__expect-mark" aria-hidden="true">▸</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- ---- RIGHT: lead form ---- -->
+          <div class="cf__formwrap">
+            <form class="cf__form" data-mailto-form novalidate>
+              <p class="cf__form-title">Send us a message</p>
+
+              <div class="cf__field">
+                <label for="cf-name">Name <span aria-hidden="true">*</span></label>
+                <input type="text" id="cf-name" name="name" autocomplete="name" required />
+              </div>
+
+              <div class="cf__row">
+                <div class="cf__field">
+                  <label for="cf-email">Email <span aria-hidden="true">*</span></label>
+                  <input type="email" id="cf-email" name="email" autocomplete="email" required />
+                </div>
+                <div class="cf__field">
+                  <label for="cf-phone">Phone</label>
+                  <input type="tel" id="cf-phone" name="phone" autocomplete="tel" />
+                </div>
+              </div>
+
+              <div class="cf__field">
+                <label for="cf-company">Company / Property</label>
+                <input type="text" id="cf-company" name="company" autocomplete="organization" />
+              </div>
+
+              <div class="cf__field">
+                <label for="cf-message">How can we help? <span aria-hidden="true">*</span></label>
+                <textarea id="cf-message" name="message" rows="5" required></textarea>
+              </div>
+
+              {/* Honeypot — hidden from humans, catches naive bots. */}
+              <div class="cf__hp" aria-hidden="true">
+                <label for="cf-website">Website</label>
+                <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <button type="submit" class="av-wgl-btn cf__submit">
+                <span class="av-wgl-btn__text">send message</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </button>
+
+              <p class="cf__form-note">
+                Prefer to talk now? Call <a href={contact.phoneHref}>{contact.phone}</a>.
+              </p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
 </BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * 0. Page-title banner — duplicated from inspections.astro so the
+   * visual language matches 1:1 without coupling to its scope.
+   * ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 450px;
+    margin-bottom: 0;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * 1. Contact section
+   * ══════════════════════════════════════════════════════════ */
+  .cf {
+    background: #ffffff;
+    padding-block: 96px;
+  }
+  @media (min-width: 768px) { .cf { padding-block: 128px; } }
+
+  .cf__grid {
+    display: grid;
+    gap: 48px;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .cf__grid { grid-template-columns: 5fr 6fr; gap: 80px; }
+  }
+
+  /* ---- Left column: info ---- */
+  .cf__info .av-dblh__subtitle {
+    margin-bottom: 20px;
+    display: flex;
+  }
+  .cf__heading {
+    margin: 0 0 20px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+  .cf__lead {
+    margin: 0 0 40px;
+    max-width: 46ch;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #626262;
+  }
+
+  .cf__details {
+    list-style: none;
+    margin: 0 0 36px;
+    padding: 0;
+    display: grid;
+    gap: 24px;
+  }
+  .cf__detail {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: start;
+    gap: 18px;
+  }
+  .cf__detail-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--av-primary);
+    color: #ffffff;
+  }
+  .cf__detail-icon svg { width: 18px; height: 18px; }
+  .cf__detail-text { display: flex; flex-direction: column; gap: 3px; }
+  .cf__detail-label {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9a9a9a;
+  }
+  .cf__detail-text a,
+  .cf__detail-plain {
+    font-size: 17px;
+    line-height: 1.5;
+    color: #0a0a0a;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .cf__detail-text a:hover { color: var(--av-primary); }
+
+  .cf__emergency {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+    margin-bottom: 36px;
+    background: #0d0d0b;
+  }
+  .cf__emergency-tag {
+    flex-shrink: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    background: var(--av-primary);
+    padding: 8px 12px;
+    line-height: 1;
+  }
+  .cf__emergency-text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .cf__emergency-text strong {
+    display: block;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .cf__expect {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .cf__expect-item {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: #3a3a3a;
+  }
+  .cf__expect-mark { color: var(--av-primary); font-size: 15px; line-height: 1.4; }
+
+  /* ---- Right column: form ---- */
+  .cf__formwrap {
+    background: #f5f5f5;
+    padding: 40px;
+  }
+  @media (max-width: 767px) { .cf__formwrap { padding: 28px 22px; } }
+
+  .cf__form-title {
+    margin: 0 0 26px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+  .cf__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  @media (min-width: 560px) {
+    .cf__row { grid-template-columns: 1fr 1fr; gap: 18px; }
+  }
+  .cf__field { margin-bottom: 18px; display: flex; flex-direction: column; }
+  .cf__field label {
+    margin-bottom: 8px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #4a4a4a;
+  }
+  .cf__field label span { color: var(--av-primary); }
+  .cf__field input,
+  .cf__field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #0a0a0a;
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 0;
+    transition: border-color 0.3s;
+  }
+  .cf__field input:focus,
+  .cf__field textarea:focus {
+    outline: none;
+    border-color: var(--av-primary);
+  }
+  .cf__field textarea { resize: vertical; min-height: 120px; }
+
+  /* Honeypot — visually removed, still in the DOM for bots. */
+  .cf__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .cf__submit {
+    margin-top: 8px;
+    --av-wgl-btn-bg: var(--av-primary);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: var(--av-primary);
+    --av-wgl-btn-bg-hover: #0a0a0a;
+    --av-wgl-btn-color-hover: #ffffff;
+    --av-wgl-btn-border-hover: #0a0a0a;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .cf__form-note {
+    margin: 22px 0 0;
+    font-size: 14px;
+    color: #626262;
+  }
+  .cf__form-note a { color: var(--av-primary); text-decoration: none; font-weight: 600; }
+  .cf__form-note a:hover { text-decoration: underline; }
+
+  /* Success / error message injected by the enhancement script. */
+  .cf__status {
+    margin: 18px 0 0;
+    padding: 14px 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    background: #eef7ee;
+    border: 1px solid #cfe6cf;
+    color: #1f6b2e;
+  }
+  .cf__status[data-kind="error"] {
+    background: #fdeeee;
+    border-color: #f2cccc;
+    color: #a11b1b;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive — matching inspections.astro breakpoints
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+    .cf { padding-block: 90px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .cf { padding-block: 64px; }
+    .cf__heading { font-size: 30px; }
+  }
+</style>
+
+<script>
+  /**
+   * Progressive enhancement for the contact form.
+   *
+   * This is a static site with no server, so on submit we compose a
+   * pre-filled email to info@rrfps.com via the visitor's mail client.
+   * If a real endpoint is wired onto the <form> later, remove the
+   * `data-mailto-form` attribute and this handler steps aside.
+   */
+  function initContactForm() {
+    const form = document.querySelector<HTMLFormElement>('form[data-mailto-form]');
+    if (!form || form.dataset.bound === 'true') return;
+    form.dataset.bound = 'true';
+
+    const showStatus = (message: string, kind: 'ok' | 'error') => {
+      let el = form.querySelector<HTMLElement>('.cf__status');
+      if (!el) {
+        el = document.createElement('p');
+        el.className = 'cf__status';
+        el.setAttribute('role', 'status');
+        form.appendChild(el);
+      }
+      el.dataset.kind = kind;
+      el.textContent = message;
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Honeypot: silently drop bot submissions.
+      const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
+      if (honeypot && honeypot.value.trim() !== '') return;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const phone = String(data.get('phone') || '').trim();
+      const companyName = String(data.get('company') || '').trim();
+      const message = String(data.get('message') || '').trim();
+
+      const bodyLines = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        phone ? `Phone: ${phone}` : '',
+        companyName ? `Company / Property: ${companyName}` : '',
+        '',
+        message,
+      ].filter(Boolean);
+
+      const subject = `Website inquiry from ${name}`;
+      const mailto =
+        `mailto:info@rrfps.com?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+      window.location.href = mailto;
+      showStatus(
+        'Opening your email app to send this message. If nothing happens, email us directly at info@rrfps.com.',
+        'ok'
+      );
+    });
+  }
+
+  document.addEventListener('astro:page-load', initContactForm);
+  if (document.readyState !== 'loading') initContactForm();
+</script>
