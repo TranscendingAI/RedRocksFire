@@ -501,9 +501,18 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   }
   .city-ahj__codes li:first-child { border-top: none; }
 
-  /* ══════════════════════════════════════════════════════════
-   * §3 NEIGHBORHOODS — 3-col grid on light bg
-   * ══════════════════════════════════════════════════════════ */
+  /* Shared accordion icon rotation — defines the open/closed affordance.
+     Closed: rotate(90deg) → arrow points up (►). Open: rotate(-90deg) → arrow points down (▼). */
+  .acc__icon {
+    display: inline-flex;
+    align-self: flex-start;
+    margin: 8px 18px -15px 2px;
+    color: #d41226;
+    transform: rotate(90deg);
+    transition: transform 0.4s;
+  }
+  .acc__panel.is-active .acc__icon { transform: rotate(-90deg); }
+  .acc__icon svg { width: 18px; height: 16px; }
   .city-neigh {
     background: var(--rr-bg-light, #F4F2F1);
     padding-block: 110px;
