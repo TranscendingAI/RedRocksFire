@@ -1,10 +1,238 @@
 ---
+/**
+ * Service Areas — hub page at /service-areas/.
+ *
+ * Lists every published city in src/data/cities.ts with a short card.
+ * Add a new city to that array and it appears here automatically.
+ */
+
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { cities } from '../data/cities';
+
+const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.rrfps.com';
+const canonicalAbsolute = `${siteOrigin}/service-areas/`;
+
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteOrigin}/` },
+    { '@type': 'ListItem', position: 2, name: 'Service Areas', item: canonicalAbsolute },
+  ],
+});
 ---
 
-<BaseLayout title="Service Areas | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">Service Areas</h1>
-    <p class="text-lg text-gray-700">Placeholder service areas page — content coming soon.</p>
-  </section>
+<BaseLayout
+  title="Service Areas | Red Rocks Fire Protection"
+  description="Fire protection services across the Colorado Front Range. RRFPS serves Centennial, Denver, Englewood, Littleton, Aurora, Lakewood, Boulder, Fort Collins, Colorado Springs, and surrounding cities."
+  canonical={canonicalAbsolute}
+  type="website"
+  schema={breadcrumbSchema}
+>
+  <div class="av-page service-areas-index">
+    <div class="sai-banner" style="background-image: url('/images/red-rocks-fire-protection-home-hero.jpg');">
+      <div class="sai-banner__inner">
+        <h1 class="sai-banner__title">Service Areas.</h1>
+        <nav class="sai-banner__breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="sai-banner__divider">-</span>
+          <span class="sai-banner__current">Service Areas</span>
+        </nav>
+      </div>
+    </div>
+
+    <section class="sai-intro">
+      <div class="sai-intro__inner">
+        <p class="sai-intro__eyebrow">Colorado Front Range</p>
+        <h2 class="sai-intro__title">One vendor for life-safety across the Denver metro.</h2>
+        <p class="sai-intro__body">
+          Red Rocks Fire Protection is headquartered in Centennial and serves properties across the Colorado Front Range — from Denver and Aurora down to Colorado Springs, and up to Fort Collins. Every city we work in falls under a specific Authority Having Jurisdiction (AHJ), and our inspection reports are formatted to each AHJ's preferred layout so corrections are approved without rework.
+        </p>
+      </div>
+    </section>
+
+    <section class="sai-grid">
+      <div class="sai-grid__inner">
+        <div class="sai-grid__list">
+          {cities.map((c) => (
+            <a class="sai-card" href={`/service-areas/${c.slug}/`}>
+              <span class="sai-card__county">{c.county}</span>
+              <h3 class="sai-card__city">{c.city}, {c.state}</h3>
+              <p class="sai-card__ahj">AHJ: {c.ahj.name}</p>
+              <span class="sai-card__cta">View city page →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .sai-banner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 380px;
+    padding-top: 154px;
+    padding-bottom: 24px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    isolation: isolate;
+  }
+  .sai-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: -1;
+  }
+  .sai-banner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .sai-banner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .sai-banner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .sai-banner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .sai-banner__breadcrumbs a:hover { color: #ffffff99; }
+  .sai-banner__divider { margin: 0 10px; }
+  .sai-banner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  .sai-intro {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 90px;
+  }
+  @media (min-width: 768px) { .sai-intro { padding-block: 120px; } }
+  .sai-intro__inner {
+    width: 100%;
+    max-width: 1080px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .sai-intro__inner { padding-inline: 2.5rem; } }
+  .sai-intro__eyebrow {
+    margin: 0 0 14px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #d41226;
+  }
+  .sai-intro__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .sai-intro__body {
+    margin: 0;
+    max-width: 920px;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: rgba(0, 0, 0, 0.75);
+  }
+
+  .sai-grid {
+    background: #ffffff;
+    padding-block: 90px;
+  }
+  @media (min-width: 768px) { .sai-grid { padding-block: 120px; } }
+  .sai-grid__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .sai-grid__inner { padding-inline: 2.5rem; } }
+  .sai-grid__list {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px)  { .sai-grid__list { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .sai-grid__list { grid-template-columns: repeat(3, 1fr); } }
+  .sai-card {
+    display: block;
+    padding: 32px;
+    background: var(--rr-bg-light, #F4F2F1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+  }
+  .sai-card:hover {
+    background: #0a0a0a;
+    color: #ffffff;
+    border-color: #0a0a0a;
+  }
+  .sai-card:hover .sai-card__cta { color: #ffffff; }
+  .sai-card__county {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 4px 10px;
+    background: rgba(212, 18, 38, 0.08);
+    color: #d41226;
+    border-radius: 999px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .sai-card:hover .sai-card__county { background: rgba(212, 18, 38, 0.25); }
+  .sai-card__city {
+    margin: 0 0 10px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .sai-card__ahj {
+    margin: 0 0 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.65);
+  }
+  .sai-card:hover .sai-card__ahj { color: rgba(255, 255, 255, 0.75); }
+  .sai-card__cta {
+    display: inline-block;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: #0a0a0a;
+    text-transform: uppercase;
+  }
+</style>

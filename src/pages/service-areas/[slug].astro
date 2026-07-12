@@ -1,0 +1,839 @@
+---
+/**
+ * City service-area page — dynamic route.
+ *
+ *   /service-areas/<slug>/ → src/pages/service-areas/[slug].astro
+ *
+ * Driven by src/data/cities.ts. One template, many cities.
+ *
+ * Layout follows the multi-family-management-companies.astro pattern
+ * (industry.astro lineage):
+ *
+ *   §0 ptbanner — page title + breadcrumbs, full-bleed bg image
+ *   §1 hero SplitPanel — the city hook paragraph + photo
+ *   §2 AHJ band — dark bg, accordion of the city's AHJ + code facts
+ *   §3 neighborhoods — 3-column grid of named areas with notes
+ *   §4 services band — what we do in this city
+ *   §5 industries — chips / grid of industries served here
+ *   §6 common deficiencies — accordion (lighter styling)
+ *   §7 building stock + FAQ band
+ *   §8 closing DualCTA
+ *
+ * Schema: BreadcrumbList + LocalBusiness (anchored to company HQ) +
+ * FAQPage (the 8 city-specific questions).
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SplitPanel from '../../components/SplitPanel.astro';
+import DualCTA from '../../components/DualCTA.astro';
+import { cities, getCity } from '../../data/cities';
+import { company, contact } from '../../data/site';
+
+export function getStaticPaths() {
+  return cities.map((c) => ({ params: { slug: c.slug }, props: { city: c } }));
+}
+
+const { city } = Astro.props;
+
+const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.rrfps.com';
+const canonicalAbsolute = `${siteOrigin}${city.meta.canonical}`;
+const pageUrl = canonicalAbsolute;
+
+// Arrow + diamond icons reused from the multi-family page so visual rhythm matches.
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941 14.3396 0.939992Z"></path></svg>';
+
+// ─── SCHEMA ─────────────────────────────────────────────────────────────
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteOrigin}/` },
+    { '@type': 'ListItem', position: 2, name: 'Service Areas', item: `${siteOrigin}/service-areas/` },
+    { '@type': 'ListItem', position: 3, name: `${city.city}, ${city.state}`, item: canonicalAbsolute },
+  ],
+});
+
+const localBusinessSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FireProtectionService',
+  '@id': `${siteOrigin}/#org`,
+  name: company.legalName,
+  alternateName: company.shortName,
+  url: siteOrigin,
+  telephone: contact.phone,
+  email: contact.email,
+  priceRange: '$$',
+  description: `${company.tagline} ${company.serviceRegion}.`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.address.line1,
+    addressLocality: contact.address.city,
+    addressRegion: contact.address.state,
+    postalCode: contact.address.zip,
+    addressCountry: 'US',
+  },
+  areaServed: [
+    { '@type': 'City', name: city.city, containedInPlace: { '@type': 'State', name: 'Colorado' } },
+    { '@type': 'AdministrativeArea', name: city.county },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '16:00',
+    },
+  ],
+  parentOrganization: { '@id': `${siteOrigin}/#org` },
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: city.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+});
+
+const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, faqSchema].map((s) => JSON.parse(s)));
+---
+
+<BaseLayout
+  title={city.meta.title}
+  description={city.meta.description}
+  canonical={canonicalAbsolute}
+  type="website"
+  schema={combinedSchema}
+>
+  <div class="av-page city-page" data-city-slug={city.slug}>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §0 PAGE-TITLE BANNER
+         ══════════════════════════════════════════════════════════ -->
+    <div class="ptbanner" style={`background-image: url('${city.bannerImage}');`}>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">{city.bannerTitle}</h1>
+        <nav class="ptbanner__breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/service-areas">Service Areas</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">{city.city}, {city.state}</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §1 HERO — SplitPanel, the city hook paragraph
+         ══════════════════════════════════════════════════════════ -->
+    <SplitPanel
+      eyebrow={`${company.serviceRegion.split('—')[0].trim()} • ${city.county}`}
+      title={`Fire Protection in ${city.city}.`}
+      body={city.heroIntro}
+      ctaLabel="Schedule an Inspection"
+      ctaHref="/contact"
+      image={city.bannerImage}
+      imageAlt={`A Red Rocks Fire Protection technician on a job site in ${city.city}, ${city.state}`}
+      background="white"
+      revealTop={false}
+    />
+
+    <!-- ══════════════════════════════════════════════════════════
+         §2 AHJ BAND — dark bg, accordion of code-adoption facts
+         ══════════════════════════════════════════════════════════ -->
+    <section class="city-ahj">
+      <div class="city-ahj__bg" aria-hidden="true"></div>
+      <div class="city-ahj__overlay" aria-hidden="true"></div>
+
+      <div class="city-ahj__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Authority Having Jurisdiction</span>
+        </div>
+        <h2 class="city-ahj__title">Code enforcement in {city.city} is run by {city.ahj.name}.</h2>
+
+        <div class="city-ahj__layout">
+          <div class="city-ahj__left">
+            <p class="city-ahj__intro">{city.ahj.note}</p>
+            <dl class="city-ahj__facts">
+              <div class="city-ahj__fact">
+                <dt>AHJ</dt>
+                <dd>{city.ahj.name}</dd>
+              </div>
+              <div class="city-ahj__fact">
+                <dt>Non-Emergency</dt>
+                <dd><a href={`tel:${city.ahj.nonEmergencyPhone.replace(/[^0-9+]/g, '')}`}>{city.ahj.nonEmergencyPhone}</a></dd>
+              </div>
+              <div class="city-ahj__fact">
+                <dt>Website</dt>
+                <dd><a href={city.ahj.website} target="_blank" rel="noopener">{city.ahj.website.replace(/^https?:\/\//, '')}</a></dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="acc city-ahj__right">
+            <div class="acc__panel is-active" data-acc-panel>
+              <button type="button" class="acc__header" aria-expanded="true">
+                <span class="acc__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                </span>
+                <span class="acc__title">Adopted NFPA & Code Standards</span>
+              </button>
+              <div class="acc__content">
+                <ul class="city-ahj__codes">
+                  {city.ahj.adoptedNFPA.map((std) => <li>{std}</li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §3 NEIGHBORHOODS — 3-column grid of named areas
+         ══════════════════════════════════════════════════════════ -->
+    <section class="city-neigh">
+      <div class="city-neigh__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Where we work in {city.city}</span>
+        </div>
+        <h2 class="city-neigh__title">{city.city} neighborhoods and districts we serve.</h2>
+        <p class="city-neigh__lede">
+          We work across the full mix of property types in {city.city} — from established single-family neighborhoods off Arapahoe Road to Class-A office and flex-industrial space along the I-25 / E-470 corridor. Below are the named areas and corridors our technicians cover most often.
+        </p>
+
+        <div class="city-neigh__grid">
+          {city.neighborhoods.map((n) => (
+            <article class="city-neigh__card">
+              <span class={`city-neigh__tag city-neigh__tag--${n.type.toLowerCase().replace(/[^a-z]+/g, '-')}`}>{n.type}</span>
+              <h3 class="city-neigh__name">{n.name}</h3>
+              <p class="city-neigh__note">{n.note}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §4 SERVICES BAND — what we do in this city (grid)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="city-services">
+      <div class="city-services__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Services in {city.city}</span>
+        </div>
+        <h2 class="city-services__title">What we do for {city.city} properties.</h2>
+        <p class="city-services__lede">
+          Every service below is run by NICET- or CSA-certified technicians, with reports formatted to {city.ahj.name}'s preferred layout — so corrections are approved without rework.
+        </p>
+
+        <div class="city-services__grid">
+          {city.servicesOffered.map((s) => (
+            <article class="city-services__card">
+              <h3 class="city-services__name">{s.title}</h3>
+              <p class="city-services__body">{s.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §5 INDUSTRIES BAND — chips of industries served
+         ══════════════════════════════════════════════════════════ -->
+    <section class="city-industries">
+      <div class="city-industries__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Industries served in {city.city}</span>
+        </div>
+        <h2 class="city-industries__title">Property types we work with in {city.city}.</h2>
+        <ul class="city-industries__chips">
+          {city.industriesServed.map((i) => (
+            <li><a href={`/industries-we-serve`}>{i}</a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §6 COMMON DEFICIENCIES — accordion (light bg)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="city-def">
+      <div class="city-def__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Common findings in {city.city}</span>
+        </div>
+        <h2 class="city-def__title">What {city.ahj.name} flags most often on {city.city} inspections.</h2>
+        <p class="city-def__lede">
+          These are the recurring deficiency categories we see across {city.city} properties. None of this is a citation from a specific property — it's the pattern of findings our technicians document and correct most frequently in this jurisdiction.
+        </p>
+
+        <div class="acc city-def__list">
+          {city.commonDeficiencies.map((d, i) => (
+            <div class:list={['acc__panel', i === 0 && 'is-active']} data-acc-panel>
+              <button type="button" class="acc__header" aria-expanded={i === 0 ? 'true' : 'false'}>
+                <span class="acc__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                </span>
+                <span class="acc__title">{d.title}</span>
+              </button>
+              <div class="acc__content" hidden={i !== 0}>
+                <p>{d.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §7 BUILDING STOCK — copy panel + FAQ accordion
+         ══════════════════════════════════════════════════════════ -->
+    <section class="city-stock">
+      <div class="city-stock__inner">
+        <div class="city-stock__copy">
+          <div class="av-dblh__subtitle">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Building stock</span>
+          </div>
+          <h2 class="city-stock__title">What {city.city}'s building stock looks like.</h2>
+          <p class="city-stock__body">{city.buildingStock}</p>
+        </div>
+
+        <div class="city-stock__faq">
+          <div class="av-dblh__subtitle">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Frequently asked</span>
+          </div>
+          <h3 class="city-stock__faq-title">Frequently asked questions about fire protection in {city.city}.</h3>
+          <div class="acc">
+            {city.faq.map((f, i) => (
+              <div class:list={['acc__panel', i === 0 && 'is-active']} data-acc-panel>
+                <button type="button" class="acc__header" aria-expanded={i === 0 ? 'true' : 'false'}>
+                  <span class="acc__icon" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                  </span>
+                  <span class="acc__title">{f.question}</span>
+                </button>
+                <div class="acc__content" hidden={i !== 0}>
+                  <p>{f.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §8 CLOSING — DualCTA
+         ══════════════════════════════════════════════════════════ -->
+    <DualCTA items={city.ctaPair} background="white" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * §0 PTBANNER — verbatim from multi-family-management-companies.astro
+   * (duplicated to avoid cross-component style coupling).
+   * ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §2 AHJ BAND — dark bg + image overlay, same rhythm as
+   *    multi-family-management-companies.astro §2 mf-challenges.
+   * ══════════════════════════════════════════════════════════ */
+  .city-ahj {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 110px;
+    background-color: #0d0d0b;
+  }
+  .city-ahj__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/jobsite.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.35);
+    z-index: -2;
+  }
+  .city-ahj__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  .city-ahj__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .city-ahj__inner { padding-inline: 2.5rem; } }
+  .city-ahj .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .city-ahj__title {
+    margin: 0 0 60px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .city-ahj__layout {
+    display: grid;
+    gap: 48px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 1024px) {
+    .city-ahj__layout { grid-template-columns: 5fr 7fr; gap: 80px; }
+  }
+  .city-ahj__intro {
+    margin: 0 0 32px;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .city-ahj__facts {
+    margin: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .city-ahj__fact {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .city-ahj__fact dt {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d41226;
+  }
+  .city-ahj__fact dd {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+  }
+  .city-ahj__fact dd a { color: #ffffff; text-decoration: underline; text-underline-offset: 3px; }
+  .city-ahj__codes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .city-ahj__codes li {
+    padding: 6px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .city-ahj__codes li:first-child { border-top: none; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §3 NEIGHBORHOODS — 3-col grid on light bg
+   * ══════════════════════════════════════════════════════════ */
+  .city-neigh {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .city-neigh { padding-block: 150px; } }
+  .city-neigh__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .city-neigh__inner { padding-inline: 2.5rem; } }
+  .city-neigh .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .city-neigh__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .city-neigh__lede {
+    margin: 0 0 48px;
+    max-width: 920px;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .city-neigh__grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px)  { .city-neigh__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .city-neigh__grid { grid-template-columns: repeat(3, 1fr); } }
+  .city-neigh__card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 28px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.04);
+  }
+  .city-neigh__tag {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 4px 10px;
+    background: rgba(212, 18, 38, 0.08);
+    color: #d41226;
+    border-radius: 999px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .city-neigh__name {
+    margin: 0 0 10px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #0a0a0a;
+  }
+  .city-neigh__note {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §4 SERVICES — white bg, dense 2-col grid
+   * ══════════════════════════════════════════════════════════ */
+  .city-services {
+    background: #ffffff;
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .city-services { padding-block: 150px; } }
+  .city-services__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .city-services__inner { padding-inline: 2.5rem; } }
+  .city-services .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .city-services__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .city-services__lede {
+    margin: 0 0 56px;
+    max-width: 920px;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .city-services__grid {
+    display: grid;
+    gap: 32px 48px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) { .city-services__grid { grid-template-columns: repeat(2, 1fr); } }
+  .city-services__card {
+    padding: 24px 0;
+    border-top: 2px solid #0a0a0a;
+  }
+  .city-services__name {
+    margin: 0 0 12px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.25;
+    color: #0a0a0a;
+  }
+  .city-services__body {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §5 INDUSTRIES — chips
+   * ══════════════════════════════════════════════════════════ */
+  .city-industries {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 90px;
+  }
+  @media (min-width: 768px) { .city-industries { padding-block: 120px; } }
+  .city-industries__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .city-industries__inner { padding-inline: 2.5rem; } }
+  .city-industries .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .city-industries__title {
+    margin: 0 0 40px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .city-industries__chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .city-industries__chips li a {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0a0a0a;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  .city-industries__chips li a:hover {
+    background: #0a0a0a;
+    color: #ffffff;
+    border-color: #0a0a0a;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §6 DEFICIENCIES — light bg accordion
+   * (Reuses .acc styles but tones down colors for the light bg.)
+   * ══════════════════════════════════════════════════════════ */
+  .city-def {
+    background: #ffffff;
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .city-def { padding-block: 150px; } }
+  .city-def__inner {
+    width: 100%;
+    max-width: 1080px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .city-def__inner { padding-inline: 2.5rem; } }
+  .city-def .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .city-def__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .city-def__lede {
+    margin: 0 0 56px;
+    max-width: 920px;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  /* Light-bg accordion overrides — borders and text tuned for white bg. */
+  .city-def__list .acc__panel {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .city-def__list .acc__panel:first-child { border-top: none; }
+  .city-def__list .acc__panel:last-child { border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+  .city-def__list .acc__panel:hover,
+  .city-def__list .acc__panel.is-active,
+  .city-def__list .acc__panel:hover + .acc__panel,
+  .city-def__list .acc__panel.is-active + .acc__panel { border-top-color: #d41226; }
+  .city-def__list .acc__panel.is-active:last-child,
+  .city-def__list .acc__panel:hover:last-child { border-bottom-color: #d41226; }
+  .city-def__list .acc__header { color: #0a0a0a; }
+  .city-def__list .acc__content { color: rgba(0, 0, 0, 0.75); padding-left: 39px; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §7 BUILDING STOCK + FAQ — split layout
+   * ══════════════════════════════════════════════════════════ */
+  .city-stock {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .city-stock { padding-block: 150px; } }
+  .city-stock__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    display: grid;
+    gap: 64px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 1024px) {
+    .city-stock__inner { padding-inline: 2.5rem; grid-template-columns: 5fr 7fr; gap: 80px; }
+  }
+  .city-stock .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .city-stock__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .city-stock__body {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: rgba(0, 0, 0, 0.75);
+  }
+  .city-stock__faq-title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(24px, 3vw, 32px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  /* Light-bg accordion overrides for FAQ column. */
+  .city-stock .acc__panel {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .city-stock .acc__panel:first-child { border-top: none; }
+  .city-stock .acc__panel:last-child { border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+  .city-stock .acc__panel:hover,
+  .city-stock .acc__panel.is-active,
+  .city-stock .acc__panel:hover + .acc__panel,
+  .city-stock .acc__panel.is-active + .acc__panel { border-top-color: #d41226; }
+  .city-stock .acc__panel.is-active:last-child,
+  .city-stock .acc__panel:hover:last-child { border-bottom-color: #d41226; }
+  .city-stock .acc__header { color: #0a0a0a; font-size: 18px; padding: 10px 0; }
+  .city-stock .acc__icon { margin: 6px 16px -10px 2px; }
+  .city-stock .acc__content { color: rgba(0, 0, 0, 0.75); padding-left: 39px; }
+</style>
+
+<script>
+  // Accordion controller — same pattern as the rest of the site.
+  // Toggles `.is-active` on the panel and `aria-expanded` on the header.
+  function initCityAccordions() {
+    const panels = document.querySelectorAll<HTMLElement>('.city-page [data-acc-panel]');
+    panels.forEach((panel) => {
+      const header = panel.querySelector<HTMLButtonElement>('.acc__header');
+      if (!header) return;
+      header.addEventListener('click', () => {
+        const isActive = panel.classList.toggle('is-active');
+        header.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        const content = panel.querySelector<HTMLElement>('.acc__content');
+        if (content) content.hidden = !isActive;
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initCityAccordions);
+</script>
