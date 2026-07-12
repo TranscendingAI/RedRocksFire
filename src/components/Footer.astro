@@ -186,23 +186,26 @@ const socials = [
   .avf__giant {
     margin: 0;
     text-align: center;
-    font-size: 180px;
+    /* Responsive font: scales smoothly between 48px (small phones)
+     * and 180px (≥1400px viewports). vw term lets it grow continuously
+     * with viewport width instead of jumping at breakpoints. */
+    font-size: clamp(48px, 13vw, 180px);
     text-transform: uppercase;
-    line-height: 0.8em;
+    line-height: 0.85em;
     letter-spacing: -0.04em;
-    padding-bottom: 5px;
+    padding: 0 8px 5px;
     background-image: linear-gradient(180deg, #ffffff00 0%, #ffffff 76%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+    overflow-wrap: break-word;
   }
   .avf__giant span { white-space: nowrap; }
 
   @media (max-width: 1200px) {
     .avf__spacer-top { height: 30px; }
     .avf__spacer-mid { height: 40px; }
-    .avf__giant { font-size: 110px; }
     .avf__spacer-bottom { height: 20px; }
     .avf__contact { width: 37%; padding: 50px 40px 30px; }
     .avf__big-link { font-size: 28px; }
@@ -212,6 +215,6 @@ const socials = [
     .avf__contact { width: 100%; padding: 40px 20px 30px; }
     .avf__col { padding-top: 0; padding-left: 20px; }
     .avf__contact-spacer { height: 30px; }
-    .avf__giant { font-size: 48px; }
+    /* .avf__giant font-size is now handled by clamp() in the base rule. */
   }
 </style>
