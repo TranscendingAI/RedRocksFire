@@ -8,21 +8,28 @@
  * transparent→white vertical gradient).
  */
 
-const companyLinks = ['Company', 'Our Team', 'Features', 'FAQs', 'Getting Started'];
+/**
+ * Footer link columns — derived from the live site (Header nav + actual
+ * service offerings from site.ts: "Inspections, sprinklers, alarms,
+ * monitoring, backflow, extinguishers, suppression, and consulting").
+ * Both columns kept at 5 entries to match the original layout.
+ */
+const companyLinks = [
+  { href: '/about',                label: 'About Us' },
+  { href: '/service-areas',        label: 'Service Areas' },
+  { href: '/industries-we-serve',  label: 'Industries We Serve' },
+  { href: '/testimonials',         label: 'Testimonials' },
+  { href: '/blog',                 label: 'Blog' },
+];
 const serviceLinks = [
-  'General Contracting',
-  'Design & Build',
-  'Project Management',
-  'Residential Construction',
-  'Commercial Construction',
+  { href: '/services#inspections', label: 'Inspections' },
+  { href: '/services#sprinklers',  label: 'Fire Sprinklers' },
+  { href: '/services#alarms',      label: 'Fire Alarms' },
+  { href: '/services#monitoring',  label: '24/7 Monitoring' },
+  { href: '/services',             label: 'All Services' },
 ];
 
 const socials = [
-  {
-    href: 'https://x.com/', label: 'X-twitter',
-    path: 'M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z',
-    viewBox: '0 0 512 512',
-  },
   {
     href: 'https://www.facebook.com/', label: 'Facebook',
     path: 'M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z',
@@ -65,8 +72,8 @@ const socials = [
     <div class="avf__col">
       <h3 class="avf__col-heading">company</h3>
       <ul class="avf__links">
-        {companyLinks.map((label) => (
-          <li><a href="/contact" class="avf__link">{label}</a></li>
+        {companyLinks.map((link) => (
+          <li><a href={link.href} class="avf__link">{link.label}</a></li>
         ))}
       </ul>
     </div>
@@ -74,8 +81,8 @@ const socials = [
     <div class="avf__col">
       <h3 class="avf__col-heading">services</h3>
       <ul class="avf__links">
-        {serviceLinks.map((label) => (
-          <li><a href="/contact" class="avf__link">{label}</a></li>
+        {serviceLinks.map((link) => (
+          <li><a href={link.href} class="avf__link">{link.label}</a></li>
         ))}
       </ul>
     </div>
