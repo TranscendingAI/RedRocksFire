@@ -97,12 +97,31 @@ const socials = [
 
 <style>
   .avf {
+    position: relative;
     background-color: #0d0d0b;
     background-image: url('/images/home/footer-bg.webp');
     background-position: center center;
     background-size: cover;
     overflow: hidden;
   }
+  /* Dark gradient overlay so footer text stays legible over any background image.
+   * Sits above the bg image but below all content. pointer-events:none so it
+   * never intercepts clicks. */
+  .avf::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      180deg,
+      rgba(13, 13, 11, 0.92) 0%,
+      rgba(13, 13, 11, 0.78) 50%,
+      rgba(13, 13, 11, 0.92) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* All direct children of .avf sit above the overlay */
+  .avf > * { position: relative; z-index: 1; }
   .avf__spacer-top { height: 99px; }
   .avf__spacer-mid { height: 77px; }
   .avf__spacer-small { height: 30px; }
