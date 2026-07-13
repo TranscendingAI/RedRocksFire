@@ -736,7 +736,326 @@ export const inspectionsPage = {
 } as const;
 
 // ──────────────────────────────────────────────────────────────────────
-// 13. NAV
+// 13. FIRE SPRINKLER SERVICE & SYSTEMS — content for
+//     /fire-sprinkler-service-and-systems/
+//
+// Page design emulates inspections.astro (ptbanner → 2×2 ibox →
+// `rr-why` bg-image band → accordion → SplitPanel series → DualCTA),
+// pulling additional section patterns from multi-family-management-
+// companies.astro (Built-for-… SplitPanel, advocacy bridge,
+// testimonials) and about.astro (Our Core Values SplitPanel,
+// Benefits bg-image 4-card-grid) to accommodate the larger .txt
+// content body. Slider section from the multi-family template is
+// deliberately not used here.
+//
+// All copy is sourced verbatim from
+// reference/content/rrfps-fire-sprinkler-services-and-systems-page-content.txt.
+// Reused design templates alternate black↔white↔dark-image themes
+// so no two same-theme panels sit back-to-back.
+//
+export const fireSprinklerPage = {
+  seo: {
+    title:
+      'Fire Sprinkler Service & Systems | Red Rocks Fire Protection | Colorado',
+    description:
+      'Comprehensive fire sprinkler service, modifications, and replacement for commercial, multifamily, industrial, retail, and healthcare facilities across Colorado. NFPA-aligned, code-compliant, 24/7 emergency response.',
+  },
+  banner: {
+    /** ptbanner (industry.astro §0 pattern, replicated from inspections.astro §0). */
+    title: 'Fire Sprinkler Service & Systems',
+    subtitle: 'FIRE PROTECTION SERVICES',
+    /** RRFPS-2: swapped from rrfps-fire-sprinkler-systems-hero.jpg to
+     *  rrfps-our-fire-sprinkler-services.jpg at user request. Same
+     *  image is also used as §3's accordion background. */
+    backgroundImage: '/images/rrfps-our-fire-sprinkler-services.jpg',
+  },
+  /** 2×2 ibox grid (industry.astro §1 pattern, replicated from inspections.astro §1).
+   *  Four .txt-derived tiles — Service, Modifications, Replacement, 24/7. */
+  categories: [
+    {
+      title: 'Fire Sprinkler Service.',
+      body:
+        'A properly functioning fire sprinkler system is one of the most effective tools for protecting lives and property during a fire. Regular service and maintenance help ensure your system operates as designed when an emergency occurs.',
+    },
+    {
+      title: 'System Modifications.',
+      body:
+        'Building renovations, tenant improvements, occupancy changes, and space reconfigurations often require modifications to existing fire sprinkler systems — and Red Rocks Fire Protection specializes in designing and installing code-compliant sprinkler modifications that maintain proper coverage.',
+    },
+    {
+      title: 'System Replacement.',
+      body:
+        'As fire sprinkler systems age, components can deteriorate due to corrosion, freeze damage, mechanical wear, or obsolete equipment. RRFPS provides complete replacement, from individual components to full system upgrades.',
+    },
+    {
+      title: '24/7 Emergency Response.',
+      body:
+        'Leak repairs, sprinkler head replacement, control valve repairs, waterflow and tamper switch service, dry pipe valve service, air compressor service, fire pump service, backflow preventer repairs, and emergency sprinkler repairs — anytime.',
+    },
+  ] as const,
+  /** `rr-why` bg-image band (about.astro §3 + inspections.astro §2 pattern). */
+  intro: {
+    eyebrow: 'Why Red Rocks Fire Protection',
+    title: 'Your Trusted Partner for Fire Sprinkler Service & Systems.',
+    body:
+      'At Red Rocks Fire Protection Services, we understand that fire sprinkler systems are far more than mechanical components installed throughout a building. They are one of the most critical life safety systems protecting your employees, residents, tenants, customers, visitors, and property every day. When properly designed, maintained, and serviced, a fire sprinkler system helps protect lives, minimize property damage, reduce business interruption, and provide valuable time for occupants to evacuate safely during an emergency.',
+    body2:
+      'Since 2010, Red Rocks Fire Protection Services has proudly served its customers throughout Colorado as a trusted, family-owned life safety company. Our purpose is simple: to protect lives and property by simplifying life safety compliance and providing dependable service our clients can trust. Every inspection, repair, modification, and replacement we perform is guided by that commitment.',
+    bullets: [
+      'Comprehensive service across wet, dry, preaction, deluge, standpipe, and fire pump systems.',
+      'NFPA-aligned maintenance, repair, and replacement to keep systems in compliance with local fire codes.',
+      '24/7/365 emergency response — staffed by the same technicians who know your portfolio.',
+    ],
+  },
+  /** 5-panel accordion (industry.astro §2 pattern, replicated from
+   *  multi-family-management-companies.astro §2 challenges). Holds
+   *  the bulk of the .txt content: three main service categories,
+   *  the replacement warning signs, and the One Vendor Life Safety
+   *  Solution list. */
+  accordion: {
+    eyebrow: 'How We Serve',
+    title: 'Our Fire Sprinkler Services.',
+    body:
+      'The work breaks into three primary service lines plus a coordinated view across every life safety system we touch. Click each panel for the full scope.',
+    intro:
+      "Most of the sprinkler programs we walk into are dealing with one or more of these needs — and most are running them in parallel. Click each panel below to see the work that's typically involved.",
+    panels: [
+      {
+        title: 'Fire Sprinkler Service',
+        body:
+          'Red Rocks Fire Protection provides comprehensive fire sprinkler service for commercial, multifamily, industrial, retail, and healthcare facilities and more throughout Colorado. Our experienced technicians diagnose and repair system deficiencies, troubleshoot leaks and alarms, replace damaged components, and perform preventative maintenance to keep your system in compliance with NFPA standards and local fire codes.',
+        bullets: [
+          'Leak repairs',
+          'Sprinkler head replacement',
+          'Control valve repairs',
+          'Waterflow and tamper switch service',
+          'Dry pipe valve service and repair',
+          'Air compressor replacement and maintenance',
+          'Fire pump service',
+          'Backflow preventer repairs',
+          'Corrosion mitigation solutions',
+          'Emergency sprinkler repairs',
+          '24/7 emergency response',
+        ],
+        open: false,
+      },
+      {
+        title: 'Fire Sprinkler System Modifications',
+        body:
+          'Red Rocks Fire Protection specializes in designing and installing code-compliant sprinkler system modifications that maintain proper coverage and meet current NFPA requirements. Our team manages the entire process, including permitting, design, installation, testing, and final acceptance.',
+        bullets: [
+          'Office remodels',
+          'Tenant finish projects',
+          'Wall additions and removals',
+          'Ceiling height changes',
+          'Pendant to concealed sprinkler conversions',
+          'Occupancy changes',
+          'Storage configuration changes',
+          'New branch line installations',
+          'Sprinkler relocations',
+          'System expansions',
+        ],
+        open: false,
+      },
+      {
+        title: 'Fire Sprinkler System Replacement',
+        body:
+          'Red Rocks Fire Protection provides complete fire sprinkler system replacement services, from individual components to full system upgrades.',
+        bullets: [
+          'Wet pipe sprinkler systems',
+          'Dry pipe sprinkler systems',
+          'Preaction systems',
+          'Deluge systems',
+          'Dry valves',
+          'Fire pumps',
+          'Air compressors',
+          'Corroded piping',
+          'Control valves',
+          'Backflow preventers',
+          'Obsolete sprinkler heads',
+          'Fire Department Connections (FDCs)',
+        ],
+        open: false,
+      },
+      {
+        title: 'Signs Your System May Need Replacement',
+        body:
+          'In some cases, repairs become more costly than replacing portions of the system or upgrading the entire installation. Here are the indicators that replacement is typically the right call:',
+        bullets: [
+          'Frequent leaks',
+          'Internal pipe corrosion',
+          'Freeze damage',
+          'Repeated valve failures',
+          'Obsolete or discontinued components',
+          'Failed 5-year internal inspections',
+          'Failed sprinkler head testing',
+          'Excessive repair costs',
+          'Poor system reliability',
+        ],
+        open: false,
+      },
+      {
+        title: 'Your One Vendor Life Safety Solution',
+        body:
+          'In addition to fire sprinkler systems, we provide comprehensive life safety services including:',
+        bullets: [
+          'Fire Sprinkler Service & Systems',
+          'Fire Alarm Service & Systems',
+          'Monitoring Services',
+          'Backflow Prevention Assemblies',
+          'Portable Fire Extinguishers',
+          'Distributed Antenna Systems (DAS)',
+          'Security System Installation & Monitoring',
+          'Kitchen Hood Suppression Systems',
+          'Area of Refuge Communication Systems',
+          'Consulting Services',
+          '24 Hour Service',
+        ],
+        footer:
+          'Having one experienced team coordinating your life safety systems creates greater efficiency, improves communication, streamlines compliance, and gives you one trusted point of contact for virtually all of your fire protection needs.',
+        open: false,
+      },
+    ] as const,
+  },
+  /** §5 — More Than a Fire Sprinkler Contractor (white-bg SplitPanel,
+   *  cloned from about.astro §2 / Our Core Values template). */
+  moreThanContractor: {
+    eyebrow: 'How We Work',
+    title: 'More Than a Fire Sprinkler Contractor.',
+    body:
+      'While many companies simply repair fire sprinkler systems, Red Rocks Fire Protection Services takes a different approach. We believe our responsibility extends well beyond completing a service call. We strive to become a long-term life safety partner who helps clients navigate the complexities of fire protection, compliance requirements, and evolving fire codes with confidence.',
+    ctaLabel: 'See All Services',
+    ctaHref: '/services',
+    image: '/images/rrfps-more-than-a-fire-sprinkler-contractor.jpg',
+    imageAlt: 'Red Rocks Fire Protection technician on a sprinkler service call',
+  },
+  /** §5 — Advocacy That Protects Your Investment (black-bg SplitPanel,
+   *  multi-family.astro §4 advocacy pattern, no reveal-top rounded
+   *  corners). */
+  advocacy: {
+    eyebrow: 'Our Edge',
+    title: 'Advocacy That Protects Your Investment.',
+    body:
+      'Advocacy is one of the core values that defines Red Rocks Fire Protection Services and one of the qualities that sets us apart. Fire codes, NFPA standards, local jurisdiction requirements, and compliance regulations continue to evolve. Staying informed requires ongoing education and industry involvement. Our team continually monitors these changes so we can provide proactive guidance that helps our clients remain compliant while avoiding unnecessary surprises. We believe our customers deserve more than a contractor who simply completes inspections or repairs. They deserve a trusted advisor who communicates clearly, explains recommendations honestly, and helps them make informed decisions that protect both their property and the people who depend on it.',
+    ctaLabel: 'Schedule a Service Call',
+    ctaHref: '/contact',
+    image: '/images/rrfps-advocacy-that-protects-your-investment.jpg',
+    imageAlt: 'Red Rocks Fire Protection advocacy in action',
+  },
+  /** §7 — Why Clients Continue to Choose RRFPS (black-bg SplitPanel,
+   *  reused Core Values pattern). 5 brand-promise bullets + framing. */
+  whyClients: {
+    eyebrow: 'Why Clients Stay',
+    title: 'Why Clients Continue to Choose RRFPS.',
+    body:
+      'Everything we do is built upon the values that have guided our company since its founding. These principles are reflected in our Brand Promise: we communicate clearly, we honor our commitments, we arrive prepared, we respond when it matters most, we price fairly, we stand behind our work, and we remain committed until every issue has been fully resolved.',
+    ctaLabel: 'See Service Areas',
+    ctaHref: '/service-areas',
+  },
+  /** 5-value array backing the Why Clients section's bullet list
+   *  (rendered alongside the title). */
+  whyClientsValues: [
+    {
+      title: 'We lead with safety.',
+      body: 'Protecting lives and property is both our responsibility and our privilege.',
+    },
+    {
+      title: 'We advocate for our clients.',
+      body: 'We stay ahead of changing codes and help simplify compliance.',
+    },
+    {
+      title: 'We go the extra mile.',
+      body: 'We take ownership of every project until the job is completed correctly.',
+    },
+    {
+      title: 'We demonstrate character.',
+      body: 'Integrity, professionalism, accountability, and respect in every interaction.',
+    },
+    {
+      title: 'And we operate as one family.',
+      body: 'Supporting one another while building lasting partnerships with every client we serve.',
+    },
+  ] as const,
+  /** §8 — Experience You Can Trust (white-bg SplitPanel, reused
+   *  Built-for-… pattern from multi-family.astro §1). */
+  experience: {
+    eyebrow: 'Experience',
+    title: 'Experience You Can Trust.',
+    body:
+      'When it comes to life safety systems, experience and qualifications matter. Red Rocks Fire Protection Services employs highly trained professionals who maintain numerous state licenses and respected industry certifications. Our team continually invests in training, technical expertise, and staying current with evolving codes and regulations to ensure every project meets the highest standards for quality, safety, and compliance. Combined with our responsive customer service, dependable scheduling, and commitment to accountability, our experience allows clients to move forward with confidence knowing their life safety systems are in capable hands.',
+    ctaLabel: 'About RRFPS',
+    ctaHref: '/about',
+    image: '/images/rrfps-experience-you-can-trust.jpg',
+    imageAlt: 'Red Rocks Fire Protection team on a service call',
+  },
+  /** §9 — Serving Colorado's Diverse Industries (bg-image 4-card grid,
+   *  about.astro §3 / Benefits pattern, reused). 14 industries adapted
+   *  to the 4-column grid (with the last 2 tiling into row 4). */
+  industries: {
+    eyebrow: 'Industries We Serve',
+    title: 'Serving Colorado’s Diverse Industries.',
+    intro:
+      'Every industry has unique life safety challenges, and our experienced team understands the specific requirements associated with a wide variety of occupancies throughout Colorado. We proudly provide fire sprinkler services for:',
+    items: [
+      { title: 'Multi-Family Management Companies', body: '' },
+      { title: 'Commercial Property & Management Companies', body: '' },
+      { title: 'Religious Institutions / Churches', body: '' },
+      { title: 'Assisted Living Facilities & Healthcare', body: '' },
+      { title: 'Education / Universities', body: '' },
+      { title: 'Warehouse / Storage / Industrial', body: '' },
+      { title: 'HOA Management Companies', body: '' },
+      { title: 'Hotels & Hospitality', body: '' },
+      { title: 'Retail & Shopping Centers', body: '' },
+      { title: 'Restaurants & Food Trucks', body: '' },
+      { title: 'Financial Institutions / Banks', body: '' },
+      { title: 'Automotive Dealerships & Service Centers', body: '' },
+      { title: 'Data Centers', body: '' },
+      { title: 'General Contractors', body: '' },
+    ] as const,
+    closing:
+      'Whether you’re responsible for a single facility or an extensive property portfolio, Red Rocks Fire Protection Services delivers reliable solutions tailored to your specific operational and compliance requirements.',
+  },
+  /** §10 — Protecting What Matters Most (white-bg SplitPanel, image-only,
+   *  black text). Originally a black-bg panel; per revision RRFPS-2 this
+   *  section flips to a white-bg + black-text SplitPanel so the page
+   *  rhythm reads: §9 black → §10 white. */
+  protecting: {
+    eyebrow: 'Our Promise',
+    title: 'Protecting What Matters Most.',
+    body:
+      'At Red Rocks Fire Protection Services, we believe protecting lives and property should never be reactive. It should be proactive, dependable, and entrusted to a partner who genuinely cares about your success. Whether you need routine fire sprinkler maintenance, emergency repairs, tenant improvement modifications, system upgrades, or complete fire sprinkler replacement, our experienced team is ready to deliver the responsive service, expert guidance, and long-term partnership you deserve.',
+    image: '/images/rrfps-protect-what-matters-most.jpg',
+    imageAlt: 'A Red Rocks Fire Protection technician performing a sprinkler service',
+  },
+  /** §11 — Ready to Partner with RRFPS? (white-bg closing band +
+   *  DualCTA). Final CTA pair. */
+  closing: {
+    eyebrow: 'Ready When You Are',
+    title: 'Ready to Partner with Red Rocks Fire Protection Services?',
+    body:
+      'Whether you need routine fire sprinkler service, emergency repairs, system modifications, or a complete fire sprinkler system replacement, Red Rocks Fire Protection Services is ready to help. Our experienced team is committed to protecting your people, your property, and your peace of mind with responsive service, expert guidance, and complete accountability. Since 2010, we’ve proudly partnered with property owners, facility managers, maintenance professionals, and contractors across Colorado, delivering dependable fire sprinkler solutions backed by exceptional service and long-term relationships. When you choose Red Rocks Fire Protection Services, you’re choosing more than a contractor, you’re gaining a trusted life safety partner dedicated to helping you protect what matters most. Let’s Protect What Matters Most Together.',
+    phone: '(303) 663-0397',
+    ctaPair: [
+      {
+        title: 'Request Service.',
+        descriptor:
+          'Visit our Contact Us page to request service, schedule an inspection, or learn more about our comprehensive One Vendor Life Safety Solution.',
+        href: '/contact',
+        label: 'Get in touch',
+      },
+      {
+        title: 'See All Services.',
+        descriptor:
+          'Fire sprinklers are one part of our complete life safety catalog — sprinklers, alarms, monitoring, backflow, extinguishers, suppression, DAS, and consulting, all coordinated under one trusted team.',
+        href: '/services',
+        label: 'Browse services',
+      },
+    ] as const,
+  },
+} as const;
+
+// ──────────────────────────────────────────────────────────────────────
+// 14. NAV
 // ──────────────────────────────────────────────────────────────────────
 
 export const navItems = [
