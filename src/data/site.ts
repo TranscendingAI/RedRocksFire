@@ -660,25 +660,32 @@ export const inspectionsPage = {
      */
     backgroundImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
   },
-  /** 2×2 ibox grid (industry.astro §1) — 4 inspection categories. */
+  /** 2×2 ibox grid (industry.astro §1) — 4 inspection categories.
+   *  Each entry now carries an `icon` field (Iconify name, mdi:* set)
+   *  so the page can render <iconify-icon icon={c.icon} /> directly
+   *  instead of holding the SVG path data inline. */
   categories: [
     {
       title: 'Annual NFPA Inspections.',
+      icon: 'mdi:clipboard-text-search-outline',
       body:
         'By code, fire-protection systems must be inspected annually. We evaluate every component against the current NFPA standard for that system, capture findings in a detailed written report, and hand you a correction summary your AHJ will accept.',
     },
     {
       title: 'Fire Alarm Testing.',
+      icon: 'mdi:bell-ring-outline',
       body:
         'Initiating devices, notification appliances, control panels, secondary power, and supervision — tested to NFPA 72 by NICET-certified technicians. We document every device, every signal, and any deficiency worth correcting.',
     },
     {
       title: 'Sprinkler & Standpipe Testing.',
+      icon: 'mdi:wrench-outline',
       body:
         'Wet, dry, antifreeze, preaction, deluge, standpipes, and fire pumps — exercised, flowed, and gauged to NFPA 25. Includes main-drain tests, valve supervision checks, and a prioritized deficiency list.',
     },
     {
       title: 'Special Hazard & Suppression.',
+      icon: 'mdi:fire-extinguisher',
       body:
         'Kitchen hood suppression, clean-agent systems, BDA/DAS radio coverage, area-of-refuge communications, and backflow prevention — each with its own cadence and inspection checklist, all in one report.',
     },
@@ -770,25 +777,30 @@ export const fireSprinklerPage = {
     backgroundImage: '/images/rrfps-our-fire-sprinkler-services.jpg',
   },
   /** 2×2 ibox grid (industry.astro §1 pattern, replicated from inspections.astro §1).
-   *  Four .txt-derived tiles — Service, Modifications, Replacement, 24/7. */
+   *  Four .txt-derived tiles — Service, Modifications, Replacement, 24/7.
+   *  `icon` field added so the page can render <iconify-icon icon={c.icon} />. */
   categories: [
     {
       title: 'Fire Sprinkler Service.',
+      icon: 'mdi:clipboard-text-search-outline',
       body:
         'A properly functioning fire sprinkler system is one of the most effective tools for protecting lives and property during a fire. Regular service and maintenance help ensure your system operates as designed when an emergency occurs.',
     },
     {
       title: 'System Modifications.',
+      icon: 'mdi:bell-ring-outline',
       body:
         'Building renovations, tenant improvements, occupancy changes, and space reconfigurations often require modifications to existing fire sprinkler systems — and Red Rocks Fire Protection specializes in designing and installing code-compliant sprinkler modifications that maintain proper coverage.',
     },
     {
       title: 'System Replacement.',
+      icon: 'mdi:wrench-outline',
       body:
         'As fire sprinkler systems age, components can deteriorate due to corrosion, freeze damage, mechanical wear, or obsolete equipment. RRFPS provides complete replacement, from individual components to full system upgrades.',
     },
     {
       title: '24/7 Emergency Response.',
+      icon: 'mdi:fire-extinguisher',
       body:
         'Leak repairs, sprinkler head replacement, control valve repairs, waterflow and tamper switch service, dry pipe valve service, air compressor service, fire pump service, backflow preventer repairs, and emergency sprinkler repairs — anytime.',
     },

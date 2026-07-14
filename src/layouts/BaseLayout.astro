@@ -75,6 +75,11 @@ const {
     </main>
     <Footer />
 
+    {/* Iconify icon web-component runtime — registers <iconify-icon>
+     * globally so any page can drop in <iconify-icon icon="mdi:..." />.
+     * Bundled by Vite from node_modules rather than served raw. */}
+    <script>import 'iconify-icon';</script>
+
     {/* GSAP + ScrollTrigger — loaded on every page so sections that want
      * scroll-triggered reveals work without each page re-loading them.
      * is:inline keeps them as plain <script src> tags (not bundled) so
