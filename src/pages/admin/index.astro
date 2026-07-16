@@ -40,10 +40,6 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
             <input type="text" id="u-city" placeholder="Denver" />
           </label>
           <label class="field">
-            <span class="field-label">State</span>
-            <input type="text" id="u-state" placeholder="CO" maxlength="20" />
-          </label>
-          <label class="field">
             <span class="field-label">ZIP</span>
             <input type="text" id="u-zip" placeholder="80202" maxlength="12" />
           </label>
@@ -59,32 +55,58 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         </form>
       </section>
 
-      <!-- ── Search ─────────────────────────────────────────── -->
+      <!-- ── All uploaded reports ───────────────────────────── -->
       <section class="panel">
-        <h2 class="panel-title">Search Reports</h2>
-        <form id="search-form" class="grid">
-          <label class="field">
-            <span class="field-label">City</span>
-            <input type="text" id="s-city" placeholder="Denver" />
-          </label>
-          <label class="field">
-            <span class="field-label">State</span>
-            <input type="text" id="s-state" placeholder="CO" />
-          </label>
-          <label class="field">
-            <span class="field-label">ZIP</span>
-            <input type="text" id="s-zip" placeholder="80202" />
-          </label>
-          <div class="field search-actions">
-            <button type="submit" class="btn-primary">Search</button>
-            <button type="button" id="s-clear" class="btn-ghost">Clear</button>
-          </div>
-        </form>
+        <div class="panel-head">
+          <h2 class="panel-title">All Fire Reports</h2>
+          <button type="button" id="refresh" class="btn-ghost">Refresh</button>
+        </div>
 
-        <p id="results-status" class="results-status">Loading recent reports…</p>
+        <p id="results-status" class="results-status">Loading reports…</p>
         <ul id="results" class="results"></ul>
+
+        <div id="pager" class="pager" hidden>
+          <button type="button" id="prev-page" class="btn-ghost">&larr; Prev</button>
+          <span id="page-info" class="pager__info"></span>
+          <button type="button" id="next-page" class="btn-ghost">Next &rarr;</button>
+        </div>
       </section>
     </main>
+  </div>
+
+  <!-- ── Edit report modal ─────────────────────────────────── -->
+  <div id="edit-modal" class="modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+      <h3 id="edit-title" class="modal__title">Edit Report</h3>
+      <form id="edit-form" class="grid">
+        <label class="field">
+          <span class="field-label">Client name *</span>
+          <input type="text" id="e-client" required />
+        </label>
+        <label class="field">
+          <span class="field-label">Date of test</span>
+          <input type="date" id="e-date" />
+        </label>
+        <label class="field field--wide">
+          <span class="field-label">Address</span>
+          <input type="text" id="e-address" />
+        </label>
+        <label class="field">
+          <span class="field-label">City</span>
+          <input type="text" id="e-city" />
+        </label>
+        <label class="field">
+          <span class="field-label">ZIP</span>
+          <input type="text" id="e-zip" maxlength="12" />
+        </label>
+        <div class="field--wide modal__actions">
+          <button type="submit" class="btn-primary">Save changes</button>
+          <button type="button" class="btn-ghost" data-close>Cancel</button>
+          <span id="e-msg" class="msg" role="status"></span>
+        </div>
+      </form>
+    </div>
   </div>
 </AdminLayout>
 
@@ -182,7 +204,6 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         client_name: client,
         address: ($('u-address') as HTMLInputElement).value.trim() || null,
         city: ($('u-city') as HTMLInputElement).value.trim() || null,
-        state: ($('u-state') as HTMLInputElement).value.trim() || null,
         zip: ($('u-zip') as HTMLInputElement).value.trim() || null,
         test_date: ($('u-date') as HTMLInputElement).value || null,
         pdf_path: path,
@@ -206,11 +227,11 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       msg.classList.add('msg--ok');
       btn.disabled = false;
       btn.textContent = 'Upload report';
-      runSearch(); // refresh the list below
+      loadReports(); // refresh the list below
     });
   }
 
-  // ── Search / listing ──────────────────────────────────────
+  // ── Report listing ────────────────────────────────────────
   const results = $('results');
   const status = $('results-status');
 
@@ -234,20 +255,22 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     }
   }
 
-  function render(rows: any[]) {
+  // Inline SVGs (no icon-runtime dependency in the admin layout).
+  const openIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>`;
+  const downloadIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>`;
+  const editIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
+  const trashIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`;
+
+  // Client-side pagination over the full report set.
+  let allRows: any[] = [];
+  let page = 0;
+  const PAGE_SIZE = 8;
+
+  function renderCards(rows: any[]) {
     results.innerHTML = '';
-    if (!rows.length) {
-      status.textContent = 'No reports found.';
-      return;
-    }
-    status.textContent = `${rows.length} report${rows.length === 1 ? '' : 's'}`;
-
     for (const r of rows) {
-      const loc = [r.address, r.city, r.state, r.zip].filter(Boolean).join(', ');
-      // Inline SVGs (no icon-runtime dependency in the admin layout).
-      const openIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>`;
-      const downloadIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>`;
-
+      // State is intentionally omitted (all reports are in Colorado).
+      const loc = [r.address, r.city, r.zip].filter(Boolean).join(', ');
       const li = document.createElement('li');
       li.className = 'result';
       li.innerHTML = `
@@ -262,50 +285,140 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         <div class="result-actions">
           <button class="icon-btn" data-act="open" title="Open in browser" aria-label="Open in browser">${openIcon}</button>
           <button class="icon-btn" data-act="download" title="Download PDF" aria-label="Download PDF">${downloadIcon}</button>
+          <button class="icon-btn" data-act="edit" title="Edit report details" aria-label="Edit report details">${editIcon}</button>
+          <button class="icon-btn icon-btn--danger" data-act="delete" title="Delete report" aria-label="Delete report">${trashIcon}</button>
         </div>`;
       li.querySelector('[data-act="open"]')!
         .addEventListener('click', () => openPdf(r.pdf_path, false, r.file_name));
       li.querySelector('[data-act="download"]')!
         .addEventListener('click', () => openPdf(r.pdf_path, true, r.file_name));
+      li.querySelector('[data-act="edit"]')!
+        .addEventListener('click', () => openEdit(r));
+      li.querySelector('[data-act="delete"]')!
+        .addEventListener('click', () => deleteReport(r));
       results.appendChild(li);
     }
   }
 
-  async function runSearch() {
-    status.textContent = 'Searching…';
+  function renderPage() {
+    const total = allRows.length;
+    const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (page > pages - 1) page = pages - 1;
+    if (page < 0) page = 0;
+
+    const start = page * PAGE_SIZE;
+    const slice = allRows.slice(start, start + PAGE_SIZE);
+    renderCards(slice);
+
+    if (!total) {
+      status.textContent = 'No reports found.';
+    } else {
+      status.textContent = `Showing ${start + 1}–${start + slice.length} of ${total} report${total === 1 ? '' : 's'}`;
+    }
+
+    const pager = $('pager');
+    pager.hidden = total <= PAGE_SIZE;
+    $('page-info').textContent = `Page ${page + 1} of ${pages}`;
+    ($('prev-page') as HTMLButtonElement).disabled = page === 0;
+    ($('next-page') as HTMLButtonElement).disabled = page >= pages - 1;
+  }
+
+  async function loadReports() {
+    status.textContent = 'Loading reports…';
     results.innerHTML = '';
 
-    let q = supabase
+    const { data, error } = await supabase
       .from('fire_reports')
       .select('*')
-      .order('created_at', { ascending: false })
-      .limit(200);
+      .order('created_at', { ascending: false });
 
-    const city = ($('s-city') as HTMLInputElement).value.trim();
-    const state = ($('s-state') as HTMLInputElement).value.trim();
-    const zip = ($('s-zip') as HTMLInputElement).value.trim();
-    if (city) q = q.ilike('city', `%${city}%`);
-    if (state) q = q.ilike('state', `%${state}%`);
-    if (zip) q = q.ilike('zip', `%${zip}%`);
-
-    const { data, error } = await q;
     if (error) {
       status.textContent = 'Error loading reports: ' + error.message;
       return;
     }
-    render(data ?? []);
+    allRows = data ?? [];
+    page = 0;
+    renderPage();
   }
 
-  function initSearch() {
-    ($('search-form') as HTMLFormElement).addEventListener('submit', (e) => {
-      e.preventDefault();
-      runSearch();
+  // ── Delete ────────────────────────────────────────────────
+  async function deleteReport(row: any) {
+    if (!confirm(`Delete the report for "${row.client_name}"?\nThis permanently removes the record and its PDF and cannot be undone.`)) {
+      return;
+    }
+    const { error } = await supabase.from('fire_reports').delete().eq('id', row.id);
+    if (error) {
+      alert('Delete failed: ' + error.message);
+      return;
+    }
+    // Row is gone from the listing; also remove the stored PDF (best-effort).
+    await supabase.storage.from(REPORTS_BUCKET).remove([row.pdf_path]);
+    allRows = allRows.filter((r) => r.id !== row.id);
+    renderPage();
+  }
+
+  // ── Edit ──────────────────────────────────────────────────
+  let editingId: string | null = null;
+
+  function openEdit(row: any) {
+    editingId = row.id;
+    ($('e-client') as HTMLInputElement).value = row.client_name ?? '';
+    ($('e-date') as HTMLInputElement).value = row.test_date ? row.test_date.split('T')[0] : '';
+    ($('e-address') as HTMLInputElement).value = row.address ?? '';
+    ($('e-city') as HTMLInputElement).value = row.city ?? '';
+    ($('e-zip') as HTMLInputElement).value = row.zip ?? '';
+    const msg = $('e-msg');
+    msg.textContent = '';
+    msg.className = 'msg';
+    $('edit-modal').hidden = false;
+  }
+
+  function closeEdit() {
+    $('edit-modal').hidden = true;
+    editingId = null;
+  }
+
+  function initEdit() {
+    const modal = $('edit-modal');
+    modal.querySelectorAll('[data-close]').forEach((el) =>
+      el.addEventListener('click', closeEdit)
+    );
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) closeEdit();
     });
-    $('s-clear').addEventListener('click', () => {
-      ($('s-city') as HTMLInputElement).value = '';
-      ($('s-state') as HTMLInputElement).value = '';
-      ($('s-zip') as HTMLInputElement).value = '';
-      runSearch();
+
+    ($('edit-form') as HTMLFormElement).addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = $('e-msg');
+      msg.className = 'msg';
+      const client = ($('e-client') as HTMLInputElement).value.trim();
+      if (!client) {
+        msg.textContent = 'Client name is required.';
+        msg.classList.add('msg--err');
+        return;
+      }
+      const updates = {
+        client_name: client,
+        test_date: ($('e-date') as HTMLInputElement).value || null,
+        address: ($('e-address') as HTMLInputElement).value.trim() || null,
+        city: ($('e-city') as HTMLInputElement).value.trim() || null,
+        zip: ($('e-zip') as HTMLInputElement).value.trim() || null,
+      };
+      const { data, error } = await supabase
+        .from('fire_reports')
+        .update(updates)
+        .eq('id', editingId)
+        .select();
+      if (error) {
+        msg.textContent = 'Save failed: ' + error.message;
+        msg.classList.add('msg--err');
+        return;
+      }
+      // Reflect the change in the in-memory list without a full reload.
+      const idx = allRows.findIndex((r) => r.id === editingId);
+      if (idx >= 0 && data && data[0]) allRows[idx] = data[0];
+      closeEdit();
+      renderPage();
     });
   }
 
@@ -324,8 +437,11 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     });
 
     initUpload(session.user.id);
-    initSearch();
-    runSearch(); // initial "recent reports" listing
+    initEdit();
+    $('refresh').addEventListener('click', loadReports);
+    $('prev-page').addEventListener('click', () => { page--; renderPage(); });
+    $('next-page').addEventListener('click', () => { page++; renderPage(); });
+    loadReports(); // list all uploaded reports
   })();
 </script>
 
@@ -387,6 +503,14 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     letter-spacing: -0.02em;
     margin: 0 0 1.25rem;
   }
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .panel-head .panel-title { margin: 0; }
 
   .grid {
     display: grid;
@@ -421,12 +545,11 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
   }
   input[type="file"]::file-selector-button:hover { background: var(--rr-red-hover); }
 
-  .upload-actions, .search-actions {
+  .upload-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
-  .search-actions { align-self: end; }
 
   .btn-primary {
     font: inherit;
@@ -525,6 +648,66 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     color: var(--rr-white);
     background: var(--rr-red);
     border-color: var(--rr-red);
+  }
+  /* Delete button turns red on hover to signal a destructive action. */
+  :global(.icon-btn--danger:hover) {
+    color: var(--rr-white);
+    background: #c0182b;
+    border-color: #c0182b;
+  }
+
+  /* ── Pagination ─────────────────────────────────────────── */
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+  .pager[hidden] { display: none; }
+  .pager__info { font-size: 0.85rem; color: var(--rr-grey); min-width: 110px; text-align: center; }
+  .btn-ghost:disabled { opacity: 0.4; cursor: default; border-color: var(--rr-grey-soft); color: var(--rr-black); }
+
+  /* ── Edit modal ─────────────────────────────────────────── */
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+  }
+  .modal[hidden] { display: none; }
+  .modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .modal__card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--rr-white);
+    border-radius: var(--rr-radius-card);
+    padding: 1.75rem;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  }
+  .modal__title {
+    font-family: var(--rr-font-display);
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+  }
+  .modal__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
   }
 
   @media (max-width: 640px) {
