@@ -6,16 +6,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title="Fire Reports Lookup — Red Rocks Fire Protection"
   description="Search Red Rocks Fire Protection fire reports by property address or company name, then open or download the report PDF."
 >
+  <!-- ══════════════════════════════════════════════════════════
+       PAGE-TITLE BANNER (replicated from inspections.astro §0)
+       ══════════════════════════════════════════════════════════ -->
+  <div
+    class="ptbanner"
+    style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.jpg');"
+  >
+    <div class="ptbanner__inner">
+      <h1 class="ptbanner__title">Fire Report Lookup</h1>
+      <div class="ptbanner__breadcrumbs">
+        <a href="/">Home</a>
+        <span class="ptbanner__divider">-</span>
+        <span class="ptbanner__current">FIRE REPORT LOOKUP</span>
+      </div>
+    </div>
+  </div>
+
   <section class="fr">
     <div class="rr-container">
-      <header class="fr__head">
-        <span class="rr-eyebrow">Red Rocks Fire Protection</span>
-        <h1 class="fr__title">Fire Report Lookup</h1>
-        <p class="fr__lead">
-          Search for a fire report by property address or company name.
-          Then open the report in your browser or download the PDF.
-        </p>
-      </header>
+      <p class="fr__lead">
+        Search for a fire report by property address or company name.
+        Then open the report in your browser or download the PDF.
+      </p>
 
       <form id="fr-search" class="fr__form">
         <label class="fr__field">
@@ -163,20 +176,63 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </script>
 
 <style>
+  /* ---- Page-title banner (copied from inspections.astro §0) ---- */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
   .fr {
-    /* Top padding clears the site's floating (position:absolute) header,
-     * which is ~70px on mobile and ~135px on desktop. */
-    padding-top: 110px;
+    padding-top: 0;
     padding-bottom: var(--rr-space-24);
-  }
-  @media (min-width: 1025px) {
-    .fr { padding-top: 200px; }
-  }
-  .fr__head { max-width: 640px; }
-  .fr__title {
-    font-family: var(--rr-font-display);
-    font-size: var(--rr-text-section);
-    margin: 0.5rem 0 0.75rem;
   }
   .fr__lead {
     font-size: var(--rr-text-lead);
@@ -286,6 +342,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--rr-white);
     background: var(--rr-red);
     border-color: var(--rr-red);
+  }
+
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
   }
 
   @media (max-width: 640px) {
