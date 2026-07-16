@@ -92,7 +92,11 @@ const socials = [
   <div class="avf__divider" aria-hidden="true"></div>
   <div class="avf__spacer-small" aria-hidden="true"></div>
 
-  <p class="avf__copyright">© 2026 Red Rocks Fire Protection. All Rights Reserved</p>
+  <p class="avf__copyright">
+    © 2026 Red Rocks Fire Protection. All Rights Reserved
+    <span class="avf__copyright-sep" aria-hidden="true">·</span>
+    <a href="/admin/login" class="avf__admin-link" data-astro-reload>Access Previous Fire Reports</a>
+  </p>
 
   <div class="avf__divider" aria-hidden="true"></div>
 
@@ -208,6 +212,14 @@ const socials = [
     font-weight: 700;
     color: #ffffff;
   }
+  .avf__copyright-sep { margin: 0 8px; color: #ffffff66; }
+  .avf__admin-link {
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 1px solid #ffffff66;
+    transition: 0.4s;
+  }
+  .avf__admin-link:hover { border-bottom-color: #ffffff; color: #ffffff; }
 
   .avf__giant {
     margin: 0;

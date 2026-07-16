@@ -1,0 +1,535 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Fire Reports Admin — Red Rocks Fire Protection">
+  <!-- Hidden until we confirm an admin session, to avoid flashing the UI. -->
+  <div id="gate" class="gate">Checking access…</div>
+
+  <div id="app" class="app" hidden>
+    <header class="topbar">
+      <div>
+        <span class="topbar-eyebrow">Red Rocks Fire Protection</span>
+        <h1 class="topbar-title">Fire Reports</h1>
+      </div>
+      <div class="topbar-right">
+        <span id="who" class="who"></span>
+        <button id="logout" class="btn-ghost">Log out</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- ── Upload ─────────────────────────────────────────── -->
+      <section class="panel">
+        <h2 class="panel-title">Upload a Fire Report</h2>
+        <form id="upload-form" class="grid">
+          <label class="field">
+            <span class="field-label">Client name *</span>
+            <input type="text" id="u-client" required placeholder="Acme Property Group" />
+          </label>
+          <label class="field">
+            <span class="field-label">Date of test</span>
+            <input type="date" id="u-date" />
+          </label>
+          <label class="field field--wide">
+            <span class="field-label">Address</span>
+            <input type="text" id="u-address" placeholder="123 Main St" />
+          </label>
+          <label class="field">
+            <span class="field-label">City</span>
+            <input type="text" id="u-city" placeholder="Denver" />
+          </label>
+          <label class="field">
+            <span class="field-label">State</span>
+            <input type="text" id="u-state" placeholder="CO" maxlength="20" />
+          </label>
+          <label class="field">
+            <span class="field-label">ZIP</span>
+            <input type="text" id="u-zip" placeholder="80202" maxlength="12" />
+          </label>
+          <label class="field">
+            <span class="field-label">PDF file *</span>
+            <input type="file" id="u-file" accept="application/pdf" required />
+          </label>
+
+          <div class="field--wide upload-actions">
+            <button type="submit" id="u-btn" class="btn-primary">Upload report</button>
+            <span id="u-msg" class="msg" role="status"></span>
+          </div>
+        </form>
+      </section>
+
+      <!-- ── Search ─────────────────────────────────────────── -->
+      <section class="panel">
+        <h2 class="panel-title">Search Reports</h2>
+        <form id="search-form" class="grid">
+          <label class="field">
+            <span class="field-label">City</span>
+            <input type="text" id="s-city" placeholder="Denver" />
+          </label>
+          <label class="field">
+            <span class="field-label">State</span>
+            <input type="text" id="s-state" placeholder="CO" />
+          </label>
+          <label class="field">
+            <span class="field-label">ZIP</span>
+            <input type="text" id="s-zip" placeholder="80202" />
+          </label>
+          <div class="field search-actions">
+            <button type="submit" class="btn-primary">Search</button>
+            <button type="button" id="s-clear" class="btn-ghost">Clear</button>
+          </div>
+        </form>
+
+        <p id="results-status" class="results-status">Loading recent reports…</p>
+        <ul id="results" class="results"></ul>
+      </section>
+    </main>
+  </div>
+</AdminLayout>
+
+<script>
+  import { supabase, REPORTS_BUCKET } from '../../lib/supabase';
+
+  const gate = document.getElementById('gate')!;
+  const app = document.getElementById('app')!;
+  const who = document.getElementById('who')!;
+
+  // ── Access guard ──────────────────────────────────────────
+  async function requireAdmin() {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      window.location.replace('/admin/login');
+      return null;
+    }
+    const { data: isAdmin } = await supabase.rpc('is_admin');
+    if (!isAdmin) {
+      await supabase.auth.signOut();
+      window.location.replace('/admin/login');
+      return null;
+    }
+    return data.session;
+  }
+
+  // ── Helpers ───────────────────────────────────────────────
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  function esc(s: string | null | undefined) {
+    return (s ?? '').replace(/[&<>"']/g, (c) => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string
+    ));
+  }
+
+  function fmtDate(d: string | null) {
+    if (!d) return '—';
+    // Date-only string: render without timezone drift.
+    const [y, m, day] = d.split('T')[0].split('-');
+    if (!y) return d;
+    return `${m}/${day}/${y}`;
+  }
+
+  function fmtSize(bytes: number | null) {
+    if (!bytes) return '';
+    const kb = bytes / 1024;
+    return kb < 1024 ? `${kb.toFixed(0)} KB` : `${(kb / 1024).toFixed(1)} MB`;
+  }
+
+  // ── Upload ────────────────────────────────────────────────
+  function initUpload(userId: string) {
+    const form = $('upload-form') as HTMLFormElement;
+    const btn = $('u-btn') as HTMLButtonElement;
+    const msg = $('u-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      msg.className = 'msg';
+
+      const client = ($('u-client') as HTMLInputElement).value.trim();
+      const file = ($('u-file') as HTMLInputElement).files?.[0];
+      if (!client || !file) {
+        msg.textContent = 'Client name and a PDF file are required.';
+        msg.classList.add('msg--err');
+        return;
+      }
+      if (file.type !== 'application/pdf') {
+        msg.textContent = 'Only PDF files are allowed.';
+        msg.classList.add('msg--err');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Uploading…';
+
+      // Unique, collision-proof storage path. Keep the original filename
+      // as a suffix so it is human-recognizable in the bucket.
+      const safeName = file.name.replace(/[^\w.\-]+/g, '_');
+      const path = `${crypto.randomUUID()}-${safeName}`;
+
+      const { error: upErr } = await supabase.storage
+        .from(REPORTS_BUCKET)
+        .upload(path, file, { contentType: 'application/pdf', upsert: false });
+
+      if (upErr) {
+        msg.textContent = `Upload failed: ${upErr.message}`;
+        msg.classList.add('msg--err');
+        btn.disabled = false;
+        btn.textContent = 'Upload report';
+        return;
+      }
+
+      const { error: insErr } = await supabase.from('fire_reports').insert({
+        client_name: client,
+        address: ($('u-address') as HTMLInputElement).value.trim() || null,
+        city: ($('u-city') as HTMLInputElement).value.trim() || null,
+        state: ($('u-state') as HTMLInputElement).value.trim() || null,
+        zip: ($('u-zip') as HTMLInputElement).value.trim() || null,
+        test_date: ($('u-date') as HTMLInputElement).value || null,
+        pdf_path: path,
+        file_name: file.name,
+        file_size: file.size,
+        uploaded_by: userId,
+      });
+
+      if (insErr) {
+        // Roll back the orphaned file if the row insert failed.
+        await supabase.storage.from(REPORTS_BUCKET).remove([path]);
+        msg.textContent = `Save failed: ${insErr.message}`;
+        msg.classList.add('msg--err');
+        btn.disabled = false;
+        btn.textContent = 'Upload report';
+        return;
+      }
+
+      form.reset();
+      msg.textContent = '✓ Report uploaded.';
+      msg.classList.add('msg--ok');
+      btn.disabled = false;
+      btn.textContent = 'Upload report';
+      runSearch(); // refresh the list below
+    });
+  }
+
+  // ── Search / listing ──────────────────────────────────────
+  const results = $('results');
+  const status = $('results-status');
+
+  async function openPdf(path: string, download: boolean, fileName: string) {
+    const { data, error } = await supabase.storage
+      .from(REPORTS_BUCKET)
+      .createSignedUrl(path, 60, download ? { download: fileName } : undefined);
+    if (error || !data) {
+      alert('Could not open file: ' + (error?.message ?? 'unknown error'));
+      return;
+    }
+    if (download) {
+      const a = document.createElement('a');
+      a.href = data.signedUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } else {
+      window.open(data.signedUrl, '_blank', 'noopener');
+    }
+  }
+
+  function render(rows: any[]) {
+    results.innerHTML = '';
+    if (!rows.length) {
+      status.textContent = 'No reports found.';
+      return;
+    }
+    status.textContent = `${rows.length} report${rows.length === 1 ? '' : 's'}`;
+
+    for (const r of rows) {
+      const loc = [r.address, r.city, r.state, r.zip].filter(Boolean).join(', ');
+      // Inline SVGs (no icon-runtime dependency in the admin layout).
+      const openIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>`;
+      const downloadIcon = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>`;
+
+      const li = document.createElement('li');
+      li.className = 'result';
+      li.innerHTML = `
+        <div class="result-main">
+          <p class="result-client">${esc(r.client_name)}</p>
+          <p class="result-loc">${esc(loc) || '—'}</p>
+          <p class="result-meta">
+            <span>Tested: ${fmtDate(r.test_date)}</span>
+            <span>File: ${esc(r.file_name)} ${fmtSize(r.file_size)}</span>
+          </p>
+        </div>
+        <div class="result-actions">
+          <button class="icon-btn" data-act="open" title="Open in browser" aria-label="Open in browser">${openIcon}</button>
+          <button class="icon-btn" data-act="download" title="Download PDF" aria-label="Download PDF">${downloadIcon}</button>
+        </div>`;
+      li.querySelector('[data-act="open"]')!
+        .addEventListener('click', () => openPdf(r.pdf_path, false, r.file_name));
+      li.querySelector('[data-act="download"]')!
+        .addEventListener('click', () => openPdf(r.pdf_path, true, r.file_name));
+      results.appendChild(li);
+    }
+  }
+
+  async function runSearch() {
+    status.textContent = 'Searching…';
+    results.innerHTML = '';
+
+    let q = supabase
+      .from('fire_reports')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(200);
+
+    const city = ($('s-city') as HTMLInputElement).value.trim();
+    const state = ($('s-state') as HTMLInputElement).value.trim();
+    const zip = ($('s-zip') as HTMLInputElement).value.trim();
+    if (city) q = q.ilike('city', `%${city}%`);
+    if (state) q = q.ilike('state', `%${state}%`);
+    if (zip) q = q.ilike('zip', `%${zip}%`);
+
+    const { data, error } = await q;
+    if (error) {
+      status.textContent = 'Error loading reports: ' + error.message;
+      return;
+    }
+    render(data ?? []);
+  }
+
+  function initSearch() {
+    ($('search-form') as HTMLFormElement).addEventListener('submit', (e) => {
+      e.preventDefault();
+      runSearch();
+    });
+    $('s-clear').addEventListener('click', () => {
+      ($('s-city') as HTMLInputElement).value = '';
+      ($('s-state') as HTMLInputElement).value = '';
+      ($('s-zip') as HTMLInputElement).value = '';
+      runSearch();
+    });
+  }
+
+  // ── Boot ──────────────────────────────────────────────────
+  (async () => {
+    const session = await requireAdmin();
+    if (!session) return;
+
+    who.textContent = session.user.email ?? '';
+    gate.hidden = true;
+    app.hidden = false;
+
+    $('logout').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.replace('/admin/login');
+    });
+
+    initUpload(session.user.id);
+    initSearch();
+    runSearch(); // initial "recent reports" listing
+  })();
+</script>
+
+<style>
+  .gate {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rr-grey);
+    font-size: 0.95rem;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 2rem;
+    background: var(--rr-white);
+    border-bottom: 1px solid var(--rr-border-lt);
+  }
+  .topbar-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--rr-red);
+  }
+  .topbar-title {
+    font-family: var(--rr-font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin: 0.2rem 0 0;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 1rem; }
+  .who { font-size: 0.85rem; color: var(--rr-grey); }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .panel {
+    background: var(--rr-white);
+    border: 1px solid var(--rr-border-lt);
+    border-radius: var(--rr-radius-card);
+    padding: 1.75rem;
+  }
+  .panel-title {
+    font-family: var(--rr-font-display);
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field--wide { grid-column: 1 / -1; }
+  .field-label { font-size: 0.8rem; font-weight: 600; }
+  input {
+    font: inherit;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--rr-grey-soft);
+    border-radius: 10px;
+    background: var(--rr-bg-light);
+  }
+  input:focus { border-color: var(--rr-red); outline: none; }
+
+  /* Red "Choose File" button inside the PDF file input */
+  input[type="file"] { padding: 0.45rem 0.55rem; }
+  input[type="file"]::file-selector-button {
+    font: inherit;
+    font-weight: 700;
+    color: var(--rr-white);
+    background: var(--rr-red);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 0.9rem;
+    margin-right: 0.75rem;
+    cursor: pointer;
+    transition: background var(--rr-dur-fast);
+  }
+  input[type="file"]::file-selector-button:hover { background: var(--rr-red-hover); }
+
+  .upload-actions, .search-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .search-actions { align-self: end; }
+
+  .btn-primary {
+    font: inherit;
+    font-weight: 700;
+    color: var(--rr-white);
+    background: var(--rr-red);
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 1.4rem;
+    cursor: pointer;
+    transition: background var(--rr-dur-fast);
+  }
+  .btn-primary:hover { background: var(--rr-red-hover); }
+  .btn-primary:disabled { opacity: 0.6; cursor: default; }
+
+  .btn-ghost {
+    font: inherit;
+    font-weight: 600;
+    color: var(--rr-black);
+    background: transparent;
+    border: 1px solid var(--rr-grey-soft);
+    border-radius: 10px;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    transition: border-color var(--rr-dur-fast), color var(--rr-dur-fast);
+  }
+  .btn-ghost:hover { border-color: var(--rr-red); color: var(--rr-red); }
+
+  .msg { font-size: 0.85rem; font-weight: 600; }
+  .msg--ok { color: #1a7f37; }
+  .msg--err { color: var(--rr-red); }
+
+  .results-status {
+    margin: 1.25rem 0 0.75rem;
+    font-size: 0.85rem;
+    color: var(--rr-grey);
+  }
+  .results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  /* Card-style result. These elements are injected via JS innerHTML, so they
+   * carry no scoped-style attribute — the rules must be :global to reach them.
+   * padding-bottom leaves room for the action icons pinned bottom-right. */
+  :global(.result) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.25rem 3.5rem;
+    border: 1px solid var(--rr-border-lt);
+    border-radius: var(--rr-radius-card);
+    background: var(--rr-white);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    transition: box-shadow var(--rr-dur-fast), transform var(--rr-dur-fast);
+  }
+  :global(.result:hover) {
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+  :global(.result-client) { margin: 0; font-weight: 700; font-size: 1.05rem; }
+  :global(.result-loc) { margin: 0.35rem 0 0; font-size: 0.9rem; color: var(--rr-black); }
+  :global(.result-meta) {
+    margin: 0.75rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--rr-grey);
+  }
+
+  :global(.result-actions) {
+    position: absolute;
+    bottom: 1rem;
+    right: 1.1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  :global(.icon-btn) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: var(--rr-black);
+    background: var(--rr-bg-light);
+    border: 1px solid var(--rr-grey-soft);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background var(--rr-dur-fast), color var(--rr-dur-fast), border-color var(--rr-dur-fast);
+  }
+  :global(.icon-btn:hover) {
+    color: var(--rr-white);
+    background: var(--rr-red);
+    border-color: var(--rr-red);
+  }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .topbar { padding: 1rem 1.25rem; }
+    .results { grid-template-columns: 1fr; }
+  }
+</style>

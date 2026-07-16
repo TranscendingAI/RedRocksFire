@@ -1,0 +1,173 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Admin Login — Red Rocks Fire Protection">
+  <main class="login-wrap">
+    <div class="login-card">
+      <div class="login-brand">
+        <span class="login-eyebrow">Red Rocks Fire Protection</span>
+        <h1 class="login-title">Fire Reports Portal</h1>
+        <p class="login-sub">Authorized personnel only. Please sign in to continue.</p>
+      </div>
+
+      <form id="login-form" class="login-form" novalidate>
+        <label class="field">
+          <span class="field-label">Email</span>
+          <input type="email" id="email" name="email" autocomplete="username"
+                 required placeholder="you@rrfps.com" />
+        </label>
+
+        <label class="field">
+          <span class="field-label">Password</span>
+          <input type="password" id="password" name="password"
+                 autocomplete="current-password" required placeholder="••••••••" />
+        </label>
+
+        <p id="login-error" class="login-error" role="alert" hidden></p>
+
+        <button type="submit" id="login-btn" class="btn-primary">Sign In</button>
+      </form>
+
+      <a href="/" class="login-back" data-astro-reload>&larr; Back to site</a>
+    </div>
+  </main>
+</AdminLayout>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+
+  const form = document.getElementById('login-form') as HTMLFormElement;
+  const emailEl = document.getElementById('email') as HTMLInputElement;
+  const passEl = document.getElementById('password') as HTMLInputElement;
+  const errEl = document.getElementById('login-error') as HTMLParagraphElement;
+  const btn = document.getElementById('login-btn') as HTMLButtonElement;
+
+  function showError(msg: string) {
+    errEl.textContent = msg;
+    errEl.hidden = false;
+  }
+
+  // If already signed in as an admin, skip straight to the dashboard.
+  (async () => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+      const { data: isAdmin } = await supabase.rpc('is_admin');
+      if (isAdmin) window.location.replace('/admin');
+    }
+  })();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errEl.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Signing in…';
+
+    const email = emailEl.value.trim();
+    const password = passEl.value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error || !data.session) {
+      showError('Incorrect email or password.');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+      return;
+    }
+
+    // Confirm the account is on the admin allowlist before letting them in.
+    const { data: isAdmin } = await supabase.rpc('is_admin');
+    if (!isAdmin) {
+      await supabase.auth.signOut();
+      showError('This account is not authorized for the reports portal.');
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+      return;
+    }
+
+    window.location.replace('/admin');
+  });
+</script>
+
+<style>
+  .login-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.25rem;
+  }
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--rr-white);
+    border: 1px solid var(--rr-border-lt);
+    border-radius: var(--rr-radius-card);
+    padding: 2.5rem 2rem;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+  }
+  .login-brand { text-align: center; margin-bottom: 2rem; }
+  .login-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--rr-red);
+  }
+  .login-title {
+    font-family: var(--rr-font-display);
+    font-size: 1.9rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin: 0.5rem 0 0.4rem;
+  }
+  .login-sub { margin: 0; color: var(--rr-grey); font-size: 0.9rem; }
+
+  .login-form { display: flex; flex-direction: column; gap: 1.1rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--rr-black);
+  }
+  input {
+    font: inherit;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--rr-grey-soft);
+    border-radius: 10px;
+    background: var(--rr-bg-light);
+    transition: border-color var(--rr-dur-fast);
+  }
+  input:focus { border-color: var(--rr-red); outline: none; }
+
+  .btn-primary {
+    font: inherit;
+    font-weight: 700;
+    color: var(--rr-white);
+    background: var(--rr-red);
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    margin-top: 0.25rem;
+    transition: background var(--rr-dur-fast);
+  }
+  .btn-primary:hover { background: var(--rr-red-hover); }
+  .btn-primary:disabled { opacity: 0.6; cursor: default; }
+
+  .login-error {
+    margin: 0;
+    color: var(--rr-red);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .login-back {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--rr-grey);
+    text-decoration: none;
+  }
+  .login-back:hover { color: var(--rr-black); }
+</style>
