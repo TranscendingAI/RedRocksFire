@@ -85,12 +85,19 @@ export interface City {
   ahj: AhjInfo;
   /** Neighborhood / district list. */
   neighborhoods: Neighborhood[];
+  /** Local overview shown above the neighborhood cards. */
+  neighborhoodIntro: string;
   /** Building stock paragraph — describes the typical property mix. */
   buildingStock: string;
   /** Ordered list of services offered in this city. */
   servicesOffered: { title: string; body: string }[];
+  /** Local overview shown above the service cards. */
+  servicesIntro: string;
   /** Industries most commonly served in this city. */
   industriesServed: string[];
+  /** Heading and context for the local deficiencies accordion. */
+  deficienciesTitle: string;
+  deficienciesIntro: string;
   /** Common inspection deficiencies observed in this region's properties (phrased as guidance). */
   commonDeficiencies: { title: string; body: string }[];
   /** FAQ items for FAQPage schema. */
@@ -156,6 +163,9 @@ export const cities: City[] = [
       { name: 'East Arapahoe / Havana', type: 'Retail', note: 'Grocery-anchored retail strips; Ansul kitchen-hood suppression and sprinkler-obstruction clearances are common deficiency sources.' },
     ],
 
+    neighborhoodIntro:
+      'We work across the full mix of property types in Centennial — from established single-family neighborhoods off Arapahoe Road to Class-A office and flex-industrial space along the I-25 / E-470 corridor. Below are the named areas and corridors our technicians cover most often.',
+
     buildingStock:
       'Centennial’s housing stock is dominated by single-family residential built primarily between the late 1970s and the early 2000s, anchored by master-planned communities like Willow Creek and Heritage Place. Commercial property is concentrated along three corridors: the Arapahoe Road office-and-retail spine (Centennial Center), the I-25 / Dry Creek / Inverness flex-industrial and Class-A office cluster, and the retail concentrations at Streets at SouthGlenn and Park Meadows. Multi-family housing is mostly garden-style apartments and townhome communities, with an increasing share of mid-rise residential above retail in the SouthGlenn submarket. Light industrial and last-mile warehouse space has grown along the eastern edge of the city, near Jordan Road and the Parker corridor.',
 
@@ -198,6 +208,9 @@ export const cities: City[] = [
       },
     ],
 
+    servicesIntro:
+      'Every service below is run by NICET- or CSA-certified technicians, with reports formatted to South Metro Fire Rescue Authority’s preferred layout — so corrections are approved without rework.',
+
     industriesServed: [
       'HOA & community associations',
       'Multi-family property management',
@@ -212,6 +225,10 @@ export const cities: City[] = [
       'Data centers and server rooms',
       'Religious and community facilities',
     ],
+
+    deficienciesTitle: 'What South Metro Fire Rescue Authority flags most often on Centennial inspections.',
+    deficienciesIntro:
+      'These are the recurring deficiency categories we see across Centennial properties. None of this is a citation from a specific property — it’s the pattern of findings our technicians document and correct most frequently in this jurisdiction.',
 
     commonDeficiencies: [
       {
@@ -301,6 +318,221 @@ export const cities: City[] = [
       keywords:
         'fire protection Centennial CO, fire inspections Centennial, sprinkler inspection Centennial, fire alarm testing Centennial, backflow testing Centennial, kitchen hood suppression Centennial, fire protection company Centennial Colorado, South Metro Fire Rescue inspections',
       canonical: '/service-areas/centennial-co/',
+    },
+  },
+
+  // ──────────────────────────────────────────────────────────────────
+  // DENVER, COLORADO
+  // Sources checked July 2026:
+  // - Denver Fire Safety Inspections (annual cadence and common violations)
+  // - Denver Fire Permits & Licensing (DFD authority, permits, licensing)
+  // - 2022 Denver Building and Fire Code (local amendments and standards)
+  // - Denver System Down Reporting and Firewatch requirements
+  // ──────────────────────────────────────────────────────────────────
+  {
+    slug: 'denver-co',
+    city: 'Denver',
+    state: 'CO',
+    county: 'City and County of Denver',
+    bannerTitle: 'Fire Protection Services in Denver, CO',
+    bannerSubtitle: 'DENVER FIRE PROTECTION',
+    // TODO: replace with a Denver-specific skyline or Red Rocks jobsite photo.
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+
+    heroIntro:
+      'Denver properties range from century-old masonry buildings and converted warehouses to high-rise offices, dense apartment communities, commercial kitchens, healthcare facilities, and distribution space. That variety creates very different life-safety needs from one block to the next. Red Rocks Fire Protection helps Denver owners and property managers keep sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated under one vendor — with documentation prepared for the Denver Fire Department’s requirements.',
+
+    ahj: {
+      name: 'Denver Fire Department Fire Prevention Division',
+      adoptedNFPA: [
+        '2022 Denver Fire Code — based on the 2021 International Fire Code with Denver amendments',
+        'NFPA 13 (Installation of Sprinkler Systems) — 2022 edition',
+        'NFPA 13D and NFPA 13R (Residential Sprinkler Systems) — 2022 editions',
+        'NFPA 14 (Standpipe and Hose Systems) — 2019 edition',
+        'NFPA 20 (Installation of Stationary Pumps for Fire Protection) — 2022 edition',
+        'NFPA 72 (National Fire Alarm and Signaling Code) — 2022 edition',
+        'NFPA National Fire Codes Set — 2022 edition unless specifically noted otherwise',
+      ],
+      nonEmergencyPhone: '(720) 913-3474',
+      website: 'https://www.denvergov.org/fire',
+      note:
+        'The Denver Fire Department Fire Prevention Division conducts Denver’s annual commercial occupancy inspections and administers fire-system permitting, plan review, acceptance testing, and technician licensing. Denver requires Fire Department licenses for people who design, install, modify, inspect, or test regulated life-safety systems. Construction permits are required for new or modified sprinkler, standpipe, fire alarm, fire pump, and other regulated systems; the Denver Fire Code also requires permits for many maintenance activities, subject to listed exceptions.',
+    },
+
+    neighborhoods: [
+      { name: 'Downtown / Central Business District', type: 'Commercial Corridor', note: 'High-rise offices, hotels, assembly occupancies, and mixed-use towers with standpipes, fire pumps, voice evacuation, and smoke-control interfaces.' },
+      { name: 'LoDo', type: 'Mixed-Use', note: 'Historic masonry buildings adapted for restaurants, offices, retail, and residential use; tenant changes often affect alarms, sprinklers, egress, and kitchen suppression.' },
+      { name: 'RiNo Art District', type: 'Mixed-Use', note: 'Converted warehouses, new mid-rise apartments, breweries, galleries, and event spaces with changing hazards and occupancy loads.' },
+      { name: 'Five Points', type: 'Mixed-Use', note: 'Historic commercial buildings alongside new multi-family projects; system records, extinguisher access, and build-out coordination matter at turnover.' },
+      { name: 'Cherry Creek', type: 'Retail', note: 'Retail, restaurants, hotels, offices, and multi-family towers with dense tenant turnover and interconnected fire-alarm and sprinkler scopes.' },
+      { name: 'Capitol Hill', type: 'Residential', note: 'Older apartment and condominium buildings where common-area extinguishers, alarm devices, egress paths, and inspection logs require close attention.' },
+      { name: 'Highland / LoHi', type: 'Mixed-Use', note: 'Restaurants and neighborhood retail mixed with newer apartment and condominium projects; hood suppression and shared life-safety systems are common.' },
+      { name: 'South Broadway / Baker', type: 'Retail', note: 'Older storefronts, entertainment venues, restaurants, and adaptive-reuse buildings with frequent tenant-improvement and change-of-use work.' },
+      { name: 'Central Park', type: 'Master-Planned', note: 'Newer multi-family, schools, retail centers, medical offices, and large commercial properties with modern integrated systems.' },
+      { name: 'Montbello', type: 'Residential', note: 'Apartment communities, schools, neighborhood retail, and light-commercial properties across northeast Denver.' },
+      { name: 'Globeville / Elyria-Swansea', type: 'Industrial', note: 'Warehouses, fabrication, logistics, and mixed industrial uses where storage configuration, commodity hazards, and fire access shape sprinkler requirements.' },
+      { name: 'Denver International Airport corridor', type: 'Commercial Corridor', note: 'Hotels, logistics, warehouse, fleet, and airport-support facilities with larger system footprints and specialized operational hazards.' },
+    ],
+
+    neighborhoodIntro:
+      'Our Denver service area spans the high-rise and historic core, neighborhood commercial districts, multi-family corridors, industrial properties along I-70, and the airport market. Each district has a different mix of building age, occupancy, and system complexity, so we scope the work around the property rather than applying a one-size-fits-all checklist.',
+
+    buildingStock:
+      'Denver’s building stock layers multiple eras of development: historic brick and masonry storefronts in LoDo, Five Points, Baker, and Capitol Hill; downtown high-rises with standpipes, fire pumps, voice evacuation, and smoke-control systems; converted RiNo warehouses now used as restaurants, offices, breweries, and event venues; postwar apartment communities; and rapidly growing mid-rise and high-rise residential construction. Industrial and logistics facilities cluster along I-70 and toward Denver International Airport. That mix makes tenant-improvement coordination especially important — a new wall, ceiling, storage arrangement, commercial cooking line, or change of occupancy can affect sprinkler coverage, alarm notification, egress, permits, and acceptance testing.',
+
+    servicesOffered: [
+      {
+        title: 'Fire-Protection System Inspections',
+        body: 'Code-driven inspection, testing, and maintenance for sprinklers, alarms, extinguishers, pumps, standpipes, backflow assemblies, and suppression systems — with clear reports for your property records and Denver Fire review.',
+      },
+      {
+        title: 'Fire Sprinkler, Standpipe & Pump Testing',
+        body: 'Wet, dry, preaction, and standpipe systems tested on the required NFPA cadence, including valves, drains, fire department connections, pumps, and prioritized deficiency documentation.',
+      },
+      {
+        title: 'Fire Alarm Testing & Service',
+        body: 'Functional testing of initiating devices, notification appliances, supervising signals, control equipment, secondary power, and system interfaces, coordinated to limit disruption in occupied buildings.',
+      },
+      {
+        title: '24/7 Alarm Monitoring',
+        body: 'Central-station monitoring and signal response for Denver properties, with account information, contacts, and dispatch procedures kept current as tenants and building staff change.',
+      },
+      {
+        title: 'System-Down & Fire-Watch Support',
+        body: 'Fast response when a sprinkler or alarm system is impaired, including repair coordination, outage documentation, and guidance through Denver’s system-down reporting and fire-watch process.',
+      },
+      {
+        title: 'Backflow Prevention',
+        body: 'Testing, repair, and documentation for fire-line and domestic backflow assemblies, coordinated with the applicable water provider and the fire-protection system’s service schedule.',
+      },
+      {
+        title: 'Fire Extinguisher Service',
+        body: 'Inspection, tagging, maintenance, hydrostatic testing, recharging, placement review, and logbook support for portable extinguishers throughout commercial and multi-family properties.',
+      },
+      {
+        title: 'Kitchen Hood Suppression',
+        body: 'Inspection and service for commercial cooking suppression systems in Denver restaurants, hotels, commissaries, food halls, schools, and institutional kitchens.',
+      },
+      {
+        title: 'Special Hazard & Clean-Agent Systems',
+        body: 'Inspection and maintenance for clean-agent, carbon-dioxide, dry-chemical, and other special systems protecting data rooms, industrial processes, archives, and critical equipment.',
+      },
+      {
+        title: 'Permitting & Life-Safety Coordination',
+        body: 'Scope development, construction-permit coordination, acceptance-test preparation, and correction management for Denver tenant improvements, system modifications, and property transitions.',
+      },
+    ],
+
+    servicesIntro:
+      'Denver Fire requires current local licenses for technicians who inspect and test regulated life-safety systems. We coordinate the systems under one service program and keep NFPA or Denver Fire forms, license information, and correction records organized for the property.',
+
+    industriesServed: [
+      'Commercial property management',
+      'Multi-family apartments and condominiums',
+      'High-rise office and mixed-use',
+      'Restaurants, bars, and commercial kitchens',
+      'Hotels and hospitality',
+      'Retail centers and neighborhood storefronts',
+      'Warehouse, logistics, and light industrial',
+      'Healthcare and assisted living',
+      'Education and childcare',
+      'Entertainment and assembly venues',
+      'Data centers and server rooms',
+      'HOA and community associations',
+    ],
+
+    deficienciesTitle: 'Common Denver Fire inspection issues to address before the inspector arrives.',
+    deficienciesIntro:
+      'Denver Fire publishes several preventable violations for property teams to watch. The Denver-specific items below combine that guidance with documentation and system-impairment requirements in the Denver Fire Code.',
+
+    commonDeficiencies: [
+      {
+        title: 'Extinguisher service is out of date or records are missing',
+        body: 'Denver lists out-of-date extinguishers and unavailable logbooks among its common violations. We verify placement and condition, complete required service, and leave organized records on site for the next Fire Prevention inspection.',
+      },
+      {
+        title: 'Egress paths are narrowed or obstructed',
+        body: 'Denver requires egress pathways to remain at least 36 inches wide. Furniture, merchandise, deliveries, or stored material can turn an ordinary corridor into an inspection finding and a real evacuation hazard.',
+      },
+      {
+        title: 'Exit doors do not provide single-motion egress',
+        body: 'Added deadbolts, surface bolts, chains, or other tenant-installed hardware can prevent a door from opening with one releasing motion. We identify the issue early and coordinate the right correction before inspection.',
+      },
+      {
+        title: 'Storage has moved outside approved areas',
+        body: 'Denver identifies storage outside designated areas as a common violation. Changes in stock, rack height, or room use can also alter sprinkler clearances and the hazard the original system was designed to protect.',
+      },
+      {
+        title: 'Knox Box keys and emergency contacts are outdated',
+        body: 'Denver requires current building-access keys for fire-department use. Locks, tenants, alarm panels, and property managers change; the emergency-access set and contact list need to change with them.',
+      },
+      {
+        title: 'Inspection and testing records are not kept on site',
+        body: 'Denver Fire Code Section 901.6.3 requires records of system installation, inspection, testing, and maintenance to remain on the premises using NFPA or Denver Fire forms, with the service provider’s Denver license number legible.',
+      },
+      {
+        title: 'A system impairment was not reported',
+        body: 'Denver requires notification whenever a fire alarm or sprinkler system is compromised. If the system remains down beyond 10 hours, a fire-watch permit is required; interruption of a fire water line triggers the fire-watch permit process immediately.',
+      },
+    ],
+
+    faq: [
+      {
+        question: 'Who is the Authority Having Jurisdiction for fire inspections in Denver, Colorado?',
+        answer: 'The Denver Fire Department Fire Prevention Division is the fire-code AHJ inside the City and County of Denver. It conducts commercial occupancy inspections and administers life-safety system permitting, plan review, acceptance testing, and licensing.',
+      },
+      {
+        question: 'Which fire code does Denver use?',
+        answer: 'Denver publishes the 2022 Denver Building and Fire Code. The Denver Fire Code is based on the 2021 International Fire Code with local Denver amendments. Its referenced standards include the 2022 editions of NFPA 13, NFPA 13D, NFPA 13R, NFPA 20, and NFPA 72, plus the 2019 edition of NFPA 14.',
+      },
+      {
+        question: 'How often does the Denver Fire Department inspect commercial properties?',
+        answer: 'Denver states that Fire Safety Inspections occur once per year for commercial occupancies, including businesses, schools, apartment buildings, and institutions. Marijuana facilities receive inspections twice per year. These city inspections are separate from the recurring system inspection, testing, and maintenance performed by a fire-protection contractor.',
+      },
+      {
+        question: 'Does Denver require licensed fire-protection technicians?',
+        answer: 'Yes. The Denver Fire Code requires Denver Fire Department licenses for people performing regulated design, installation, modification, inspection, testing, maintenance, and repair on life-safety systems and equipment. The required license category depends on the system and scope.',
+      },
+      {
+        question: 'Do sprinkler and fire-alarm repairs require permits in Denver?',
+        answer: 'Denver requires construction permits before installing or modifying sprinkler, standpipe, fire-pump, alarm, and related systems. The code also treats many repairs and maintenance activities as permit work, while listing limited exceptions for minor work and approved emergency procedures. We confirm the scope before work begins and coordinate the appropriate permit path.',
+      },
+      {
+        question: 'What should I do if a fire alarm or sprinkler system goes down in Denver?',
+        answer: 'Notify the Denver Fire Department through its System Down Reporting website whenever a fire alarm or sprinkler system is compromised, and notify the monitoring company. If the outage exceeds 10 hours, Denver requires a fire-watch permit. Any interruption of a fire water line requires the fire-watch permit process immediately.',
+      },
+      {
+        question: 'What records should a Denver property keep for its fire-protection systems?',
+        answer: 'Denver Fire Code Section 901.6.3 requires records of system installations, inspections, tests, and maintenance to be maintained on the premises. Records must use NFPA forms or Denver Fire Department forms and show the service person’s name and Denver Fire Department license number legibly.',
+      },
+      {
+        question: 'How quickly can Red Rocks Fire Protection respond in Denver?',
+        answer: 'Denver is part of our core metro service area. We provide 24/7 emergency response and typically target arrival within 90 minutes for Denver Metro fire-protection emergencies, depending on technician location, traffic, site access, and the system involved.',
+      },
+    ],
+
+    ctaPair: [
+      {
+        title: 'Schedule a Denver Inspection.',
+        descriptor: 'Tell us about the building and systems you manage. We’ll coordinate the right technician and a scope built around Denver’s code, licensing, and documentation requirements.',
+        href: '/contact',
+        label: 'Get in touch',
+      },
+      {
+        title: 'See All Our Services.',
+        descriptor: 'Bring sprinklers, alarms, monitoring, extinguishers, suppression, backflow, and life-safety coordination under one accountable vendor.',
+        href: '/services',
+        label: 'Browse services',
+      },
+    ],
+
+    meta: {
+      title: 'Fire Protection Services in Denver, CO | Red Rocks Fire Protection',
+      description:
+        'Fire sprinkler, alarm, extinguisher, monitoring, suppression, backflow, and inspection services for Denver properties. Denver Fire Code–ready documentation and 24/7 emergency response.',
+      keywords:
+        'fire protection Denver CO, fire sprinkler inspection Denver, fire alarm testing Denver, fire extinguisher service Denver, kitchen hood suppression Denver, backflow testing Denver, Denver Fire Department inspections, Denver Fire Code',
+      canonical: '/service-areas/denver-co/',
     },
   },
 ];

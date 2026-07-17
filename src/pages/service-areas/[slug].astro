@@ -206,9 +206,7 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
           <span>Where we work in {city.city}</span>
         </div>
         <h2 class="city-neigh__title">{city.city} neighborhoods and districts we serve.</h2>
-        <p class="city-neigh__lede">
-          We work across the full mix of property types in {city.city} — from established single-family neighborhoods off Arapahoe Road to Class-A office and flex-industrial space along the I-25 / E-470 corridor. Below are the named areas and corridors our technicians cover most often.
-        </p>
+        <p class="city-neigh__lede">{city.neighborhoodIntro}</p>
 
         <div class="city-neigh__grid">
           {city.neighborhoods.map((n) => (
@@ -232,9 +230,7 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
           <span>Services in {city.city}</span>
         </div>
         <h2 class="city-services__title">What we do for {city.city} properties.</h2>
-        <p class="city-services__lede">
-          Every service below is run by NICET- or CSA-certified technicians, with reports formatted to {city.ahj.name}'s preferred layout — so corrections are approved without rework.
-        </p>
+        <p class="city-services__lede">{city.servicesIntro}</p>
 
         <div class="city-services__grid">
           {city.servicesOffered.map((s) => (
@@ -274,10 +270,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
           <span class="divider-icon" set:html={diamondIcon} />
           <span>Common findings in {city.city}</span>
         </div>
-        <h2 class="city-def__title">What {city.ahj.name} flags most often on {city.city} inspections.</h2>
-        <p class="city-def__lede">
-          These are the recurring deficiency categories we see across {city.city} properties. None of this is a citation from a specific property — it's the pattern of findings our technicians document and correct most frequently in this jurisdiction.
-        </p>
+        <h2 class="city-def__title">{city.deficienciesTitle}</h2>
+        <p class="city-def__lede">{city.deficienciesIntro}</p>
 
         <div class="acc city-def__list">
           {city.commonDeficiencies.map((d, i) => (
@@ -572,6 +566,10 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+  .city-neigh__tag--residential {
+    background: rgba(34, 139, 60, 0.10);
+    color: #1f7d3a;
   }
   .city-neigh__name {
     margin: 0 0 10px;
