@@ -162,88 +162,163 @@ export const home = {
 
 export const about = {
   seo: {
-    title: 'About | Red Rocks Fire Protection',
+    title: 'About Red Rocks Fire Protection Services | Colorado Life Safety Partner',
     description:
-      'Family-owned fire protection company established in 2010. 200+ years of combined experience. NICET and CSA certified. Serving Colorado.',
+      'Meet Red Rocks Fire Protection Services, a Colorado-based, family-owned life safety company delivering comprehensive fire protection and compliance solutions since 2010.',
   },
-  hero: {
-    title: 'Expert Fire Protection Services.',
-    highlight: 'Expert',
-    body: 'We are Red Rocks Fire Protection, a family-owned fire inspection service company established in 2010. Our team is like a family, and we treat our customers as part of that family. With over 200 years of combined experience, we are dedicated to honesty, trust, and accountability. We are committed to delivering top-quality service at competitive prices, ensuring the safety and peace of mind of both our clients and their property through the highest standards in fire protection services.',
-    ctaLabel: 'Schedule Our Services',
-    ctaHref: '/contact',
+  banner: {
+    title: 'About Us.',
+    subtitle: 'About Red Rocks Fire Protection Services',
+    backgroundImage: '/images/the-red-rocks-of-the-canyon.jpg',
   },
-  /** Section §5 of Brand Strategy — positioning narrative. */
-  positioningNarrative: {
-    eyebrow: 'Who We Are',
-    title: 'Our Core Values.',
-    body: 'At Red Rocks Fire Protection, delivering exceptional service goes beyond competitive pricing. We are committed to upholding the principles of honesty, trust, and accountability in everything we do — ensuring our clients receive reliable, high-quality fire protection solutions, and a partner who actually shows up.',
-    ctaLabel: 'See Our Services',
-    ctaHref: '/services',
-  },
-  /** Brand Strategy §14 — 5 core values. */
-  coreValues: [
+  fastFacts: [
     {
-      title: 'Safety First — Always.',
-      body: 'Protecting lives and property is both a responsibility and a privilege. Every system, every service call, every inspection — approached with duty, accountability, and care.',
+      title: 'Who We Are',
+      body: 'A local, family-owned, life safety company serving Colorado since 2010.',
+      icon: 'solar:users-group-rounded-bold-duotone',
     },
     {
-      title: 'Advocacy for Our Clients.',
-      body: 'We stay ahead of evolving fire codes, legislation, and jurisdictional changes. Then we share what we learn — proactively, before they become problems for you.',
+      title: 'What We Do',
+      body: 'Provide full-service fire protection service & systems and compliance solutions.',
+      icon: 'solar:shield-check-bold-duotone',
     },
     {
-      title: 'Go the Extra Mile.',
-      body: 'Personal ownership until the job is done right and the customer is informed. Reliability is non-negotiable.',
+      title: 'Why We Do It',
+      body: 'To protect lives and property.',
+      icon: 'solar:heart-pulse-2-bold-duotone',
     },
     {
-      title: 'Character.',
-      body: 'Integrity, respect, accountability, professionalism — in how we communicate, honor commitments, perform work, and represent RRFPS every day.',
+      title: 'How We Do It',
+      body: 'Through a proven process built on accountability, reliability, and communication.',
+      icon: 'solar:settings-bold-duotone',
     },
     {
-      title: 'One Family.',
-      body: 'Team above self. We treat employees, customers, and partners like family — the foundation John and Brian Kakac built from the very beginning.',
+      title: 'What Sets Us Apart',
+      body: 'One Vendor Life Safety Solution and proactive client advocacy.',
+      icon: 'solar:star-bold-duotone',
+    },
+    {
+      title: 'Why Choose Us',
+      body: 'Reliable service, expert guidance, and long-term partnership.',
+      icon: 'solar:hand-heart-bold-duotone',
     },
   ] as const,
-  /** Brand Strategy §13 — Mission. */
-  mission:
-    'To protect lives and property by delivering proactive, reliable, and fully integrated life safety solutions, while guiding clients through compliance with clarity and accountability.',
-  /** Brand Strategy §12 — Vision. */
-  vision:
-    'To become the most trusted life safety partner in Colorado, recognized for simplifying compliance, protecting communities, and delivering unmatched service.',
-  /** Brand Strategy §18 — CEO message; first-person quote form. */
+  companyOverview: {
+    eyebrow: 'Company Overview',
+    title: 'One Partner. Total Life Safety Confidence.',
+    paragraphs: [
+      'Red Rocks Fire Protection Services is a Colorado-based, family-owned life safety company established in 2010, delivering comprehensive fire protection and compliance solutions across the Denver Front Range.',
+      'We specialize in protecting lives and property through a full-service, single-source approach, serving multi-family communities, commercial facilities, retail centers, healthcare environments, and more.',
+      'With a team of highly certified professionals and a proven track record of service since 2010, Red Rocks Fire Protection Services delivers reliable, compliant, and expertly managed life safety systems, built on trust, accountability, and long-term partnership.',
+    ] as const,
+    image: '/images/rrfps-about-total-life-safety.jpg',
+    imageAlt: 'Red Rocks Fire Protection total life safety services',
+  },
+  whyWeExist: {
+    eyebrow: 'Why We Exist',
+    title: 'Protecting Lives, Property, and Peace of Mind.',
+    statement:
+      'We exist to protect lives and property by simplifying life safety compliance and serving as a proactive partner for property owners and managers.',
+    body: 'At Red Rocks Fire Protection Services, we believe safety is not optional and delivering it is both a responsibility and a privilege. We take that responsibility seriously, approaching every system, every service, and every client relationship with a deep sense of duty and passion. Our purpose is to bring clarity, reliability, and confidence to every client we serve.',
+    image: '/images/rrfps-about-protecting-lives.jpg',
+  },
+  capabilities: {
+    eyebrow: 'Our Capabilities',
+    title: 'Your One Vendor Life Safety Solution.',
+    intro: 'We deliver a fully integrated One Vendor Life Safety Solution, including:',
+    closing: 'All managed through one coordinated team.',
+    items: [
+      { title: 'Inspections', icon: 'solar:clipboard-check-bold-duotone', href: '/inspections' },
+      { title: 'Fire Sprinkler Service & Systems', icon: 'solar:waterdrops-bold-duotone', href: '/fire-sprinkler-service-and-systems' },
+      { title: 'Fire Alarm Service & Systems', icon: 'solar:alarm-bold-duotone', href: '/services' },
+      { title: 'Monitoring Services', icon: 'solar:monitor-camera-bold-duotone', href: '/services' },
+      { title: 'Backflow Prevention Assemblies', icon: 'solar:water-bold-duotone', href: '/services' },
+      { title: 'Portable Fire Extinguishers', icon: 'solar:fire-bold-duotone', href: '/services' },
+      { title: 'Distributed Antenna Systems (DAS)', icon: 'solar:wi-fi-router-bold-duotone', href: '/services' },
+      { title: 'Security System Installation & Monitoring', icon: 'solar:shield-keyhole-bold-duotone', href: '/services' },
+      { title: 'Kitchen Hood Suppression Systems', icon: 'solar:chef-hat-bold-duotone', href: '/services' },
+      { title: 'Area of Refuge Communication Systems', icon: 'solar:chat-round-call-bold-duotone', href: '/services' },
+      { title: 'Consulting Services', icon: 'solar:document-text-bold-duotone', href: '/services' },
+      { title: '24 Hour Service', icon: 'solar:clock-circle-bold-duotone', href: '/contact' },
+    ] as const,
+  },
+  industries: {
+    eyebrow: 'Industries We Serve',
+    title: 'Built to Protect Every Kind of Property.',
+    items: [
+      { title: 'Multi-Family Management Companies', href: '/multi-family-management-companies' },
+      { title: 'Commercial Property & Management Companies', href: '/commercial-property' },
+      { title: 'Religious Institutions / Churches', href: '/religious-institutions' },
+      { title: 'Assisted Living Facilities & Healthcare', href: '/assisted-living' },
+      { title: 'Education / Universities', href: '/education' },
+      { title: 'Warehouse / Storage / Industrial', href: '/warehouse-industrial' },
+      { title: 'HOA Management Companies', href: '/hoa-management' },
+      { title: 'Hotels & Hospitality', href: '/hotels-hospitality' },
+      { title: 'Retail & Shopping Centers', href: '/retail' },
+      { title: 'Restaurants & Food Trucks', href: '/restaurants' },
+      { title: 'Financial Institutions / Banks', href: '/financial' },
+      { title: 'Automotive Dealerships & Service Centers', href: '/automotive' },
+      { title: 'Data Centers', href: '/data-centers' },
+      { title: 'General Contractors', href: '/general-contractors' },
+    ] as const,
+  },
   ceoMessage: {
-    greeting: `Hi, I’m Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services.`,
-    body: 'Since 2010, we’ve proudly served property owners and managers across Colorado, helping protect what matters most — your employees, your residents, your tenants, your properties, your buildings, and your peace of mind. We live here, we work here, and we’re deeply committed to protecting the communities we serve like they’re our own.\n\nWhen you partner with us, you’re not just hiring a fire protection company — you’re gaining a team that understands the responsibility you carry every day. We built our company around a One Vendor Life Safety Solution: one trusted partner to manage inspections, service, repairs, and compliance.\n\nIf you’re looking for a responsive, experienced partner who shows up when it matters most, we’re ready to earn your business.',
-    signOff: 'Sincerely,',
-    signName: 'Brian Kakac',
-    signTitle: 'CEO & Owner, Red Rocks Fire Protection Services',
+    eyebrow: 'Message from Our CEO',
+    title: 'Our CEO’s Message.',
+    greeting: 'Greetings from the CEO & Owner of Red Rocks Fire Protection Services.',
+    intro: 'Hi, I’m Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services.',
+    body: 'Since 2010, we’ve proudly served property owners and managers across Colorado, helping protect what matters most: your employees, your residents, your tenants, your properties, your buildings, and your peace of mind. We live here, we work here, and we’re deeply committed to protecting the communities we serve like they’re our own. I would love the opportunity to earn your business.',
+    image: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png',
+    imageAlt: 'Brian Kakac, CEO and Owner of Red Rocks Fire Protection Services',
   },
-  /** Brand Strategy §15 — 7 promises. */
-  promises: [
-    'We promise to lead with safety. Safety at the center of every decision, every system, every service.',
-    'We promise to advocate for our clients. Proactively stay ahead of evolving fire codes, legislation, and compliance.',
-    'We promise to do what we say. Honor commitments, communicate clearly, follow through without surprises.',
-    'We promise to show up when we say we will. Reliable, responsive, prepared, respectful of your time.',
-    `We promise to respond when it matters most. ${contact.serviceAvailability} with a ${contact.emergencyResponseMetro}.`,
-    'We promise to communicate clearly and price fairly. Straightforward pricing — no added fees, no minimums, no surprises.',
-    'We promise to take ownership and make it right. Full responsibility when challenges arise — open communication, fast action, follow-through until every issue is resolved.',
-  ] as const,
-  benefits: [
+  learnMore: {
+    eyebrow: 'Learn More About Us',
+    title: 'The People and Principles Behind RRFPS.',
+    intro: 'Learn more about the values, leadership, and promise that guide every client relationship.',
+    items: [
+      {
+        label: 'Core',
+        title: 'Our Values',
+        href: '#fast-facts',
+        image: '/images/rrfps-about-core-values.jpg',
+        imageAlt: 'The values that guide Red Rocks Fire Protection Services',
+      },
+      {
+        label: 'Team',
+        title: 'Our Leadership',
+        href: '#ceo-message',
+        image: '/images/rrfps-about-our-leadership.jpg',
+        imageAlt: 'Red Rocks Fire Protection Services leadership team',
+      },
+      {
+        label: 'Promise',
+        title: 'Our Promise',
+        href: '#rrfps-difference',
+        image: '/images/rrfps-about-our-promise.jpg',
+        imageAlt: 'Red Rocks Fire Protection Services promise to clients',
+      },
+    ] as const,
+  },
+  difference: {
+    eyebrow: 'The RRFPS Difference',
+    title: 'The Red Rocks Fire Protection Services Difference.',
+    lead: 'No other fire protection company combines advocacy, comprehensive service capabilities, and accountability into a single, unified experience.',
+    points: ['We lead with safety.', 'We simplify compliance.', 'We protect what matters most.'] as const,
+    body: 'We actively stay current with evolving codes, regulations, and jurisdictional requirements, reinforcing our role as a proactive partner and trusted advisor in life safety compliance.',
+    backgroundImage: '/images/rrfps-about-the-difference.jpg',
+  },
+  reachOut: [
     {
-      title: 'Extensive Experience.',
-      body: `${company.experience} and credentials like NICET, CSA, and Colorado licensing — we deliver precise, standards-compliant fire protection services.`,
+      title: 'Reach Out Today.',
+      descriptor: 'Connect with our team to discuss your properties, systems, and life safety compliance needs.',
+      href: '/contact',
+      label: 'Get in touch',
     },
     {
-      title: 'Prompt Response.',
-      body: `${contact.serviceAvailability} with a ${contact.emergencyResponseMetro} — swift communication and action when you need us most.`,
-    },
-    {
-      title: 'Customer-Centric Approach.',
-      body: 'We prioritize our clients’ needs and work diligently to maintain strong, lasting relationships — not transactions.',
-    },
-    {
-      title: 'Comprehensive Services.',
-      body: 'From inspections to monitoring, we provide a full range of fire protection services to safeguard your occupants and property.',
+      title: 'See Our Services.',
+      descriptor: 'Explore the integrated fire protection and compliance services managed by one coordinated team.',
+      href: '/services',
+      label: 'Browse services',
     },
   ] as const,
 } as const;
