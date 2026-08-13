@@ -15,6 +15,9 @@
 /* Avelon theme base (buttons, double headings, marquee, delimiters) */
 @import "./avelon.css";
 
+/* Global override layer (client edits v2) — MUST stay last so it wins. */
+@import "./global-overrides.css";
+
 /* ── Base resets / defaults ──────────────────────────────── */
 html {
   -webkit-font-smoothing: antialiased;

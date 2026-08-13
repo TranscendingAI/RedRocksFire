@@ -1,0 +1,83 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * GLOBAL OVERRIDES — client edits v2 (Victoria)
+ *
+ * This is the single, intentional site-wide override layer. It is imported
+ * LAST in global.css so its rules win over per-page scoped CSS. Every value
+ * here is driven by a CSS custom property so future global tweaks are a
+ * one-line change instead of a 27-page hunt.
+ *
+ * Contents:
+ *   1. H2 headings — unified size, reduced 30%
+ *   2. Sub-headers / eyebrows — reduced 30%
+ *   3. Left/right margins — matched to the About page (narrower content)
+ *   4. Inner-page title banner — shorter on mobile only
+ *
+ * NOTE on !important: this file is the designated override layer. Per-page
+ * styles use Astro-scoped classes ([data-astro-cid-*]) whose specificity a
+ * plain element/class selector can't reliably beat. !important here is the
+ * deliberate mechanism that makes "one global size" actually global.
+ * ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* 1. Unified H2 size — was ~clamp(38px,5vw,64px); −30% → max ~45px */
+  --rr-h2-size: clamp(26px, 3.4vw, 45px);
+
+  /* 2. Sub-header / eyebrow size — Avelon subtitle was 20px; −30% → 14px */
+  --rr-subheader-size: 14px;
+
+  /* 3. Site-wide margins (match About): narrower content = wider L/R margins */
+  --rr-container: 1120px;      /* was 1280px */
+  --rr-gutter-desktop: 5rem;   /* was 2.5rem (40px) → 80px */
+
+  /* 4. Inner-page banner min-height on mobile (was ~390px) */
+  --rr-ptbanner-mobile-min-h: 200px;
+}
+
+/* ── 1. H2 — one unified, reduced size across every page ──────────────
+ * Targets the <h2> element itself so it reaches all the varied per-page
+ * heading classes (.section-title, .sol__title, .mf-slider__title,
+ * .city-*__title, .band__heading, .panel-title, etc.) at once.
+ *
+ * :not() carve-outs: a few <h2> elements are NOT section titles and have
+ * their own deliberate sizes — the ClosingCTA display heading, the small
+ * "Trusted Across Colorado" label, and large statement text. Leave them be.
+ */
+h2:not(.cta__title):not(.tm__customers-label):not(.statement__text) {
+  font-size: var(--rr-h2-size) !important;
+}
+
+/* ── 2. Sub-headers / eyebrows — reduced 30% ──────────────────────────
+ * The two dominant subhead patterns site-wide: the Avelon double-heading
+ * subtitle (26 uses) and the section eyebrow / rr-eyebrow labels.
+ */
+.av-dblh__subtitle,
+.section-eyebrow,
+.rr-eyebrow {
+  font-size: var(--rr-subheader-size) !important;
+}
+
+/* ── 3. Margins — global container width/gutter (About parity) ─────────
+ * .rr-container reads the tokens above, so lowering --rr-container and
+ * raising --rr-gutter-desktop instantly widens L/R margins on every page
+ * that uses the shared container utility. Pages with bespoke containers
+ * (e.g. About's .section-inner) already carry the same 1120/80px values.
+ */
+.rr-container {
+  max-width: var(--rr-container);
+}
+@media (min-width: 768px) {
+  .rr-container {
+    padding-inline: var(--rr-gutter-desktop);
+  }
+}
+
+/* ── 4. Inner-page title banner — shorter on MOBILE only ──────────────
+ * Desktop is fine per the client; only the mobile banner is too tall
+ * (was eating over half the viewport). .ptbanner__inner is duplicated
+ * (same class) across 10 pages, so one rule reaches them all.
+ */
+@media (max-width: 767px) {
+  .ptbanner__inner {
+    min-height: var(--rr-ptbanner-mobile-min-h) !important;
+  }
+}
