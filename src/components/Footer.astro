@@ -9,24 +9,28 @@
  */
 
 /**
- * Footer link columns — derived from the live site (Header nav + actual
- * service offerings from site.ts: "Inspections, sprinklers, alarms,
- * monitoring, backflow, extinguishers, suppression, and consulting").
- * Both columns kept at 5 entries to match the original layout.
+ * Footer link columns.
+ *   • Services — top 5 offerings + "All Services" (2 have dedicated pages;
+ *     the rest resolve to the /services hub).
+ *   • Industries We Serve — top 5 verticals + "All Industries" (all have
+ *     dedicated pages; hub is /industries-we-serve).
+ * Both columns kept at 6 entries to match the original two-column layout.
  */
-const companyLinks = [
-  { href: '/about',                label: 'About Us' },
-  { href: '/service-areas',        label: 'Service Areas' },
-  { href: '/industries-we-serve',  label: 'Industries We Serve' },
-  { href: '/testimonials',         label: 'Testimonials' },
-  { href: '/blog',                 label: 'Blog' },
-];
 const serviceLinks = [
-  { href: '/services#inspections', label: 'Inspections' },
-  { href: '/services#sprinklers',  label: 'Fire Sprinklers' },
-  { href: '/services#alarms',      label: 'Fire Alarms' },
-  { href: '/services#monitoring',  label: '24/7 Monitoring' },
-  { href: '/services',             label: 'All Services' },
+  { href: '/inspections',                        label: 'Inspections' },
+  { href: '/fire-sprinkler-service-and-systems', label: 'Fire Sprinkler Systems' },
+  { href: '/services',                           label: 'Fire Alarm Systems' },
+  { href: '/services',                           label: '24/7 Monitoring' },
+  { href: '/services',                           label: 'Backflow Prevention' },
+  { href: '/services',                           label: 'All Services' },
+];
+const industryLinks = [
+  { href: '/multi-family-management-companies', label: 'Multi-Family Management' },
+  { href: '/commercial-property',               label: 'Commercial Property' },
+  { href: '/assisted-living',                   label: 'Assisted Living & Healthcare' },
+  { href: '/hotels-hospitality',                label: 'Hotels & Hospitality' },
+  { href: '/retail',                            label: 'Retail & Shopping Centers' },
+  { href: '/industries-we-serve',               label: 'All Industries' },
 ];
 
 const socials = [
@@ -65,18 +69,18 @@ const socials = [
     </div>
 
     <div class="avf__col">
-      <h3 class="avf__col-heading">company</h3>
+      <h3 class="avf__col-heading">services</h3>
       <ul class="avf__links">
-        {companyLinks.map((link) => (
+        {serviceLinks.map((link) => (
           <li><a href={link.href} class="avf__link">{link.label}</a></li>
         ))}
       </ul>
     </div>
 
     <div class="avf__col">
-      <h3 class="avf__col-heading">services</h3>
+      <h3 class="avf__col-heading">industries we serve</h3>
       <ul class="avf__links">
-        {serviceLinks.map((link) => (
+        {industryLinks.map((link) => (
           <li><a href={link.href} class="avf__link">{link.label}</a></li>
         ))}
       </ul>
