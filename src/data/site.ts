@@ -169,7 +169,7 @@ export const about = {
   banner: {
     title: 'About Us.',
     subtitle: 'About Red Rocks Fire Protection Services',
-    backgroundImage: '/images/the-red-rocks-of-the-canyon.jpg',
+    backgroundImage: '/images/rrfps-about-hero-bg.jpg',
   },
   fastFacts: [
     {
@@ -211,8 +211,8 @@ export const about = {
       'We specialize in protecting lives and property through a full-service, single-source approach, serving multi-family communities, commercial facilities, retail centers, healthcare environments, and more.',
       'With a team of highly certified professionals and a proven track record of service since 2010, Red Rocks Fire Protection Services delivers reliable, compliant, and expertly managed life safety systems, built on trust, accountability, and long-term partnership.',
     ] as const,
-    image: '/images/rrfps-about-total-life-safety.jpg',
-    imageAlt: 'Red Rocks Fire Protection total life safety services',
+    image: '/images/rrfps-about-company-overview.jpg',
+    imageAlt: 'Red Rocks Fire Protection technician reviewing a fire sprinkler riser with a client',
   },
   whyWeExist: {
     eyebrow: 'Why We Exist',
@@ -315,15 +315,16 @@ export const about = {
       { title: 'Religious Institutions / Churches', meta: 'compliance / monitoring', image: '/images/rrfps-religious-institutions.jpg', href: '/religious-institutions' },
       { title: 'Assisted Living Facilities & Healthcare', meta: 'compliance / monitoring', image: '/images/rrfps-assisted-living-facilities.jpg', href: '/assisted-living' },
       { title: 'Education / Universities', meta: 'sprinklers / alarms', image: '/images/rrfps-educational-universities.jpg', href: '/education' },
-      { title: 'Warehouse / Storage / Industrial', meta: 'fire protection / inspections', href: '/warehouse-industrial' },
+      { title: 'Warehouse / Storage / Industrial', meta: 'fire protection / inspections', image: '/images/rrfps-about-warehouse-industrial.jpg', href: '/warehouse-industrial' },
       { title: 'HOA Management Companies', meta: 'inspections / monitoring', image: '/images/rrfps-hoa-management-companies.jpg', href: '/hoa-management' },
       { title: 'Hotels & Hospitality', meta: 'fire protection / life safety', image: '/images/rrfps-hotel-hospitality.jpg', href: '/hotels-hospitality' },
       { title: 'Retail & Shopping Centers', meta: 'compliance / monitoring', image: '/images/rrfps-retail-shopping-center.jpg', href: '/retail' },
       { title: 'Restaurants & Food Trucks', meta: 'fire suppression / inspections', image: '/images/rrfps-restaurants-food-trucks.jpg', href: '/restaurants' },
-      { title: 'Financial Institutions / Banks', meta: 'compliance / monitoring', href: '/financial' },
+      { title: 'Financial Institutions / Banks', meta: 'compliance / monitoring', image: '/images/rrfps-financial-institutions.jpg', href: '/financial' },
       { title: 'Automotive Dealerships & Service Centers', meta: 'fire protection / inspections', image: '/images/rrfps-car-dealerships.jpg', href: '/automotive' },
       { title: 'Data Centers', meta: 'fire suppression / monitoring', image: '/images/rrfps-data-centers.jpg', href: '/data-centers' },
       { title: 'General Contractors', meta: 'plan review / inspections', image: '/images/rrfps-general-contractors.jpg', href: '/general-contractors' },
+      { title: 'Meet Our Leadership Team', meta: 'our people / our culture', image: '/images/rrfps-about-our-leadership.jpg', imagePosition: 'center 22%', href: '/meet-the-team' },
     ] as const,
   },
   ceoMessage: {
@@ -387,6 +388,29 @@ export const about = {
       label: 'Browse services',
     },
   ] as const,
+  closingCta: {
+    backgroundImage: '/images/rrfps-about-cta-bg.jpg',
+    titleLine1: "Let's Protect",
+    titleLine2: 'What Matters Most',
+    script: 'Together.',
+    paragraphs: [
+      "Choosing the right life safety partner is about more than maintaining systems and meeting requirements. It's about having a team you can trust to communicate clearly, advocate for you, stay ahead of compliance, and take responsibility for protecting your people and property.",
+    ] as const,
+    closer: 'At Red Rocks Fire Protection Services, we want to be more than another vendor.',
+    closerBold: 'We want to be your trusted life safety partner for years to come.',
+    phone: {
+      display: '(720) 733-8050',
+      tel: '+17207338050',
+    },
+    contactHref: '/contact',
+    subCopyLine1: 'Want to learn more about what makes Red Rocks Fire Protection Services different?',
+    subCopyLine2: 'Explore the pages below to discover our commitment to safety, our purpose, and the promises that guide every relationship we build.',
+    buttons: [
+      { label: 'Our Promise', icon: 'solar:verified-check-bold-duotone', href: '#' },
+      { label: 'Our Mission', icon: 'solar:target-bold-duotone', href: '#' },
+      { label: 'The RRFPS Difference', icon: 'solar:users-group-rounded-bold-duotone', href: '#' },
+    ] as const,
+  },
 } as const;
 
 // ──────────────────────────────────────────────────────────────────────
