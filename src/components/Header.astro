@@ -20,11 +20,22 @@ interface SubItem {
   label: string;
 }
 
+/**
+ * Enhanced sub-item — used by the ABOUT dropdown. Renders as a tile card
+ * (red icon square + title + body + LEARN MORE link) inside a 4-column
+ * light-panel grid. Faithful to the colleague's screenshot.
+ */
+interface AboutSubItem extends SubItem {
+  icon: string;        // iconify icon id
+  body: string;        // short blurb shown under the title
+}
+
 interface NavItem {
   href?: string;
   label: string;
-  /** If set, this nav item opens a dropdown of children instead of linking anywhere. */
-  children?: SubItem[];
+  /** If set, this nav item opens a dropdown of children instead of linking anywhere.
+   *  Pass `AboutSubItem[]` for the rich tile-card dropdown layout. */
+  children?: SubItem[] | AboutSubItem[];
 }
 
 /**
@@ -50,8 +61,29 @@ const industriesNav = [
   { href: '/general-contractors',               label: 'General Contractors' },
 ] as const satisfies ReadonlyArray<SubItem>;
 
+/**
+ * About dropdown — 8 tile cards, 4×2 grid. Faithful to the colleague's
+ * screenshot. Two items currently share anchors (Our Story + Message from
+ * Our CEO → #ceo-message; Our Promise + RRFPS Difference → #rrfps-difference)
+ * because the relevant sections are where those topics live. "Our Credentials
+ * & Certifications" has no page yet and points to # until one is built.
+ */
+const aboutNav: AboutSubItem[] = [
+  { href: '/about',                     label: 'About RRFPS',                     icon: 'solar:gallery-wide-bold-duotone',           body: 'Discover who we are, what drives us, and our commitment to protecting people and property.' },
+  { href: '/meet-the-team',             label: 'Meet Our Team',                   icon: 'solar:users-group-rounded-bold-duotone',    body: 'Meet the experienced professionals who lead, serve, and represent the RRFPS family.' },
+  { href: '/about#ceo-message',         label: 'Our Story',                       icon: 'solar:book-bookmark-bold-duotone',           body: 'Learn how family, legacy, and a commitment to life safety shaped the RRFPS story.' },
+  { href: '/about#fast-facts',          label: 'Mission / Vision / Values',       icon: 'solar:target-bold-duotone',                  body: 'Explore the principles and purpose that guide how we serve our customers and one another.' },
+  { href: '/about#rrfps-difference',    label: 'The RRFPS Difference',            icon: 'solar:shield-star-bold-duotone',             body: 'See how advocacy, capability, and trust create a different fire protection experience.' },
+  { href: '/about#rrfps-difference',    label: 'Our Promise',                     icon: 'solar:hand-heart-bold-duotone',              body: 'The commitments we make to deliver responsive service, accountability, and peace of mind.' },
+  { href: '#',                          label: 'Our Credentials & Certifications', icon: 'solar:medal-ribbon-star-bold-duotone',     body: 'Explore the credentials and certifications behind our commitment to professional life safety services.' },
+  { href: '/about#ceo-message',         label: 'Message from Our CEO',            icon: 'solar:chat-round-bold-duotone',              body: 'Hear from CEO Brian Kakac about our purpose, our people, and the future of RRFPS.' },
+];
+
 const navItems: NavItem[] = [
-  { href: '/about', label: 'ABOUT' },
+  {
+    label: 'ABOUT',
+    children: aboutNav,
+  },
   {
     label: 'SERVICES',
     children: [
@@ -133,7 +165,7 @@ const socials = [
         <nav aria-label="Primary" class="avh__nav">
           <ul>
             {navItems.map((item) => (
-              <li class:list={['avh__item', item.children && 'avh__item--has-children']}>
+              <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about']}>
                 {item.children ? (
                   /* Dropdown trigger — button, not <a>, since it doesn't navigate */
                   <>
@@ -153,6 +185,23 @@ const socials = [
                     <ul class="avh__submenu" role="menu" data-dropdown-menu>
                       {item.children.map((child) => {
                         const isChildCurrent = currentPath === child.href || currentPath.startsWith(child.href + '/');
+                        /* Enhanced (rich-card) variant — used by ABOUT. Detected by
+                         * the presence of the extra fields on AboutSubItem. */
+                        if ('icon' in child && 'body' in child) {
+                          const card = child as AboutSubItem;
+                          return (
+                            <li role="none" class="avh__submenu-item--card">
+                              <a href={card.href} role="menuitem" class="avh__about-card" aria-current={isChildCurrent ? 'page' : undefined}>
+                                <span class="avh__about-icon" aria-hidden="true">
+                                  <iconify-icon icon={card.icon} width="28" height="28"></iconify-icon>
+                                </span>
+                                <span class="avh__about-title">{card.label}</span>
+                                <span class="avh__about-body">{card.body}</span>
+                                <span class="avh__about-cta">LEARN MORE <span class="avh__about-arrow" aria-hidden="true">→</span></span>
+                              </a>
+                            </li>
+                          );
+                        }
                         return (
                           <li role="none">
                             <a
@@ -559,6 +608,127 @@ const socials = [
   }
   .avh__drawer-link--current {
     color: #D31126 !important;
+  }
+
+  /* ── About dropdown — rich tile-card variant ─────────────────────────
+   * Faithful to the colleague's screenshot: light cream panel with a
+   * 4×2 grid of cards. Each card has a red icon square, a title, a body
+   * blurb, and a red "LEARN MORE →" CTA. Uses class:list to scope every
+   * rule to .avh__item--about so Services + Industries dropdowns are
+   * untouched.
+   */
+  .avh__item--about > .avh__submenu {
+    /* Full-width: anchor to viewport edges. Because the dropdown's
+       containing block is the <li> (which is much narrower than the
+       viewport), we use `position: fixed` to escape it and place the
+       panel relative to the viewport directly. `top` matches the
+       header's effective height so the panel sits flush below the nav.
+       !important on width/max-width defeats the base rule's
+       max-width: 320px which would otherwise cap the grid container. */
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    max-width: none !important;
+    top: 135px;            /* matches .avh desktop header height (overridden in mobile breakpoint) */
+    margin: 0 !important;
+    transform: none;
+    height: auto;            /* override the implicit height inherited via the parent <li> */
+    padding: 36px 40px 32px;
+    background: #F4F2F1;
+    box-shadow: 0 18px 40px rgba(10, 10, 10, 0.22);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    gap: 24px 28px;
+    z-index: 60;
+    isolation: isolate;
+  }
+  /* When opening via hover/focus/.is-open, just make it visible (no transform) */
+  .avh__item--about:hover > .avh__submenu,
+  .avh__item--about:focus-within > .avh__submenu,
+  .avh__item--about.is-open > .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  /* Re-trigger hover-open path (trigger sits above menu in DOM, but our
+     fixed-positioning means transform doesn't matter — just show) */
+  .avh__item--about .avh__link--trigger:hover + .avh__submenu,
+  .avh__item--about .avh__link--trigger:focus-visible + .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .avh__item--about > .avh__submenu > li {
+    width: auto;
+    display: block;
+    list-style: none;
+  }
+  .avh__about-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 4px 6px 4px;
+    text-decoration: none;
+    color: #0a0a0a;
+    transition: transform 150ms ease;
+  }
+  .avh__about-card:hover { transform: translateY(-2px); }
+  .avh__about-icon {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    background: #D31126;
+    color: #ffffff;
+    border-radius: 0;
+  }
+  .avh__about-icon iconify-icon { display: block; }
+  .avh__about-title {
+    font-family: "Space Grotesk", "Archivo Variable", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+    color: #0a0a0a;
+    text-transform: none;
+    margin-top: 4px;
+  }
+  .avh__about-body {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #4a494b;
+    max-width: 24ch;
+  }
+  .avh__about-cta {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #D31126;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .avh__about-arrow {
+    display: inline-block;
+    transition: transform 150ms ease;
+  }
+  .avh__about-card:hover .avh__about-arrow { transform: translateX(3px); }
+
+  /* Mobile: collapse to a single column, full-width with a small inset. */
+  @media (max-width: 980px) {
+    .avh__item--about > .avh__submenu {
+      left: 16px !important;
+      right: 16px !important;
+      width: calc(100vw - 32px) !important;
+      top: 110px;       /* tighter mobile header */
+      padding: 24px 22px;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
   }
 </style>
 
