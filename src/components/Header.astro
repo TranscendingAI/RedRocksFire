@@ -44,22 +44,22 @@ interface NavItem {
  * the case of /multi-family, a fully-built landing page); when each one's
  * full content lands, no nav change is needed.
  */
-const industriesNav = [
-  { href: '/multi-family',                       label: 'Multi-Family Management' },
-  { href: '/commercial-property',                label: 'Commercial Property' },
-  { href: '/religious-institutions',             label: 'Religious Institutions' },
-  { href: '/assisted-living',                   label: 'Assisted Living' },
-  { href: '/education',                         label: 'Education / Universities' },
-  { href: '/warehouse-industrial',               label: 'Warehouse / Industrial' },
-  { href: '/hoa-management',                    label: 'HOA Management' },
-  { href: '/hotels-hospitality',                label: 'Hotels & Hospitality' },
-  { href: '/retail',                            label: 'Retail & Shopping Centers' },
-  { href: '/restaurants',                        label: 'Restaurants & Food Trucks' },
-  { href: '/financial',                         label: 'Financial Institutions' },
-  { href: '/automotive',                        label: 'Automotive Dealerships' },
-  { href: '/data-centers',                      label: 'Data Centers' },
-  { href: '/general-contractors',               label: 'General Contractors' },
-] as const satisfies ReadonlyArray<SubItem>;
+const industriesNav: AboutSubItem[] = [
+  { href: '/multi-family',         label: 'Multi-Family Management',   icon: 'solar:buildings-2-bold-duotone',            body: 'Coordinated inspections and monitoring for apartment communities and their residents.' },
+  { href: '/commercial-property',  label: 'Commercial Property',       icon: 'solar:city-bold-duotone',                   body: 'Sprinkler, alarm, and compliance coverage for offices and commercial facilities.' },
+  { href: '/religious-institutions', label: 'Religious Institutions',  icon: 'solar:home-angle-bold-duotone',             body: 'Protecting places of worship and their congregations with dependable life safety.' },
+  { href: '/assisted-living',      label: 'Assisted Living',           icon: 'solar:heart-pulse-bold-duotone',            body: 'Compliance-focused fire protection for senior living and healthcare facilities.' },
+  { href: '/education',            label: 'Education / Universities',  icon: 'solar:square-academic-cap-bold-duotone',    body: 'Sprinkler and alarm systems that keep campuses and students safe.' },
+  { href: '/warehouse-industrial', label: 'Warehouse / Industrial',    icon: 'solar:box-bold-duotone',                    body: 'Fire protection and inspections built for warehouse, storage, and industrial sites.' },
+  { href: '/hoa-management',       label: 'HOA Management',            icon: 'solar:home-2-bold-duotone',                 body: 'Inspections and monitoring that help HOAs stay ahead of compliance.' },
+  { href: '/hotels-hospitality',  label: 'Hotels & Hospitality',      icon: 'solar:bed-bold-duotone',                    body: 'Life safety systems that protect guests, staff, and hospitality properties.' },
+  { href: '/retail',               label: 'Retail & Shopping Centers', icon: 'solar:cart-large-2-bold-duotone',           body: 'Reliable fire protection for retail stores and shopping centers.' },
+  { href: '/restaurants',          label: 'Restaurants & Food Trucks', icon: 'solar:chef-hat-bold-duotone',               body: 'Kitchen suppression and fire protection for restaurants and food service.' },
+  { href: '/financial',           label: 'Financial Institutions',    icon: 'solar:card-bold-duotone',                   body: 'Compliance and monitoring for banks and financial facilities.' },
+  { href: '/automotive',           label: 'Automotive Dealerships',    icon: 'solar:wheel-bold-duotone',                  body: 'Fire protection tailored to dealerships and automotive facilities.' },
+  { href: '/data-centers',         label: 'Data Centers',              icon: 'solar:server-bold-duotone',                 body: 'Specialized suppression and monitoring for mission-critical data centers.' },
+  { href: '/general-contractors',  label: 'General Contractors',       icon: 'solar:hammer-bold-duotone',                 body: 'A trusted fire protection partner for GCs and construction projects.' },
+];
 
 /**
  * About dropdown — 8 tile cards, 4×2 grid. Faithful to the colleague's
@@ -165,7 +165,7 @@ const socials = [
         <nav aria-label="Primary" class="avh__nav">
           <ul>
             {navItems.map((item) => (
-              <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about']}>
+              <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about', item.label === 'INDUSTRIES WE SERVE' && 'avh__item--industries']}>
                 {item.children ? (
                   /* Dropdown trigger — button, not <a>, since it doesn't navigate */
                   <>
@@ -617,7 +617,8 @@ const socials = [
    * rule to .avh__item--about so Services + Industries dropdowns are
    * untouched.
    */
-  .avh__item--about > .avh__submenu {
+  .avh__item--about > .avh__submenu,
+  .avh__item--industries > .avh__submenu {
     /* Full-width: anchor to viewport edges. Because the dropdown's
        containing block is the <li> (which is much narrower than the
        viewport), we use `position: fixed` to escape it and place the
@@ -644,10 +645,19 @@ const socials = [
     z-index: 60;
     isolation: isolate;
   }
+  /* Industries has 14 cards → let the grid flow to as many rows as needed
+     (4 columns × 4 rows) instead of being locked to About's 2 rows. */
+  .avh__item--industries > .avh__submenu {
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+  }
   /* When opening via hover/focus/.is-open, just make it visible (no transform) */
   .avh__item--about:hover > .avh__submenu,
   .avh__item--about:focus-within > .avh__submenu,
-  .avh__item--about.is-open > .avh__submenu {
+  .avh__item--about.is-open > .avh__submenu,
+  .avh__item--industries:hover > .avh__submenu,
+  .avh__item--industries:focus-within > .avh__submenu,
+  .avh__item--industries.is-open > .avh__submenu {
     opacity: 1;
     visibility: visible;
     transform: none;
@@ -655,12 +665,15 @@ const socials = [
   /* Re-trigger hover-open path (trigger sits above menu in DOM, but our
      fixed-positioning means transform doesn't matter — just show) */
   .avh__item--about .avh__link--trigger:hover + .avh__submenu,
-  .avh__item--about .avh__link--trigger:focus-visible + .avh__submenu {
+  .avh__item--about .avh__link--trigger:focus-visible + .avh__submenu,
+  .avh__item--industries .avh__link--trigger:hover + .avh__submenu,
+  .avh__item--industries .avh__link--trigger:focus-visible + .avh__submenu {
     opacity: 1;
     visibility: visible;
     transform: none;
   }
-  .avh__item--about > .avh__submenu > li {
+  .avh__item--about > .avh__submenu > li,
+  .avh__item--industries > .avh__submenu > li {
     width: auto;
     display: block;
     list-style: none;
@@ -720,7 +733,8 @@ const socials = [
 
   /* Mobile: collapse to a single column, full-width with a small inset. */
   @media (max-width: 980px) {
-    .avh__item--about > .avh__submenu {
+    .avh__item--about > .avh__submenu,
+    .avh__item--industries > .avh__submenu {
       left: 16px !important;
       right: 16px !important;
       width: calc(100vw - 32px) !important;

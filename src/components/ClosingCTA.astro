@@ -9,11 +9,24 @@
  * and a red circular arrow on the right.
  *
  * Content: src/data/site.ts → about.closingCta
+ *
+ * Per-page override: pass `paragraphs` (string[]) to replace just the intro
+ * copy while keeping the shared title, buttons, phone, and background. When
+ * omitted, falls back to the shared about.closingCta.paragraphs (About page).
  */
 
 import { about } from '../data/site';
 
+interface Props {
+  paragraphs?: readonly string[];
+  backgroundImage?: string;
+}
+
+const { paragraphs, backgroundImage } = Astro.props;
+
 const cta = about.closingCta;
+const introParagraphs = paragraphs ?? cta.paragraphs;
+const bgImage = backgroundImage ?? cta.backgroundImage;
 
 const arrowPath =
   'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
@@ -31,7 +44,7 @@ const flameIcon =
   <div class="cta__card">
     <div
       class="cta__bg"
-      style={`background-image: url('${cta.backgroundImage}');`}
+      style={`background-image: url('${bgImage}');`}
       aria-hidden="true"
     ></div>
     <div class="cta__overlay" aria-hidden="true"></div>
@@ -46,7 +59,7 @@ const flameIcon =
         </span>
       </h2>
 
-      {cta.paragraphs.map((paragraph) => <p class="cta__para">{paragraph}</p>)}
+      {introParagraphs.map((paragraph) => <p class="cta__para">{paragraph}</p>)}
 
       <p class="cta__para">
         {cta.closer} <strong>{cta.closerBold}</strong>
