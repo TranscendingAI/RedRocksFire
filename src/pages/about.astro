@@ -101,7 +101,7 @@ const testimonialAvatars = [
               <span class="divider-icon" set:html={diamondIcon} />
               <span>{about.companyOverview.eyebrow}</span>
             </div>
-            <h2 class="section-title section-title--light">{about.companyOverview.title}</h2>
+            <h2 class="section-title section-title--light overview__title">{about.companyOverview.title}</h2>
             <div class="overview__body">
               {about.companyOverview.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
             </div>
@@ -266,7 +266,7 @@ const testimonialAvatars = [
             <p class="ceo__intro">{about.ceoMessage.intro}</p>
             <p>{about.ceoMessage.body}</p>
             <a href="#ceo-message" class="av-wgl-btn ceo__cta">
-              <span class="av-wgl-btn__text">Read Our CEO’s Message</span>
+              <span class="av-wgl-btn__text">More From Our CEO</span>
               <span class="av-wgl-btn__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
               </span>
@@ -480,11 +480,12 @@ const testimonialAvatars = [
     background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
     z-index: -1;
   }
+  /* Banner height reduced 20% per client edit v3 */
   .ptbanner__inner {
-    min-height: 560px;
+    min-height: 448px;
     max-width: 1120px;
     margin-inline: auto;
-    padding: 170px 80px 45px;
+    padding: 136px 80px 36px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -602,6 +603,22 @@ const testimonialAvatars = [
   .ceo__grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
+  /* Full-width CEO section: break the inner out of the 1120px cap so Brian's
+     photo sits further left and the copy stretches across the row. Wide max
+     with modest gutters keeps it readable without hard-bleeding to the edge. */
+  .ceo .section-inner {
+    max-width: none;
+    padding-inline: 64px;
+  }
+  /* Larger photo column so the copy is balanced with (not dwarfing) the
+     portrait, per client: "wording even with the sizing of his photo". */
+  .ceo__grid {
+    grid-template-columns: minmax(360px, 34%) minmax(0, 1fr);
+    gap: 64px;
+  }
+  /* Honor the literal "\n" in companyOverview.title so it always breaks as
+     "One Partner." / "Total Life Safety." regardless of viewport width. */
+  .overview__title { white-space: pre-line; }
   .overview__body p {
     margin: 22px 0 0;
     color: rgba(255, 255, 255, 0.78);
@@ -739,11 +756,12 @@ const testimonialAvatars = [
     margin: 38px auto 0;
     text-align: center;
   }
+  /* Why We Exist body — reduced 50% per client edit v3 */
   .purpose__statement {
     margin: 0;
     color: #111111;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(30px, 3vw, 42px);
+    font-size: clamp(15px, 1.5vw, 21px);
     font-weight: 600;
     line-height: 1.42;
     letter-spacing: -0.035em;
@@ -752,7 +770,7 @@ const testimonialAvatars = [
     max-width: 1180px;
     margin: 26px auto 0;
     color: #232323;
-    font-size: clamp(20px, 1.95vw, 27px);
+    font-size: clamp(10px, 0.98vw, 13px);
     line-height: 1.7;
   }
 
@@ -963,22 +981,27 @@ const testimonialAvatars = [
     object-fit: cover;
     object-position: center 36%;
   }
+  /* Nameplate sits BELOW the photo (in the same column), as plain text.
+     No overlay, no backdrop, no blur — so the whole face is visible. */
   .ceo__nameplate {
-    position: absolute;
-    inset: auto 24px 24px 24px;
-    padding: 18px 20px;
+    margin-top: 18px;
     display: flex;
     flex-direction: column;
-    background: rgba(13, 13, 11, 0.88);
     color: #ffffff;
-    backdrop-filter: blur(8px);
   }
   .ceo__nameplate strong {
     font-family: "Space Grotesk", sans-serif;
-    font-size: 23px;
+    font-size: 22px;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: -0.01em;
   }
-  .ceo__nameplate span { margin-top: 4px; color: rgba(255, 255, 255, 0.7); }
+  .ceo__nameplate span {
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
   .ceo__greeting {
     margin: 28px 0 0;
     font-family: "Space Grotesk", sans-serif;
@@ -1115,11 +1138,12 @@ const testimonialAvatars = [
 
   .tm { overflow: hidden; background: #ffffff; padding-bottom: 34px; }
   .tm__marquee { --av-loop-gap: 60px; --av-loop-duration: 300s; }
+  /* Testimonials — reduced ~50% per client edit v3 */
   .tm__marquee-text {
     margin: 0;
     color: #ffffff;
     font-family: "Space Grotesk", sans-serif;
-    font-size: 145px;
+    font-size: 72px;
     font-weight: 700;
     line-height: 1.2;
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
@@ -1145,17 +1169,17 @@ const testimonialAvatars = [
   .tm__col { width: 53%; max-width: 750px; padding-right: 40px; }
   .tm__carousel { padding: 28px 0 38px; border-bottom: 1px solid rgba(10, 10, 10, 0.2); }
   .tm-item__quote {
-    margin: 0 0 40px;
+    margin: 0 0 28px;
     padding-right: 18px;
     color: #0a0a0a;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(25px, 2.2vw, 34px);
+    font-size: clamp(15px, 1.3vw, 20px);
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.45;
     letter-spacing: -0.04em;
   }
-  .tm-item__name { margin: 0; color: #0a0a0a; font-size: 24px; }
-  .tm-item__position { color: #626262; font-size: 14px; }
+  .tm-item__name { margin: 0; color: #0a0a0a; font-size: 15px; }
+  .tm-item__position { color: #626262; font-size: 12px; }
   .tm__nav { margin-top: 28px; display: flex; justify-content: flex-end; gap: 24px; }
   .tm__nav-btn {
     display: inline-flex;
@@ -1281,7 +1305,7 @@ const testimonialAvatars = [
 
   @media (max-width: 1100px) {
     .section-inner { padding: 90px 60px; }
-    .ptbanner__inner { min-height: 470px; padding-inline: 60px; }
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
     .facts__grid,
     .capabilities__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .capabilities__head {
@@ -1340,7 +1364,7 @@ const testimonialAvatars = [
       padding-inline: 30px;
       gap: 36px;
     }
-    .tm__marquee-text { font-size: 96px; }
+    .tm__marquee-text { font-size: 48px; }
   }
 
   @media (max-width: 767px) {
@@ -1348,8 +1372,8 @@ const testimonialAvatars = [
     .section-head { margin-bottom: 40px; }
     .section-title { font-size: 36px; }
     .ptbanner__inner {
-      min-height: 390px;
-      padding: 135px 28px 35px;
+      min-height: 312px;
+      padding: 108px 28px 28px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-end;
@@ -1496,12 +1520,12 @@ const testimonialAvatars = [
     }
     .purpose__copy { margin-top: 28px; }
     .purpose__statement {
-      font-size: 22px;
+      font-size: 14px;
       line-height: 1.5;
     }
     .purpose__body {
       margin-top: 18px;
-      font-size: 17px;
+      font-size: 12px;
       line-height: 1.8;
     }
     .capabilities__grid { border-left: 0; }
@@ -1519,7 +1543,7 @@ const testimonialAvatars = [
     .industry-card h3 { font-size: 16px; }
     .industry-card__meta { font-size: 13px; }
     .learn-card { min-height: 410px; }
-    .tm__marquee-text { font-size: 58px; }
+    .tm__marquee-text { font-size: 30px; }
     .tm__row {
       margin: 24px 0 60px;
       padding-inline: 28px;

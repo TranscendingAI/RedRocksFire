@@ -205,7 +205,7 @@ export const about = {
   ] as const,
   companyOverview: {
     eyebrow: 'Company Overview',
-    title: 'One Partner. Total Life Safety Confidence.',
+    title: 'One Partner.\nTotal Life Safety.',
     paragraphs: [
       'Red Rocks Fire Protection Services is a Colorado-based, family-owned life safety company established in 2010, delivering comprehensive fire protection and compliance solutions across the Denver Front Range.',
       'We specialize in protecting lives and property through a full-service, single-source approach, serving multi-family communities, commercial facilities, retail centers, healthcare environments, and more.',
@@ -312,7 +312,7 @@ export const about = {
     items: [
       { title: 'Multi-Family Management Companies', meta: 'inspections / monitoring', image: '/images/red-rocks-fire-protectionmulti-family-communities.jpg', href: '/multi-family-management-companies' },
       { title: 'Commercial Property & Management Companies', meta: 'sprinklers / alarms', image: '/images/red-rocks-fire-protection-commercial-facilities.jpg', href: '/commercial-property' },
-      { title: 'Religious Institutions / Churches', meta: 'compliance / monitoring', image: '/images/rrfps-religious-institutions.jpg', href: '/religious-institutions' },
+      { title: 'Religious Institutions / Churches', meta: 'compliance / monitoring', image: '/images/rrfps-mega-church.jpg', href: '/religious-institutions' },
       { title: 'Assisted Living Facilities & Healthcare', meta: 'compliance / monitoring', image: '/images/rrfps-assisted-living-facilities.jpg', href: '/assisted-living' },
       { title: 'Education / Universities', meta: 'sprinklers / alarms', image: '/images/rrfps-educational-universities.jpg', href: '/education' },
       { title: 'Warehouse / Storage / Industrial', meta: 'fire protection / inspections', image: '/images/rrfps-about-warehouse-industrial.jpg', href: '/warehouse-industrial' },

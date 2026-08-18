@@ -31,7 +31,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SplitPanel from '../components/SplitPanel.astro';
-import DualCTA from '../components/DualCTA.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
 import { multiFamilyPage, testimonials } from '../data/site';
 
 // Arrow + diamond icons used by the page-title banner and any matching
@@ -199,10 +199,10 @@ const sliderPanels = multiFamilyPage.slider.panels;
     </section>
 
     <!-- ══════════════════════════════════════════════════════════
-         6. CLOSING — DualCTA on white band, same pattern as
-            inspections.astro / about.astro.
+         6. CLOSING — site-wide ClosingCTA (full-width-bleed). Same
+            component, copy, image, and buttons as the About page.
          ══════════════════════════════════════════════════════════ -->
-    <DualCTA items={multiFamilyPage.ctaPair} background="white" />
+    <ClosingCTA />
 
   </div>
 </BaseLayout>

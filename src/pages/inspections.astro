@@ -25,7 +25,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SplitPanel from '../components/SplitPanel.astro';
-import DualCTA from '../components/DualCTA.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
 import { inspectionsPage } from '../data/site';
 
 // Same arrow path & diamond icon used across the demo pages — keep them here
@@ -178,10 +178,10 @@ const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
     />
 
     <!-- ══════════════════════════════════════════════════════════
-         4. CLOSING — marquee band (index.astro testiominal-marquee style,
-            but smaller) + DualCTA in a white band.
+         4. CLOSING — site-wide ClosingCTA (full-width-bleed). Same
+            component, copy, image, and buttons as the About page.
          ══════════════════════════════════════════════════════════ -->
-    <DualCTA items={inspectionsPage.ctaPair} background="white" />
+    <ClosingCTA />
 
   </div>
 </BaseLayout>
