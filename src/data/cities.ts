@@ -121,7 +121,7 @@ export const cities: City[] = [
     city: 'Centennial',
     state: 'CO',
     county: 'Arapahoe County',
-    bannerTitle: 'Fire Protection Services in Centennial, CO',
+    bannerTitle: 'Fire Protection Centennial, CO',
     bannerSubtitle: 'CENTENNIAL FIRE PROTECTION',
     // TODO: replace with a Centennial-specific hero photo when one is
     // commissioned (e.g. jobsite shot at a Centennial HOA common area,
@@ -334,7 +334,7 @@ export const cities: City[] = [
     city: 'Denver',
     state: 'CO',
     county: 'City and County of Denver',
-    bannerTitle: 'Fire Protection Services in Denver, CO',
+    bannerTitle: 'Fire Protection Denver, CO',
     bannerSubtitle: 'DENVER FIRE PROTECTION',
     // TODO: replace with a Denver-specific skyline or Red Rocks jobsite photo.
     bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
