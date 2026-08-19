@@ -21,6 +21,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ClosingCTA from '../components/ClosingCTA.astro';
+import IndustriesGrid from '../components/IndustriesGrid.astro';
 import { about, testimonials } from '../data/site';
 
 const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
@@ -196,50 +197,7 @@ const testimonialAvatars = [
       </div>
     </section>
 
-    <section class="industries">
-      <div class="section-inner section-inner--wide industries__inner">
-        <div class="section-head industries__head">
-          <div class="industries__head-copy">
-            <div class="av-dblh__subtitle section-eyebrow">
-              <span class="divider-icon" set:html={diamondIcon} />
-              <span>{about.industries.eyebrow}</span>
-            </div>
-            <h2 class="section-title industries__title">{about.industries.title}</h2>
-          </div>
-          <a href="/services" class="av-wgl-btn av-wgl-btn--outline industries__cta">
-            <span class="av-wgl-btn__text">All Services</span>
-            <span class="av-wgl-btn__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
-            </span>
-          </a>
-        </div>
-
-        <div class="industries__grid">
-          {about.industries.items.map((item) => (
-            <a href={item.href} class="industry-card">
-              <div class="industry-card__image-wrap">
-                <img
-                  src={item.image ?? about.industries.cardImage}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  class="industry-card__image"
-                  style={'imagePosition' in item ? `object-position: ${(item as { imagePosition: string }).imagePosition};` : undefined}
-                />
-              </div>
-              <div class="industry-card__body">
-                <h3>{item.title}</h3>
-                <p class="industry-card__meta">{item.meta}</p>
-                <span class="industry-card__link">
-                  Learn more
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
+    <IndustriesGrid />
 
     <section class="ceo section-dark" id="ceo-message">
       <div class="section-inner">
@@ -586,8 +544,8 @@ const testimonialAvatars = [
     margin-top: 12px;
     max-width: 250px;
     color: #232323;
-    font-size: 17px;
-    line-height: 1.65;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
 
   .split-grid,
@@ -622,8 +580,8 @@ const testimonialAvatars = [
   .overview__body p {
     margin: 22px 0 0;
     color: rgba(255, 255, 255, 0.78);
-    font-size: 17px;
-    line-height: 1.75;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
   .split-image { overflow: hidden; border-radius: 18px; }
   .split-image img { display: block; width: 100%; aspect-ratio: 4 / 4.2; object-fit: cover; }
@@ -650,6 +608,10 @@ const testimonialAvatars = [
   .purpose__wrap {
     padding-top: 96px;
     padding-bottom: 96px;
+    /* Full-width per client: break out of the 1340px section cap so the
+       "Why We Exist" section spans the viewport with modest edge gutters. */
+    max-width: none;
+    padding-inline: 64px;
   }
   .purpose__head {
     display: flex;
@@ -688,11 +650,20 @@ const testimonialAvatars = [
     min-height: 400px;
     margin-top: 44px;
     overflow: hidden;
-    border-radius: 22px;
+    /* Full-bleed: break the stage out of .purpose__wrap's gutters so the
+       image-bg rectangle (with .purpose__stage-overlay) spans the full
+       viewport width, edge to edge. Title/copy above + below stay padded. */
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-radius: 0;
     display: grid;
     grid-template-columns: minmax(220px, 0.58fr) minmax(0, 1fr) auto;
     align-items: center;
-    padding: 34px 18px 34px 0;
+    /* Right gutter for the CTA; left is 0 so the red badge background can
+       reach the viewport's left edge (badge carries its own text padding). */
+    padding: 34px 64px 34px 0;
   }
   .purpose__stage-bg {
     position: absolute;
@@ -714,7 +685,9 @@ const testimonialAvatars = [
     justify-content: center;
     gap: 4px;
     margin-right: 42px;
-    padding: 36px 28px 36px 40px;
+    /* Generous left text padding so the words sit inset while the red box
+       itself starts at the viewport's left edge. */
+    padding: 36px 28px 36px 64px;
     background: linear-gradient(135deg, #d41226 0%, #c00e20 100%);
     color: #ffffff;
   }
@@ -735,9 +708,9 @@ const testimonialAvatars = [
   .purpose__panel-copy p {
     margin: 0;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(24px, 2vw, 32px);
+    font-size: var(--rr-text-lead);
     font-weight: 500;
-    line-height: 1.55;
+    line-height: var(--rr-text-lead-lh);
     letter-spacing: -0.03em;
   }
   .purpose__cta {
@@ -761,17 +734,17 @@ const testimonialAvatars = [
     margin: 0;
     color: #111111;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(15px, 1.5vw, 21px);
+    font-size: var(--rr-text-lead);
     font-weight: 600;
-    line-height: 1.42;
+    line-height: var(--rr-text-lead-lh);
     letter-spacing: -0.035em;
   }
   .purpose__body {
     max-width: 1180px;
     margin: 26px auto 0;
     color: #232323;
-    font-size: clamp(10px, 0.98vw, 13px);
-    line-height: 1.7;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
 
   .capabilities {
@@ -840,8 +813,8 @@ const testimonialAvatars = [
   .capability-card__body {
     margin: 0;
     color: rgba(255, 255, 255, 0.88);
-    font-size: 16px;
-    line-height: 1.55;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
   .capability-card__link,
   .industry-card__link {
@@ -877,96 +850,6 @@ const testimonialAvatars = [
     background: #ffffff;
     color: #0a0a0a;
   }
-
-  .industries {
-    background: #ffffff;
-    color: #0a0a0a;
-  }
-  .industries__inner { padding-top: 96px; padding-bottom: 96px; }
-  .industries__head {
-    max-width: none;
-    margin-bottom: 26px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 28px;
-  }
-  .industries__head-copy { max-width: 860px; }
-  .industries__title {
-    max-width: 920px;
-    font-size: clamp(40px, 4.8vw, 66px);
-    line-height: 1.02;
-  }
-  .industries__cta {
-    flex-shrink: 0;
-    margin-bottom: 8px;
-  }
-  .industries__grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px 28px;
-  }
-  .industry-card {
-    display: flex;
-    flex-direction: column;
-    color: #0a0a0a;
-    text-decoration: none;
-    border: 1px solid rgba(10, 10, 10, 0.16);
-    background: #ffffff;
-    transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
-  }
-  .industry-card__image-wrap {
-    aspect-ratio: 2.6 / 1;
-    overflow: hidden;
-    background: #e8e8e8;
-  }
-  .industry-card__image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .industry-card__body {
-    min-height: 116px;
-    padding: 0 14px 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .industry-card h3 {
-    margin: 2px 0 2px;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(17px, 1.3vw, 21px);
-    font-weight: 700;
-    line-height: 1.08;
-    text-transform: uppercase;
-    color: #0a0a0a;
-  }
-  .industry-card__meta {
-    margin: 0;
-    color: #414141;
-    font-size: 14px;
-    line-height: 1.35;
-    text-transform: lowercase;
-  }
-  .industry-card__link {
-    width: 100%;
-    justify-content: space-between;
-    margin-top: auto;
-    padding: 12px 0 10px;
-    border-top: 1px solid rgba(212, 18, 38, 0.55);
-    color: #0a0a0a;
-  }
-  .industry-card__link svg {
-    width: 18px;
-    height: 16px;
-    color: #d41226;
-  }
-  .industry-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(212, 18, 38, 0.28);
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.08);
-  }
-  .industry-card:hover .industry-card__link { color: #d41226; }
 
   .ceo__portrait {
     position: relative;
@@ -1005,13 +888,13 @@ const testimonialAvatars = [
   .ceo__greeting {
     margin: 28px 0 0;
     font-family: "Space Grotesk", sans-serif;
-    font-size: 22px;
+    font-size: var(--rr-text-lead);
     font-weight: 600;
-    line-height: 1.45;
+    line-height: var(--rr-text-lead-lh);
     color: #ffffff;
   }
   .ceo__intro { margin: 20px 0 0; font-weight: 700; color: #ffffff; }
-  .ceo__copy > p:last-of-type { margin: 16px 0 0; color: rgba(255, 255, 255, 0.72); font-size: 17px; line-height: 1.75; }
+  .ceo__copy > p:last-of-type { margin: 16px 0 0; color: rgba(255, 255, 255, 0.72); font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh); }
   .ceo__cta {
     margin-top: 30px;
     --av-wgl-btn-bg: #d41226;
@@ -1034,8 +917,8 @@ const testimonialAvatars = [
   .learn-more__intro {
     max-width: 980px;
     color: #303030;
-    font-size: clamp(20px, 2vw, 28px);
-    line-height: 1.55;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
   }
   .learn-more__grid {
     display: grid;
@@ -1173,9 +1056,9 @@ const testimonialAvatars = [
     padding-right: 18px;
     color: #0a0a0a;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(15px, 1.3vw, 20px);
+    font-size: var(--rr-text-lead);
     font-weight: 500;
-    line-height: 1.45;
+    line-height: var(--rr-text-lead-lh);
     letter-spacing: -0.04em;
   }
   .tm-item__name { margin: 0; color: #0a0a0a; font-size: 15px; }
@@ -1244,8 +1127,8 @@ const testimonialAvatars = [
     margin: 30px 0 0;
     max-width: 760px;
     color: rgba(255, 255, 255, 0.92);
-    font-size: 17px;
-    line-height: 1.75;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
   }
   .difference__points {
     margin-top: 28px;
@@ -1282,8 +1165,8 @@ const testimonialAvatars = [
     max-width: 760px;
     margin: 34px 0 0;
     color: rgba(255, 255, 255, 0.8);
-    font-size: 17px;
-    line-height: 1.75;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
   .difference__cta {
     margin-top: 34px;
@@ -1511,8 +1394,8 @@ const testimonialAvatars = [
       padding: 130px 22px 0;
     }
     .purpose__panel-copy p {
-      font-size: 24px;
-      line-height: 1.5;
+      font-size: var(--rr-text-lead);
+      line-height: var(--rr-text-lead-lh);
     }
     .purpose__cta {
       justify-self: start;

@@ -65,7 +65,16 @@
   --rr-text-section:  clamp(2.25rem, 5vw, 3.75rem);
   --rr-text-statement:clamp(1.75rem, 4vw, 3.125rem);
   --rr-text-card:     clamp(1.25rem, 2vw, 1.75rem);
-  --rr-text-lead:     clamp(1.125rem, 1.6vw, 1.5rem);
+
+  /* ── Body copy — global paragraph scale (single source of truth) ──
+   * Two consistent roles used site-wide:
+   *   --rr-text-lead : intro / hero / CTA lead paragraphs
+   *   --rr-text-body : standard paragraph / body copy
+   * Both fixed (no clamp) so paragraph sizing is identical on every page. */
+  --rr-text-lead:     18px;
+  --rr-text-lead-lh:  1.7;
+  --rr-text-body:     14px;
+  --rr-text-body-lh:  1.6;
 
 
   /* ════════════════════════════════════════════════════════════

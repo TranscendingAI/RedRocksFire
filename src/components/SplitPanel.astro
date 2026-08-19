@@ -93,7 +93,7 @@ const textColorOnDark = background === 'black' ? '#fff' : undefined;
         </h2>
         <p
           class:list={['mt-6 rr-reveal', bodyClass]}
-          style={`font-size: var(--rr-text-lead);${textColorOnDark ? ` color: ${textColorOnDark}; opacity: 0.9;` : ''}`}
+          style={`font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh);${textColorOnDark ? ` color: ${textColorOnDark}; opacity: 0.9;` : ''}`}
           data-reveal-delay="120"
         >
           {body}

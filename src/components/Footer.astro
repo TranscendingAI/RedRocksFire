@@ -24,13 +24,13 @@ const serviceLinks = [
   { href: '/services',                           label: 'Backflow Prevention' },
   { href: '/services',                           label: 'All Services' },
 ];
-const industryLinks = [
-  { href: '/multi-family-management-companies', label: 'Multi-Family Management' },
-  { href: '/commercial-property',               label: 'Commercial Property' },
-  { href: '/assisted-living',                   label: 'Assisted Living & Healthcare' },
-  { href: '/hotels-hospitality',                label: 'Hotels & Hospitality' },
-  { href: '/retail',                            label: 'Retail & Shopping Centers' },
-  { href: '/industries-we-serve',               label: 'All Industries' },
+const companyLinks = [
+  { href: '/about',      label: 'About' },
+  { href: '#',           label: 'Meet Our Team' },
+  { href: '#',           label: 'Our Story' },
+  { href: '#',           label: 'Our Promise' },
+  { href: '#',           label: 'The RRFPS Difference' },
+  { href: '/industries', label: 'Industries We Serve' },
 ];
 
 const socials = [
@@ -78,9 +78,9 @@ const socials = [
     </div>
 
     <div class="avf__col">
-      <h3 class="avf__col-heading">industries we serve</h3>
+      <h3 class="avf__col-heading">Company</h3>
       <ul class="avf__links">
-        {industryLinks.map((link) => (
+        {companyLinks.map((link) => (
           <li><a href={link.href} class="avf__link">{link.label}</a></li>
         ))}
       </ul>

@@ -1,10 +1,110 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+/**
+ * Industries We Serve — landing page at /industries-we-serve/.
+ *
+ * Reuses the shared <IndustriesGrid /> component (single source of truth:
+ * about.industries in src/data/site.ts) so the 14-card grid is identical to
+ * the one on the About page. A ptbanner header matches the About/industry
+ * page pattern; the background image is reused as a lightweight placeholder
+ * until a dedicated asset is supplied.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IndustriesGrid from '../../components/IndustriesGrid.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+
+const bannerImage = '/images/rrfps-about-hero-bg.jpg';
 ---
 
-<BaseLayout title="Industries We Serve | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">Industries We Serve</h1>
-    <p class="text-lg text-gray-700">Placeholder industries page — content coming soon.</p>
-  </section>
+<BaseLayout
+  title="Industries We Serve | Red Rocks Fire Protection"
+  description="Red Rocks Fire Protection serves multi-family, commercial, healthcare, education, hospitality, retail, and more across the Colorado Front Range with one accountable life-safety team."
+>
+  <div class="av-page">
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${bannerImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Industries We Serve.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Industries We Serve</span>
+        </div>
+      </div>
+    </header>
+
+    <IndustriesGrid />
+
+    <ClosingCTA />
+  </div>
 </BaseLayout>
+
+<style>
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(64px, 8vw, 110px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+  }
+</style>

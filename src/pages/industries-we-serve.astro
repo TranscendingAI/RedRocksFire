@@ -1,0 +1,37 @@
+---
+/**
+ * Redirect stub — /industries-we-serve/ -> /industries/
+ *
+ * The industry pages were reorganized under the /industries/ parent
+ * (2026-08). This stub keeps the prior top-level URL alive for search
+ * engines, inbound links, and saved bookmarks via a meta-refresh
+ * redirect (works on Astro's static output) plus a canonical signal and
+ * a visible fallback link.
+ */
+
+const NEW_URL = '/industries/';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redirecting… | Red Rocks Fire Protection</title>
+    <meta name="description" content="This page has moved. You'll be redirected to its new location." />
+    <meta http-equiv="refresh" content={`0; url=${NEW_URL}`} />
+    <link rel="canonical" href={NEW_URL} />
+  </head>
+  <body style="margin:0; background:#000; color:#fff; font-family:'Inter',system-ui,sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem;">
+    <main style="text-align:center; max-width:32rem;">
+      <h1 style="font-size:clamp(2rem, 4vw, 2.75rem); margin:0 0 1rem; text-transform:uppercase;">This page has moved.</h1>
+      <p style="margin:0 0 1.5rem; opacity:0.75;">This content now lives at a new URL.</p>
+      <a
+        href={NEW_URL}
+        style="display:inline-block; padding:0.85rem 1.6rem; border-radius:999px; background:#D31428; color:#fff; text-decoration:none; font-weight:600;"
+      >
+        Continue to the new page →
+      </a>
+    </main>
+  </body>
+</html>

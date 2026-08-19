@@ -45,20 +45,20 @@ interface NavItem {
  * full content lands, no nav change is needed.
  */
 const industriesNav: AboutSubItem[] = [
-  { href: '/multi-family',         label: 'Multi-Family Management',   icon: 'solar:buildings-2-bold-duotone',            body: 'Coordinated inspections and monitoring for apartment communities and their residents.' },
-  { href: '/commercial-property',  label: 'Commercial Property',       icon: 'solar:city-bold-duotone',                   body: 'Sprinkler, alarm, and compliance coverage for offices and commercial facilities.' },
-  { href: '/religious-institutions', label: 'Religious Institutions',  icon: 'solar:home-angle-bold-duotone',             body: 'Protecting places of worship and their congregations with dependable life safety.' },
-  { href: '/assisted-living',      label: 'Assisted Living',           icon: 'solar:heart-pulse-bold-duotone',            body: 'Compliance-focused fire protection for senior living and healthcare facilities.' },
-  { href: '/education',            label: 'Education / Universities',  icon: 'solar:square-academic-cap-bold-duotone',    body: 'Sprinkler and alarm systems that keep campuses and students safe.' },
-  { href: '/warehouse-industrial', label: 'Warehouse / Industrial',    icon: 'solar:box-bold-duotone',                    body: 'Fire protection and inspections built for warehouse, storage, and industrial sites.' },
-  { href: '/hoa-management',       label: 'HOA Management',            icon: 'solar:home-2-bold-duotone',                 body: 'Inspections and monitoring that help HOAs stay ahead of compliance.' },
-  { href: '/hotels-hospitality',  label: 'Hotels & Hospitality',      icon: 'solar:bed-bold-duotone',                    body: 'Life safety systems that protect guests, staff, and hospitality properties.' },
-  { href: '/retail',               label: 'Retail & Shopping Centers', icon: 'solar:cart-large-2-bold-duotone',           body: 'Reliable fire protection for retail stores and shopping centers.' },
-  { href: '/restaurants',          label: 'Restaurants & Food Trucks', icon: 'solar:chef-hat-bold-duotone',               body: 'Kitchen suppression and fire protection for restaurants and food service.' },
-  { href: '/financial',           label: 'Financial Institutions',    icon: 'solar:card-bold-duotone',                   body: 'Compliance and monitoring for banks and financial facilities.' },
-  { href: '/automotive',           label: 'Automotive Dealerships',    icon: 'solar:wheel-bold-duotone',                  body: 'Fire protection tailored to dealerships and automotive facilities.' },
-  { href: '/data-centers',         label: 'Data Centers',              icon: 'solar:server-bold-duotone',                 body: 'Specialized suppression and monitoring for mission-critical data centers.' },
-  { href: '/general-contractors',  label: 'General Contractors',       icon: 'solar:hammer-bold-duotone',                 body: 'A trusted fire protection partner for GCs and construction projects.' },
+  { href: '/industries/multi-family-management-companies',         label: 'Multi-Family Management',   icon: 'solar:buildings-2-bold-duotone',            body: 'Coordinated inspections and monitoring for apartment communities and their residents.' },
+  { href: '/industries/commercial-property',  label: 'Commercial Property',       icon: 'solar:city-bold-duotone',                   body: 'Sprinkler, alarm, and compliance coverage for offices and commercial facilities.' },
+  { href: '/industries/religious-institutions', label: 'Religious Institutions',  icon: 'solar:home-angle-bold-duotone',             body: 'Protecting places of worship and their congregations with dependable life safety.' },
+  { href: '/industries/assisted-living',      label: 'Assisted Living',           icon: 'solar:heart-pulse-bold-duotone',            body: 'Compliance-focused fire protection for senior living and healthcare facilities.' },
+  { href: '/industries/education',            label: 'Education / Universities',  icon: 'solar:square-academic-cap-bold-duotone',    body: 'Sprinkler and alarm systems that keep campuses and students safe.' },
+  { href: '/industries/warehouse-industrial', label: 'Warehouse / Industrial',    icon: 'solar:box-bold-duotone',                    body: 'Fire protection and inspections built for warehouse, storage, and industrial sites.' },
+  { href: '/industries/hoa-management',       label: 'HOA Management',            icon: 'solar:home-2-bold-duotone',                 body: 'Inspections and monitoring that help HOAs stay ahead of compliance.' },
+  { href: '/industries/hotels-hospitality',  label: 'Hotels & Hospitality',      icon: 'solar:bed-bold-duotone',                    body: 'Life safety systems that protect guests, staff, and hospitality properties.' },
+  { href: '/industries/retail',               label: 'Retail & Shopping Centers', icon: 'solar:cart-large-2-bold-duotone',           body: 'Reliable fire protection for retail stores and shopping centers.' },
+  { href: '/industries/restaurants',          label: 'Restaurants & Food Trucks', icon: 'solar:chef-hat-bold-duotone',               body: 'Kitchen suppression and fire protection for restaurants and food service.' },
+  { href: '/industries/financial',           label: 'Financial Institutions',    icon: 'solar:card-bold-duotone',                   body: 'Compliance and monitoring for banks and financial facilities.' },
+  { href: '/industries/automotive',           label: 'Automotive Dealerships',    icon: 'solar:wheel-bold-duotone',                  body: 'Fire protection tailored to dealerships and automotive facilities.' },
+  { href: '/industries/data-centers',         label: 'Data Centers',              icon: 'solar:server-bold-duotone',                 body: 'Specialized suppression and monitoring for mission-critical data centers.' },
+  { href: '/industries/general-contractors',  label: 'General Contractors',       icon: 'solar:hammer-bold-duotone',                 body: 'A trusted fire protection partner for GCs and construction projects.' },
 ];
 
 /**
@@ -94,6 +94,7 @@ const navItems: NavItem[] = [
   },
   {
     label: 'INDUSTRIES WE SERVE',
+    href: '/industries',
     children: [...industriesNav],
   },
   { href: '/testimonials', label: 'TESTIMONIALS' },
@@ -167,24 +168,46 @@ const socials = [
             {navItems.map((item) => (
               <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about', item.label === 'INDUSTRIES WE SERVE' && 'avh__item--industries']}>
                 {item.children ? (
-                  /* Dropdown trigger — button, not <a>, since it doesn't navigate */
+                  /* Dropdown parent. If the item ALSO has an href, the label is a
+                   * real link (<a>) that navigates on click while the dropdown
+                   * still opens on hover/focus. Otherwise it's a non-navigating
+                   * <button> toggle (ABOUT, SERVICES). */
                   <>
-                    <button
-                      type="button"
-                      class:list={['avh__link', 'avh__link--trigger', isCurrent(item) && 'avh__link--current']}
-                      aria-haspopup="menu"
-                      aria-expanded="false"
-                      data-dropdown-trigger
-                      aria-current={isCurrent(item) ? 'page' : undefined}
-                    >
-                      <span>{item.label}</span>
-                      <svg class="avh__caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
-                        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </button>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        class:list={['avh__link', 'avh__link--trigger', isCurrent(item) && 'avh__link--current']}
+                        aria-haspopup="menu"
+                        aria-expanded="false"
+                        data-dropdown-trigger
+                        aria-current={isCurrent(item) ? 'page' : undefined}
+                      >
+                        <span>{item.label}</span>
+                        <svg class="avh__caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                          <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        class:list={['avh__link', 'avh__link--trigger', isCurrent(item) && 'avh__link--current']}
+                        aria-haspopup="menu"
+                        aria-expanded="false"
+                        data-dropdown-trigger
+                        aria-current={isCurrent(item) ? 'page' : undefined}
+                      >
+                        <span>{item.label}</span>
+                        <svg class="avh__caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                          <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                    )}
                     <ul class="avh__submenu" role="menu" data-dropdown-menu>
                       {item.children.map((child) => {
                         const isChildCurrent = currentPath === child.href || currentPath.startsWith(child.href + '/');
+                        /* Industries menu: card layout WITHOUT the body blurb
+                         * (icon + title + LEARN MORE only). ABOUT keeps its blurbs. */
+                        const hideBody = item.label === 'INDUSTRIES WE SERVE';
                         /* Enhanced (rich-card) variant — used by ABOUT. Detected by
                          * the presence of the extra fields on AboutSubItem. */
                         if ('icon' in child && 'body' in child) {
@@ -196,7 +219,7 @@ const socials = [
                                   <iconify-icon icon={card.icon} width="28" height="28"></iconify-icon>
                                 </span>
                                 <span class="avh__about-title">{card.label}</span>
-                                <span class="avh__about-body">{card.body}</span>
+                                {!hideBody && <span class="avh__about-body">{card.body}</span>}
                                 <span class="avh__about-cta">LEARN MORE <span class="avh__about-arrow" aria-hidden="true">→</span></span>
                               </a>
                             </li>
@@ -237,7 +260,7 @@ const socials = [
 
   {/* ── Mobile header ── */}
   <div class="avh__mobile">
-    <a href="/" aria-label="Red Rocks Fire Protection home">
+    <a href="/" aria-label="Red Rocks Fire Protection home" class="avh__logo-box--mobile">
       <img
         src="/images/RRFPS_LOGO.png"
         alt="Red Rocks Fire Protection"
@@ -264,9 +287,21 @@ const socials = [
         {navItems.map((item) => (
           <li>
             {item.children ? (
-              /* Mobile: parent is a non-navigating header, children indented. */
+              /* Mobile: parent is a header. If it has an href (INDUSTRIES WE
+               * SERVE) it links to its page; otherwise it's a plain label.
+               * Children are always listed indented below. */
               <>
-                <span class="avh__drawer-parent">{item.label}</span>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    class:list={['avh__drawer-parent', 'avh__drawer-parent--link', isCurrent(item) && 'avh__drawer-link--current']}
+                    aria-current={currentPath === item.href ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <span class="avh__drawer-parent">{item.label}</span>
+                )}
                 <ul class="avh__drawer-sub">
                   {item.children.map((child) => (
                     <li>
@@ -535,15 +570,27 @@ const socials = [
   /* ── Mobile ── */
   .avh__mobile {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
     min-height: 70px;
-    padding: 0 15px;
+    /* No left padding: the red logo box hugs the top-left corner like desktop.
+       Right padding keeps the burger off the edge. */
+    padding: 0 15px 0 0;
   }
   @media (min-width: 1025px) {
     .avh__mobile { display: none; }
   }
   .avh__logo--mobile { height: 36px; }
+  /* Red box behind the mobile logo — flush to the top-left corner of the
+     viewport, matching the desktop red logo box (no radius, no offset). */
+  .avh__logo-box--mobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d41226;
+    padding: 0 20px;
+    border-radius: 0;
+  }
   .avh__burger {
     width: 50px;
     height: 50px;
@@ -594,6 +641,12 @@ const socials = [
     opacity: 0.55;
     letter-spacing: 0.04em;
   }
+  /* Navigable parent (e.g. INDUSTRIES WE SERVE) reads as a real link. */
+  .avh__drawer-parent--link {
+    opacity: 1;
+    text-decoration: none;
+  }
+  .avh__drawer-parent--link:hover { color: #d41226; }
   .avh__drawer-sub {
     list-style: none;
     margin: 0 0 8px 16px;
@@ -773,9 +826,15 @@ const socials = [
     const isCoarse = window.matchMedia('(hover: none)').matches;
 
     items.forEach((item) => {
-      const button = item.querySelector<HTMLButtonElement>('[data-dropdown-trigger]');
+      const button = item.querySelector<HTMLElement>('[data-dropdown-trigger]');
       const menu = item.querySelector<HTMLElement>('[data-dropdown-menu]');
       if (!button || !menu) return;
+
+      // A navigable trigger is an <a href> (e.g. INDUSTRIES WE SERVE): on
+      // fine-pointer devices its click should NAVIGATE, with the dropdown
+      // opening on hover. On coarse pointers (no hover) the first tap must
+      // open the menu instead so sub-items are reachable.
+      const isNavigable = button.tagName === 'A' && button.hasAttribute('href');
 
       const open = () => {
         // Close any sibling dropdowns first
@@ -799,6 +858,9 @@ const socials = [
 
       // Touch/click — always wire so keyboard users + coarse pointer can open.
       button.addEventListener('click', (e) => {
+        // Navigable trigger on a fine pointer (real hover): let the link
+        // navigate to its page; the dropdown is available via hover.
+        if (isNavigable && !isCoarse) return;
         e.preventDefault();
         toggle();
       });

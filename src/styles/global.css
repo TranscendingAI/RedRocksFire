@@ -41,6 +41,15 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 0.95;
 }
 
+/* ── Global body-copy baseline ──────────────────────────────
+ * All paragraph text defaults to the standard body size/leading.
+ * Lead paragraphs opt up via the --rr-text-lead token (18px) applied
+ * in components/pages. Keeps paragraph sizing consistent site-wide. */
+p {
+  font-size: var(--rr-text-body);
+  line-height: var(--rr-text-body-lh);
+}
+
 /* Visible keyboard focus — uses --rr-red per design.md §4.2 */
 *:focus-visible {
   outline: 2px solid var(--rr-red);

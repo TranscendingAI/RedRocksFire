@@ -25,7 +25,7 @@
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SplitPanel from '../../components/SplitPanel.astro';
-import DualCTA from '../../components/DualCTA.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
 import { cities, getCity } from '../../data/cities';
 import { company, contact } from '../../data/site';
 
@@ -331,9 +331,16 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
     </section>
 
     <!-- ══════════════════════════════════════════════════════════
-         §8 CLOSING — DualCTA
+         §8 CLOSING — ClosingCTA (shared banner, same as About /
+         Fire Sprinkler). Copy generalized across all service-area
+         cities; background is the Front Range CTA image.
          ══════════════════════════════════════════════════════════ -->
-    <DualCTA items={city.ctaPair} background="white" />
+    <ClosingCTA
+      backgroundImage="/images/rrfps-centennial-cta-bg.jpg"
+      paragraphs={[
+        "Choosing the right life safety partner for your properties is about more than maintaining systems and meeting requirements. It's about having a local team you can trust to communicate clearly, advocate for you, stay ahead of compliance, and take responsibility for protecting your people and property across the Front Range.",
+      ]}
+    />
 
   </div>
 </BaseLayout>
@@ -451,8 +458,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   }
   .city-ahj__intro {
     margin: 0 0 32px;
-    font-size: 1.0625rem;
-    line-height: 1.6;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
     color: rgba(255, 255, 255, 0.85);
   }
   .city-ahj__facts {
@@ -537,8 +544,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   .city-neigh__lede {
     margin: 0 0 48px;
     max-width: 920px;
-    font-size: 1.0625rem;
-    line-height: 1.6;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
     color: rgba(0, 0, 0, 0.7);
   }
   .city-neigh__grid {
@@ -581,8 +588,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   }
   .city-neigh__note {
     margin: 0;
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
     color: rgba(0, 0, 0, 0.7);
   }
 
@@ -619,8 +626,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   .city-services__lede {
     margin: 0 0 56px;
     max-width: 920px;
-    font-size: 1.0625rem;
-    line-height: 1.6;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
     color: rgba(0, 0, 0, 0.7);
   }
   .city-services__grid {
@@ -643,8 +650,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   }
   .city-services__body {
     margin: 0;
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
     color: rgba(0, 0, 0, 0.7);
   }
 
@@ -739,8 +746,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   .city-def__lede {
     margin: 0 0 56px;
     max-width: 920px;
-    font-size: 1.0625rem;
-    line-height: 1.6;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
     color: rgba(0, 0, 0, 0.7);
   }
   /* Light-bg accordion overrides — borders and text tuned for white bg. */
@@ -795,8 +802,8 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   }
   .city-stock__body {
     margin: 0;
-    font-size: 1.0625rem;
-    line-height: 1.7;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
     color: rgba(0, 0, 0, 0.75);
   }
   .city-stock__faq-title {

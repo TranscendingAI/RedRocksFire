@@ -29,10 +29,10 @@
  * Source of truth for copy: src/data/site.ts → `multiFamilyPage`.
  */
 
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SplitPanel from '../components/SplitPanel.astro';
-import ClosingCTA from '../components/ClosingCTA.astro';
-import { multiFamilyPage, testimonials } from '../data/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SplitPanel from '../../components/SplitPanel.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+import { multiFamilyPage, testimonials } from '../../data/site';
 
 // Arrow + diamond icons used by the page-title banner and any matching
 // dblh eyebrow. Same path data as the demo so visual rhythm matches the
@@ -338,8 +338,8 @@ const sliderPanels = multiFamilyPage.slider.panels;
   }
   .mf-challenges__intro {
     margin: 0;
-    font-size: 1.0625rem;
-    line-height: 1.6;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
     color: rgba(255, 255, 255, 0.85);
   }
   /* Accordion container colors sit on top of the dark band, so the
@@ -389,8 +389,8 @@ const sliderPanels = multiFamilyPage.slider.panels;
   .acc__content {
     padding: 6px 5px 14px 39px;
     color: rgba(255, 255, 255, 0.85);
-    font-size: 16px;
-    line-height: 1.65;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
   .acc__content p { margin: 0; }
 
@@ -478,8 +478,8 @@ const sliderPanels = multiFamilyPage.slider.panels;
   }
   .slider__desc {
     font-family: "Inter", sans-serif;
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
     color: rgba(255, 255, 255, 0.85);
   }
 
@@ -540,8 +540,8 @@ const sliderPanels = multiFamilyPage.slider.panels;
   }
   .mf-tm__quote {
     margin: 0 0 20px;
-    font-size: 1rem;
-    line-height: 1.55;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
     color: #0a0a0a;
     flex: 1;
   }
