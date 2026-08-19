@@ -2,12 +2,21 @@
 /**
  * Service Areas — hub page at /service-areas/.
  *
- * Lists every published city in src/data/cities.ts with a short card.
- * Add a new city to that array and it appears here automatically.
+ * Two card sections:
+ *   §1 Cities — grouped by region (src/data/cities.ts → cityRegions).
+ *      Each region renders its title, then a 3-up grid of city cards.
+ *   §2 Counties — the key regional counties (cities.ts → counties) in
+ *      the same card style, under a single "Counties" heading.
+ *
+ * Card links are '#' stubs for now; each becomes a real
+ * /service-areas/<slug>/ (or /service-areas/counties/<slug>/) route as
+ * that page is built. Closing section reuses the shared <ClosingCTA>
+ * banner so this page matches the city pages and other sub-pages.
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { cities } from '../data/cities';
+import ClosingCTA from '../components/ClosingCTA.astro';
+import { cityRegions, counties } from '../data/cities';
 
 const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.rrfps.com';
 const canonicalAbsolute = `${siteOrigin}/service-areas/`;
@@ -24,7 +33,7 @@ const breadcrumbSchema = JSON.stringify({
 
 <BaseLayout
   title="Service Areas | Red Rocks Fire Protection"
-  description="Fire protection services across the Colorado Front Range. RRFPS serves Centennial, Denver, Englewood, Littleton, Aurora, Lakewood, Boulder, Fort Collins, Colorado Springs, and surrounding cities."
+  description="Fire protection services across the Colorado Front Range. RRFPS serves the Denver metro, Boulder area, Northern Colorado, and the Front Range — organized by region and county."
   canonical={canonicalAbsolute}
   type="website"
   schema={breadcrumbSchema}
@@ -51,20 +60,57 @@ const breadcrumbSchema = JSON.stringify({
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════════════
+         §1 CITIES — grouped by region
+         ══════════════════════════════════════════════════════════ -->
     <section class="sai-grid">
       <div class="sai-grid__inner">
+        <p class="sai-grid__eyebrow">By City</p>
+        <h2 class="sai-grid__heading">Cities we serve.</h2>
+
+        {cityRegions.map((group) => (
+          <div class="sai-region">
+            <h3 class="sai-region__title">{group.region}</h3>
+            <div class="sai-grid__list">
+              {group.cities.map((c) => (
+                <a class="sai-card" href={c.href}>
+                  <h4 class="sai-card__city">{c.name}, CO</h4>
+                  <span class="sai-card__cta">View city page →</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §2 COUNTIES — key regional counties
+         ══════════════════════════════════════════════════════════ -->
+    <section class="sai-grid sai-grid--counties">
+      <div class="sai-grid__inner">
+        <p class="sai-grid__eyebrow">By County</p>
+        <h2 class="sai-grid__heading">Counties.</h2>
         <div class="sai-grid__list">
-          {cities.map((c) => (
-            <a class="sai-card" href={`/service-areas/${c.slug}/`}>
-              <span class="sai-card__county">{c.county}</span>
-              <h3 class="sai-card__city">{c.city}, {c.state}</h3>
-              <p class="sai-card__ahj">AHJ: {c.ahj.name}</p>
-              <span class="sai-card__cta">View city page →</span>
+          {counties.map((c) => (
+            <a class="sai-card" href={c.href}>
+              <h4 class="sai-card__city">{c.name}</h4>
+              <span class="sai-card__cta">View county page →</span>
             </a>
           ))}
         </div>
       </div>
     </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         CLOSING — shared ClosingCTA banner (matches city / sub-pages)
+         ══════════════════════════════════════════════════════════ -->
+    <ClosingCTA
+      backgroundImage="/images/rrfps-centennial-cta-bg.jpg"
+      paragraphs={[
+        "Wherever your properties sit on the Front Range, you get one local team for every life-safety system — inspections, sprinklers, alarms, monitoring, suppression, and backflow — with reports formatted to your Authority Having Jurisdiction so corrections are approved without rework.",
+      ]}
+    />
   </div>
 </BaseLayout>
 
@@ -167,6 +213,9 @@ const breadcrumbSchema = JSON.stringify({
     padding-block: 90px;
   }
   @media (min-width: 768px) { .sai-grid { padding-block: 120px; } }
+  /* Counties section sits on the light bg to separate it from the
+     white cities section above it. */
+  .sai-grid--counties { background: var(--rr-bg-light, #F4F2F1); }
   .sai-grid__inner {
     width: 100%;
     max-width: 1280px;
@@ -174,6 +223,42 @@ const breadcrumbSchema = JSON.stringify({
     padding-inline: 1.25rem;
   }
   @media (min-width: 768px) { .sai-grid__inner { padding-inline: 2.5rem; } }
+  .sai-grid__eyebrow {
+    margin: 0 0 14px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #d41226;
+  }
+  .sai-grid__heading {
+    margin: 0 0 48px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  /* Each region block: title + its own card grid. */
+  .sai-region { margin-bottom: 56px; }
+  .sai-region:last-child { margin-bottom: 0; }
+  .sai-region__title {
+    margin: 0 0 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(20px, 2.4vw, 28px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
   .sai-grid__list {
     display: grid;
     gap: 24px;
@@ -182,8 +267,11 @@ const breadcrumbSchema = JSON.stringify({
   @media (min-width: 700px)  { .sai-grid__list { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1024px) { .sai-grid__list { grid-template-columns: repeat(3, 1fr); } }
   .sai-card {
-    display: block;
-    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 28px 32px;
     background: var(--rr-bg-light, #F4F2F1);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 8px;
@@ -191,6 +279,9 @@ const breadcrumbSchema = JSON.stringify({
     color: inherit;
     transition: 0.3s;
   }
+  /* On the light-bg counties section, flip the card fill to white so
+     cards stay distinct from the section background. */
+  .sai-grid--counties .sai-card { background: #ffffff; }
   .sai-card:hover {
     background: #0a0a0a;
     color: #ffffff;
@@ -198,35 +289,15 @@ const breadcrumbSchema = JSON.stringify({
   }
   .sai-card:hover .sai-card__cta { color: #ffffff; }
   .sai-card:hover .sai-card__city { color: #ffffff; }
-  .sai-card__county {
-    display: inline-block;
-    margin-bottom: 14px;
-    padding: 4px 10px;
-    background: rgba(212, 18, 38, 0.08);
-    color: #d41226;
-    border-radius: 999px;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .sai-card:hover .sai-card__county { background: rgba(212, 18, 38, 0.25); }
   .sai-card__city {
-    margin: 0 0 10px;
+    margin: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1.1;
     letter-spacing: -0.02em;
+    color: #0a0a0a;
   }
-  .sai-card__ahj {
-    margin: 0 0 20px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: rgba(0, 0, 0, 0.65);
-  }
-  .sai-card:hover .sai-card__ahj { color: rgba(255, 255, 255, 0.75); }
   .sai-card__cta {
     display: inline-block;
     font-family: "Space Grotesk", sans-serif;

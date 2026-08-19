@@ -544,3 +544,133 @@ export const cities: City[] = [
 export function getCity(slug: string): City | undefined {
   return cities.find((c) => c.slug === slug);
 }
+
+// ──────────────────────────────────────────────────────────────────────
+// 3. SERVICE-AREAS HUB DISPLAY LISTS
+// ──────────────────────────────────────────────────────────────────────
+//
+// The `cities` array above holds the full, SEO-rich page data for the
+// handful of cities that have a dedicated /service-areas/<slug>/ page.
+//
+// The lists below drive the /service-areas/ HUB page only — the grouped
+// city cards (by region) and the county cards. They are display stubs:
+// a name + slug. As each city/county page is built, wire its card's
+// `href` from '#' to the real route. Slugs follow the same
+// `lowercase-name-co` convention as the full city pages so the links
+// line up when the pages land.
+
+export interface AreaLink {
+  /** Display name, e.g. "Thornton" or "Adams County". */
+  name: string;
+  /** URL slug for the future page, e.g. "thornton-co". */
+  slug: string;
+  /** Live link target. '#' until the page is built. */
+  href: string;
+}
+
+export interface CityRegion {
+  /** Region heading, e.g. "North Metro". */
+  region: string;
+  /** Cities in this region, in the order supplied. */
+  cities: AreaLink[];
+}
+
+const stub = (name: string, slug: string): AreaLink => ({ name, slug, href: '#' });
+
+/**
+ * Cities grouped by region for the hub page. Order = display order.
+ * `href` is '#' for every entry until its page exists.
+ */
+export const cityRegions: CityRegion[] = [
+  {
+    region: 'North Metro',
+    cities: [
+      stub('Thornton', 'thornton-co'),
+      stub('Westminster', 'westminster-co'),
+      stub('Brighton', 'brighton-co'),
+      stub('Northglenn', 'northglenn-co'),
+      stub('Commerce City', 'commerce-city-co'),
+      stub('Federal Heights', 'federal-heights-co'),
+    ],
+  },
+  {
+    region: 'South/Southwest Metro',
+    cities: [
+      stub('Littleton', 'littleton-co'),
+      stub('Centennial', 'centennial-co'),
+      stub('Highlands Ranch', 'highlands-ranch-co'),
+      stub('Englewood', 'englewood-co'),
+      stub('Greenwood Village', 'greenwood-village-co'),
+      stub('Denver Tech Center', 'denver-tech-center-co'),
+      stub('Lone Tree', 'lone-tree-co'),
+      stub('Sheridan', 'sheridan-co'),
+      stub('Cherry Hills Village', 'cherry-hills-village-co'),
+    ],
+  },
+  {
+    region: 'East/Far South Metro',
+    cities: [
+      stub('Aurora', 'aurora-co'),
+      stub('Parker', 'parker-co'),
+      stub('Castle Rock', 'castle-rock-co'),
+      stub('Castle Pines', 'castle-pines-co'),
+      stub('Elizabeth', 'elizabeth-co'),
+      stub('Franktown', 'franktown-co'),
+      stub('Larkspur', 'larkspur-co'),
+    ],
+  },
+  {
+    region: 'West Metro',
+    cities: [
+      stub('Lakewood', 'lakewood-co'),
+      stub('Arvada', 'arvada-co'),
+      stub('Golden', 'golden-co'),
+      stub('Wheat Ridge', 'wheat-ridge-co'),
+      stub('Edgewater', 'edgewater-co'),
+    ],
+  },
+  {
+    region: 'Northwest/Boulder Area',
+    cities: [
+      stub('Boulder', 'boulder-co'),
+      stub('Broomfield', 'broomfield-co'),
+      stub('Lafayette', 'lafayette-co'),
+      stub('Longmont', 'longmont-co'),
+      stub('Louisville', 'louisville-co'),
+      stub('Erie', 'erie-co'),
+      stub('Superior', 'superior-co'),
+    ],
+  },
+  {
+    region: 'Northeast Metro',
+    cities: [
+      stub('Fort Collins', 'fort-collins-co'),
+      stub('Greeley', 'greeley-co'),
+    ],
+  },
+  {
+    region: 'Near Mountain',
+    cities: [
+      stub('Evergreen', 'evergreen-co'),
+      stub('Conifer', 'conifer-co'),
+      stub('Morrison', 'morrison-co'),
+      stub('Black Hawk', 'black-hawk-co'),
+      stub('Central City', 'central-city-co'),
+    ],
+  },
+];
+
+/**
+ * Key regional counties for the hub page's Counties section.
+ * `href` is '#' until each county page exists at
+ * /service-areas/counties/<slug>/.
+ */
+export const counties: AreaLink[] = [
+  stub('Adams County', 'adams-county-co'),
+  stub('Arapahoe County', 'arapahoe-county-co'),
+  stub('Boulder County', 'boulder-county-co'),
+  stub('Broomfield County', 'broomfield-county-co'),
+  stub('Denver County', 'denver-county-co'),
+  stub('Douglas County', 'douglas-county-co'),
+  stub('El Paso County', 'el-paso-county-co'),
+];
