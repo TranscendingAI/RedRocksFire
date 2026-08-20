@@ -1,0 +1,816 @@
+---
+/**
+ * County service-area page — dynamic route.
+ *
+ *   /service-areas/counties/<slug>/ → src/pages/service-areas/counties/[slug].astro
+ *
+ * Driven by src/data/counties.ts. One template, many counties.
+ *
+ * Cohesive with the CITY template (shared ptbanner, SplitPanel, services
+ * grid, industry chips, accordion, ClosingCTA) but intentionally NOT
+ * identical. A county aggregates multiple cities and multiple AHJs, so
+ * the section set differs:
+ *
+ *   §0 ptbanner        — page title + breadcrumbs (shared style)
+ *   §1 hero SplitPanel — county hook paragraph + photo (shared component)
+ *   §2 stats band      — dark bg, big-number quick facts (NEW vs city)
+ *   §3 cities-in-county— card grid of the cities we serve here (NEW)
+ *   §4 AHJ grid        — the MULTIPLE fire authorities across the county (NEW)
+ *   §5 services band   — what we do countywide (shared grid style)
+ *   §6 industries      — chips (shared style)
+ *   §7 FAQ band        — accordion (shared .acc pattern)
+ *   §8 closing         — ClosingCTA (shared banner — REQUIRED)
+ *
+ * Schema: BreadcrumbList + FireProtectionService (anchored to HQ,
+ * areaServed = the county) + FAQPage.
+ */
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SplitPanel from '../../../components/SplitPanel.astro';
+import ClosingCTA from '../../../components/ClosingCTA.astro';
+import { counties } from '../../../data/counties';
+import { company, contact } from '../../../data/site';
+
+export function getStaticPaths() {
+  return counties.map((c) => ({ params: { slug: c.slug }, props: { county: c } }));
+}
+
+const { county } = Astro.props;
+
+const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.rrfps.com';
+const canonicalAbsolute = `${siteOrigin}${county.meta.canonical}`;
+
+// Arrow + diamond icons reused from the city template so visual rhythm matches.
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941 14.3396 0.939992Z"></path></svg>';
+
+// ─── SCHEMA ─────────────────────────────────────────────────────────────
+const breadcrumbSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteOrigin}/` },
+    { '@type': 'ListItem', position: 2, name: 'Service Areas', item: `${siteOrigin}/service-areas/` },
+    { '@type': 'ListItem', position: 3, name: county.county, item: canonicalAbsolute },
+  ],
+});
+
+const localBusinessSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FireProtectionService',
+  '@id': `${siteOrigin}/#org`,
+  name: company.legalName,
+  alternateName: company.shortName,
+  url: siteOrigin,
+  telephone: contact.phone,
+  email: contact.email,
+  priceRange: '$$',
+  description: `${company.tagline} ${company.serviceRegion}.`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contact.address.line1,
+    addressLocality: contact.address.city,
+    addressRegion: contact.address.state,
+    postalCode: contact.address.zip,
+    addressCountry: 'US',
+  },
+  areaServed: { '@type': 'AdministrativeArea', name: `${county.county}, Colorado` },
+  parentOrganization: { '@id': `${siteOrigin}/#org` },
+});
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: county.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+});
+
+const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, faqSchema].map((s) => JSON.parse(s)));
+---
+
+<BaseLayout
+  title={county.meta.title}
+  description={county.meta.description}
+  canonical={canonicalAbsolute}
+  type="website"
+  schema={combinedSchema}
+>
+  <div class="av-page county-page" data-county-slug={county.slug}>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §0 PAGE-TITLE BANNER
+         ══════════════════════════════════════════════════════════ -->
+    <div class="ptbanner" style={`background-image: url('${county.bannerImage}');`}>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">{county.bannerTitle}</h1>
+        <nav class="ptbanner__breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/service-areas">Service Areas</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">{county.county}</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §1 HERO — SplitPanel, the county hook paragraph
+         ══════════════════════════════════════════════════════════ -->
+    <SplitPanel
+      eyebrow={`${company.serviceRegion.split('—')[0].trim()} • ${county.county}`}
+      title={`Fire Protection across ${county.county}.`}
+      body={county.heroIntro}
+      ctaLabel="Schedule an Inspection"
+      ctaHref="/contact"
+      image={county.heroImage}
+      imageAlt={`A Red Rocks Fire Protection inspector meeting with a property manager in ${county.county}, Colorado`}
+      background="white"
+      revealTop={false}
+    />
+
+    <!-- ══════════════════════════════════════════════════════════
+         §2 STATS BAND — dark bg, big-number quick facts + overview
+         (Distinct from the city page's single-AHJ accordion.)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="county-stats">
+      <div class="county-stats__bg" aria-hidden="true"></div>
+      <div class="county-stats__overlay" aria-hidden="true"></div>
+
+      <div class="county-stats__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>One vendor, one county</span>
+        </div>
+        <h2 class="county-stats__title">Coordinated life-safety across every {county.county} jurisdiction.</h2>
+        <p class="county-stats__intro">{county.overview}</p>
+
+        <dl class="county-stats__grid">
+          {county.stats.map((s) => (
+            <div class="county-stats__stat">
+              <dt class="county-stats__value">{s.value}</dt>
+              <dd class="county-stats__label">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §3 CITIES IN THIS COUNTY — card grid
+         ══════════════════════════════════════════════════════════ -->
+    <section class="county-cities">
+      <div class="county-cities__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Cities we serve in {county.county}</span>
+        </div>
+        <h2 class="county-cities__title">{county.county} cities we work in.</h2>
+        <p class="county-cities__lede">{county.citiesIntro}</p>
+
+        <div class="county-cities__grid">
+          {county.citiesInCounty.map((c) => (
+            <a class="county-cities__card" href={c.href}>
+              <h3 class="county-cities__name">{c.name}, CO</h3>
+              <span class="county-cities__cta">View city page →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §4 AHJ GRID — the multiple fire authorities in the county
+         (Distinct: city page has ONE AHJ; a county has many.)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="county-ahj">
+      <div class="county-ahj__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Authorities Having Jurisdiction</span>
+        </div>
+        <h2 class="county-ahj__title">The fire authorities that enforce code in {county.county}.</h2>
+        <p class="county-ahj__lede">{county.ahjIntro}</p>
+
+        <div class="county-ahj__grid">
+          {county.ahjs.map((a) => (
+            <article class="county-ahj__card">
+              <h3 class="county-ahj__name">{a.name}</h3>
+              <p class="county-ahj__jur">{a.jurisdiction}</p>
+              {a.website && (
+                <a class="county-ahj__link" href={a.website} target="_blank" rel="noopener">
+                  {a.website.replace(/^https?:\/\//, '')} →
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §5 SERVICES BAND — what we do countywide (grid)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="county-services">
+      <div class="county-services__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Services across {county.county}</span>
+        </div>
+        <h2 class="county-services__title">What we do for {county.county} properties.</h2>
+        <p class="county-services__lede">{county.servicesIntro}</p>
+
+        <div class="county-services__grid">
+          {county.servicesOffered.map((s) => (
+            <article class="county-services__card">
+              <h3 class="county-services__name">{s.title}</h3>
+              <p class="county-services__body">{s.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §6 INDUSTRIES BAND — chips of industries served
+         ══════════════════════════════════════════════════════════ -->
+    <section class="county-industries">
+      <div class="county-industries__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Industries served in {county.county}</span>
+        </div>
+        <h2 class="county-industries__title">Property types we work with in {county.county}.</h2>
+        <ul class="county-industries__chips">
+          {county.industriesServed.map((i) => (
+            <li><a href="/industries-we-serve">{i}</a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §7 FAQ BAND — accordion (reuses .acc pattern)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="county-faq">
+      <div class="county-faq__inner">
+        <div class="av-dblh__subtitle">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Frequently asked</span>
+        </div>
+        <h2 class="county-faq__title">Fire protection in {county.county} — common questions.</h2>
+
+        <div class="acc county-faq__list">
+          {county.faq.map((f, i) => (
+            <div class:list={['acc__panel', i === 0 && 'is-active']} data-acc-panel>
+              <button type="button" class="acc__header" aria-expanded={i === 0 ? 'true' : 'false'}>
+                <span class="acc__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                </span>
+                <span class="acc__title">{f.question}</span>
+              </button>
+              <div class="acc__content" hidden={i !== 0}>
+                <p>{f.answer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §8 CLOSING — ClosingCTA (shared banner — REQUIRED)
+         ══════════════════════════════════════════════════════════ -->
+    <ClosingCTA
+      backgroundImage="/images/rrfps-county-cta-apartments.jpg"
+      paragraphs={[
+        `Whether you manage one building or a portfolio spread across ${county.county}, you get one local team for every life-safety system — inspections, sprinklers, alarms, monitoring, suppression, and backflow — with reports formatted to whichever Authority Having Jurisdiction covers the property, so corrections are approved without rework.`,
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * §0 PTBANNER — shared style with the city template (cohesion).
+   * ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 65px);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; transition: 0.4s; }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §2 STATS BAND — dark bg + image overlay (echoes the city AHJ
+   *    band's dark treatment for cohesion, but shows stats not an
+   *    accordion).
+   * ══════════════════════════════════════════════════════════ */
+  .county-stats {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 110px;
+    background-color: #0d0d0b;
+  }
+  .county-stats__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/rrfps-county-warehouse.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.35);
+    z-index: -2;
+  }
+  .county-stats__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  .county-stats__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .county-stats__inner { padding-inline: 2.5rem; } }
+  .county-stats .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .county-stats__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .county-stats__intro {
+    margin: 0 0 56px;
+    max-width: 920px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .county-stats__grid {
+    margin: 0;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+  @media (min-width: 800px) { .county-stats__grid { grid-template-columns: repeat(4, 1fr); gap: 40px; } }
+  .county-stats__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .county-stats__value {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(40px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #d41226;
+  }
+  .county-stats__label {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §3 CITIES IN COUNTY — light bg card grid
+   * ══════════════════════════════════════════════════════════ */
+  .county-cities {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .county-cities { padding-block: 150px; } }
+  .county-cities__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .county-cities__inner { padding-inline: 2.5rem; } }
+  .county-cities .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .county-cities__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .county-cities__lede {
+    margin: 0 0 48px;
+    max-width: 920px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .county-cities__grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px)  { .county-cities__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .county-cities__grid { grid-template-columns: repeat(3, 1fr); } }
+  .county-cities__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 28px 32px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+  }
+  .county-cities__card:hover {
+    background: #0a0a0a;
+    color: #ffffff;
+    border-color: #0a0a0a;
+  }
+  .county-cities__card:hover .county-cities__name,
+  .county-cities__card:hover .county-cities__cta { color: #ffffff; }
+  .county-cities__name {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0a0a0a;
+  }
+  .county-cities__cta {
+    display: inline-block;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: #0a0a0a;
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §4 AHJ GRID — white bg, multi-authority cards
+   * ══════════════════════════════════════════════════════════ */
+  .county-ahj {
+    background: #ffffff;
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .county-ahj { padding-block: 150px; } }
+  .county-ahj__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .county-ahj__inner { padding-inline: 2.5rem; } }
+  .county-ahj .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .county-ahj__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .county-ahj__lede {
+    margin: 0 0 48px;
+    max-width: 920px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .county-ahj__grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px)  { .county-ahj__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .county-ahj__grid { grid-template-columns: repeat(3, 1fr); } }
+  .county-ahj__card {
+    padding: 28px;
+    background: var(--rr-bg-light, #F4F2F1);
+    border-radius: 8px;
+    border-left: 3px solid #d41226;
+  }
+  .county-ahj__name {
+    margin: 0 0 12px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.2;
+    color: #0a0a0a;
+  }
+  .county-ahj__jur {
+    margin: 0 0 16px;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .county-ahj__link {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: #d41226;
+    text-decoration: none;
+  }
+  .county-ahj__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §5 SERVICES — light bg, dense 2-col grid (mirrors city §4)
+   * ══════════════════════════════════════════════════════════ */
+  .county-services {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .county-services { padding-block: 150px; } }
+  .county-services__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .county-services__inner { padding-inline: 2.5rem; } }
+  .county-services .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .county-services__title {
+    margin: 0 0 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .county-services__lede {
+    margin: 0 0 56px;
+    max-width: 920px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .county-services__grid {
+    display: grid;
+    gap: 32px 48px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) { .county-services__grid { grid-template-columns: repeat(2, 1fr); } }
+  .county-services__card {
+    padding: 24px 0;
+    border-top: 2px solid #0a0a0a;
+  }
+  .county-services__name {
+    margin: 0 0 12px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.25;
+    color: #0a0a0a;
+  }
+  .county-services__body {
+    margin: 0;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §6 INDUSTRIES — chips (mirrors city §5)
+   * ══════════════════════════════════════════════════════════ */
+  .county-industries {
+    background: #ffffff;
+    padding-block: 90px;
+  }
+  @media (min-width: 768px) { .county-industries { padding-block: 120px; } }
+  .county-industries__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .county-industries__inner { padding-inline: 2.5rem; } }
+  .county-industries .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .county-industries__title {
+    margin: 0 0 40px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .county-industries__chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .county-industries__chips li a {
+    display: inline-block;
+    padding: 10px 18px;
+    background: var(--rr-bg-light, #F4F2F1);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0a0a0a;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  .county-industries__chips li a:hover {
+    background: #0a0a0a;
+    color: #ffffff;
+    border-color: #0a0a0a;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §7 FAQ — light bg accordion (reuses .acc, tuned for light bg
+   *    exactly like the city page's FAQ column).
+   * ══════════════════════════════════════════════════════════ */
+  .county-faq {
+    background: var(--rr-bg-light, #F4F2F1);
+    padding-block: 110px;
+  }
+  @media (min-width: 768px) { .county-faq { padding-block: 150px; } }
+  .county-faq__inner {
+    width: 100%;
+    max-width: 1080px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .county-faq__inner { padding-inline: 2.5rem; } }
+  .county-faq .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .county-faq__title {
+    margin: 0 0 48px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4.5vw, 52px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  /* Shared accordion icon rotation — same affordance as the city page. */
+  .acc__icon {
+    display: inline-flex;
+    align-self: flex-start;
+    margin: 8px 18px -15px 2px;
+    color: #d41226;
+    transform: rotate(90deg);
+    transition: transform 0.4s;
+  }
+  .acc__panel.is-active .acc__icon { transform: rotate(-90deg); }
+  .acc__icon svg { width: 18px; height: 16px; }
+
+  /* Light-bg accordion overrides — borders/text tuned for the light band. */
+  .county-faq__list .acc__panel { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+  .county-faq__list .acc__panel:first-child { border-top: none; }
+  .county-faq__list .acc__panel:last-child { border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+  .county-faq__list .acc__panel:hover,
+  .county-faq__list .acc__panel.is-active,
+  .county-faq__list .acc__panel:hover + .acc__panel,
+  .county-faq__list .acc__panel.is-active + .acc__panel { border-top-color: #d41226; }
+  .county-faq__list .acc__panel.is-active:last-child,
+  .county-faq__list .acc__panel:hover:last-child { border-bottom-color: #d41226; }
+  .county-faq__list .acc__header {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 18px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.3;
+  }
+  .county-faq__list .acc__title { flex: 1; }
+  .county-faq__list .acc__content {
+    color: rgba(0, 0, 0, 0.75);
+    padding-left: 39px;
+    padding-bottom: 20px;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .county-faq__list .acc__content p { margin: 0; }
+</style>
+
+<script>
+  // Accordion controller — same pattern as the city page. Defensive
+  // registration to survive Astro View Transitions hoisting.
+  function initCountyAccordions() {
+    const panels = document.querySelectorAll<HTMLElement>('.county-page [data-acc-panel]');
+    if (!panels.length) return false;
+    panels.forEach((panel) => {
+      const header = panel.querySelector<HTMLButtonElement>('.acc__header');
+      if (!header || (panel as any).__wired) return;
+      (panel as any).__wired = true;
+      header.addEventListener('click', () => {
+        const isActive = panel.classList.toggle('is-active');
+        header.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        const content = panel.querySelector<HTMLElement>('.acc__content');
+        if (content) content.hidden = !isActive;
+      });
+    });
+    return true;
+  }
+
+  function bindCountyAccordions() {
+    if (!initCountyAccordions()) setTimeout(initCountyAccordions, 100);
+  }
+
+  document.addEventListener('astro:page-load', bindCountyAccordions);
+  document.addEventListener('astro:after-swap', bindCountyAccordions);
+  document.addEventListener('DOMContentLoaded', bindCountyAccordions);
+  if (document.readyState !== 'loading') bindCountyAccordions();
+</script>

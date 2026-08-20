@@ -1,0 +1,42 @@
+Region,City,AHJ,Phone,Website,Notes
+North Metro,Thornton,Thornton Fire Department,303-538-7602,https://www.thorntonco.gov/public-safety/fire-department,
+North Metro,Westminster,Westminster Fire Department,303-658-4500,https://www.westminsterco.gov/159/Fire-Department,
+North Metro,Brighton,Brighton Fire Rescue District,303-659-4101,https://brightonfire.org/,
+North Metro,Northglenn,North Metro Fire Rescue District,303-452-9910,https://www.northmetrofire.org/,
+North Metro,Commerce City,Address-dependent - primarily South Adams County Fire; portions are Brighton Fire Rescue,303-288-0835 / 303-659-4101,https://www.sacfd.org/ / https://brightonfire.org/,"Address-dependent. Do not hard-code a single AHJ without an address check."
+North Metro,Federal Heights,Federal Heights Fire Department,303-427-7209,https://www.fedheights.org/fire,"Handles its own commercial inspections, plan review, and permitting."
+South / Southwest Metro,Littleton,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+South / Southwest Metro,Centennial,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+South / Southwest Metro,Highlands Ranch,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+South / Southwest Metro,Englewood,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,"Englewood transitioned fire services to South Metro in 2015."
+South / Southwest Metro,Greenwood Village,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+South / Southwest Metro,Denver Tech Center,South Metro Fire Rescue*,720-989-2000,https://www.southmetro.org/,"Most of DTC is in Greenwood Village/Centennial and therefore South Metro, but DTC is not an incorporated municipality. Verify by address."
+South / Southwest Metro,Lone Tree,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+South / Southwest Metro,Sheridan,Needs address verification,-,-,Needs address verification.
+South / Southwest Metro,Cherry Hills Village,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+East / Far South Metro,Aurora,Aurora Fire Rescue / City of Aurora Life Safety,303-326-8999,https://www.auroragov.org/residents/public_safety/fire_rescue/life_safety_and_fire_prevention,"Number listed for Life Safety Division, fire inspection, and fire-code questions."
+East / Far South Metro,Parker,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+East / Far South Metro,Castle Rock,Castle Rock Fire and Rescue,303-660-1066,https://www.crgov.com/3453/Castle-Rock-Fire-and-Rescue,"Separate AHJ from South Metro."
+East / Far South Metro,Castle Pines,South Metro Fire Rescue,720-989-2000,https://www.southmetro.org/,
+East / Far South Metro,Elizabeth,Elizabeth Fire Protection District,303-646-3800,https://www.elizabethfire.com/,
+East / Far South Metro,Franktown,Franktown Fire Protection District,303-688-3811,https://www.franktownfire.org/,"Corrected from source typo ""Frantown""."
+East / Far South Metro,Larkspur,Larkspur Fire Protection District,303-681-3284,https://www.larkspurfire.org/,
+West Metro,Lakewood,West Metro Fire Rescue,303-989-4307,https://www.westmetrofire.org/,
+West Metro,Arvada,Arvada Fire Protection District,303-424-3012,https://www.arvadafireco.gov/,
+West Metro,Golden,Address-dependent - Golden Fire / West Metro,303-384-8090 / 303-989-4307,https://www.cityofgolden.net/government/departments-divisions/fire-department/ / https://www.westmetrofire.org/,"Address-dependent. Actual property location determines whether Golden Fire or West Metro is the AHJ."
+West Metro,Wheat Ridge,West Metro Fire Rescue,303-989-4307,https://www.westmetrofire.org/,"Wheat Ridge merged into West Metro in 2016."
+West Metro,Edgewater,West Metro Fire Rescue,303-989-4307,https://www.westmetrofire.org/,
+Northwest / Boulder Area,Boulder,Boulder Fire-Rescue,303-441-3350,https://bouldercolorado.gov/government/departments/fire-rescue,
+Northwest / Boulder Area,Broomfield,North Metro Fire Rescue District,303-452-9910,https://www.northmetrofire.org/,
+Northwest / Boulder Area,Lafayette,Lafayette Fire Department,303-661-1202,https://www.lafayetteco.gov/250/Fire,"Corrected from source typo ""Lafayett""."
+Northwest / Boulder Area,Longmont,Longmont Fire Services,303-651-8437,https://www.longmontcolorado.gov/departments/departments-n-z/public-safety-department/fire-services,"Administrative number listed; fire prevention/codes also reachable at 303-651-8426."
+Northwest / Boulder Area,Louisville,Louisville Fire Protection District,303-666-6595,https://www.louisvillefire.com/,
+Northwest / Boulder Area,Erie,Mountain View Fire Rescue,303-772-0710,https://www.mvfpd.org/,"Mountain View provides fire protection and handles permits/inspections."
+Northwest / Boulder Area,Superior,Mountain View Fire Rescue,303-772-0710,https://www.mvfpd.org/,"Mountain View is responsible for Superior fire and fire-protection services."
+Northeast Metro,Fort Collins,Poudre Fire Authority,970-416-2891,https://www.poudre-fire.org/,"Fire Prevention and Community Risk Reduction contact."
+Northeast Metro,Greeley,Greeley Fire Department,970-350-9500,https://greeleyfire.com/,"Corrected from source typo ""Greely""."
+Near Mountain,Evergreen,Evergreen Fire/Rescue,303-674-3145,https://www.evergreenfirerescue.com/,
+Near Mountain,Conifer,Elk Creek Fire Protection District,303-816-9385,https://elkcreekfire.org/,
+Near Mountain,Morrison,West Metro Fire Rescue,303-989-4307,https://www.westmetrofire.org/,
+Near Mountain,Black Hawk,Black Hawk Fire Department,303-582-0426,https://www.cityofblackhawk.org/government/departments/fire,
+Near Mountain,Central City,Central City Fire Department,303-582-3473,https://www.centralcity.colorado.gov/,

@@ -29,6 +29,9 @@ const breadcrumbSchema = JSON.stringify({
     { '@type': 'ListItem', position: 2, name: 'Service Areas', item: canonicalAbsolute },
   ],
 });
+
+// Shared iconography reused from the About page section patterns.
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 ---
 
 <BaseLayout
@@ -50,13 +53,123 @@ const breadcrumbSchema = JSON.stringify({
       </div>
     </div>
 
-    <section class="sai-intro">
-      <div class="sai-intro__inner">
-        <p class="sai-intro__eyebrow">Colorado Front Range</p>
-        <h2 class="sai-intro__title">One vendor for life-safety across the Denver metro.</h2>
-        <p class="sai-intro__body">
-          Red Rocks Fire Protection is headquartered in Centennial and serves properties across the Colorado Front Range — from Denver and Aurora down to Colorado Springs, and up to Fort Collins. Every city we work in falls under a specific Authority Having Jurisdiction (AHJ), and our inspection reports are formatted to each AHJ's preferred layout so corrections are approved without rework.
-        </p>
+    <!-- ══════════════════════════════════════════════════════════
+         §A INTRO — split panel (About .overview pattern), light bg
+         ══════════════════════════════════════════════════════════ -->
+    <section class="sa-overview section-light">
+      <div class="section-inner">
+        <div class="split-grid">
+          <div class="split-copy">
+            <div class="section-eyebrow">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>Colorado Front Range</span>
+            </div>
+            <h2 class="section-title sa-overview__title">One vendor for life-safety across the Denver metro.</h2>
+            <div class="sa-overview__body">
+              <p>
+                Red Rocks Fire Protection Services is proud to provide comprehensive life safety solutions throughout the Colorado Front Range. Headquartered in Centennial, Colorado, we serve commercial, industrial, multi-family, healthcare, educational, retail, and government facilities from Colorado Springs to Fort Collins, delivering dependable fire protection services backed by local expertise and exceptional customer care.
+              </p>
+              <p>
+                As a family-owned company in Centennial, Colorado, since 2010, we understand that every community has unique fire codes, inspection requirements, and Authority Having Jurisdiction (AHJ) standards. Our experienced team works closely with local fire departments and municipal agencies to ensure every inspection, report, repair, installation, and maintenance service is completed accurately and in compliance with local regulations. Because our inspection reports are formatted to meet each AHJ's preferred requirements, we help minimize delays, eliminate unnecessary rework, and keep your property compliant.
+              </p>
+            </div>
+          </div>
+          <div class="split-image">
+            <img
+              src="/images/rrfps-county-inspector-client.jpg"
+              alt="A Red Rocks Fire Protection inspector meeting with a Colorado Front Range property manager"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §B WHAT WE COVER — dark split panel, services callout
+         ══════════════════════════════════════════════════════════ -->
+    <section class="sa-services section-dark">
+      <div class="section-inner">
+        <div class="split-grid split-grid--reverse">
+          <div class="split-image">
+            <img
+              src="/images/red-rocks-fire-protections-our-inspection-process.jpg"
+              alt="Red Rocks Fire Protection technician servicing a life-safety system"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="split-copy">
+            <div class="section-eyebrow section-eyebrow--light">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>One Trusted Partner</span>
+            </div>
+            <h2 class="section-title section-title--light sa-services__title">Every life-safety system, one team.</h2>
+            <p class="sa-services__lead">
+              Whether you manage a single commercial building or oversee multiple properties across Colorado, Red Rocks Fire Protection Services is one trusted partner for all your life safety needs — responsive, professional support you can count on.
+            </p>
+            <ul class="sa-services__list">
+              <li>Fire alarm systems</li>
+              <li>Fire sprinklers</li>
+              <li>Fire extinguishers</li>
+              <li>Kitchen hood suppression</li>
+              <li>Backflow testing</li>
+              <li>BDA systems</li>
+              <li>Area of Refuge systems</li>
+              <li>Inspections &amp; maintenance</li>
+              <li>Monitoring &amp; repairs</li>
+              <li>Emergency service</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §C LOCAL KNOWLEDGE — image band (About .difference pattern)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="sa-local difference">
+      <div
+        class="difference__bg"
+        style="background-image: url('/images/the-red-rocks-of-the-canyon.jpg');"
+        aria-hidden="true"
+      ></div>
+      <div class="difference__overlay" aria-hidden="true"></div>
+      <div class="section-inner difference__inner">
+        <div class="difference__copy">
+          <div class="section-eyebrow section-eyebrow--light">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Local Knowledge, Front Range Wide</span>
+          </div>
+          <h2 class="section-title section-title--light">Local knowledge makes the difference.</h2>
+          <p class="difference__lead">
+            Our technicians understand the specific requirements of each municipality and stay current on changing fire codes and compliance standards — proactive guidance that helps clients avoid costly surprises and keep operations running.
+          </p>
+          <div class="difference__points">
+            <div class="difference__point">
+              <span class="difference__point-icon" aria-hidden="true">
+                <iconify-icon icon="solar:bolt-circle-bold-duotone" width="28" height="28"></iconify-icon>
+              </span>
+              <strong>Responsive service</strong>
+            </div>
+            <div class="difference__point">
+              <span class="difference__point-icon" aria-hidden="true">
+                <iconify-icon icon="solar:chat-round-check-bold-duotone" width="28" height="28"></iconify-icon>
+              </span>
+              <strong>Transparent communication</strong>
+            </div>
+            <div class="difference__point">
+              <span class="difference__point-icon" aria-hidden="true">
+                <iconify-icon icon="solar:tag-price-bold-duotone" width="28" height="28"></iconify-icon>
+              </span>
+              <strong>Fair pricing</strong>
+            </div>
+          </div>
+          <p class="difference__body">
+            No matter where your property sits across the Colorado Front Range, we're committed to expert solutions that keep your people, your property, and your business protected — with the professionalism, integrity, and reliability that are the foundation of our reputation. We serve 40+ communities across ten Colorado counties, including Adams, Arapahoe, Boulder, Broomfield, Denver, Douglas, El Paso, Jefferson, Larimer, and Weld — find yours below.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -169,20 +282,21 @@ const breadcrumbSchema = JSON.stringify({
   .sai-banner__divider { margin: 0 10px; }
   .sai-banner__current { text-decoration: underline; text-underline-offset: 4px; }
 
-  .sai-intro {
-    background: var(--rr-bg-light, #F4F2F1);
-    padding-block: 90px;
-  }
-  @media (min-width: 768px) { .sai-intro { padding-block: 120px; } }
-  .sai-intro__inner {
+  /* ── Shared section helpers (borrowed from the About page patterns) ── */
+  .section-light { background: #ffffff; color: #0a0a0a; }
+  .section-dark { background: #0d0d0b; color: #ffffff; }
+  .section-inner {
     width: 100%;
-    max-width: 1080px;
+    max-width: 1120px;
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding: 90px 1.25rem;
   }
-  @media (min-width: 768px) { .sai-intro__inner { padding-inline: 2.5rem; } }
-  .sai-intro__eyebrow {
-    margin: 0 0 14px;
+  @media (min-width: 768px) { .section-inner { padding: 120px 2.5rem; } }
+  .section-eyebrow {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
     font-size: 13px;
@@ -190,22 +304,143 @@ const breadcrumbSchema = JSON.stringify({
     text-transform: uppercase;
     color: #d41226;
   }
-  .sai-intro__title {
-    margin: 0 0 24px;
+  .section-eyebrow--light { color: rgba(255, 255, 255, 0.72); }
+  .section-eyebrow .divider-icon { color: #d41226; display: inline-flex; }
+  .section-eyebrow--light .divider-icon { color: #d41226; }
+  .section-title {
+    margin: 0;
     font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
     font-size: clamp(32px, 4.5vw, 52px);
-    color: #0a0a0a;
-    text-transform: uppercase;
+    font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #0a0a0a;
   }
-  .sai-intro__body {
-    margin: 0;
-    max-width: 920px;
+  .section-title--light { color: #ffffff; }
+
+  /* ── §A / §B split panels ── */
+  .split-grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) {
+    .split-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
+  }
+  .split-image { overflow: hidden; border-radius: 18px; }
+  .split-image img { display: block; width: 100%; aspect-ratio: 4 / 3.4; object-fit: cover; }
+  /* Reverse variant (§B): image sits left of copy on wide screens. */
+  @media (min-width: 900px) {
+    .split-grid--reverse .split-copy { order: 2; }
+    .split-grid--reverse .split-image { order: 1; }
+  }
+
+  .sa-overview__body p {
+    margin: 20px 0 0;
+    color: rgba(0, 0, 0, 0.75);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .sa-overview__title { margin-bottom: 4px; }
+
+  .sa-services__title { margin-bottom: 4px; }
+  .sa-services__lead {
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, 0.82);
     font-size: var(--rr-text-lead);
     line-height: var(--rr-text-lead-lh);
-    color: rgba(0, 0, 0, 0.75);
+  }
+  .sa-services__list {
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 24px;
+  }
+  .sa-services__list li {
+    position: relative;
+    padding-left: 26px;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .sa-services__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    background: #d41226;
+    transform: rotate(45deg);
+  }
+
+  /* ── §C local-knowledge image band (About .difference pattern) ── */
+  .difference {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #0d0d0b;
+    color: #ffffff;
+  }
+  .difference__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 54%;
+    z-index: -2;
+  }
+  .difference__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.72) 55%, rgba(0, 0, 0, 0.44) 100%);
+    z-index: -1;
+  }
+  .difference__copy { max-width: 820px; }
+  .difference__lead {
+    margin: 26px 0 0;
+    max-width: 760px;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  .difference__points {
+    margin-top: 28px;
+    display: grid;
+    gap: 16px;
+  }
+  .difference__point { display: flex; align-items: center; gap: 16px; }
+  .difference__point-icon {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #d41226;
+    color: #ffffff;
+  }
+  .difference__points strong {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.25;
+  }
+  .difference__body {
+    max-width: 760px;
+    margin: 32px 0 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  @media (max-width: 640px) {
+    .difference__overlay { background: rgba(0, 0, 0, 0.78); }
   }
 
   .sai-grid {
@@ -286,6 +521,11 @@ const breadcrumbSchema = JSON.stringify({
     background: #0a0a0a;
     color: #ffffff;
     border-color: #0a0a0a;
+  }
+  /* County cards hover to brand red instead of the dark fill. */
+  .sai-grid--counties .sai-card:hover {
+    background: #d41226;
+    border-color: #d41226;
   }
   .sai-card:hover .sai-card__cta { color: #ffffff; }
   .sai-card:hover .sai-card__city { color: #ffffff; }
