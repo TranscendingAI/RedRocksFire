@@ -279,10 +279,6 @@ export const cities: City[] = [
         answer: 'Most commercial fire alarm inspections in Centennial take 2 to 4 hours depending on the device count and the number of initiating devices that need to be functionally tested. We coordinate with on-site staff or your property manager so disruption to tenants is minimal, and we can run inspections after-hours for occupied office and retail buildings.',
       },
       {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair or maintenance, NFPA and South Metro require a documented fire watch — a dedicated person walking the affected area at defined intervals and logging the rounds. We provide fire-watch personnel on a 24/7 basis when our own service work requires a system to be taken offline.',
-      },
-      {
         question: 'Are kitchen hood suppression systems required in Centennial restaurants?',
         answer: 'Yes. NFPA 96 (and the IFC as adopted in Colorado) requires automatic fire-extinguishing systems for commercial cooking operations, including the hood, duct, and plenum. UL-300 wet-chemical systems are the current standard; older systems are grandfathered but typically need replacement at tenant turnover or major renovation.',
       },
@@ -707,10 +703,6 @@ export const cities: City[] = [
         answer: 'Yes. We inspect, test, and maintain NFPA 13D residential sprinkler systems and monitored alarms in Arvada’s new-growth communities — Candelas, Leyden Rock, and West Woods — along with the amenity-center and clubhouse systems those HOAs operate. We commonly pick these up when the builder warranty ends and the testing schedule needs a permanent owner.',
       },
       {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair, NFPA and the Arvada Fire Protection District require a documented fire watch — a dedicated person walking the affected area at set intervals and logging each round. We provide fire-watch personnel on a 24/7 basis when our own service work takes a system offline.',
-      },
-      {
         question: 'How quickly can you respond to a fire-protection emergency in Arvada?',
         answer: 'Arvada is inside the Denver metro, so our emergency response window for the city is typically under 90 minutes. We staff a 24/7 emergency line and dispatch the same technicians who already know your property, not a call center.',
       },
@@ -909,10 +901,6 @@ export const cities: City[] = [
       {
         question: 'Do you service ESFR sprinkler systems in the warehouses near DIA and E-470?',
         answer: 'Yes. The distribution and last-mile buildings around Gateway Park and Tower Road run ESFR sprinkler systems on high-piled storage, often paired with a fire pump. We perform NFPA 25 testing, annual fire-pump flow tests, and verify that the installed protection still matches the stored commodity class and rack height when tenants change their storage.',
-      },
-      {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair, NFPA and Aurora Fire Rescue require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel 24/7 when our own service work requires a system to be taken offline, which matters most on occupied hospital and multi-family properties.',
       },
       {
         question: 'How quickly can you respond to an emergency in Aurora?',
@@ -1323,10 +1311,6 @@ export const cities: City[] = [
         question: 'Can you respond quickly to a Boulder property, or is it out of your area?',
         answer: 'Boulder is within our Denver-metro service radius. We run it from our Centennial office up US-36, and it falls inside the roughly 90-minute emergency response window we advertise across the metro. We staff a 24/7 emergency line and dispatch technicians who already know your property, not a call center.',
       },
-      {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair or maintenance, NFPA and Boulder Fire-Rescue require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel on a 24/7 basis when our own service work requires a system to be taken offline.',
-      },
     ],
 
     ctaPair: [
@@ -1518,10 +1502,6 @@ export const cities: City[] = [
       {
         question: 'Are kitchen hood suppression systems required in Brighton restaurants?',
         answer: 'Yes. NFPA 96 and the IFC as adopted in Colorado require automatic fire-extinguishing systems for commercial cooking — the hood, duct, and plenum. UL-300 wet-chemical is the current standard. Older Main Street restaurants often run grandfathered pre-UL-300 systems that the district flags for replacement at tenant turnover or major renovation.',
-      },
-      {
-        question: 'Do you do fire watch when a warehouse sprinkler system is impaired?',
-        answer: 'Yes. When a fire-protection system is out of service for repair — a common situation on large warehouse systems where a single valve closure disables acres of coverage — NFPA and Brighton Fire Rescue require a documented fire watch with rounds logged at set intervals. We provide fire-watch personnel 24/7 whenever our service work takes a system offline.',
       },
       {
         question: 'Do you service residential sprinkler systems in Brighton?',
@@ -1936,10 +1916,6 @@ export const cities: City[] = [
         question: 'How quickly can Red Rocks Fire Protection respond to an emergency in Castle Pines?',
         answer: 'Our office is in Centennial, a straight run down I-25 to the Castle Pines Parkway interchange, so we hold to a roughly 90-minute emergency response window inside the Denver metro — and Castle Pines is well within it. We staff a 24/7 line and dispatch the technicians who already know your property, not a call center.',
       },
-      {
-        question: 'Do you handle fire watch when a system is taken offline in Castle Pines?',
-        answer: 'Yes. When a fire protection system is out of service for repair, NFPA and South Metro require a documented fire watch — a dedicated person walking the affected area at set intervals and logging each round. When our own service work requires taking a clubhouse, retail, or residential system offline, we provide fire-watch personnel on a 24/7 basis.',
-      },
     ],
 
     ctaPair: [
@@ -2135,10 +2111,6 @@ export const cities: City[] = [
       {
         question: 'Do you service the Castle Rock Adventist Hospital campus and medical offices?',
         answer: 'We inspect, test, and maintain fire-protection systems for healthcare and medical-office properties, including the addressable alarm panels, clean-agent suppression for imaging and server spaces, and the strict NFPA 72 cadences those occupancies require. We coordinate testing windows around clinical operations so patient-care areas stay covered.',
-      },
-      {
-        question: 'Do you handle fire watch when a system is down in Castle Rock?',
-        answer: 'Yes. When a fire-protection system is out of service for repair or maintenance, NFPA and Castle Rock Fire and Rescue require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel 24/7 when our own service work requires a system to be taken offline.',
       },
       {
         question: 'Do you service residential sprinkler systems in Castle Rock’s master-planned communities?',
@@ -2744,10 +2716,6 @@ export const cities: City[] = [
         answer: 'Yes. Refinery-adjacent and flammable-liquid occupancies use foam, deluge, CO₂, and clean-agent suppression that fall outside standard sprinkler ITM. We inspect and test FM-200, Novec 1230, CO₂, and foam/deluge systems and keep each one on a tracked interval so nothing lapses between annual visits.',
       },
       {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service in a Commerce City warehouse or industrial building, NFPA and South Adams County require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel 24/7 when our service work takes a system offline.',
-      },
-      {
         question: 'Do you inspect residential sprinklers in Reunion and Belle Creek?',
         answer: 'Yes. The north-side master-planned communities — Reunion, Belle Creek, and Northern Range Village — carry NFPA 13D residential sprinkler systems and monitored smoke/CO detection in newer builds. We inspect, test, and maintain those systems, plus the alarm and suppression systems in the HOA clubhouses and pool houses.',
       },
@@ -3150,10 +3118,6 @@ export const cities: City[] = [
       answer: 'Our office is in Centennial, about ten minutes south of the DTC on I-25, so our emergency response window for the Denver Tech Center is typically under 90 minutes — usually faster. We staff a 24/7 line and dispatch technicians who already know your pump room and riser layout, not a call center.',
     },
     {
-      question: 'Do you handle fire watch when a standpipe or pump is out of service in a high-rise?',
-      answer: 'Yes. When a standpipe, fire pump, or sprinkler system in a DTC tower is taken offline for repair or testing, NFPA and South Metro require a documented fire watch with rounds at defined intervals — and high-rises usually need coverage per floor or per zone. We provide fire-watch personnel 24/7 whenever our own service work requires a system to go down.',
-    },
-    {
       question: 'Are the ground-floor restaurants at Belleview Station on your inspection scope?',
       answer: 'Yes. The transit-oriented development at Belleview Station and the retail base of the Greenwood Plaza towers carry restaurant tenants that need NFPA 96 kitchen-hood suppression — UL-300 wet-chemical and Ansul R-102 systems inspected, tested, and tagged. We fold that into the same visit as the building’s standpipe and alarm testing so the property manager gets one report.',
     },
@@ -3352,10 +3316,6 @@ export const cities: City[] = [
       {
         question: 'Are kitchen hood suppression systems required in Edgewater restaurants and taprooms?',
         answer: 'Yes. NFPA 96 and the IFC as adopted in Colorado require an automatic fire-extinguishing system for commercial cooking operations — the hood, duct, and plenum. UL-300 wet-chemical is the current standard. Older systems may be grandfathered but typically need replacement at tenant turnover or renovation, which happens often along the 20th and 25th Avenue corridors.',
-      },
-      {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service, NFPA and West Metro require a documented fire watch — a dedicated person walking the affected area at set intervals and logging each round. That matters in a food hall or mixed-use building where impairing one riser affects several tenants. We provide fire-watch personnel on a 24/7 basis when our service work takes a system offline.',
       },
       {
         question: 'Do you service residential sprinkler systems in Edgewater’s new townhomes and mixed-use buildings?',
@@ -6007,10 +5967,6 @@ export const cities: City[] = [
         answer: 'Yes. NFPA 96 and the IFC as adopted in Colorado require an automatic extinguishing system for the hood, duct, and plenum on commercial cooking operations. UL-300 wet-chemical is the current standard. Many of the older restaurants along Colfax and Alameda still run pre-UL-300 systems that West Metro flags for replacement at turnover or major renovation.',
       },
       {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system goes out of service for repair or maintenance, NFPA and West Metro require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel on a 24/7 basis whenever our service work takes a system offline.',
-      },
-      {
         question: 'Do you service the older apartment and multi-family buildings in Lakewood?',
         answer: 'Yes, and it is a large part of what we do here. Lakewood’s mid-century apartment courts along Sheridan, Mississippi, and West Colfax often run aging fire alarm panels and dated standpipes. We inspect and test those systems to NFPA 72 and NFPA 25, track battery and equipment age, and stage upgrades before they fail an inspection.',
       },
@@ -6617,10 +6573,6 @@ export const cities: City[] = [
       {
         question: 'Do you handle healthcare occupancies like the Sky Ridge Medical Center campus?',
         answer: 'Yes. Hospital and medical office buildings are NFPA 99 healthcare occupancies with generator-backed fire alarm, smoke-compartment barriers, and coordinated fire/smoke damper testing. We schedule around clinical operations, phase testing so care areas stay in service, and document barrier and damper conditions to the format South Metro expects.',
-      },
-      {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair, NFPA and South Metro require a documented fire watch — a dedicated person walking the affected area at set intervals and logging rounds. We supply fire-watch personnel 24/7 when our own service work takes a system offline, which matters most in the mall and hospital where an impairment affects thousands of occupants.',
       },
       {
         question: 'Can you commission fire protection in new RidgeGate buildings?',
@@ -7235,10 +7187,6 @@ export const cities: City[] = [
     {
       question: 'What special considerations apply to Morrison’s historic stone buildings?',
       answer: 'The old downtown structures are frequently unheated in parts, which points to dry-pipe or antifreeze sprinkler systems that need their air pressure, trip settings, and antifreeze concentration verified — especially after a seasonal closure. Retrofitting detection and suppression into mortared-stone buildings also takes routing that respects the structure, so we plan the work rather than force a standard layout onto it.',
-    },
-    {
-      question: 'Do you handle fire watch when a system is down?',
-      answer: 'Yes. When a fire protection system is out of service for repair, NFPA and the local district require a documented fire watch — a dedicated person walking the affected area at set intervals and logging rounds. We provide fire-watch personnel on a 24/7 basis when our own service work takes a system offline, which matters most at assembly occupancies like the amphitheatre and its concessions.',
     },
   ],
 
@@ -8049,10 +7997,6 @@ export const cities: City[] = [
       answer: 'Yes. NFPA 96 and the IFC as adopted in Colorado require automatic fire-extinguishing systems for commercial cooking operations — hood, duct, and plenum. UL-300 wet-chemical systems are the current standard. We inspect and tag the new restaurant tenants at Downtown Superior and along McCaslin, and flag any older grandfathered system for replacement at turnover.',
     },
     {
-      question: 'Do you handle fire watch when a system is down?',
-      answer: 'Yes. When a fire-protection system is taken out of service for repair, NFPA and the local fire district require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel on a 24/7 basis when our own service work requires a system to be offline, which matters in occupied Rock Creek multi-family and Town Center mixed-use buildings.',
-    },
-    {
       question: 'Does wildland-fire exposure change what you inspect in Superior?',
       answer: 'It shapes the conversation. Nearly every neighborhood in Superior borders open grassland, and the Marshall Fire showed how fast a grassfire can move into a subdivision. We keep detection, monitoring, and water-based systems in reliable working order so the built-in fire protection performs when it is needed, and we coordinate with the fire district on the wildland-urban interface provisions Boulder County jurisdictions enforce.',
     },
@@ -8243,10 +8187,6 @@ export const cities: City[] = [
       {
         question: 'Do you cover both the older core and the new north Thornton subdivisions?',
         answer: 'Yes. We work the 1950s–70s core around 88th and Washington, the 1980s–90s apartment and retail belt along I-25, and the new-build growth past 120th and 144th. The old core tends toward legacy alarm panels and missing hydraulic placards; the north-growth areas are mostly fresh NFPA 13D and 13R systems that need first-year testing set up correctly.',
-      },
-      {
-        question: 'Do you handle fire watch when a Thornton system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair, NFPA and Thornton Fire Department require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel 24/7 when our own service work takes a system offline in a Thornton building.',
       },
       {
         question: 'Are kitchen hood suppression systems required in Thornton restaurants?',
@@ -8460,10 +8400,6 @@ export const cities: City[] = [
         question: 'Do you service residential sprinkler systems in Westminster?',
         answer: 'Yes. We inspect, test, and maintain NFPA 13D and 13R residential systems — most commonly in the newer master-planned communities like Legacy Ridge and Bradburn Village, and in the mid-rise residential above retail going up in the Westminster Station transit district. We also handle monitored residential alarm and smoke-detection systems.',
       },
-      {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair or maintenance, NFPA and the Westminster Fire Department require a documented fire watch — a dedicated person walking the affected area at set intervals and logging the rounds. We provide fire-watch personnel on a 24/7 basis when our own service work requires a system to be taken offline.',
-      },
     ],
 
     ctaPair: [
@@ -8651,10 +8587,6 @@ export const cities: City[] = [
       {
         question: 'How long does a fire alarm inspection take?',
         answer: 'Most commercial fire alarm inspections in Wheat Ridge run 2 to 4 hours, depending on device count and how many initiating devices need functional testing. Smaller storefronts on 38th and 44th are usually on the shorter end. We coordinate with on-site staff so tenant disruption is minimal and can run inspections after-hours for occupied retail.',
-      },
-      {
-        question: 'Do you handle fire watch when a system is down?',
-        answer: 'Yes. When a fire protection system is out of service for repair or maintenance, NFPA and West Metro require a documented fire watch — a dedicated person walking the affected area at set intervals and logging each round. We provide fire-watch personnel on a 24/7 basis when our own service work requires taking a system offline.',
       },
       {
         question: 'Are kitchen hood suppression systems required in Wheat Ridge restaurants?',
