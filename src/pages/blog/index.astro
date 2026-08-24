@@ -54,7 +54,7 @@ function formatDate(d: Date): string {
     style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.jpg');"
   >
     <div class="ptbanner__inner">
-      <h1 class="ptbanner__title">Field Notes</h1>
+      <h1 class="ptbanner__title">Blog</h1>
       <div class="ptbanner__breadcrumbs">
         <a href="/">Home</a>
         <span class="ptbanner__divider">-</span>
@@ -62,30 +62,6 @@ function formatDate(d: Date): string {
       </div>
     </div>
   </div>
-
-  <!-- INTRO -->
-  <section class="rr-band" style="background: var(--rr-bg-light);">
-    <div class="rr-container">
-      <div class="max-w-3xl rr-reveal">
-        <p class="rr-eyebrow text-rr-grey mb-5">From the RRFPS team</p>
-        <h2
-          class="font-display font-black uppercase tracking-tight text-rr-black"
-          style="font-size: var(--rr-text-section); line-height: 0.95;"
-        >
-          Practical fire-safety insights for Colorado property teams.
-        </h2>
-        <p
-          class="mt-6 text-rr-grey"
-          style="font-size: var(--rr-text-lead);"
-        >
-          Inspection cadence, NFPA code changes, multi-family compliance,
-          and what an RRFPS report actually contains. Written for the
-          people who carry the responsibility — property managers, regional
-          directors, and facility teams across the Denver Front Range.
-        </p>
-      </div>
-    </div>
-  </section>
 
   <!-- POST GRID -->
   <section class="rr-band" style="background: var(--rr-white);">
@@ -137,9 +113,6 @@ function formatDate(d: Date): string {
                       <time datetime={post.data.publishDate.toISOString()}>
                         {formatDate(post.data.publishDate)}
                       </time>
-                      {post.data.readMinutes && (
-                        <span> · {post.data.readMinutes} min read</span>
-                      )}
                     </p>
                   </div>
                 </article>
@@ -198,7 +171,6 @@ function formatDate(d: Date): string {
     background-repeat: no-repeat;
     background-position: center bottom;
     min-height: 450px;
-    margin-bottom: 60px;
     padding-top: 154px;
     padding-bottom: 20px;
     display: flex;
