@@ -1,0 +1,77 @@
+---
+/**
+ * PlaceholderPage — shared hero + "coming soon" body for service/industry
+ * sub-pages that don't have full content yet. Used so every nav link
+ * resolves to a real 200 page with the standard RRFPS page-title banner.
+ *
+ * Usage:
+ *   <PlaceholderPage title="Monitoring Services" heroImage="..." />
+ *
+ * Hero image is required so every placeholder has a banner that matches
+ * the rest of the site — until real imagery is supplied for each page,
+ * all placeholders reuse the same fire-safety hero.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  title: string;
+  heroImage: string;
+}
+
+const { title, heroImage } = Astro.props;
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.4628 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const breadcrumbLabel = title.toUpperCase();
+---
+
+<BaseLayout title={`${title} | Red Rocks Fire Protection`} description={`${title} — Red Rocks Fire Protection. Content coming soon.`}>
+  <div class="av-page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         PAGE-TITLE BANNER (industry.astro §0 pattern)
+         ══════════════════════════════════════════════════════════ -->
+    <div
+      class="ptbanner"
+      style={`background-image: url('${heroImage}');`}
+    >
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">{title}</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/services">Services</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">{breadcrumbLabel}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         COMING-SOON BODY
+         ══════════════════════════════════════════════════════════ -->
+    <section class="rr-container" style="padding: 96px 0 120px; max-width: 880px;">
+      <div class="av-dblh__subtitle" style="margin-bottom: 18px;">
+        <span class="divider-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg></span>
+        <span>Coming Soon</span>
+      </div>
+      <h2 class="font-display font-black uppercase tracking-tight" style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em; margin: 0 0 28px;">
+        {title}
+      </h2>
+      <p style="font-size: var(--av-text-lead, 18px); line-height: 1.7; color: #4a494b; margin: 0 0 18px;">
+        We're putting the finishing touches on this page. Red Rocks Fire Protection
+        provides {title.toLowerCase()} as part of our full-service life-safety
+        offering for properties across the Colorado Front Range.
+      </p>
+      <p style="font-size: var(--av-text-lead, 18px); line-height: 1.7; color: #4a494b; margin: 0 0 32px;">
+        In the meantime, get in touch and we'll route you to the right team.
+      </p>
+      <a href="/contact" class="av-wgl-btn av-wgl-btn--outline">
+        <span class="av-wgl-btn__text">contact our team</span>
+        <span class="av-wgl-btn__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+        </span>
+      </a>
+    </section>
+
+  </div>
+</BaseLayout>

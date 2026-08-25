@@ -39,22 +39,22 @@ interface NavItem {
 }
 
 /**
- * Industries We Serve dropdown — 14 sub-pages, one per vertical named in
- * the Brand Strategy §5.5. Restructured (2026-08) into a 3-column mega menu
- * with a titled heading above each column, per the client's reference
- * layout. Each item is a small red icon square + left-aligned label; no
- * body blurbs. Pages all exist as light placeholders (or in the case of
- * /multi-family, a fully-built landing page); when each one's full content
- * lands, no nav change is needed.
+ * Industries We Serve dropdown — 14 sub-pages in 3 titled columns. Pages
+ * all exist as light placeholders or fully-built landing pages.
+ *
+ * The 3-column titled mega-menu pattern (icon-square + label per row,
+ * bold uppercase column title, no divider) is shared across the Industries
+ * We Serve, Services, and Contact dropdowns — the per-column data shape
+ * lives here, the shared CSS lives in `.avh__mm-*` rules below.
  */
-interface IndustryItem extends SubItem {
+interface MMItem extends SubItem {
   icon: string;   // iconify icon id, rendered in a small red square
 }
-interface IndustryColumn {
+interface MMColumn {
   title: string;
-  items: IndustryItem[];
+  items: MMItem[];
 }
-const industriesColumns: IndustryColumn[] = [
+const industriesColumns: MMColumn[] = [
   {
     title: 'Property & Community',
     items: [
@@ -90,6 +90,47 @@ const industriesColumns: IndustryColumn[] = [
 const industriesNav: SubItem[] = industriesColumns.flatMap((c) => c.items);
 
 /**
+ * Services dropdown — 13 sub-pages in 3 titled columns. Layout matches
+ * Industries We Serve: bold uppercase column titles, red square icon +
+ * left-aligned label per row, items contained in cream panel.
+ *
+ * /services, /inspections, and /fire-sprinkler-service-and-systems are
+ * already built. The remaining 10 are placeholder pages (see
+ * src/pages/services/<slug>.astro).
+ */
+const servicesColumns: MMColumn[] = [
+  {
+    title: 'Explore Services',
+    items: [
+      { href: '/services',                                                label: 'Services Overview',     icon: 'solar:clipboard-text-bold-duotone' },
+      { href: '/inspections',                                             label: 'Inspections',           icon: 'solar:clipboard-check-bold-duotone' },
+      { href: '/services/monitoring-services',                            label: 'Monitoring Services',   icon: 'solar:monitor-smartphone-bold-duotone' },
+      { href: '/services/24-hour-service',                                label: '24 Hour Service',       icon: 'solar:alarm-bold-duotone' },
+    ],
+  },
+  {
+    title: 'Fire & Life Safety Systems',
+    items: [
+      { href: '/services/fire-alarm-service-and-systems',                 label: 'Fire Alarm Service & Systems',          icon: 'solar:fire-bold-duotone' },
+      { href: '/fire-sprinkler-service-and-systems',                      label: 'Fire Sprinkler Service & Systems',      icon: 'solar:waterdrops-bold-duotone' },
+      { href: '/services/portable-fire-extinguishers',                     label: 'Portable Fire Extinguishers',           icon: 'solar:fire-square-bold-duotone' },
+      { href: '/services/kitchen-hood-suppression-systems',               label: 'Kitchen Hood Suppression Systems',      icon: 'solar:chef-hat-heart-bold-duotone' },
+      { href: '/services/backflow-prevention-assemblies',                 label: 'Backflow Prevention Assemblies',        icon: 'solar:settings-bold-duotone' },
+    ],
+  },
+  {
+    title: 'Specialty & Support Services',
+    items: [
+      { href: '/services/distributed-antenna-systems',                    label: 'Distributed Antenna Systems (DAS)',                       icon: 'solar:satellite-bold-duotone' },
+      { href: '/services/security-system-installation-and-monitoring',    label: 'Security System Installation & Monitoring',              icon: 'solar:camera-bold-duotone' },
+      { href: '/services/area-of-refuge-communication-systems',           label: 'Area of Refuge Communication Systems',                   icon: 'solar:accessibility-bold-duotone' },
+      { href: '/services/consulting-services',                            label: 'Consulting Services',                                     icon: 'solar:document-bold-duotone' },
+    ],
+  },
+];
+const servicesNav: SubItem[] = servicesColumns.flatMap((c) => c.items);
+
+/**
  * About dropdown — 8 tile cards, 4×2 grid. Faithful to the colleague's
  * screenshot. Two items currently share anchors (Our Story + Message from
  * Our CEO → #ceo-message; Our Promise + RRFPS Difference → #rrfps-difference)
@@ -114,11 +155,7 @@ const navItems: NavItem[] = [
   },
   {
     label: 'SERVICES',
-    children: [
-      { href: '/services', label: 'Services Overview' },
-      { href: '/inspections', label: 'Inspections' },
-      { href: '/fire-sprinkler-service-and-systems', label: 'Fire Sprinkler Service & Systems' },
-    ],
+    children: [...servicesNav],
   },
   {
     label: 'INDUSTRIES WE SERVE',
@@ -194,7 +231,7 @@ const socials = [
         <nav aria-label="Primary" class="avh__nav">
           <ul>
             {navItems.map((item) => (
-              <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about', item.label === 'INDUSTRIES WE SERVE' && 'avh__item--industries']}>
+              <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about', (item.label === 'INDUSTRIES WE SERVE' || item.label === 'SERVICES') && 'avh__item--mm']}>
                 {item.children ? (
                   /* Dropdown parent. If the item ALSO has an href, the label is a
                    * real link (<a>) that navigates on click while the dropdown
@@ -231,13 +268,15 @@ const socials = [
                       </button>
                     )}
                     <ul class="avh__submenu" role="menu" data-dropdown-menu>
-                      {item.label === 'INDUSTRIES WE SERVE' ? (
-                        /* Industries mega menu: 3 titled columns of plain
-                         * text links (no icons, no blurbs). */
-                        industriesColumns.map((col) => (
-                          <li role="none" class="avh__ind-col">
-                            <p class="avh__ind-col-title">{col.title}</p>
-                            <ul class="avh__ind-col-list" role="none">
+                      {(item.label === 'INDUSTRIES WE SERVE' || item.label === 'SERVICES') ? (
+                        /* Shared 3-column mega menu (Industries + Services).
+                         * Renders title + icon-square + label per item from
+                         * the per-label columns data (industriesColumns /
+                         * servicesColumns). Styled by .avh__mm-* rules. */
+                        (item.label === 'INDUSTRIES WE SERVE' ? industriesColumns : servicesColumns).map((col) => (
+                          <li role="none" class="avh__mm-col">
+                            <p class="avh__mm-col-title">{col.title}</p>
+                            <ul class="avh__mm-col-list" role="none">
                               {col.items.map((child) => {
                                 const isChildCurrent = currentPath === child.href || currentPath.startsWith(child.href + '/');
                                 return (
@@ -245,13 +284,13 @@ const socials = [
                                     <a
                                       href={child.href}
                                       role="menuitem"
-                                      class:list={['avh__ind-link', isChildCurrent && 'avh__ind-link--current']}
+                                      class:list={['avh__mm-link', isChildCurrent && 'avh__mm-link--current']}
                                       aria-current={isChildCurrent ? 'page' : undefined}
                                     >
-                                      <span class="avh__ind-icon" aria-hidden="true">
-                                        <iconify-icon icon={child.icon} width="20" height="20"></iconify-icon>
+                                      <span class="avh__mm-icon" aria-hidden="true">
+                                        <iconify-icon icon={child.icon} width="28" height="28"></iconify-icon>
                                       </span>
-                                      <span class="avh__ind-label">{child.label}</span>
+                                      <span class="avh__mm-label">{child.label}</span>
                                     </a>
                                   </li>
                                 );
@@ -753,12 +792,11 @@ const socials = [
     isolation: isolate;
   }
 
-  /* ── Industries dropdown — 3-column titled mega menu ──────────────────
-   * Plain text links grouped under a bold column heading. Uses flexbox
-   * (NOT grid) on the outer panel so the height always fits all rows of
-   * content; the prior grid implementation was producing a single 132px
-   * row track and clipping rows 4-5 below the cream background. */
-  .avh__item--industries > .avh__submenu {
+  /* ── Mega menu dropdown — 3-column titled panel (Industries + Services) ─
+   * Uses flexbox (not grid) on the outer panel so the height always fits
+   * all rows of content. Inside each column, items are a flex list with
+   * the icon square left-aligned on the cross-axis. */
+  .avh__item--mm > .avh__submenu {
     position: fixed !important;
     left: 0 !important;
     right: 0 !important;
@@ -780,13 +818,13 @@ const socials = [
     isolation: isolate;
     overflow: visible;
   }
-  .avh__ind-col {
+  .avh__mm-col {
     flex: 1 1 0;
     min-width: 0;
     display: block;
     list-style: none;
   }
-  .avh__ind-col-title {
+  .avh__mm-col-title {
     font-family: "Space Grotesk", "Archivo Variable", sans-serif;
     font-size: 15px;
     font-weight: 800;
@@ -797,45 +835,46 @@ const socials = [
   }
   /* Specific selector (0,2,0) defeats the .avh__nav ul { height: 94px }
    * descendant rule (0,1,1) that was clipping every nested <ul>. */
-  .avh__ind-col > .avh__ind-col-list {
+  .avh__mm-col > .avh__mm-col-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: start;        /* keep <li>s left-aligned on the cross-axis */
+    align-items: start;
     gap: 6px;
     height: auto !important;
     min-height: 0 !important;
   }
-  .avh__ind-link {
+  .avh__mm-link {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 6px 0;
-    font-size: 14.5px;
+    font-size: 15px;
+    font-weight: 700;
     line-height: 1.3;
     color: #2a2a2c;
     text-decoration: none;
     text-align: left;
     transition: color 140ms ease;
   }
-  .avh__ind-icon {
+  .avh__mm-icon {
     flex: 0 0 auto;
-    width: 34px;
-    height: 34px;
+    width: 64px;
+    height: 64px;
     display: grid;
     place-items: center;
     background: #D31126;
     color: #ffffff;
   }
-  .avh__ind-icon iconify-icon { display: block; }
-  .avh__ind-label { flex: 1 1 auto; }
-  .avh__ind-link:hover .avh__ind-label,
-  .avh__ind-link:focus-visible .avh__ind-label {
+  .avh__mm-icon iconify-icon { display: block; }
+  .avh__mm-label { flex: 1 1 auto; }
+  .avh__mm-link:hover .avh__mm-label,
+  .avh__mm-link:focus-visible .avh__mm-label {
     color: #D31126;
   }
-  .avh__ind-link--current .avh__ind-label { color: #D31126; font-weight: 600; }
+  .avh__mm-link--current .avh__mm-label { color: #D31126; font-weight: 600; }
   /* When opening via hover/focus/.is-open, just make it visible (no transform) */
   .avh__item--about:hover > .avh__submenu,
   .avh__item--about:focus-within > .avh__submenu,
@@ -844,10 +883,10 @@ const socials = [
     visibility: visible;
     transform: none;
   }
-  /* Industries open state — no transform override; centered via margin: auto. */
-  .avh__item--industries:hover > .avh__submenu,
-  .avh__item--industries:focus-within > .avh__submenu,
-  .avh__item--industries.is-open > .avh__submenu {
+  /* Mega-menu open state — centered via margin: auto, no transform needed. */
+  .avh__item--mm:hover > .avh__submenu,
+  .avh__item--mm:focus-within > .avh__submenu,
+  .avh__item--mm.is-open > .avh__submenu {
     opacity: 1;
     visibility: visible;
   }
@@ -859,13 +898,13 @@ const socials = [
     visibility: visible;
     transform: none;
   }
-  .avh__item--industries .avh__link--trigger:hover + .avh__submenu,
-  .avh__item--industries .avh__link--trigger:focus-visible + .avh__submenu {
+  .avh__item--mm .avh__link--trigger:hover + .avh__submenu,
+  .avh__item--mm .avh__link--trigger:focus-visible + .avh__submenu {
     opacity: 1;
     visibility: visible;
   }
   .avh__item--about > .avh__submenu > li,
-  .avh__item--industries > .avh__submenu > li {
+  .avh__item--mm > .avh__submenu > li {
     width: auto;
     display: block;
     list-style: none;
@@ -934,7 +973,7 @@ const socials = [
       grid-template-columns: 1fr;
       gap: 18px;
     }
-    .avh__item--industries > .avh__submenu {
+    .avh__item--mm > .avh__submenu {
       left: 16px !important;
       right: 16px !important;
       width: calc(100vw - 32px) !important;
