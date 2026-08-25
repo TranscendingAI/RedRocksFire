@@ -5,7 +5,6 @@
  * own-page navigation). Its dropdown menu lists "Services Overview"
  * (-> /services) and "Inspections" (-> /inspections).
  *
- * Existing structure preserved:
  *   Desktop:
  *     [ red logo box max(251px, 16.1%) ] [ right column:
  *         row 1 — social icons (left) · "Mon - Sat: 7.00am - 19.00pm" (right)
@@ -14,6 +13,8 @@
  *
  * Source of truth for nav data lives HERE so future nav edits are 1 place.
  */
+
+import { contact } from '../data/site';
 
 interface SubItem {
   href: string;
@@ -128,6 +129,67 @@ const servicesColumns: MMColumn[] = [
     ],
   },
 ];
+/**
+ * Contact mega menu — 2-column layout (different shape than Industries /
+ * Services). Column 1 is a stack of icon + label + value rows (Office,
+ * Phone, Email, Office Hours) separated by thin dividers, with social
+ * icons below. Column 2 is "Get in Touch" copy + an embedded Google Map.
+ *
+ * Data shape differs from MMColumn because column-1 rows carry both a
+ * label and a value (and an optional href for tel/mailto), not just an
+ * href + label like the other dropdowns' items.
+ */
+interface ContactRow {
+  icon: string;
+  label: string;
+  value: string;
+  href?: string;
+}
+const contactMenu = {
+  info: {
+    title: 'Contact Information',
+    address: {
+      icon: 'solar:city-bold',
+      label: 'Office',
+      value: '7076 S. Alton Way, Suite G2\nCentennial, CO 80112',
+      href: contact.mapsUrl,
+    },
+    phone: {
+      icon: 'solar:phone-calling-bold-duotone',
+      label: 'Phone',
+      value: contact.phone,
+      href: contact.phoneHref,
+    },
+    email: {
+      icon: 'solar:letter-bold-duotone',
+      label: 'Email',
+      value: contact.email,
+      href: contact.emailHref,
+    },
+    hours: {
+      icon: 'solar:clock-circle-bold-duotone',
+      label: 'Office Hours',
+      value: `${contact.officeHours}\n${contact.officeClosed}`,
+    },
+  },
+  intro: {
+    title: 'Get in Touch',
+    subhead: "Let's Build a Safer Property Together.",
+    body: "Let's build a safer property together. Reach the team that protects property owners and managers across the Colorado Front Range — for routine inspections, code questions, or 24/7 emergency response.",
+  },
+  /** Address encoded for Google Maps embed; URL-escaped once. */
+  mapsEmbedUrl: 'https://www.google.com/maps?q=7076+S.+Alton+Way+Suite+G2+Centennial+CO+80112&output=embed',
+} as const;
+
+/** Three social links shown below the contact rows (column 1). Facebook
+ *  handle is currently unset in src/data/site.ts — wire to a generic /facebook.com
+ *  placeholder until Brian confirms the canonical handle. */
+const menuSocials = [
+  { label: 'Facebook',  href: 'https://www.facebook.com/' },
+  { label: 'LinkedIn',  href: contact.socials.linkedin },
+  { label: 'Instagram', href: 'https://www.instagram.com/' },
+];
+
 const servicesNav: SubItem[] = servicesColumns.flatMap((c) => c.items);
 
 /**
@@ -165,7 +227,16 @@ const navItems: NavItem[] = [
   { href: '/testimonials', label: 'TESTIMONIALS' },
   { href: '/service-areas', label: 'SERVICE AREAS' },
   { href: '/blog', label: 'BLOG' },
-  { href: '/contact', label: 'CONTACT' },
+  {
+    label: 'CONTACT',
+    href: '/contact',
+    /* Contact is a 2-column mega menu; the submenu branch renders the
+     * info rows + socials + "Get in Touch" + map directly from
+     * contactMenu data instead of a flat children array. */
+    children: [
+      { href: '/contact', label: 'Contact' },
+    ],
+  },
 ];
 
 const currentPath = typeof Astro !== 'undefined' ? Astro.url.pathname : '/';
@@ -231,7 +302,7 @@ const socials = [
         <nav aria-label="Primary" class="avh__nav">
           <ul>
             {navItems.map((item) => (
-              <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about', (item.label === 'INDUSTRIES WE SERVE' || item.label === 'SERVICES') && 'avh__item--mm']}>
+              <li class:list={['avh__item', item.children && 'avh__item--has-children', item.label === 'ABOUT' && 'avh__item--about', (item.label === 'INDUSTRIES WE SERVE' || item.label === 'SERVICES') && 'avh__item--mm', item.label === 'CONTACT' && 'avh__item--contact']}>
                 {item.children ? (
                   /* Dropdown parent. If the item ALSO has an href, the label is a
                    * real link (<a>) that navigates on click while the dropdown
@@ -268,7 +339,69 @@ const socials = [
                       </button>
                     )}
                     <ul class="avh__submenu" role="menu" data-dropdown-menu>
-                      {(item.label === 'INDUSTRIES WE SERVE' || item.label === 'SERVICES') ? (
+                      {item.label === 'CONTACT' ? (
+                        /* Contact mega menu — 2 columns (info rows + socials
+                         * on the left, copy + map on the right). Styled by
+                         * .avh__contact-* rules. */
+                        <li role="none" class="avh__contact-grid">
+                          {/* ── Column 1: Contact Information ── */}
+                          <div class="avh__contact-col">
+                            <p class="avh__contact-title">{contactMenu.info.title}</p>
+                            <div class="avh__contact-rows">
+                              {[contactMenu.info.address, contactMenu.info.phone, contactMenu.info.email, contactMenu.info.hours].map((row) => {
+                                const valueHtml = row.value.split('\n').map((line) => `<span>${line}</span>`).join('');
+                                return (
+                                  <div class="avh__contact-row">
+                                    <span class="avh__contact-row-icon" aria-hidden="true">
+                                      <iconify-icon icon={row.icon} width="22" height="22"></iconify-icon>
+                                    </span>
+                                    <div class="avh__contact-row-body">
+                                      <div class="avh__contact-row-label">{row.label}</div>
+                                      <div class="avh__contact-row-value">
+                                        {row.href ? (
+                                          <a href={row.href} set:html={valueHtml} />
+                                        ) : (
+                                          <span set:html={valueHtml} />
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            <div class="avh__contact-socials">
+                              {menuSocials.map((s) => (
+                                <a href={s.href} aria-label={s.label} class="avh__contact-social" target="_blank" rel="noopener noreferrer">
+                                  {s.label === 'Facebook' && (
+                                    <svg width="20" height="20" viewBox="0 0 320 512" aria-hidden="true" fill="currentColor"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+                                  )}
+                                  {s.label === 'LinkedIn' && (
+                                    <svg width="20" height="20" viewBox="0 0 448 512" aria-hidden="true" fill="currentColor"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+                                  )}
+                                  {s.label === 'Instagram' && (
+                                    <svg width="20" height="20" viewBox="0 0 448 512" aria-hidden="true" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9 114.9-51.3 114.9-114.9S287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+                                  )}
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                          {/* ── Column 2: Get in Touch + map ── */}
+                          <div class="avh__contact-col">
+                            <p class="avh__contact-title">{contactMenu.intro.title}</p>
+                            <p class="avh__contact-subhead">{contactMenu.intro.subhead}</p>
+                            <p class="avh__contact-body">{contactMenu.intro.body}</p>
+                            <div class="avh__contact-map">
+                              <iframe
+                                src={contactMenu.mapsEmbedUrl}
+                                title="RRFPS office location"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                allowfullscreen
+                              ></iframe>
+                            </div>
+                          </div>
+                        </li>
+                      ) : (item.label === 'INDUSTRIES WE SERVE' || item.label === 'SERVICES') ? (
                         /* Shared 3-column mega menu (Industries + Services).
                          * Renders title + icon-square + label per item from
                          * the per-label columns data (industriesColumns /
@@ -890,6 +1023,12 @@ const socials = [
     opacity: 1;
     visibility: visible;
   }
+  .avh__item--contact:hover > .avh__submenu,
+  .avh__item--contact:focus-within > .avh__submenu,
+  .avh__item--contact.is-open > .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+  }
   /* Re-trigger hover-open path (trigger sits above menu in DOM, but our
      fixed-positioning means transform doesn't matter — just show) */
   .avh__item--about .avh__link--trigger:hover + .avh__submenu,
@@ -903,11 +1042,180 @@ const socials = [
     opacity: 1;
     visibility: visible;
   }
+  .avh__item--contact .avh__link--trigger:hover + .avh__submenu,
+  .avh__item--contact .avh__link--trigger:focus-visible + .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+  }
   .avh__item--about > .avh__submenu > li,
   .avh__item--mm > .avh__submenu > li {
     width: auto;
     display: block;
     list-style: none;
+  }
+
+  /* ── Contact mega menu — 2-column panel (info rows + socials on the
+   * left, "Get in Touch" copy + embedded Google Map on the right) ── */
+  .avh__item--contact > .avh__submenu {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 135px;
+    margin: 0 auto !important;
+    width: 1180px !important;
+    max-width: calc(100vw - 32px) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    transform: none !important;
+    padding: 40px 40px 36px;
+    background: #F4F2F1;
+    box-shadow: 0 18px 40px rgba(10, 10, 10, 0.22);
+    z-index: 60;
+    isolation: isolate;
+    overflow: visible;
+  }
+  .avh__item--contact > .avh__submenu > li { display: block; padding: 0; }
+  /* Specificity (0,4,0) wins over the .avh__item--contact > .avh__submenu > li
+   * (0,3,1) rule above (which sets display:block on every direct <li>).
+   * That rule targets the .avh__contact-grid <li> too — without the higher
+   * selector here, display:flex would never apply. */
+  .avh__item--contact > .avh__submenu > .avh__contact-grid {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 56px;
+    list-style: none;
+  }
+  .avh__contact-col {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  /* Column 1: same flex-basis as col2 so the two columns are equal width */
+  .avh__item--contact > .avh__submenu > .avh__contact-grid > .avh__contact-col:first-child { flex: 1 1 0; }
+  /* Column 2: equal-width sibling (was flex: 1 1 0; left as-is for clarity) */
+  .avh__item--contact > .avh__submenu > .avh__contact-grid > .avh__contact-col:last-child  { flex: 1 1 0; }
+  .avh__contact-title {
+    font-family: "Space Grotesk", "Archivo Variable", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    margin: 0 0 18px;
+  }
+  /* Column 1: contact rows separated by thin dividers */
+  .avh__contact-rows {
+    display: flex;
+    flex-direction: column;
+  }
+  .avh__contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.12);
+  }
+  .avh__contact-row:first-child { padding-top: 0; }
+  .avh__contact-row:last-child  { border-bottom: none; padding-bottom: 0; }
+  .avh__contact-row-icon {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    background: #D31126;
+    color: #ffffff;
+  }
+  .avh__contact-row-icon iconify-icon { display: block; }
+  .avh__contact-row-body { min-width: 0; }
+  .avh__contact-row-label {
+    font-family: "Space Grotesk", "Archivo Variable", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    margin-bottom: 4px;
+  }
+  .avh__contact-row-value {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #2a2a2c;
+    white-space: pre-line;
+  }
+  .avh__contact-row-value a {
+    color: #2a2a2c;
+    text-decoration: none;
+    transition: color 140ms ease;
+  }
+  .avh__contact-row-value a:hover,
+  .avh__contact-row-value a:focus-visible { color: #D31126; }
+  /* Social icons below the contact rows */
+  .avh__contact-socials {
+    display: flex;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .avh__contact-social {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    color: #0a0a0a;
+    border: 1px solid rgba(10, 10, 10, 0.18);
+    background: transparent;
+    transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
+  }
+  .avh__contact-social svg { display: block; }
+  .avh__contact-social:hover,
+  .avh__contact-social:focus-visible {
+    color: #ffffff;
+    background: #D31126;
+    border-color: #D31126;
+  }
+  /* Column 2: copy + map */
+  .avh__contact-subhead {
+    font-family: "Space Grotesk", "Archivo Variable", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+    color: #D31126;
+    margin: 0 0 14px;
+  }
+  .avh__contact-body {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #2a2a2c;
+    margin: 0 0 18px;
+    max-width: 60ch;
+  }
+  .avh__contact-map {
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    background: #e7e5e4;
+    overflow: hidden;
+  }
+  .avh__contact-map iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .avh__contact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #2a2a2c;
+    text-decoration: none;
+    text-align: left;
+    transition: color 140ms ease;
   }
   .avh__about-card {
     display: flex;
@@ -984,6 +1292,20 @@ const socials = [
       flex-direction: column;
       gap: 24px;
     }
+    .avh__item--contact > .avh__submenu {
+      left: 16px !important;
+      right: 16px !important;
+      width: calc(100vw - 32px) !important;
+      max-width: none !important;
+      top: 110px;
+      transform: none !important;
+      padding: 24px 22px;
+    }
+    .avh__item--contact > .avh__submenu > .avh__contact-grid {
+      flex-direction: column;
+      gap: 24px;
+    }
+    .avh__item--contact > .avh__submenu > .avh__contact-grid > .avh__contact-col:first-child { flex-basis: auto; }
   }
 </style>
 
