@@ -38,11 +38,6 @@ const { Content } = await render(post);
 // URL correct if a future loader (e.g. live data) omits it.
 const slug = post.id;
 
-const fmtDate = post.data.publishDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
 const isoDate = post.data.publishDate.toISOString();
 const canonical = new URL(`/blog/${slug}/`, Astro.site ?? 'http://localhost:4321').toString();
 const ogImage = new URL(post.data.featuredImage, Astro.site ?? 'http://localhost:4321').toString();
@@ -99,33 +94,6 @@ const jsonLd = JSON.stringify({
       </div>
     </div>
   </div>
-
-  <!-- POST HEADER — category eyebrow, byline + date + read time -->
-  <section class="rr-band" style="background: var(--rr-bg-light);">
-    <div class="rr-container">
-      <div class="max-w-3xl mx-auto rr-reveal">
-        <p class="rr-eyebrow text-rr-grey mb-5">{post.data.category}</p>
-
-        <div
-          class="flex flex-wrap items-center gap-x-4 gap-y-2 text-rr-grey pb-6"
-          style="font-size: 0.9375rem; border-bottom: 1px solid var(--rr-border-lt);"
-        >
-          <span>
-            By
-            <strong class="text-rr-black font-semibold">{post.data.author}</strong>
-          </span>
-          <span aria-hidden="true">·</span>
-          <time datetime={isoDate}>{fmtDate}</time>
-          {post.data.readMinutes && (
-            <>
-              <span aria-hidden="true">·</span>
-              <span>{post.data.readMinutes} min read</span>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- BODY — rendered from the markdown file via the Content component -->
   <article class="rr-band" style="background: var(--rr-white);">
@@ -278,7 +246,6 @@ const jsonLd = JSON.stringify({
     background-repeat: no-repeat;
     background-position: center bottom;
     min-height: 450px;
-    margin-bottom: 60px;
     padding-top: 154px;
     padding-bottom: 20px;
     display: flex;
