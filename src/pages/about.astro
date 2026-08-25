@@ -28,21 +28,23 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
+/* 4 testimonial slides — matches the 4-avatar strip below. The 5th
+ * placeholder slide ("Colorado Property Partner") was removed (2026-08)
+ * when the avatar strip was reduced from 5 to 4. */
 const testimonialSlides = [
   ...testimonials,
-  {
-    quote: 'Red Rocks Fire Protection Services brings clarity, responsiveness, and a true partnership mindset to every life safety need. Their coordinated approach makes complex compliance easier to manage.',
-    attribution: { name: 'Colorado Property Partner', title: 'Property Management Client', company: '' },
-    headline: 'A Proactive Partner in Life Safety.',
-  },
 ] as const;
 
+/* Avatar strip mirrors the 4-slide carousel above:
+ *   1. Brandon Cox photo (Bell Partners testimonial)
+ *   2. Greystar logo (Greystar testimonial)
+ *   3. Greystar logo (same brand, different reviewer)
+ *   4. user.png placeholder (Jorge Lopez testimonial, no headshot yet) */
 const testimonialAvatars = [
-  '/images/home/testimonials-logo-1.webp',
-  '/images/home/testimonials-logo-2.webp',
-  '/images/home/testimonials-logo-3.webp',
-  '',
-  '',
+  '/images/Brandon-Cox-Director-of-Maintenance-Bell-Partners-Inc.jpg',
+  '/images/greystar_logo.jpg',
+  '/images/greystar_logo.jpg',
+  '/images/user.png',
 ] as const;
 ---
 
@@ -142,9 +144,9 @@ const testimonialAvatars = [
             {about.whyWeExist.bannerWords.map((word) => <strong>{word}</strong>)}
           </div>
 
-          <div class="purpose__panel-copy">
-            <p>{about.whyWeExist.bannerBody}</p>
-          </div>
+          {/* White-text body removed (2026-08) — it duplicated the bold
+              .purpose__statement copy directly below the stage. Kept the
+              bold version per client edit. */}
 
           <a href={about.whyWeExist.ctaHref} class="av-wgl-btn purpose__cta">
             <span class="av-wgl-btn__text">{about.whyWeExist.ctaLabel}</span>
@@ -443,6 +445,10 @@ const testimonialAvatars = [
     min-height: 448px;
     max-width: 1120px;
     margin-inline: auto;
+    /* Match fire-sprinkler-service-and-systems.astro so the white-space
+       gap between the hero and the first section feels consistent
+       across top-level landing pages. */
+    margin-bottom: 60px;
     padding: 136px 80px 36px;
     display: flex;
     align-items: flex-end;

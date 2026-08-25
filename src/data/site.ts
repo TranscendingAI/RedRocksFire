@@ -211,7 +211,7 @@ export const about = {
       'We specialize in protecting lives and property through a full-service, single-source approach, serving multi-family communities, commercial facilities, retail centers, healthcare environments, and more.',
       'With a team of highly certified professionals and a proven track record of service since 2010, Red Rocks Fire Protection Services delivers reliable, compliant, and expertly managed life safety systems, built on trust, accountability, and long-term partnership.',
     ] as const,
-    image: '/images/rrfps-about-company-overview.jpg',
+    image: '/images/rrfps-about-overview-brian-inspector.jpg',
     imageAlt: 'Red Rocks Fire Protection technician reviewing a fire sprinkler riser with a client',
   },
   whyWeExist: {
@@ -250,9 +250,9 @@ export const about = {
         href: '/services',
       },
       {
-        title: 'One Vendor Solution',
-        body: 'One coordinated team responsible for every life safety system in your building - no gaps, no juggling vendors, no surprises.',
-        icon: 'solar:layers-bold-duotone',
+        title: 'Monitoring Services',
+        body: '24/7 UL-listed monitoring of fire alarm, sprinkler, and suppression systems — with same-day response on trouble signals across the Front Range.',
+        icon: 'solar:monitor-smartphone-bold-duotone',
         href: '/services',
       },
       {
