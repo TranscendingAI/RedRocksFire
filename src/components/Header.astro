@@ -40,26 +40,54 @@ interface NavItem {
 
 /**
  * Industries We Serve dropdown — 14 sub-pages, one per vertical named in
- * the Brand Strategy §5.5. Pages all exist as light placeholders (or in
- * the case of /multi-family, a fully-built landing page); when each one's
- * full content lands, no nav change is needed.
+ * the Brand Strategy §5.5. Restructured (2026-08) into a 3-column mega menu
+ * with a titled heading above each column, per the client's reference
+ * layout. Each item is a small red icon square + left-aligned label; no
+ * body blurbs. Pages all exist as light placeholders (or in the case of
+ * /multi-family, a fully-built landing page); when each one's full content
+ * lands, no nav change is needed.
  */
-const industriesNav: AboutSubItem[] = [
-  { href: '/industries/multi-family-management-companies',         label: 'Multi-Family Management',   icon: 'solar:buildings-2-bold-duotone',            body: 'Coordinated inspections and monitoring for apartment communities and their residents.' },
-  { href: '/industries/commercial-property',  label: 'Commercial Property',       icon: 'solar:city-bold-duotone',                   body: 'Sprinkler, alarm, and compliance coverage for offices and commercial facilities.' },
-  { href: '/industries/religious-institutions', label: 'Religious Institutions',  icon: 'solar:home-angle-bold-duotone',             body: 'Protecting places of worship and their congregations with dependable life safety.' },
-  { href: '/industries/assisted-living',      label: 'Assisted Living',           icon: 'solar:heart-pulse-bold-duotone',            body: 'Compliance-focused fire protection for senior living and healthcare facilities.' },
-  { href: '/industries/education',            label: 'Education / Universities',  icon: 'solar:square-academic-cap-bold-duotone',    body: 'Sprinkler and alarm systems that keep campuses and students safe.' },
-  { href: '/industries/warehouse-industrial', label: 'Warehouse / Industrial',    icon: 'solar:box-bold-duotone',                    body: 'Fire protection and inspections built for warehouse, storage, and industrial sites.' },
-  { href: '/industries/hoa-management',       label: 'HOA Management',            icon: 'solar:home-2-bold-duotone',                 body: 'Inspections and monitoring that help HOAs stay ahead of compliance.' },
-  { href: '/industries/hotels-hospitality',  label: 'Hotels & Hospitality',      icon: 'solar:bed-bold-duotone',                    body: 'Life safety systems that protect guests, staff, and hospitality properties.' },
-  { href: '/industries/retail',               label: 'Retail & Shopping Centers', icon: 'solar:cart-large-2-bold-duotone',           body: 'Reliable fire protection for retail stores and shopping centers.' },
-  { href: '/industries/restaurants',          label: 'Restaurants & Food Trucks', icon: 'solar:chef-hat-bold-duotone',               body: 'Kitchen suppression and fire protection for restaurants and food service.' },
-  { href: '/industries/financial',           label: 'Financial Institutions',    icon: 'solar:card-bold-duotone',                   body: 'Compliance and monitoring for banks and financial facilities.' },
-  { href: '/industries/automotive',           label: 'Automotive Dealerships',    icon: 'solar:wheel-bold-duotone',                  body: 'Fire protection tailored to dealerships and automotive facilities.' },
-  { href: '/industries/data-centers',         label: 'Data Centers',              icon: 'solar:server-bold-duotone',                 body: 'Specialized suppression and monitoring for mission-critical data centers.' },
-  { href: '/industries/general-contractors',  label: 'General Contractors',       icon: 'solar:hammer-bold-duotone',                 body: 'A trusted fire protection partner for GCs and construction projects.' },
+interface IndustryItem extends SubItem {
+  icon: string;   // iconify icon id, rendered in a small red square
+}
+interface IndustryColumn {
+  title: string;
+  items: IndustryItem[];
+}
+const industriesColumns: IndustryColumn[] = [
+  {
+    title: 'Property & Community',
+    items: [
+      { href: '/industries/multi-family-management-companies', label: 'Multi-Family Management Companies',              icon: 'solar:buildings-2-bold-duotone' },
+      { href: '/industries/commercial-property',               label: 'Commercial Properties & Management Companies',    icon: 'solar:city-bold-duotone' },
+      { href: '/industries/hoa-management',                    label: 'HOA Management Companies',                        icon: 'solar:home-2-bold-duotone' },
+      { href: '/industries/hotels-hospitality',                label: 'Hotels & Hospitality',                            icon: 'solar:bed-bold-duotone' },
+      { href: '/industries/retail',                            label: 'Retail & Shopping Centers',                       icon: 'solar:cart-large-2-bold-duotone' },
+    ],
+  },
+  {
+    title: 'Commercial & Institutional',
+    items: [
+      { href: '/industries/religious-institutions', label: 'Religious Institutions / Churches',        icon: 'solar:home-angle-bold-duotone' },
+      { href: '/industries/assisted-living',        label: 'Assisted Living Facilities & Healthcare',  icon: 'solar:heart-pulse-bold-duotone' },
+      { href: '/industries/education',              label: 'Education & Universities',                 icon: 'solar:square-academic-cap-bold-duotone' },
+      { href: '/industries/restaurants',            label: 'Restaurants & Food Trucks',                icon: 'solar:chef-hat-bold-duotone' },
+      { href: '/industries/financial',              label: 'Financial Institutions',                   icon: 'solar:card-bold-duotone' },
+    ],
+  },
+  {
+    title: 'Specialized Facilities',
+    items: [
+      { href: '/industries/warehouse-industrial',  label: 'Warehouse / Storage / Industrial',           icon: 'solar:box-bold-duotone' },
+      { href: '/industries/data-centers',          label: 'Data Centers',                               icon: 'solar:server-bold-duotone' },
+      { href: '/industries/automotive',            label: 'Automotive Dealerships & Service Centers',   icon: 'solar:wheel-bold-duotone' },
+      { href: '/industries/general-contractors',   label: 'General Contractors',                        icon: 'solar:sledgehammer-bold-duotone' },
+    ],
+  },
 ];
+/** Flat list of every industry sub-page — used for the mobile drawer and the
+ *  isCurrent() roll-up (which just needs the hrefs, not the columns). */
+const industriesNav: SubItem[] = industriesColumns.flatMap((c) => c.items);
 
 /**
  * About dropdown — 8 tile cards, 4×2 grid. Faithful to the colleague's
@@ -203,11 +231,37 @@ const socials = [
                       </button>
                     )}
                     <ul class="avh__submenu" role="menu" data-dropdown-menu>
-                      {item.children.map((child) => {
+                      {item.label === 'INDUSTRIES WE SERVE' ? (
+                        /* Industries mega menu: 3 titled columns of plain
+                         * text links (no icons, no blurbs). */
+                        industriesColumns.map((col) => (
+                          <li role="none" class="avh__ind-col">
+                            <p class="avh__ind-col-title">{col.title}</p>
+                            <ul class="avh__ind-col-list" role="none">
+                              {col.items.map((child) => {
+                                const isChildCurrent = currentPath === child.href || currentPath.startsWith(child.href + '/');
+                                return (
+                                  <li role="none">
+                                    <a
+                                      href={child.href}
+                                      role="menuitem"
+                                      class:list={['avh__ind-link', isChildCurrent && 'avh__ind-link--current']}
+                                      aria-current={isChildCurrent ? 'page' : undefined}
+                                    >
+                                      <span class="avh__ind-icon" aria-hidden="true">
+                                        <iconify-icon icon={child.icon} width="20" height="20"></iconify-icon>
+                                      </span>
+                                      <span class="avh__ind-label">{child.label}</span>
+                                    </a>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </li>
+                        ))
+                      ) : (
+                      item.children.map((child) => {
                         const isChildCurrent = currentPath === child.href || currentPath.startsWith(child.href + '/');
-                        /* Industries menu: card layout WITHOUT the body blurb
-                         * (icon + title + LEARN MORE only). ABOUT keeps its blurbs. */
-                        const hideBody = item.label === 'INDUSTRIES WE SERVE';
                         /* Enhanced (rich-card) variant — used by ABOUT. Detected by
                          * the presence of the extra fields on AboutSubItem. */
                         if ('icon' in child && 'body' in child) {
@@ -219,7 +273,7 @@ const socials = [
                                   <iconify-icon icon={card.icon} width="28" height="28"></iconify-icon>
                                 </span>
                                 <span class="avh__about-title">{card.label}</span>
-                                {!hideBody && <span class="avh__about-body">{card.body}</span>}
+                                <span class="avh__about-body">{card.body}</span>
                                 <span class="avh__about-cta">LEARN MORE <span class="avh__about-arrow" aria-hidden="true">→</span></span>
                               </a>
                             </li>
@@ -237,7 +291,8 @@ const socials = [
                             </a>
                           </li>
                         );
-                      })}
+                      })
+                      )}
                     </ul>
                   </>
                 ) : (
@@ -670,8 +725,7 @@ const socials = [
    * rule to .avh__item--about so Services + Industries dropdowns are
    * untouched.
    */
-  .avh__item--about > .avh__submenu,
-  .avh__item--industries > .avh__submenu {
+  .avh__item--about > .avh__submenu {
     /* Full-width: anchor to viewport edges. Because the dropdown's
        containing block is the <li> (which is much narrower than the
        viewport), we use `position: fixed` to escape it and place the
@@ -698,32 +752,117 @@ const socials = [
     z-index: 60;
     isolation: isolate;
   }
-  /* Industries has 14 cards → let the grid flow to as many rows as needed
-     (4 columns × 4 rows) instead of being locked to About's 2 rows. */
+
+  /* ── Industries dropdown — 3-column titled mega menu ──────────────────
+   * Plain text links grouped under a bold column heading. Uses flexbox
+   * (NOT grid) on the outer panel so the height always fits all rows of
+   * content; the prior grid implementation was producing a single 132px
+   * row track and clipping rows 4-5 below the cream background. */
   .avh__item--industries > .avh__submenu {
-    grid-template-rows: none;
-    grid-auto-rows: auto;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 135px;
+    margin: 0 auto !important;
+    width: 1180px !important;
+    max-width: calc(100vw - 32px) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    transform: none !important;
+    padding: 40px 40px 36px;
+    background: #F4F2F1;
+    box-shadow: 0 18px 40px rgba(10, 10, 10, 0.22);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 48px;
+    z-index: 60;
+    isolation: isolate;
+    overflow: visible;
   }
+  .avh__ind-col {
+    flex: 1 1 0;
+    min-width: 0;
+    display: block;
+    list-style: none;
+  }
+  .avh__ind-col-title {
+    font-family: "Space Grotesk", "Archivo Variable", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    margin: 0 0 14px;
+  }
+  /* Specific selector (0,2,0) defeats the .avh__nav ul { height: 94px }
+   * descendant rule (0,1,1) that was clipping every nested <ul>. */
+  .avh__ind-col > .avh__ind-col-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;        /* keep <li>s left-aligned on the cross-axis */
+    gap: 6px;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .avh__ind-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 14.5px;
+    line-height: 1.3;
+    color: #2a2a2c;
+    text-decoration: none;
+    text-align: left;
+    transition: color 140ms ease;
+  }
+  .avh__ind-icon {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    background: #D31126;
+    color: #ffffff;
+  }
+  .avh__ind-icon iconify-icon { display: block; }
+  .avh__ind-label { flex: 1 1 auto; }
+  .avh__ind-link:hover .avh__ind-label,
+  .avh__ind-link:focus-visible .avh__ind-label {
+    color: #D31126;
+  }
+  .avh__ind-link--current .avh__ind-label { color: #D31126; font-weight: 600; }
   /* When opening via hover/focus/.is-open, just make it visible (no transform) */
   .avh__item--about:hover > .avh__submenu,
   .avh__item--about:focus-within > .avh__submenu,
-  .avh__item--about.is-open > .avh__submenu,
+  .avh__item--about.is-open > .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  /* Industries open state — no transform override; centered via margin: auto. */
   .avh__item--industries:hover > .avh__submenu,
   .avh__item--industries:focus-within > .avh__submenu,
   .avh__item--industries.is-open > .avh__submenu {
     opacity: 1;
     visibility: visible;
-    transform: none;
   }
   /* Re-trigger hover-open path (trigger sits above menu in DOM, but our
      fixed-positioning means transform doesn't matter — just show) */
   .avh__item--about .avh__link--trigger:hover + .avh__submenu,
-  .avh__item--about .avh__link--trigger:focus-visible + .avh__submenu,
+  .avh__item--about .avh__link--trigger:focus-visible + .avh__submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
   .avh__item--industries .avh__link--trigger:hover + .avh__submenu,
   .avh__item--industries .avh__link--trigger:focus-visible + .avh__submenu {
     opacity: 1;
     visibility: visible;
-    transform: none;
   }
   .avh__item--about > .avh__submenu > li,
   .avh__item--industries > .avh__submenu > li {
@@ -786,8 +925,7 @@ const socials = [
 
   /* Mobile: collapse to a single column, full-width with a small inset. */
   @media (max-width: 980px) {
-    .avh__item--about > .avh__submenu,
-    .avh__item--industries > .avh__submenu {
+    .avh__item--about > .avh__submenu {
       left: 16px !important;
       right: 16px !important;
       width: calc(100vw - 32px) !important;
@@ -795,6 +933,17 @@ const socials = [
       padding: 24px 22px;
       grid-template-columns: 1fr;
       gap: 18px;
+    }
+    .avh__item--industries > .avh__submenu {
+      left: 16px !important;
+      right: 16px !important;
+      width: calc(100vw - 32px) !important;
+      max-width: none !important;
+      top: 110px;
+      transform: none !important;
+      padding: 24px 22px;
+      flex-direction: column;
+      gap: 24px;
     }
   }
 </style>
