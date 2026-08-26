@@ -5,25 +5,26 @@
  * Section order:
  *   0. Page-title banner (hero + breadcrumbs)
  *   1. CEO quote box — 2 columns (Brian photo + big-red-quote block)
- *   2. Team grid — 2 columns × 4 rows. Each row: portrait placeholder,
- *      role + name, red divider, red arrow link (href="#" for now).
- *      Title: "Strong Foundations. Strong Team." with the small red
- *      diamond-icon eyebrow "our leadership & experts".
- *   3. Credentials — light background, red horizontal borders top + bottom,
- *      title "OUR CREDENTIALS & CERTIFICATIONS", 6 logos in a 2×3 grid.
+ *   2. Team grid — 2 columns × 4 rows. Each row: portrait placeholder
+ *      (or real photo when supplied), role + name, red divider, social
+ *      icons revealed on hover. Title: "Strong Foundations. Strong
+ *      Team." with the small red diamond-icon eyebrow "our leadership
+ *      & experts".
+ *   3. Credentials — light background, red horizontal borders top +
+ *      bottom, title "OUR CREDENTIALS & CERTIFICATIONS", 6 logos in
+ *      one row (responsive: 6→3×2→2×3→1).
  *   4. Closing CTA — shared <ClosingCTA> with meet-the-team paragraph
- *      and a multi-family apartment daytime background image.
+ *      and a meet-the-team CTA background image.
  *
  * Image assets:
  *   - Section 1 hero photo: /images/brian-kakac-ceo-rrrfps-onsite-property-inspection.png
+ *   - Brian's team-card photo: /images/brian-kakac-ceo-red-rocks-fire-protection-services.png
  *   - Section 3 logos: /images/credential-logos/{asse,cdfpc,csa,iapmo,nicet,pprbd}-logo.png
- *   - Section 4 CTA bg: /images/rrfps-meet-the-team-cta-bg.jpg (Higgsfield)
+ *   - Section 4 CTA bg: /images/meet-our-team-rrfps-cta-banner-bg.jpg
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ClosingCTA from '../components/ClosingCTA.astro';
-
-const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
