@@ -109,20 +109,24 @@ const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="
             <p class="sa-services__lead">
               Whether you manage a single commercial building or oversee multiple properties across Colorado, Red Rocks Fire Protection Services is one trusted partner for all your life safety needs — responsive, professional support you can count on.
             </p>
-            <ul class="sa-services__list">
-              <li>Inspections</li>
-              <li>Fire Sprinkler Service &amp; Systems</li>
-              <li>Fire Alarm Service &amp; Systems</li>
-              <li>Monitoring Services</li>
-              <li>Backflow Prevention Assemblies</li>
-              <li>Portable Fire Extinguishers</li>
-              <li>Distributed Antenna Systems (DAS)</li>
-              <li>Security System Installation &amp; Monitoring</li>
-              <li>Kitchen Hood Suppression Systems</li>
-              <li>Area of Refuge Communication Systems</li>
-              <li>Consulting Services</li>
-              <li>24 Hour Service</li>
-            </ul>
+            <div class="sa-services__cols">
+              <ul class="sa-services__list">
+                <li>Inspections</li>
+                <li>Fire Sprinkler Service &amp; Systems</li>
+                <li>Fire Alarm Service &amp; Systems</li>
+                <li>Monitoring Services</li>
+                <li>Backflow Prevention Assemblies</li>
+                <li>Portable Fire Extinguishers</li>
+              </ul>
+              <ul class="sa-services__list">
+                <li>Distributed Antenna Systems (DAS)</li>
+                <li>Security System Installation &amp; Monitoring</li>
+                <li>Kitchen Hood Suppression Systems</li>
+                <li>Area of Refuge Communication Systems</li>
+                <li>Consulting Services</li>
+                <li>24 Hour Service</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -366,17 +370,26 @@ const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="
     font-size: var(--rr-text-lead);
     line-height: var(--rr-text-lead-lh);
   }
-  .sa-services__list {
+  /* Flex wrapper for the two-column services list (2026-08). Each
+     <ul> stacks its own items vertically; the wrapper places the
+     two lists side-by-side. Avoided the grid layout that left dead
+     space under short items when one column ran longer than the
+     other (items with two-line names). */
+  .sa-services__cols {
     margin: 28px 0 0;
+    display: flex;
+    gap: 24px;
+  }
+  .sa-services__list {
+    margin: 0;
     padding: 0;
     list-style: none;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px 24px;
+    flex: 1 1 0;
+    min-width: 0;
   }
   .sa-services__list li {
     position: relative;
-    padding-left: 26px;
+    padding: 8px 0 8px 26px;
     color: rgba(255, 255, 255, 0.9);
     font-family: "Space Grotesk", sans-serif;
     font-weight: 500;
@@ -387,11 +400,14 @@ const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="
     content: "";
     position: absolute;
     left: 0;
-    top: 6px;
+    top: 16px;
     width: 8px;
     height: 8px;
     background: #d41226;
     transform: rotate(45deg);
+  }
+  @media (max-width: 700px) {
+    .sa-services__cols { flex-direction: column; gap: 0; }
   }
 
   /* ── §C local-knowledge image band (About .difference pattern) ── */
