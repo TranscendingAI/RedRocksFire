@@ -15,6 +15,7 @@
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
 import { getCollection, render } from 'astro:content';
 
 // Build static paths at build time. In Astro 7 the `glob()` loader
@@ -123,32 +124,13 @@ const jsonLd = JSON.stringify({
     </section>
   )}
 
-  <!-- DUAL CTA — stay consistent with /blog/index.astro -->
-  <section class="rr-band" style="background: var(--rr-white);">
-    <div class="rr-container">
-      <div class="max-w-3xl mx-auto" style="text-align: center;">
-        <p class="rr-eyebrow text-rr-grey mb-5">Take the next step</p>
-        <h2
-          class="font-display font-black uppercase tracking-tight text-rr-black"
-          style="font-size: var(--rr-text-statement); line-height: 0.95;"
-        >
-          Need this on your property?
-        </h2>
-        <p class="mt-6 text-rr-grey" style="font-size: var(--rr-text-lead);">
-          Tell us about your building — type, size, last inspection date —
-          and we'll route the right technician.
-        </p>
-        <div class="mt-10 flex justify-center gap-4 flex-wrap">
-          <a href="/contact" class="rr-btn rr-btn--primary rr-btn--lg">
-            Schedule an Inspection
-          </a>
-          <a href="/blog/" class="rr-btn rr-btn--ghost rr-btn--lg">
-            Read More Posts
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- CLOSING CTA — same component + same bg image as /blog (parity with the rest of the site).
+       flipBackground={false} because the apartment photo was pre-flipped
+       at the file level — we don't want the CSS scaleX(-1) to mirror it back. -->
+  <ClosingCTA
+    backgroundImage="/images/rrfps-county-cta-apartments.jpg"
+    flipBackground={false}
+  />
 
 </BaseLayout>
 

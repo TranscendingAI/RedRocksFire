@@ -20,9 +20,17 @@ import { about } from '../data/site';
 interface Props {
   paragraphs?: readonly string[];
   backgroundImage?: string;
+  /**
+   * When true (default), the background photo is mirrored horizontally via
+   * `transform: scaleX(-1)` so the "weight" of a stock image faces the
+   * copy panel on the right side of the gradient. Set to false when the
+   * caller has already pre-flipped the source image and wants the flip
+   * baked into the asset itself.
+   */
+  flipBackground?: boolean;
 }
 
-const { paragraphs, backgroundImage } = Astro.props;
+const { paragraphs, backgroundImage, flipBackground = true } = Astro.props;
 
 const cta = about.closingCta;
 const introParagraphs = paragraphs ?? cta.paragraphs;
@@ -43,7 +51,7 @@ const flameIcon =
 <section class="cta">
   <div class="cta__card">
     <div
-      class="cta__bg"
+      class={`cta__bg${flipBackground ? '' : ' cta__bg--noflip'}`}
       style={`background-image: url('${bgImage}');`}
       aria-hidden="true"
     ></div>
@@ -125,10 +133,13 @@ const flameIcon =
     inset: 0;
     background-size: cover;
     background-position: center right;
-    /* Horizontally mirror the photo per client request. */
+    /* Horizontally mirror the photo per client request.
+     * If the caller pre-flipped the image (flipBackground={false}),
+     * .cta__bg--noflip cancels the transform. */
     transform: scaleX(-1);
     z-index: 0;
   }
+  .cta__bg--noflip { transform: none; }
   /* Left→right gradient: solid light where the copy sits, fading to the photo. */
   .cta__overlay {
     position: absolute;
