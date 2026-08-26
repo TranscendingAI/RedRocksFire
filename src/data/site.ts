@@ -55,7 +55,7 @@ export const contact = {
     city: 'Centennial',
     state: 'CO',
     zip: '80112',
-    full: '7076 S. Alton Way, Suite G2, Centennial, CO 80112',
+    full: '7076 S Alton Way # G-2, Centennial, CO 80112, USA',
   },
   mapsUrl: 'https://maps.app.goo.gl/6KtPNqsZFRP8iXmn7',
   /** Office reception hours — separate from field service availability. */

@@ -151,7 +151,7 @@ const contactMenu = {
     address: {
       icon: 'mdi:office-building-marker',
       label: 'Office',
-      value: '7076 S. Alton Way, Suite G2,\nCentennial, CO 80112',
+      value: '7076 S Alton Way # G-2,\nCentennial, CO 80112, USA',
       href: contact.mapsUrl,
     },
     phone: {
@@ -177,8 +177,9 @@ const contactMenu = {
     subhead: "Let's Protect What Matters Most – Together.",
     body: 'Reach the team that protects property owners and managers across the Colorado Front Range – from fire alarms, sprinklers, inspections, to fire safety code requirements, 24-hour emergency response, and much more.',
   },
-  /** Address encoded for Google Maps embed; URL-escaped once. */
-  mapsEmbedUrl: 'https://www.google.com/maps?q=7076+S.+Alton+Way+Suite+G2+Centennial+CO+80112&output=embed',
+  /** Address encoded for Google Maps embed; URL-escaped once. Matches the
+   *  display string in contactMenu.info.address.value above. */
+  mapsEmbedUrl: 'https://www.google.com/maps?q=7076+S+Alton+Way+%23+G-2+Centennial+CO+80112+USA&output=embed',
 } as const;
 
 /** Two social links shown below the contact rows (column 1). Facebook
