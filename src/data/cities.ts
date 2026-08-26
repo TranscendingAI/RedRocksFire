@@ -8674,17 +8674,6 @@ const stub = (name: string, slug: string, href: string = '#'): AreaLink => ({ na
  */
 export const cityRegions: CityRegion[] = [
   {
-    region: 'North Metro',
-    cities: [
-      stub('Thornton', 'thornton-co', '/service-areas/thornton-co/'),
-      stub('Westminster', 'westminster-co', '/service-areas/westminster-co/'),
-      stub('Brighton', 'brighton-co', '/service-areas/brighton-co/'),
-      stub('Northglenn', 'northglenn-co', '/service-areas/northglenn-co/'),
-      stub('Commerce City', 'commerce-city-co', '/service-areas/commerce-city-co/'),
-      stub('Federal Heights', 'federal-heights-co', '/service-areas/federal-heights-co/'),
-    ],
-  },
-  {
     region: 'South/Southwest Metro',
     cities: [
       stub('Littleton', 'littleton-co', '/service-areas/littleton-co/'),
@@ -8696,6 +8685,18 @@ export const cityRegions: CityRegion[] = [
       stub('Lone Tree', 'lone-tree-co', '/service-areas/lone-tree-co/'),
       stub('Sheridan', 'sheridan-co', '/service-areas/sheridan-co/'),
       stub('Cherry Hills Village', 'cherry-hills-village-co', '/service-areas/cherry-hills-village-co/'),
+      // (continued — kept from the original block)
+    ],
+  },
+  {
+    region: 'North Metro',
+    cities: [
+      stub('Thornton', 'thornton-co', '/service-areas/thornton-co/'),
+      stub('Westminster', 'westminster-co', '/service-areas/westminster-co/'),
+      stub('Brighton', 'brighton-co', '/service-areas/brighton-co/'),
+      stub('Northglenn', 'northglenn-co', '/service-areas/northglenn-co/'),
+      stub('Commerce City', 'commerce-city-co', '/service-areas/commerce-city-co/'),
+      stub('Federal Heights', 'federal-heights-co', '/service-areas/federal-heights-co/'),
     ],
   },
   {

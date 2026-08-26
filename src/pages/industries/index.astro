@@ -93,6 +93,17 @@ const bannerImage = '/images/rrfps-about-hero-bg.jpg';
   .ptbanner__divider { margin-inline: 10px; }
   .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
 
+  /* First section below the hero — match About's reduced 55px top padding
+     so the white-space gap between hero + first section feels consistent
+     across top-level landing pages (2026-08).
+     IndustriesGrid's own scoped .section-inner rule sets padding: 110px 80px;
+     :global() lets us reach into the child component's DOM from this page
+     so we don't have to touch the shared IndustriesGrid (which is also
+     used inside About's §5 and fire-sprinkler's §8). */
+  :global(.industries .section-inner) {
+    padding-top: 55px;
+  }
+
   @media (max-width: 1100px) {
     .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
   }

@@ -110,16 +110,18 @@ const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="
               Whether you manage a single commercial building or oversee multiple properties across Colorado, Red Rocks Fire Protection Services is one trusted partner for all your life safety needs — responsive, professional support you can count on.
             </p>
             <ul class="sa-services__list">
-              <li>Fire alarm systems</li>
-              <li>Fire sprinklers</li>
-              <li>Fire extinguishers</li>
-              <li>Kitchen hood suppression</li>
-              <li>Backflow testing</li>
-              <li>BDA systems</li>
-              <li>Area of Refuge systems</li>
-              <li>Inspections &amp; maintenance</li>
-              <li>Monitoring &amp; repairs</li>
-              <li>Emergency service</li>
+              <li>Inspections</li>
+              <li>Fire Sprinkler Service &amp; Systems</li>
+              <li>Fire Alarm Service &amp; Systems</li>
+              <li>Monitoring Services</li>
+              <li>Backflow Prevention Assemblies</li>
+              <li>Portable Fire Extinguishers</li>
+              <li>Distributed Antenna Systems (DAS)</li>
+              <li>Security System Installation &amp; Monitoring</li>
+              <li>Kitchen Hood Suppression Systems</li>
+              <li>Area of Refuge Communication Systems</li>
+              <li>Consulting Services</li>
+              <li>24 Hour Service</li>
             </ul>
           </div>
         </div>
@@ -292,6 +294,18 @@ const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="
     padding: 90px 1.25rem;
   }
   @media (min-width: 768px) { .section-inner { padding: 120px 2.5rem; } }
+  /* First section below the hero (.sa-overview) — match About's reduced
+     55px top padding so the white-space gap between hero + first section
+     feels consistent across top-level landing pages (2026-08). */
+  .sa-overview.section-light > .section-inner {
+    padding-top: 55px;
+  }
+  /* On small screens where the default .section-inner padding already
+     drops to 90px / 70px-equivalent, keep the first-section override in
+     the same 55px ballpark so the rhythm stays tight across viewports. */
+  @media (max-width: 767px) {
+    .sa-overview.section-light > .section-inner { padding-top: 55px; }
+  }
   .section-eyebrow {
     margin-bottom: 20px;
     display: flex;
