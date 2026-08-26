@@ -1,10 +1,560 @@
 ---
+/**
+ * Meet Our Leadership Team — /meet-the-team/
+ *
+ * Section order:
+ *   0. Page-title banner (hero + breadcrumbs)
+ *   1. CEO quote box — 2 columns (Brian photo + big-red-quote block)
+ *   2. Team grid — 2 columns × 4 rows. Each row: portrait placeholder,
+ *      role + name, red divider, red arrow link (href="#" for now).
+ *      Title: "Strong Foundations. Strong Team." with the small red
+ *      diamond-icon eyebrow "our leadership & experts".
+ *   3. Credentials — light background, red horizontal borders top + bottom,
+ *      title "OUR CREDENTIALS & CERTIFICATIONS", 6 logos in a 2×3 grid.
+ *   4. Closing CTA — shared <ClosingCTA> with meet-the-team paragraph
+ *      and a multi-family apartment daytime background image.
+ *
+ * Image assets:
+ *   - Section 1 hero photo: /images/brian-kakac-ceo-rrrfps-onsite-property-inspection.png
+ *   - Section 3 logos: /images/credential-logos/{asse,cdfpc,csa,iapmo,nicet,pprbd}-logo.png
+ *   - Section 4 CTA bg: /images/rrfps-meet-the-team-cta-bg.jpg (Higgsfield)
+ */
+
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+const heroBg = '/images/red-rocks-fire-protection-multi-family-hero.jpg';
+const brianPhoto = '/images/brian-kakac-ceo-rrrfps-onsite-property-inspection.png';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+
+/** Section 2 — team grid. Same 8 names + roles from the reference image. */
+const team = [
+  { role: 'CEO',                      name: 'Brian Kakac',     href: '#', photo: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png' },
+  { role: 'Operations Manager',       name: 'Jeff Kakac',      href: '#' },
+  { role: 'Sales',                    name: 'Nick Ayde',       href: '#' },
+  { role: 'Financial Manager',        name: 'Lisa Cordova',    href: '#' },
+  { role: 'Inspections Coordinator',  name: 'Alicia Plescia',  href: '#' },
+  { role: 'Lead – Test & Inspections',name: 'Brandon Gallardo',href: '#' },
+  { role: 'Lead – Sprinklers',        name: 'Dale Litreal',    href: '#' },
+  { role: 'Lead – Fire Alarms',       name: 'Lowell Hines',    href: '#' },
+] as const;
+
+/** Section 3 — credentials logos (6 total, 2 rows × 3 cols). */
+const credentials = [
+  { src: '/images/credential-logos/ASSE-logo.png',   alt: 'American Society of Sanitary Engineering' },
+  { src: '/images/credential-logos/CDFPC-logo.png', alt: 'Colorado Division of Fire Prevention & Control' },
+  { src: '/images/credential-logos/CSA-logo.png',   alt: 'CSA — Canadian Standards Association' },
+  { src: '/images/credential-logos/pprbd-logo.png', alt: 'Pikes Peak Regional Building Department' },
+  { src: '/images/credential-logos/IAPMO-logo.png', alt: 'IAPMO R&T' },
+  { src: '/images/credential-logos/NICET-logo.png', alt: 'NICET' },
+] as const;
 ---
 
-<BaseLayout title="Meet Our Leadership Team | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">Meet Our Leadership Team</h1>
-    <p class="text-lg text-gray-700">Get to know the people behind Red Rocks Fire Protection Services. Content coming soon.</p>
-  </section>
+<BaseLayout
+  title="Meet Our Leadership Team | Red Rocks Fire Protection"
+  description="Meet the people behind Red Rocks Fire Protection Services — Brian Kakac and the leadership team committed to life-safety across the Colorado Front Range."
+>
+  <div class="av-page meet-team">
+
+    {/* ══════════════════════════════════════════════════════════
+       §0. PAGE-TITLE BANNER
+       ══════════════════════════════════════════════════════════ */}
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${heroBg}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Meet Our Leadership Team.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Meet Our Team</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ══════════════════════════════════════════════════════════
+       §1. CEO QUOTE — boxed container, 2 columns
+       ══════════════════════════════════════════════════════════ */}
+    <section class="mt-quote">
+      <div class="mt-quote__box">
+        <div class="mt-quote__image">
+          <img src={brianPhoto} alt="Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services, on a Colorado property inspection" loading="eager" decoding="async" />
+        </div>
+        <div class="mt-quote__copy">
+          <span class="mt-quote__mark mt-quote__mark--open" aria-hidden="true">&ldquo;</span>
+          <blockquote class="mt-quote__text">
+            We built Red Rocks Fire Protection Services on the belief that life safety is personal. Our commitment is to be the partner our clients can rely on&mdash;today and for years to come.
+          </blockquote>
+          <span class="mt-quote__mark mt-quote__mark--close" aria-hidden="true">&rdquo;</span>
+          <div class="mt-quote__author">Brian Kakac</div>
+          <div class="mt-quote__tagline">CEO, Red Rocks Fire Protection Services</div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+       §2. STRONG FOUNDATIONS — team grid
+       ══════════════════════════════════════════════════════════ */}
+    <section class="mt-team">
+      <div class="mt-team__inner">
+        <div class="mt-team__eyebrow">
+          <span class="divider-icon" set:html={diamondIcon} />
+          <span>Our Leadership &amp; Experts</span>
+        </div>
+        <h2 class="mt-team__title">Strong Foundations. Strong Team.</h2>
+
+        <div class="mt-team__grid">
+          {team.map((m) => (
+            <a class="mt-card" href={m.href}>
+              <div class="mt-card__photo" aria-hidden="true">
+                {'photo' in m && m.photo ? (
+                  <img src={m.photo} alt="" class="mt-card__photo-img" loading="lazy" decoding="async" />
+                ) : (
+                  <iconify-icon icon="mdi:account" width="100" height="100"></iconify-icon>
+                )}
+              </div>
+              <div class="mt-card__rule" aria-hidden="true"></div>
+              <div class="mt-card__body">
+                <div class="mt-card__text">
+                  <span class="mt-card__role">{m.role}</span>
+                  <span class="mt-card__name">{m.name}</span>
+                </div>
+                <div class="mt-card__socials" aria-label={`${m.name} social media`}>
+                  <span class="mt-card__social" aria-label="X (Twitter)">
+                    <iconify-icon icon="mdi:twitter" width="20" height="20"></iconify-icon>
+                  </span>
+                  <span class="mt-card__social" aria-label="Facebook">
+                    <iconify-icon icon="mdi:facebook" width="20" height="20"></iconify-icon>
+                  </span>
+                  <span class="mt-card__social" aria-label="Instagram">
+                    <iconify-icon icon="mdi:instagram" width="20" height="20"></iconify-icon>
+                  </span>
+                  <span class="mt-card__social" aria-label="LinkedIn">
+                    <iconify-icon icon="mdi:linkedin" width="20" height="20"></iconify-icon>
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+       §3. CREDENTIALS — logos in 2×3 grid with red top/bottom borders
+       ══════════════════════════════════════════════════════════ */}
+    <section class="mt-credentials">
+      <div class="mt-credentials__inner">
+        <h2 class="mt-credentials__title">Our Credentials &amp; Certifications</h2>
+        <div class="mt-credentials__grid">
+          {credentials.map((c) => (
+            <div class="mt-credential">
+              <img src={c.src} alt={c.alt} loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+       §4. CLOSING CTA — shared component, meet-the-team-specific copy
+       ══════════════════════════════════════════════════════════ */}
+    <ClosingCTA
+      backgroundImage={ctaBg}
+      paragraphs={[
+        'Choosing the right life safety partner is about more than installing equipment and meeting code. It is about trusting the team you put in front of your residents, your tenants, and your inspectors — and knowing the people behind the truck have real accountability for the work they do.',
+      ]}
+    />
+
+  </div>
 </BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+     §0. PAGE-TITLE BANNER — matches About / fire-sprinkler rhythm
+     ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    /* Match fire-sprinkler / about hero rhythm */
+    margin-bottom: 60px;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+     §1. CEO QUOTE BOX — boxed (not full-width) 2-column container
+     ══════════════════════════════════════════════════════════ */
+  .mt-quote {
+    background: #ffffff;
+    /* padding-top 55px — matches the About page's "Facts" section rhythm
+       so the white-space below the hero feels consistent across pages
+       (2026-08 edit). */
+    padding: 55px 80px 96px;
+  }
+  .mt-quote__box {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    background: #EEECED;
+    overflow: hidden;
+  }
+  .mt-quote__image {
+    position: relative;
+    aspect-ratio: 1 / 0.92;
+    overflow: hidden;
+  }
+  .mt-quote__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 28%;
+  }
+  .mt-quote__copy {
+    position: relative;
+    padding: 60px 64px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .mt-quote__mark {
+    font-family: "Space Grotesk", serif;
+    font-size: 110px;
+    line-height: 0.7;
+    color: #d41226;
+    font-weight: 700;
+    user-select: none;
+  }
+  .mt-quote__mark--open {
+    align-self: flex-start;
+    margin-bottom: -20px;
+  }
+  .mt-quote__mark--close {
+    align-self: flex-end;
+    margin-top: -28px;
+  }
+  .mt-quote__text {
+    margin: 0;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(20px, 1.9vw, 26px);
+    font-weight: 500;
+    line-height: 1.32;
+    letter-spacing: -0.02em;
+  }
+  .mt-quote__author {
+    margin-top: 32px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .mt-quote__tagline {
+    margin-top: 8px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     §2. TEAM GRID
+     ══════════════════════════════════════════════════════════ */
+  .mt-team {
+    background: #ffffff;
+    padding: 0 80px 120px;
+  }
+  .mt-team__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .mt-team__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+  }
+  .mt-team__title {
+    margin: 22px 0 56px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(40px, 5.2vw, 76px);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .mt-team__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 56px;
+    row-gap: 56px;
+  }
+  .mt-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 32px;
+    align-items: end;
+    text-decoration: none;
+    color: inherit;
+  }
+  .mt-card__photo {
+    width: 180px;
+    height: 180px;
+    display: grid;
+    place-items: center;
+    background: #d6d6d6;
+    color: #ffffff;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  /* When a member has a real photo, fill the 180×180 frame */
+  .mt-card__photo-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Red divider — sits at the bottom of the photo, stretching across
+     the full card row width. Reference image alignment: the rule
+     touches the photo's bottom edge and runs out to the right corner
+     of the row. */
+  .mt-card__rule {
+    position: absolute;
+    left: 0;
+    top: 180px;
+    width: 100%;
+    height: 2px;
+    background: #d41226;
+    pointer-events: none;
+  }
+  .mt-card__body {
+    position: relative;
+    height: 180px;
+    padding: 0 0 18px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .mt-card__text {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  .mt-card__role {
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .mt-card__name {
+    margin-top: 14px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(28px, 2.3vw, 36px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  /* Social icons — sit below the name, hidden until hover, then slide
+     up into the slot vacated by the role+name. Both translate by the
+     same distance and on the same easing so the swap reads as one
+     motion. */
+  .mt-card__socials {
+    display: flex;
+    gap: 14px;
+    margin-top: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  .mt-card__social {
+    /* Circle background removed (2026-08 client edit) — icons render as
+       bare black glyphs, sized to match the row text. */
+    display: inline-grid;
+    place-items: center;
+    color: #0a0a0a;
+    transition: color 0.25s ease, transform 0.25s ease;
+    cursor: pointer;
+  }
+  .mt-card__social:hover { color: #d41226; transform: translateY(-2px); }
+  /* Hover: nudge the text block up just enough so the socials row lands
+     below it instead of overlapping. Text stays visible. */
+  .mt-card:hover .mt-card__text,
+  .mt-card:focus-visible .mt-card__text {
+    transform: translateY(-60px);
+    opacity: 1;
+  }
+  .mt-card:hover .mt-card__socials,
+  .mt-card:focus-visible .mt-card__socials {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .mt-card:hover .mt-card__name { color: #d41226; }
+  /* Respect reduced-motion users: skip the swap, just show socials. */
+  @media (prefers-reduced-motion: reduce) {
+    .mt-card__text,
+    .mt-card__socials { transition: none; }
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     §3. CREDENTIALS — light bg, red top + bottom borders
+     ══════════════════════════════════════════════════════════ */
+  .mt-credentials {
+    background: #ffffff;
+    border-top: 2px solid #d41226;
+    border-bottom: 2px solid #d41226;
+    padding: 56px 80px;
+  }
+  .mt-credentials__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .mt-credentials__title {
+    margin: 0 0 36px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(22px, 2vw, 28px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .mt-credentials__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: 24px;
+    column-gap: 16px;
+    align-items: center;
+    justify-items: center;
+  }
+  .mt-credential {
+    width: 100%;
+    max-width: 180px;
+    display: grid;
+    place-items: center;
+  }
+  .mt-credential img {
+    display: block;
+    max-width: 100%;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(0.05);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     Responsive
+     ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .mt-quote { padding: 55px 60px 80px; }
+    .mt-quote__copy { padding: 48px 44px 44px; }
+    .mt-team { padding: 0 60px 96px; }
+    .mt-team__grid { column-gap: 40px; row-gap: 40px; }
+    .mt-credentials { padding: 48px 60px; }
+    /* 6-across credentials get tight at ≤1100 — drop to 3×2 */
+    .mt-credentials__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 32px; }
+  }
+
+  @media (max-width: 900px) {
+    .mt-quote__box { grid-template-columns: 1fr; }
+    .mt-quote__image { aspect-ratio: 4 / 3; }
+    .mt-quote__copy { padding: 48px 36px 40px; }
+    .mt-team__grid { grid-template-columns: 1fr; row-gap: 32px; }
+    .mt-card { grid-template-columns: 140px minmax(0, 1fr); gap: 22px; }
+    .mt-card__photo { width: 140px; height: 140px; }
+    .mt-card__body { height: 140px; }
+    .mt-card__rule { top: 140px; }
+    .mt-credentials__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  }
+
+  @media (max-width: 767px) {
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .mt-quote { padding: 55px 28px 64px; }
+    .mt-quote__copy { padding: 36px 28px 32px; }
+    .mt-quote__text { font-size: 18px; }
+    .mt-team { padding: 0 28px 72px; }
+    .mt-team__title { margin: 18px 0 36px; font-size: 38px; }
+    .mt-card__name { font-size: 24px; }
+    .mt-credentials { padding: 40px 28px; }
+    .mt-credentials__title { font-size: 20px; margin-bottom: 28px; }
+    .mt-credentials__grid { grid-template-columns: 1fr; row-gap: 24px; }
+  }
+</style>
