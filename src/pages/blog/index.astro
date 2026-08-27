@@ -2,22 +2,27 @@
 /**
  * Blog index (/blog) — RRFPS blog landing page.
  *
- * Mirrors the hero treatment from inspections.astro:
- *   • full-bleed ptbanner (96px H1, breadcrumbs, breadcrumb current "BLOG")
- *   • intro section (eyebrow + lead copy)
- *   • 2-up / 3-up card grid of all posts in the `blog` content collection
+ * Layout (2026-08 redesign):
+ *   • Hero (same ptbanner pattern as inspections.astro)
+ *   • 3/4 + 1/4 two-column section:
+ *       - Left:  2-up grid of 420x420 blog cards. Featured image is the
+ *                background; category badge overlays top-left, date+title
+ *                sit at the bottom; on hover date+title slide up to reveal
+ *                a "Read More →" button.
+ *       - Right: <BlogSidebar> with author card, categories list,
+ *                latest posts, and CTA card.
+ *   • ClosingCTA banner (parity with the rest of the site)
  *
- * Posts are pulled live from src/content/blog/*.md via `getCollection('blog')`,
- * sorted newest-first. Each card links to /blog/<slug>, which is served by
+ * Posts pulled live from src/content/blog/*.md via `getCollection('blog')`,
+ * sorted newest-first. Each card links to /blog/<slug>, served by
  * src/pages/blog/[slug].astro.
- *
- * The hero CSS is copied from inspections.astro verbatim — same visual
- * DNA, no need to factor a single component for two callers yet.
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ClosingCTA from '../../components/ClosingCTA.astro';
+import BlogSidebar from '../../components/BlogSidebar.astro';
 import { getCollection } from 'astro:content';
+import { services, leadership } from '../../data/site';
 
 const fallbackTitle =
   'RRFPS Field Notes | Fire Protection Insights for Colorado Property Teams';
@@ -40,6 +45,22 @@ function formatDate(d: Date): string {
     day: 'numeric',
   });
 }
+
+// Author config (Brian Kakac, CEO). Avatar path matches the CEO section
+// of about.astro so the sidebar stays in sync with the canonical bio image.
+const author = {
+  name: leadership.ceo.name,
+  role: 'CEO',
+  avatar: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png',
+  // Empty hrefs render the icon but stay non-clickable until real handles
+  // are confirmed (per data/site.ts → contact.socials note).
+  socials: {
+    x: '#',
+    facebook: '#',
+    instagram: '#',
+    linkedin: '#',
+  },
+};
 ---
 
 <BaseLayout
@@ -64,64 +85,79 @@ function formatDate(d: Date): string {
     </div>
   </div>
 
-  <!-- POST GRID -->
+  <!-- POSTS + SIDEBAR — 3/4 + 1/4 two-column layout -->
   <section class="rr-band" style="background: var(--rr-white);">
     <div class="rr-container">
-      <div class="flex items-end justify-between mb-10 md:mb-14 flex-wrap gap-4 rr-reveal">
-        <h3
-          class="font-display font-black uppercase tracking-tight text-rr-black"
-          style="font-size: var(--rr-text-statement); line-height: 0.95;"
-        >
-          Latest Posts
-        </h3>
-        <p class="text-rr-grey" style="font-size: 0.9375rem;">
-          {posts.length} {posts.length === 1 ? 'post' : 'posts'}
-        </p>
-      </div>
+      <div class="blog-layout">
+        <!-- LEFT: blog cards (2 per row, 420x420).
+             INITIAL_VISIBLE = 12 controls how many posts show before "Load More"
+             is clicked. Posts past that index are rendered in the DOM but
+             hidden via CSS until the JS toggle reveals them. -->
+        {posts.length === 0 ? (
+          <div style="background: var(--rr-bg-light); border-radius: var(--rr-radius-card); padding: 2rem;">
+            <p class="text-rr-grey">No posts yet. Check back soon.</p>
+          </div>
+        ) : (
+          <div class="blog-cards-wrap">
+            <ul class="blog-cards" role="list" data-initial-visible="12">
+              {posts.map((post, i) => (
+                <li
+                  class={`blog-cards__item${i >= 12 ? ' blog-cards__item--hidden' : ''}`}
+                  data-post-index={i}
+                >
+                  <a
+                    href={`/blog/${post.id}/`}
+                    class="blog-card"
+                    aria-label={`Read: ${post.data.title}`}
+                  >
+                    <div
+                      class="blog-card__bg"
+                      style={`background-image: url('${post.data.featuredImage}');`}
+                      aria-hidden="true"
+                    ></div>
+                    <div class="blog-card__overlay" aria-hidden="true"></div>
 
-      {posts.length === 0 ? (
-        <div class="rr-reveal" style="background: var(--rr-bg-light); border-radius: var(--rr-radius-card); padding: 2rem;">
-          <p class="text-rr-grey">No posts yet. Check back soon.</p>
-        </div>
-      ) : (
-        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post, i) => (
-            <li class="rr-reveal" data-reveal-delay={i * 60}>
-              <a
-                href={`/blog/${post.id}/`}
-                class="rrf__card-link"
-                aria-label={`Read: ${post.data.title}`}
+                    <span class="blog-card__badge">{post.data.category}</span>
+
+                    <div class="blog-card__caption">
+                      <div class="blog-card__caption-static">
+                        <time
+                          class="blog-card__date"
+                          datetime={post.data.publishDate.toISOString()}
+                        >
+                          {formatDate(post.data.publishDate)}
+                        </time>
+                        <h3 class="blog-card__title">{post.data.title}</h3>
+                      </div>
+                      <span class="blog-card__readmore" aria-hidden="true">
+                        Read More
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d="M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.0910 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z"></path></svg>
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div class="blog-loadmore-wrap">
+              <button
+                type="button"
+                class="av-wgl-btn blog-loadmore"
+                data-loadmore
+                hidden={posts.length <= 12}
               >
-                <article class="rrf__card">
-                  <div class="rrf__card-image-wrap">
-                    <img
-                      src={post.data.featuredImage}
-                      alt={post.data.featuredImageAlt}
-                      loading="lazy"
-                      decoding="async"
-                      class="rrf__card-image"
-                    />
-                  </div>
+                <span class="av-wgl-btn__text">Load More</span>
+                <span class="av-wgl-btn__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d="M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.0910 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z"></path></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        )}
 
-                  <div class="rrf__card-body">
-                    <p class="rrf__card-category">{post.data.category}</p>
-
-                    <h4 class="rrf__card-title">{post.data.title}</h4>
-
-                    <p class="rrf__card-excerpt">{post.data.excerpt}</p>
-
-                    <p class="rrf__card-meta">
-                      <time datetime={post.data.publishDate.toISOString()}>
-                        {formatDate(post.data.publishDate)}
-                      </time>
-                    </p>
-                  </div>
-                </article>
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+        <!-- RIGHT: sidebar -->
+        <BlogSidebar posts={posts} services={services.catalog} author={author} />
+      </div>
     </div>
   </section>
 
@@ -189,84 +225,194 @@ function formatDate(d: Date): string {
     text-underline-offset: 4px;
   }
 
-  /* ── Card grid styles ─────────────────────────────────────── */
-  .rrf__card-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    height: 100%;
+  /* ── 3/4 + 1/4 layout ──────────────────────────────────────── */
+  .blog-layout {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1fr;
   }
-  .rrf__card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: var(--rr-white);
-    border: 1px solid var(--rr-border-lt);
-    border-radius: var(--rr-radius-card);
-    overflow: hidden;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    transition: box-shadow 200ms ease, transform 200ms ease;
-  }
-  .rrf__card-link:hover .rrf__card {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
-    transform: translateY(-2px);
+  @media (min-width: 1024px) {
+    .blog-layout {
+      grid-template-columns: 3fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
   }
 
-  .rrf__card-image-wrap {
-    overflow: hidden;
-    aspect-ratio: 16 / 9;
-    background: var(--rr-bg-panel);
-  }
-  .rrf__card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 400ms ease;
-    display: block;
-  }
-  .rrf__card-link:hover .rrf__card-image {
-    transform: scale(1.04);
-  }
-
-  .rrf__card-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem 1.5rem 1.75rem;
-  }
-  .rrf__card-category {
-    font-family: var(--rr-font-display);
-    font-weight: 700;
-    color: var(--rr-red);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+  /* ── 2-up blog cards ────────────────────────────────────────── */
+  .blog-cards {
+    list-style: none;
     margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .rrf__card-title {
-    font-family: var(--rr-font-display);
+  @media (max-width: 640px) {
+    .blog-cards { grid-template-columns: 1fr; }
+  }
+  .blog-cards__item { display: block; }
+  /* Posts past the initial-visible count are in the DOM but hidden.
+     The .blog-cards__item--hidden class is removed by the Load More JS. */
+  .blog-cards__item--hidden { display: none; }
+
+  /* Load More button wrapper + sizing. Uses the shared .av-wgl-btn class
+     so it matches the CTA card button + the about.astro Why-We-Exist CTA. */
+  .blog-loadmore-wrap {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+  }
+  .blog-loadmore {
+    --av-wgl-btn-bg: var(--rr-red, #d41226);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: var(--rr-red, #d41226);
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: var(--rr-black, #0a0a0a);
+    --av-wgl-btn-border-hover: var(--rr-black, #0a0a0a);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .blog-card {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 1 / 1; /* 420x420 */
+    text-decoration: none;
+    color: #ffffff;
+  }
+  .blog-card__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    transition: transform 600ms ease;
+  }
+  /* Dark gradient overlay (top → bottom) so the bottom caption + badge
+     read white on top of any photo. */
+  .blog-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.45) 60%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: -1;
+  }
+  .blog-card:hover .blog-card__bg { transform: scale(1.05); }
+
+  .blog-card__badge {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    padding: 7px 12px;
+    background: var(--rr-red);
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.6875rem;
     font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
-    color: var(--rr-black);
-    font-size: 1.375rem;
-    line-height: 1.15;
-    margin: 0.75rem 0 0;
   }
-  .rrf__card-excerpt {
-    margin-top: 0.875rem;
-    color: var(--rr-grey);
-    font-size: 0.9375rem;
-    line-height: 1.55;
-    flex: 1;
+
+  .blog-card__caption {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Default height shows the static (date + title) block. The readmore
+       is positioned at the bottom of the caption (margin-top:auto) and
+       is clipped by overflow:hidden until the caption grows. */
+    height: 88px;
+    transition: height 320ms ease;
   }
-  .rrf__card-meta {
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--rr-border-lt);
-    color: var(--rr-grey);
+  .blog-card:hover .blog-card__caption {
+    /* Grow to fit the readmore more at the bottom of the caption. */
+    height: 132px;
+  }
+
+  /* Static (date + title) — subtle slide-up on hover */
+  .blog-card__caption-static {
+    flex: 0 0 auto;
+    /* Padding-top on the static block reserves headroom so the date's
+       top edge doesn't clip when the block slides up on hover.
+       Combined with translateY(-8px) below, the block visually sits
+       flush with the caption's top in non-hover AND hover states
+       (just shifted up by 8px on hover — date/title remain fully
+       visible since the padding-top is consumed by the translate). */
+    padding-top: 8px;
+    transition: transform 320ms ease;
+  }
+  .blog-card:hover .blog-card__caption-static {
+    transform: translateY(-8px);
+  }
+
+  /* Readmore sits at the bottom of the caption (via margin-top:auto
+     on the flex column caption) so the caption-height growth reveals
+     it in the freed space below the static block. */
+  .blog-card__readmore {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
     font-size: 0.8125rem;
-    margin-bottom: 0;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    /* In rest state, translate the readmore down by 20px (its height)
+       so its TOP edge sits below the caption bottom and is fully
+       clipped by overflow:hidden. On hover this translate is reset
+       so margin-top:auto positions it at the bottom of the taller
+       caption. */
+    transform: translateY(20px);
+    transition: transform 320ms ease;
+  }
+  .blog-card:hover .blog-card__readmore {
+    transform: translateY(0);
+  }
+
+  .blog-card__date {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .blog-card__title {
+    margin: 4px 0 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1.05rem, 1.5vw, 1.375rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    /* 2-line clamp so cards stay balanced even on long titles */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* "Read More →" — revealed by the caption height growth */
+  .blog-card__readmore svg {
+    width: 18px;
+    height: 18px;
+    background: var(--rr-red);
+    padding: 5px;
+    border-radius: 50%;
+    color: #ffffff;
   }
 
   /* ── Responsive ─────────────────────────────────────────── */
@@ -278,3 +424,47 @@ function formatDate(d: Date): string {
     .ptbanner__title { font-size: 40px; line-height: 48px; }
   }
 </style>
+
+<script>
+  /* ── Blog archive "Load More" ─────────────────────────────────────
+   * Initial-visible count is encoded in two places:
+   *   - The `data-initial-visible` attribute on .blog-cards (so the JS
+   *     can read it without hard-coding a number)
+   *   - The `hidden` attribute on the Load More button (so the button
+   *     is gone server-side when posts.length <= initial-visible)
+   *
+   * Posts past the initial count get the .blog-cards__item--hidden
+   * class (rendered server-side). Clicking "Load More" reveals them
+   * one batch at a time, matching the same per-page count. When no
+   * posts remain hidden, the button hides itself.
+   */
+  function initBlogLoadMore() {
+    const list = document.querySelector('.blog-cards');
+    const button = document.querySelector('[data-loadmore]');
+    if (!list || !button) return;
+
+    const STEP = Number(list.dataset.initialVisible) || 12;
+    const hiddenItems = Array.from(
+      list.querySelectorAll('.blog-cards__item--hidden')
+    );
+
+    function updateButton() {
+      const stillHidden = list.querySelectorAll('.blog-cards__item--hidden');
+      if (stillHidden.length === 0) {
+        button.hidden = true;
+      }
+    }
+
+    button.hidden = hiddenItems.length === 0;
+    button.addEventListener('click', () => {
+      // Reveal up to STEP more items per click.
+      const toReveal = hiddenItems.splice(0, STEP);
+      toReveal.forEach((el) => el.classList.remove('blog-cards__item--hidden'));
+      updateButton();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initBlogLoadMore);
+  document.addEventListener('astro:after-swap', initBlogLoadMore);
+  if (document.readyState !== 'loading') initBlogLoadMore();
+</script>

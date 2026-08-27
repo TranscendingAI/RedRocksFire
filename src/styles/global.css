@@ -93,18 +93,23 @@ p {
   }
 }
 
-/* ── Band reveal (design.md §4.3) ──────────────────────────
- * Each band sits on top of the previous, with large rounded
- * top corners on the lower band to create the slide-over feel.
+/* ── Utility: band ──────────────────────────────────────────
+ * Each band sits on top of the previous. Vertical padding has been
+ * halved from the original --rr-space-24 / --rr-space-32 tokens
+ * (96px / 128px) → 48px / 64px to tighten the gap above the hero
+ * and between bands. The bottom padding is unchanged so bands
+ * don't crowd their following content; only the top is halved.
  */
 .rr-band {
   position: relative;
-  padding-block: var(--rr-space-24);
+  padding-top: calc(var(--rr-space-24) / 2);
+  padding-bottom: var(--rr-space-24);
 }
 
 @media (min-width: 768px) {
   .rr-band {
-    padding-block: var(--rr-space-32);
+    padding-top: calc(var(--rr-space-32) / 2);
+    padding-bottom: var(--rr-space-32);
   }
 }
 
