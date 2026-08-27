@@ -1,0 +1,288 @@
+---
+/**
+ * Brian Kakac — /meet-the-team/brian-kakac/
+ *
+ * Individual bio page for the CEO. Child of /meet-the-team/.
+ *
+ * Section order:
+ *   §0. Page-title banner (same .ptbanner hero as the rest of the site)
+ *   §1. Bio — 1/3 + 2/3 row: photo on the left, bio text on the right
+ *   §2. Closing CTA — shared <ClosingCTA> with meet-the-team CTA bg
+ *
+ * Content source:
+ *   - Photo:  /public/images/brian-kakac-ceo-red-rocks-fire-protection-services.png
+ *   - Copy:   /reference/rrfps-brian-kakac-bio-short.md
+ *   - Hero:   /public/images/rrfps-about-cta-bg.jpg
+ *   - CTA bg: /public/images/meet-our-team-rrfps-cta-banner-bg.jpg
+ *
+ * Notes:
+ *   - Page is intentionally scoped to its own <style> block (the rest of
+ *     the site does this too). BEM class prefix: `.bk-`.
+ *   - Bio section is a 1/3 + 2/3 grid. The 1/3 column holds the photo
+ *     in an aspect-ratio frame; the 2/3 column holds the name, role
+ *     line, red divider, and four body paragraphs from the source md.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+
+/** Hero bg — uses the rrfps-about-cta-bg image (per client 2026-08).
+ *  The Brian portrait used in the bio photo is wired separately
+ *  via `brianPhoto` below. */
+const heroBg = '/images/rrfps-about-cta-bg.jpg';
+const brianPhoto = '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+
+/** Body paragraphs pulled from /reference/rrfps-brian-kakac-bio-short.md.
+ *  The first two are the title + role; the rest are body copy. */
+const bioParagraphs = [
+  'As Chief Executive Officer of Red Rocks Fire Protection Services, Brian Kakac provides the strategic direction and leadership behind the company’s growth, culture, and commitment to protecting lives. With more than 30 years of experience in fire protection and life safety, Brian brings extensive industry knowledge along with decades of experience building and leading successful organizations.',
+  'Brian founded Red Rocks Fire Protection Services in 2010 with a clear vision: to build a company where customers are treated as partners, employees are treated like family, and life safety always comes before profits. Today, he oversees company growth, financial stewardship, long-term planning, business development, customer relationships, organizational culture, and leadership development.',
+  'Brian’s leadership philosophy is simple: people always come first. Influenced greatly by his late father, John, Brian believes in servant leadership, leading by example, and treating people with dignity and respect. That philosophy has helped shape the culture of RRFPS and its commitment to Safety, Advocacy, Character, Team Above Self, and One Family.',
+  'Brian remains actively involved with customers and his team, believing that leadership is demonstrated through action rather than title.',
+  'Outside of RRFPS, Brian enjoys spending time with his wife and two daughters, motocross, hunting, wakeboarding, restoring classic muscle cars, and enjoying Colorado’s outdoors and the family cabin.',
+] as const;
+---
+
+<BaseLayout
+  title="Brian Kakac | CEO, Red Rocks Fire Protection Services"
+  description="Meet Brian Kakac, CEO of Red Rocks Fire Protection Services — three decades of fire-protection leadership, founder of RRFPS in 2010, and the driving force behind our commitment to life safety."
+>
+  <div class="av-page bk-page">
+
+    {/* ══════════════════════════════════════════════════════════
+       §0. PAGE-TITLE BANNER — same .ptbanner rhythm as
+       meet-the-team.astro so the two pages read as a pair.
+       ══════════════════════════════════════════════════════════ */}
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${heroBg}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Brian Kakac.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/meet-the-team">Meet Our Team</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Brian Kakac</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ══════════════════════════════════════════════════════════
+       §1. BIO SECTION — 1/3 photo + 2/3 copy
+       ══════════════════════════════════════════════════════════ */}
+    <section class="bk-bio" aria-label="Brian Kakac bio">
+      <div class="bk-bio__inner">
+
+        {/* 1/3 column — photo */}
+        <div class="bk-bio__photo">
+          <img
+            src={brianPhoto}
+            alt="Brian Kakac, CEO of Red Rocks Fire Protection Services"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+
+        {/* 2/3 column — name, role, copy */}
+        <div class="bk-bio__copy">
+          <div class="bk-bio__name">Brian Kakac</div>
+          <div class="bk-bio__role">Chief Executive Officer | Red Rocks Fire Protection Services</div>
+          <div class="bk-bio__rule" aria-hidden="true"></div>
+
+          <div class="bk-bio__body">
+            {bioParagraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+       §2. CLOSING CTA — same shared <ClosingCTA> + meet-the-team
+       paragraph copy as the parent meet-the-team.astro page
+       ══════════════════════════════════════════════════════════ */}
+    <ClosingCTA
+      backgroundImage={ctaBg}
+      paragraphs={[
+        'Choosing the right life safety partner is about more than installing equipment and meeting code. It is about trusting the team you put in front of your residents, your tenants, and your inspectors — and knowing the people behind the truck have real accountability for the work they do.',
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+     §0. PAGE-TITLE BANNER — scoped copy of meet-the-team.astro
+     so the bio page has identical hero rhythm to the parent.
+     ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    margin-bottom: 60px;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+     §1. BIO — 1/3 + 2/3 row
+     ══════════════════════════════════════════════════════════ */
+  .bk-bio {
+    background: #ffffff;
+    padding: 96px 80px 120px;
+  }
+  .bk-bio__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: 56px;
+    row-gap: 48px;
+    align-items: start;
+  }
+
+  /* 1/3 — photo in an aspect-ratio frame so the column width
+     alone dictates height (no fixed px → responsive across all
+     breakpoints). The object-position keeps Brian's head high in
+     the crop, matching the framing used in meet-the-team.astro. */
+  .bk-bio__photo {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    overflow: hidden;
+    background: #EEECED;
+  }
+  .bk-bio__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+  }
+
+  /* 2/3 — name / role / red rule / paragraphs */
+  .bk-bio__copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .bk-bio__name {
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .bk-bio__role {
+    margin-top: 18px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(15px, 1.1vw, 18px);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+  /* Red divider — matches the mt-card__rule treatment from the
+     parent page (same color, same thickness, runs the full
+     2/3 column width). */
+  .bk-bio__rule {
+    margin-top: 28px;
+    width: 100%;
+    height: 2px;
+    background: #d41226;
+  }
+  .bk-bio__body {
+    margin-top: 36px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .bk-bio__body p + p { margin-top: 22px; }
+
+  /* ══════════════════════════════════════════════════════════
+     Responsive
+     ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .bk-bio { padding: 80px 60px 96px; }
+    .bk-bio__inner { column-gap: 40px; }
+    .bk-bio__body { font-size: 16px; }
+  }
+
+  @media (max-width: 900px) {
+    .bk-bio__inner {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 36px;
+    }
+    .bk-bio__photo { aspect-ratio: 4 / 3; max-width: 520px; }
+  }
+
+  @media (max-width: 767px) {
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .bk-bio { padding: 64px 28px 80px; }
+    .bk-bio__rule { margin-top: 24px; }
+    .bk-bio__body { margin-top: 28px; font-size: 16px; }
+    .bk-bio__body p + p { margin-top: 18px; }
+  }
+</style>
