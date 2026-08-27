@@ -1,10 +1,345 @@
 ---
+/**
+ * Services — /services/
+ *
+ * Single-purpose landing page for the company's full service catalog.
+ * Built 2026-08.
+ *
+ * Section order:
+ *   §0. Page-title banner — `.ptbanner` hero with a new generated
+ *       fire-sprinkler photo as the background.
+ *   §1. Our Capabilities — copied from /about/ with the colors
+ *       inverted: white bg, black titles/text, red eyebrow, red
+ *       card icons + "All Services" button. 12 capability cards
+ *       from `about.capabilities.items` (single source of truth in
+ *       site.ts).
+ *   §2. Closing CTA — site-wide <ClosingCTA> with a new generated
+ *       multi-family apartment streetview photo as the background
+ *       and a services-themed paragraph copy.
+ *
+ * Asset credits:
+ *   - Hero:    /public/images/rrfps-services-hero-bg.png
+ *              (Higgsfield GPT Image 2 — industrial fire sprinkler
+ *              system with brass heads and dramatic tungsten lighting)
+ *   - CTA bg:  /public/images/rrfps-services-cta-bg.png
+ *              (Higgsfield GPT Image 2 — Google Street View style
+ *              multi-family apartment complex from the sidewalk)
+ *
+ * Class prefix: `.sv-` for any new section-scoped styles. The
+ * `.ptbanner` hero reuses the existing fire-sprinkler-page styles
+ * (no duplication).
+ */
+
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+import { about } from '../data/site';
+
+const heroImage = '/images/rrfps-services-hero-bg.png';
+const ctaImage = '/images/rrfps-services-cta-bg.png';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
 ---
 
-<BaseLayout title="Services | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">Services</h1>
-    <p class="text-lg text-gray-700">Placeholder services page — content coming soon.</p>
-  </section>
+<BaseLayout
+  title="Services | Red Rocks Fire Protection"
+  description="From inspections and service to system modifications, replacements, and 24/7 response — Red Rocks Fire Protection delivers the full life-safety service catalog across Colorado."
+>
+  <div class="av-page sv-page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         §0. PAGE-TITLE BANNER
+         Same .ptbanner rhythm as about.astro, fire-sprinkler-
+         service-and-systems.astro, etc. — so the hero reads
+         consistently across top-level landing pages.
+         ══════════════════════════════════════════════════════════ -->
+    <div class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${heroImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Services.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Services</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §1. OUR CAPABILITIES
+         Light variant of the about.astro capabilities block.
+         12 cards from `about.capabilities.items`. Inverted colors:
+         white bg, black titles + text, red eyebrow, red card icons,
+         red "All Services" button.
+         ══════════════════════════════════════════════════════════ -->
+    <section class="sv-capabilities">
+      <div class="sv-capabilities__inner">
+        <div class="sv-capabilities__head">
+          <div class="sv-capabilities__head-copy">
+            <div class="av-dblh__subtitle sv-eyebrow">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>{about.capabilities.eyebrow}</span>
+            </div>
+            <h2 class="sv-capabilities__title">{about.capabilities.title}</h2>
+          </div>
+          <a href="/services" class="av-wgl-btn sv-capabilities__cta">
+            <span class="av-wgl-btn__text">All Services</span>
+            <span class="av-wgl-btn__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+            </span>
+          </a>
+        </div>
+
+        <div class="sv-capabilities__grid">
+          {about.capabilities.items.map((item) => (
+            <a href={item.href} class="sv-capability-card">
+              <span class="sv-capability-card__icon" aria-hidden="true">
+                <iconify-icon icon={item.icon} width="40" height="40"></iconify-icon>
+              </span>
+              <h3>{item.title}</h3>
+              <p class="sv-capability-card__body">{item.body}</p>
+              <span class="sv-capability-card__link">
+                Learn more
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §2. CLOSING CTA — site-wide <ClosingCTA> with a new bg
+         (multi-family apartment streetview) and a services-themed
+         paragraph. The ClosingCTA handles the eyebrow + title +
+         script title + phone + 3 buttons in its own scoped styles.
+         ══════════════════════════════════════════════════════════ -->
+    <ClosingCTA
+      backgroundImage={ctaImage}
+      paragraphs={[
+        "Choosing the right fire protection services partner is about more than certifications and equipment. It's about having one team that can handle inspections, service, modifications, and replacements across every life safety system on your property — with the certifications to back it up and the responsiveness to be there when it counts.",
+      ]}
+    />
+
+  </div>
 </BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+     §0. PAGE-TITLE BANNER — scoped copy of about.astro + fire-
+     sprinkler-service-and-systems.astro so the services page
+     has identical hero rhythm to the rest of the site.
+     ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    margin-bottom: 60px;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+     §1. OUR CAPABILITIES — light variant (white bg, black text,
+     red eyebrow + icons + button). Mirrors about.astro's section
+     4 with the color palette inverted per client request 2026-08.
+     ══════════════════════════════════════════════════════════ */
+  .sv-capabilities {
+    background: #ffffff;
+    color: #0a0a0a;
+  }
+  .sv-capabilities__inner {
+    width: 100%;
+    max-width: 1340px;
+    margin-inline: auto;
+    padding: 110px 80px;
+  }
+  .sv-capabilities__head {
+    max-width: none;
+    margin-bottom: 34px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px;
+  }
+  .sv-capabilities__head-copy { max-width: 780px; }
+  .sv-capabilities__title {
+    margin: 0;
+    max-width: 860px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(40px, 4.6vw, 66px);
+    font-weight: 700;
+    line-height: 1.02;
+    text-transform: uppercase;
+  }
+  /* Eyebrow — red on the white background. */
+  .sv-eyebrow {
+    margin-bottom: 23px;
+    display: flex;
+    color: #d41226;
+  }
+  /* "All Services" button — red filled (default .av-wgl-btn styling). */
+  .sv-capabilities__cta {
+    flex-shrink: 0;
+    margin-bottom: 10px;
+  }
+  .sv-capabilities__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+  }
+  /* Capability card — light variant. Same shape as about.astro
+     .capability-card but with dark text + light bg + red icon. */
+  .sv-capability-card {
+    min-height: 372px;
+    padding: 18px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    color: #0a0a0a;
+    text-decoration: none;
+    border: 1px solid rgba(10, 10, 10, 0.18);
+    background: #ffffff;
+    transition: border-color 0.35s, transform 0.35s;
+  }
+  .sv-capability-card__icon {
+    width: 74px;
+    height: 74px;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    background: #d41226;
+    flex: 0 0 auto;
+  }
+  .sv-capability-card__icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+  .sv-capability-card h3 {
+    margin: 22px 0 14px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(19px, 1.45vw, 24px);
+    font-weight: 700;
+    line-height: 1.18;
+    text-transform: uppercase;
+  }
+  .sv-capability-card__body {
+    margin: 0;
+    color: #303030;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .sv-capability-card__link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    min-width: 190px;
+    justify-content: center;
+    margin-top: 26px;
+    padding: 12px 18px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid rgba(10, 10, 10, 0.82);
+  }
+  .sv-capability-card__link svg { width: 16px; height: 14px; }
+  .sv-capability-card:hover {
+    border-color: #d41226;
+    transform: translateY(-3px);
+  }
+  .sv-capability-card:hover .sv-capability-card__link {
+    background: #d41226;
+    color: #ffffff;
+    border-color: #d41226;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     Responsive
+     ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .sv-capabilities__inner { padding: 90px 60px; }
+    .sv-capabilities__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sv-capabilities__head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .sv-capabilities__cta { margin-bottom: 0; }
+    .sv-capability-card { min-height: 0; }
+  }
+
+  @media (max-width: 767px) {
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .sv-capabilities__inner { padding: 70px 28px; }
+    .sv-capabilities__head { margin-bottom: 26px; gap: 18px; }
+    .sv-capabilities__title { font-size: 38px; }
+    .sv-capabilities__grid { grid-template-columns: 1fr; }
+    .sv-capability-card { min-height: 0; padding: 18px 16px 18px; }
+    .sv-capability-card__icon { width: 66px; height: 66px; }
+    .sv-capability-card__icon iconify-icon { width: 34px; height: 34px; }
+    .sv-capability-card h3 { margin-top: 18px; font-size: 18px; }
+    .sv-capability-card__body { font-size: 15px; line-height: 1.6; }
+    .sv-capability-card__link { width: 100%; min-width: 0; margin-top: 22px; }
+  }
+</style>
