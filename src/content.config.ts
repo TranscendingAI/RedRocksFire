@@ -30,11 +30,13 @@ const blog = defineCollection({
     excerpt: z.string().min(20).max(280),
     publishDate: z.coerce.date(),
     category: z.enum([
-      'Inspections',
       'Code & Compliance',
+      'Inspections',
       'Property Management',
       'Service & Maintenance',
+      'Systems',
       'Company News',
+      'Emergency Response',
     ]),
     tags: z.array(z.string()).default([]),
     /** Path under /public/images/, e.g. "/images/whatever.jpg". */
@@ -49,6 +51,13 @@ const blog = defineCollection({
     seoDescription: z.string().min(50).max(200),
     /** Approximate read time in minutes (compute when writing). */
     readMinutes: z.number().int().positive().optional(),
+    /**
+     * Background-position override for the post hero (.ptbanner). Default
+     * is 'center bottom' (the site-wide default). Use 'center top' for
+     * landscape photos whose subjects sit in the upper half of the frame
+     * and would otherwise be cropped by `background-size: cover`.
+     */
+    heroPosition: z.enum(['center bottom', 'center top', 'center', 'top', 'bottom']).default('center bottom'),
   }),
 });
 

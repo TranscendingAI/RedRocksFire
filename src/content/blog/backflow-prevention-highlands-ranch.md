@@ -63,13 +63,13 @@ The pattern is consistent across communities:
 - **The count is wrong.** The community tests the two assemblies everyone knows about and misses the three on irrigation zones added when a new common area was landscaped.
 - **The fire-line assembly falls between vendors.** The irrigation backflow gets tested by the landscape contractor; the fire-line backflow — which is part of the fire protection system — gets forgotten because it's not clearly anyone's job. This is the exact seam a [single life-safety vendor](/blog/one-vendor-life-safety-denver/) closes.
 
-That fire-line assembly is why backflow sits in the fire protection conversation at all. It's part of the system that feeds your [fire sprinklers](/fire-sprinkler-service-and-systems), and it belongs on the same coordinated schedule as your [HOA's inspections and monitoring](/industries/hoa-management).
+That fire-line assembly is why backflow sits in the fire protection conversation at all. It's part of the system that feeds your [fire sprinklers](/fire-sprinkler-service-and-systems), and it belongs on the same coordinated schedule as your [HOA's inspections and monitoring](/industries/hoa-management). Our [backflow testing and certification service](/services/backflow-prevention-assemblies) handles the certification paperwork with the water utility, so the HOA board never has to chase the filing itself.
 
 ## Getting ahead of it
 
-The fix is unglamorous: inventory every backflow assembly on the property, put them all on one annual schedule, and use a certified tester who files the certification with the water utility for you. Coordinating that alongside the community's other life-safety testing — [fire alarm](#), [sprinkler](/fire-sprinkler-service-and-systems), [extinguisher](/blog/fire-extinguisher-service-littleton/) — means one vendor tracking one calendar instead of a board reconstructing what's due after a utility notice.
+The fix is unglamorous: inventory every backflow assembly on the property, put them all on one annual schedule, and use a certified tester who files the certification with the water utility for you. Coordinating that alongside the community's other life-safety testing — [fire alarm](/services/fire-alarm-service-and-systems), [sprinkler](/fire-sprinkler-service-and-systems), [extinguisher](/services/portable-fire-extinguishers) — means one vendor tracking one calendar instead of a board reconstructing what's due after a utility notice.
 
-Red Rocks Fire Protection provides certified [backflow testing](#) across [Highlands Ranch](/service-areas/highlands-ranch-co/) and [Douglas County](/service-areas/counties/douglas-county-co/), files the certification with the water jurisdiction, and folds it into the same schedule as the rest of your community's [life-safety services](/services). We work with every water jurisdiction on the Front Range.
+Red Rocks Fire Protection provides certified [backflow testing](/services/backflow-prevention-assemblies) across [Highlands Ranch](/service-areas/highlands-ranch-co/) and [Douglas County](/service-areas/counties/douglas-county-co/), files the certification with the water jurisdiction, and folds it into the same schedule as the rest of your community's [life-safety services](/services). We work with every water jurisdiction on the Front Range.
 
 ---
 

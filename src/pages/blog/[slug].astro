@@ -43,7 +43,9 @@ const isoDate = post.data.publishDate.toISOString();
 const canonical = new URL(`/blog/${slug}/`, Astro.site ?? 'http://localhost:4321').toString();
 const ogImage = new URL(post.data.featuredImage, Astro.site ?? 'http://localhost:4321').toString();
 
-// JSON-LD payload — single string passed into <Fragment set:html>.
+// Per-post hero background-position override (Zod schema: optional, default 'center bottom').
+// Applied as an inline style so it overrides the .ptbanner { background-position: center bottom; }
+// site default without adding per-post CSS.
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -82,7 +84,7 @@ const jsonLd = JSON.stringify({
        the post, not a hardcoded constant. -->
   <div
     class="ptbanner"
-    style={`background-image: url('${post.data.featuredImage}');`}
+    style={`background-image: url('${post.data.featuredImage}'); background-position: ${post.data.heroPosition};`}
   >
     <div class="ptbanner__inner">
       <h1 class="ptbanner__title">{post.data.title}</h1>

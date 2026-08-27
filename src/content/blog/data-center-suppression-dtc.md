@@ -65,11 +65,11 @@ For a DTC data center or a building with significant server-room space, the supp
 - **Room integrity.** When was the last fan test on the clean-agent rooms? An agent system that can't hold concentration is the most common silent failure.
 - **Detection health.** Aspirating and spot detectors need regular testing; a suppression system is only as good as the detection that triggers it.
 - **Preaction interlock testing.** The two-event logic — detection plus head — has to be verified, along with the trip test and the air-supervision that keeps the system dry.
-- **Coordination with the base-building systems.** A server room inside a larger DTC office building has its special-hazard suppression *and* the building's [fire alarm](#) and [sprinkler systems](/fire-sprinkler-service-and-systems), and those have to interoperate.
+- **Coordination with the base-building systems.** A server room inside a larger DTC office building has its special-hazard suppression *and* the building's [fire alarm](/services/fire-alarm-service-and-systems) and [sprinkler systems](/fire-sprinkler-service-and-systems), and those have to interoperate.
 
 That coordination is the argument for a [single life-safety vendor](/blog/one-vendor-life-safety-denver/): the special-hazard suppression, the preaction sprinklers, the detection, and the building alarm all tested by one team that understands how they hand off to each other. It's the approach we bring to [data centers](/industries/data-centers) and server rooms across the DTC. (For how preaction fits alongside wet and dry systems, see our [sprinkler system types guide](/blog/wet-dry-antifreeze-sprinkler-fort-collins/).)
 
-Red Rocks Fire Protection designs, inspects, and maintains [clean-agent, preaction, and special-hazard suppression](#) across the [Denver Tech Center](/service-areas/denver-tech-center-co/) and [Arapahoe County](/service-areas/counties/arapahoe-county-co/), coordinated with each facility's [sprinkler and alarm systems](/fire-sprinkler-service-and-systems) under one accountable team. Explore the full range of [services](/services) we run.
+Red Rocks Fire Protection designs, inspects, and maintains [clean-agent, preaction, and special-hazard suppression](/services/kitchen-hood-suppression-systems) across the [Denver Tech Center](/service-areas/denver-tech-center-co/) and [Arapahoe County](/service-areas/counties/arapahoe-county-co/), coordinated with each facility's [sprinkler and alarm systems](/fire-sprinkler-service-and-systems) under one accountable team. Explore the full range of [services](/services) we run.
 
 ---
 

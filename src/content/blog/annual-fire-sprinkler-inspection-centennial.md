@@ -19,6 +19,7 @@ readMinutes: 7
 featuredImage: /images/blog/annual-fire-sprinkler-inspection-centennial.png
 featuredImageAlt: A fire protection inspector examining a wet-pipe sprinkler riser and pressure gauges with a flashlight during an annual inspection in a Centennial, CO commercial building.
 featuredImageCaption: Annual NFPA 25 sprinkler testing in a Centennial commercial building — the main drain test and valve check that a passing report is built on.
+heroPosition: center top
 ---
 
 # What Actually Happens During an Annual Sprinkler Inspection.
@@ -80,9 +81,9 @@ That report is what your AHJ, your insurer, and a future property manager all re
 Two rules of thumb for Centennial properties:
 
 1. **At least 90 days before your AHJ renewal.** That leaves room to correct anything the inspection turns up before South Metro reviews the file.
-2. **Coordinate it with your [alarm](#), [extinguisher](/blog/fire-extinguisher-service-littleton/), and [backflow](/blog/backflow-prevention-highlands-ranch/) inspections.** One coordinated visit means one round of tenant coordination and one reconciled record set instead of four.
+2. **Coordinate it with your [alarm](/services/fire-alarm-service-and-systems), [extinguisher](/services/portable-fire-extinguishers), and [backflow](/services/backflow-prevention-assemblies) inspections.** One coordinated visit means one round of tenant coordination and one reconciled record set instead of four.
 
-Red Rocks Fire Protection runs annual [sprinkler inspections](/fire-sprinkler-service-and-systems) across [Centennial](/service-areas/centennial-co/) — our office is in the city — and every inspection is written to a South Metro–ready report. The full [inspection service](/inspections) covers sprinklers, [alarms](#), [extinguishers](#), [backflow](#), and [suppression](#) on one coordinated schedule. We serve properties throughout [Arapahoe County](/service-areas/counties/arapahoe-county-co/).
+Red Rocks Fire Protection runs annual [sprinkler inspections](/services/fire-sprinkler-service-and-systems) across [Centennial](/service-areas/centennial-co/) — our office is in the city — and every inspection is written to a South Metro–ready report. The full [inspection service](/inspections) covers sprinklers, [alarms](/services/fire-alarm-service-and-systems), [extinguishers](/services/portable-fire-extinguishers), [backflow](/services/backflow-prevention-assemblies), and [suppression](/services/kitchen-hood-suppression-systems) on one coordinated schedule. We serve properties throughout [Arapahoe County](/service-areas/counties/arapahoe-county-co/).
 
 ---
 

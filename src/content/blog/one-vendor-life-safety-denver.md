@@ -20,6 +20,7 @@ readMinutes: 7
 featuredImage: /images/blog/one-vendor-life-safety-denver.png
 featuredImageAlt: A Red Rocks Fire Protection technician standing in the mechanical room of a Denver high-rise beside a sprinkler riser, fire alarm panel, and backflow assembly.
 featuredImageCaption: One accountable technician standing over the sprinkler riser, alarm panel, and backflow assembly of a Denver commercial building — the systems most properties split across five separate vendors.
+heroPosition: center top
 ---
 
 # Why Denver Property Teams Stop Juggling Fire Protection Contractors.
@@ -32,7 +33,7 @@ That gap is where compliance problems live. This is a look at what the one-vendo
 
 Each of those five contractors probably does competent work inside their own lane. The trouble starts at the boundaries.
 
-Your [fire alarm system](#) and your [sprinkler system](/fire-sprinkler-service-and-systems) talk to each other. When a sprinkler flow switch trips, it signals the alarm panel, which signals the [monitoring company](#), which dispatches Denver Fire. That chain runs through equipment owned by three different vendors. NFPA 72 requires you to test the interface between those systems — not just each system on its own. So who tests the handoff?
+Your [fire alarm system](/services/fire-alarm-service-and-systems) and your [sprinkler system](/fire-sprinkler-service-and-systems) talk to each other. When a sprinkler flow switch trips, it signals the alarm panel, which signals the [monitoring company](/services/monitoring-services), which dispatches Denver Fire. That chain runs through equipment owned by three different vendors. NFPA 72 requires you to test the interface between those systems — not just each system on its own. So who tests the handoff?
 
 In a split-vendor setup, the honest answer is usually nobody. The sprinkler company tests to the flow switch and stops. The alarm company tests from the panel and assumes the input is fine. The monitoring company confirms it received *a* signal during a scheduled test window. Each one signs off on their piece. The seam between them — the part that actually matters when there's a fire — goes unverified from one year to the next.
 
@@ -44,7 +45,7 @@ When one company inspects, services, and monitors every life-safety system in th
 
 - **One team tests the integrations, not just the components.** The flow-switch-to-panel-to-dispatch chain gets verified end to end because the same technician owns both ends.
 - **One report, formatted for your AHJ.** Denver Fire has a preferred deficiency-list format, and Denver Fire Code Section 901.6.3 requires inspection and testing records to stay on the premises using NFPA or Denver Fire forms with the service provider's Denver license number legible. One vendor means one record set that already matches what the inspector expects — not five reports in five formats you have to reconcile before an inspection.
-- **One phone number when a system goes down.** Denver requires you to report a compromised alarm or sprinkler system, and if the outage runs past 10 hours you need a fire-watch permit. When the clock is running, you don't want to be figuring out which of five vendors handles the impaired system.
+- **One phone number when a system goes down.** Denver requires you to report a compromised alarm or sprinkler system, and if the outage runs past 10 hours you need a fire-watch permit. When the clock is running, you don't want to be figuring out which of five vendors handles the impaired system — that's the role [24-hour emergency service](/services/24-hour-service) is built to fill.
 - **One accountable party.** When something is wrong, there's no vendor-to-vendor finger-pointing. The answer to "whose problem is this?" is settled before the question comes up.
 
 ## Why Denver makes this worse than most cities
@@ -63,7 +64,7 @@ If you're evaluating the one-vendor approach for a Denver property, three questi
 2. **Do you test the interfaces between systems, and does your report document those tests?** Ask to see a sample report and look for the sprinkler-to-alarm integration test specifically.
 3. **Will your report land in Denver Fire's preferred format the first time?** Rework because a report didn't match the AHJ's expectations is the hidden cost of a vendor who doesn't work the jurisdiction regularly.
 
-Red Rocks Fire Protection was built around this model — [inspections](/inspections), [fire sprinkler systems](/fire-sprinkler-service-and-systems), [fire alarm systems](#), [24/7 monitoring](#), [suppression](#), and [backflow prevention](#) under one coordinated team, one point of accountability, across the [Denver Front Range](/service-areas/denver-co/). We've been [doing it since 2010](/about), and we work Denver Fire's requirements every week. It's the same coordinated approach we bring to the [multi-tenant retail centers](/blog/retail-shopping-center-parker/) and [healthcare facilities](/blog/assisted-living-healthcare-lakewood/) where the seams between vendors do the most damage.
+Red Rocks Fire Protection was built around this model — [inspections](/inspections), [fire sprinkler systems](/fire-sprinkler-service-and-systems), [fire alarm systems](/services/fire-alarm-service-and-systems), [24/7 monitoring](/services/monitoring-services), [suppression](/services/kitchen-hood-suppression-systems), and [backflow prevention](/services/backflow-prevention-assemblies) under one coordinated team, one point of accountability, across the [Denver Front Range](/service-areas/denver-co/). We've been [doing it since 2010](/about), and we work Denver Fire's requirements every week. It's the same coordinated approach we bring to the [multi-tenant retail centers](/blog/retail-shopping-center-parker/) and [healthcare facilities](/blog/assisted-living-healthcare-lakewood/) where the seams between vendors do the most damage.
 
 ---
 

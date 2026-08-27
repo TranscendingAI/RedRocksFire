@@ -44,7 +44,7 @@ In principle, the lease divides responsibility. In practice, retail leases are f
 
 The common division looks like this:
 
-- **Landlord owns the shell and the common systems** — the riser, the main [sprinkler infrastructure](/fire-sprinkler-service-and-systems), the [fire alarm](#) panel, the FDC, the [backflow](#), the fire pump, and the annual inspection and testing of those.
+- **Landlord owns the shell and the common systems** — the riser, the main [sprinkler infrastructure](/fire-sprinkler-service-and-systems), the [fire alarm](/services/fire-alarm-service-and-systems) panel, the FDC, the [backflow](/services/backflow-prevention-assemblies), the fire pump, and the annual inspection and testing of those.
 - **Tenants own what's inside their space** — keeping heads unobstructed, not blocking egress, maintaining any tenant-specific equipment (a restaurant's [kitchen hood suppression](/blog/kitchen-hood-suppression-boulder/), for example), and not modifying the system without coordination.
 
 The problems live in the seams:
@@ -69,7 +69,7 @@ The centers that stay compliant do a few things deliberately:
 
 This is exactly where a [single accountable vendor](/blog/one-vendor-life-safety-denver/) earns its keep in [retail and shopping center](/industries/retail) work: the shared riser, the building alarm, the FDC and backflow, and every tenant space, tested by one team that knows how a build-out in one unit affects the system in the next.
 
-Red Rocks Fire Protection serves multi-tenant retail centers across [Parker](/service-areas/parker-co/) and [Douglas County](/service-areas/counties/douglas-county-co/), coordinating the shared building systems and the tenant spaces under one team, with reports formatted for South Metro Fire Rescue — the full range of [services](/services) on one schedule.
+Red Rocks Fire Protection serves multi-tenant retail centers across [Parker](/service-areas/parker-co/) and [Douglas County](/service-areas/counties/douglas-county-co/), coordinating the shared building systems and the tenant spaces under one team, with reports formatted for South Metro Fire Rescue — the full range of [services](/services) on one schedule. Retail-specific scope lives under our [retail and shopping center programs](/industries/retail).
 
 ---
 

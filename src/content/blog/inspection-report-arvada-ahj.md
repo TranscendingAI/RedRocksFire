@@ -20,6 +20,7 @@ readMinutes: 6
 featuredImage: /images/blog/inspection-report-arvada-ahj.png
 featuredImageAlt: A fire protection inspector reviewing a detailed inspection report and deficiency list on a tablet beside a fire alarm panel in an Arvada, Colorado commercial building.
 featuredImageCaption: Reviewing a deficiency list against the panel in an Arvada building — the report, not the walkthrough, is what the AHJ actually acts on.
+heroPosition: center top
 ---
 
 # The Inspection Report Your Arvada AHJ Will Actually Accept.
@@ -59,9 +60,9 @@ A report like this can describe a perfectly good inspection. It'll still cost yo
 
 The reason a locally engaged inspection company hands you a first-pass report is simple: they work the jurisdiction every week. They know the Arvada Fire Protection District's preferred deficiency-list layout because they've submitted to it repeatedly. They know which findings Arvada treats as immediate and which get a correction window. A company parachuting in from outside the area can run a flawless test and still produce a report that reads wrong to the AHJ, because they've never had to satisfy this reviewer before.
 
-That local fluency is the point of our [inspection service](/inspections): reports formatted to the AHJ that's actually going to read them, so corrections are approved without rework. It's the same reason our whole [one-vendor service model](/blog/one-vendor-life-safety-denver/) is built around one team that knows your building and your jurisdiction.
+That local fluency is the point of our [inspection service](/inspections): reports formatted to the AHJ that's actually going to read them, so corrections are approved without rework. It's the same reason our whole [one-vendor service model](/blog/one-vendor-life-safety-denver/) is built around one team that knows your building and your jurisdiction. Our [consulting services](/services/consulting-services) extend that fluency into pre-inspection reviews and AHJ-specific compliance planning when you're navigating a tricky report or a remediation cycle.
 
-Red Rocks Fire Protection runs [inspections](/inspections) across [Arvada](/service-areas/arvada-co/) and [Jefferson County](#) with reports written to what the Arvada Fire Protection District expects — ranked deficiencies, a photo on every finding, values next to every verdict, and a correction summary that maps to how they track it. It's part of the coordinated [services](/services) we provide for [commercial property](/industries/commercial-property) teams across the Front Range.
+Red Rocks Fire Protection runs [inspections](/inspections) across [Arvada](/service-areas/arvada-co/) and [Jefferson County](/service-areas/counties/jefferson-county-co/) with reports written to what the Arvada Fire Protection District expects — ranked deficiencies, a photo on every finding, values next to every verdict, and a correction summary that maps to how they track it. It's part of the coordinated [services](/services) we provide for [commercial property](/industries/commercial-property) teams across the Front Range.
 
 ---
 

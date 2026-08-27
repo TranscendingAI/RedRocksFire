@@ -69,7 +69,7 @@ The complications are the in-between spaces and the buildings that changed use. 
 
 Whatever system type you have, the annual obligation runs through NFPA 25, and Poudre Fire Authority reviews the results. Dry and antifreeze systems carry more test items than wet systems, so the inspection scope should visibly change with the system type. If a report on a dry-pipe warehouse looks identical to a report on a wet-pipe office — same tests, same length — someone skipped the trip test and the low-point drains.
 
-Red Rocks Fire Protection installs, services, and inspects all three system types across [Fort Collins](/service-areas/fort-collins-co/) and [Larimer County](#). Our [sprinkler service](/fire-sprinkler-service-and-systems) sizes the inspection to the system that's actually on your property — wet, dry, antifreeze, or a building running all three. (For the two-event preaction systems used over sensitive electronics, see our [data center suppression guide](/blog/data-center-suppression-dtc/).)
+Red Rocks Fire Protection installs, services, and inspects all three system types across [Fort Collins](/service-areas/fort-collins-co/) and [Larimer County](/service-areas/counties/larimer-county-co/). Our [sprinkler service](/services/fire-sprinkler-service-and-systems) sizes the inspection to the system that's actually on your property — wet, dry, antifreeze, or a building running all three. For the two-event preaction systems used over sensitive electronics, see our [data center suppression guide](/blog/data-center-suppression-dtc/). If you're sizing up a system type change or a new install, our [consulting services](/services/consulting-services) cover the upfront design review.
 
 ---
 

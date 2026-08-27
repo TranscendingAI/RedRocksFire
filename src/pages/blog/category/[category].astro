@@ -1,42 +1,43 @@
 ---
 /**
- * Blog index (/blog) — RRFPS blog landing page.
+ * Blog category archive — `/blog/category/<slug>/`.
  *
- * Layout (2026-08 redesign):
- *   • Hero (same ptbanner pattern as inspections.astro)
- *   • 3/4 + 1/4 two-column section:
- *       - Left:  2-up grid of 420x420 blog cards via <BlogArchiveGrid>.
- *       - Right: <BlogSidebar> with author card, categories list,
- *                latest posts, and CTA card.
- *   • ClosingCTA banner (parity with the rest of the site)
+ * Reuses the same hero, post-grid, sidebar, and closing CTA as `/blog/`.
+ * Filters the blog collection by `category === category.enumValue` and
+ * hands the filtered list to `<BlogArchiveGrid>`.
  *
- * Posts pulled live from src/content/blog/*.md via `getCollection('blog')`,
- * sorted newest-first. Each card links to /blog/<slug>, served by
- * src/pages/blog/[slug].astro.
+ * The `getStaticPaths` enumerates every entry in `blogCategories`
+ * (src/data/blogCategories.ts) so adding a new category is a one-line
+ * change there — no edits here required.
  *
- * The post grid + Load-More logic lives in <BlogArchiveGrid>; this page
- * composes hero + sidebar + CTA + grid.
+ * Empty categories render an empty-state message inside the grid
+ * component, so this page never throws.
  */
 
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ClosingCTA from '../../components/ClosingCTA.astro';
-import BlogSidebar from '../../components/BlogSidebar.astro';
-import BlogArchiveGrid from '../../components/BlogArchiveGrid.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../../components/ClosingCTA.astro';
+import BlogSidebar from '../../../components/BlogSidebar.astro';
+import BlogArchiveGrid from '../../../components/BlogArchiveGrid.astro';
 import { getCollection } from 'astro:content';
-import { blogCategories } from '../../data/blogCategories';
-import { leadership } from '../../data/site';
+import { blogCategories } from '../../../data/blogCategories';
+import { leadership } from '../../../data/site';
 
-const fallbackTitle =
-  'RRFPS Field Notes | Fire Protection Insights for Colorado Property Teams';
-const fallbackDescription =
-  'Practical fire-safety insights for Colorado property teams — inspection cadence, NFPA code changes, multi-family compliance, and what an RRFPS inspection report actually contains.';
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  return blogCategories.map((category) => {
+    const filtered = allPosts
+      .filter((post) => post.data.category === category.enumValue)
+      .sort(
+        (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+      );
+    return {
+      params: { category: category.slug },
+      props: { category, posts: filtered },
+    };
+  });
+}
 
-const seoTitle = fallbackTitle;
-const seoDescription = fallbackDescription;
-
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
-);
+const { category, posts } = Astro.props;
 
 const author = {
   name: leadership.ceo.name,
@@ -55,28 +56,28 @@ const author = {
 ---
 
 <BaseLayout
-  title={seoTitle}
-  description={seoDescription}
+  title={`${category.label} | RRFPS Blog`}
+  description={`Blog posts in the ${category.label} category — fire protection insights for Colorado property teams from Red Rocks Fire Protection Services.`}
 >
-
-  <!-- HERO — same pattern as inspections.astro (section 0).
-       Single source of truth here; if it diverges from
-       inspections.astro, update both. -->
+  <!-- HERO — same pattern as /blog/index.astro, /inspections.astro, etc.
+       Identical .ptbanner styles live in this page's <style> block below. -->
   <div
     class="ptbanner"
     style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.jpg');"
   >
     <div class="ptbanner__inner">
-      <h1 class="ptbanner__title">Blog</h1>
+      <h1 class="ptbanner__title">{category.label}</h1>
       <div class="ptbanner__breadcrumbs">
         <a href="/">Home</a>
         <span class="ptbanner__divider">-</span>
-        <span class="ptbanner__current">BLOG</span>
+        <a href="/blog/">Blog</a>
+        <span class="ptbanner__divider">-</span>
+        <span class="ptbanner__current">{category.label}</span>
       </div>
     </div>
   </div>
 
-  <!-- POSTS + SIDEBAR — 3/4 + 1/4 two-column layout -->
+  <!-- POSTS + SIDEBAR — same 3/4 + 1/4 layout as /blog/. -->
   <section class="rr-band" style="background: var(--rr-white);">
     <div class="rr-container">
       <div class="blog-layout">
@@ -85,23 +86,22 @@ const author = {
           posts={posts}
           categories={blogCategories}
           author={author}
+          activeCategory={category.slug}
         />
       </div>
     </div>
   </section>
 
-  <!-- CLOSING CTA — same component used on /about and /inspections (parity with the rest of the site).
-       flipBackground={false} because the apartment photo was pre-flipped
-       at the file level — we don't want the CSS scaleX(-1) to mirror it back. -->
+  <!-- CLOSING CTA — same as /blog/. -->
   <ClosingCTA
     backgroundImage="/images/rrfps-county-cta-apartments.jpg"
     flipBackground={false}
   />
-
 </BaseLayout>
 
 <style>
-  /* HERO — same CSS as inspections.astro (verbatim). Update both together. */
+  /* HERO — duplicated from /blog/index.astro and /blog/[slug].astro for
+     visual cohesion. If you change one, change all three. */
   .ptbanner {
     background-size: cover;
     background-repeat: no-repeat;
@@ -154,7 +154,7 @@ const author = {
     text-underline-offset: 4px;
   }
 
-  /* ── 3/4 + 1/4 layout ──────────────────────────────────────── */
+  /* ── 3/4 + 1/4 layout — same as /blog/index.astro ──────────────── */
   .blog-layout {
     display: grid;
     gap: 32px;
@@ -168,7 +168,6 @@ const author = {
     }
   }
 
-  /* ── Responsive ─────────────────────────────────────────── */
   @media (max-width: 1200px) {
     .ptbanner__title { font-size: 64px; line-height: 72px; }
   }

@@ -56,12 +56,12 @@ Secured memory-care and dementia units add a genuine tension: the doors are lock
 
 West Metro Fire Rescue is the AHJ for Lakewood, and they know these buildings. A fire protection partner serving assisted living and [healthcare facilities](/industries/assisted-living) should bring:
 
-- **Inspection scope built for defend-in-place** — verifying smoke-barrier door operation, complete [sprinkler coverage](/fire-sprinkler-service-and-systems), and the alarm-to-door-release interlocks, not just running a generic commercial checklist
+- **Inspection scope built for defend-in-place** — verifying smoke-barrier door operation, complete [sprinkler coverage](/services/fire-sprinkler-service-and-systems), and the alarm-to-door-release interlocks, not just running a generic commercial checklist
 - **Documentation that satisfies fire, licensing, and any federal survey** in one report set — [the report your AHJ will actually accept](/blog/inspection-report-arvada-ahj/)
-- **Coordination across every system** so the [fire alarm](#), sprinkler, smoke control, and secured-egress hardware are tested as the integrated system they have to be in an emergency — the [one-vendor model](/blog/one-vendor-life-safety-denver/) matters most where lives depend on the interlocks
+- **Coordination across every system** so the [fire alarm](/services/fire-alarm-service-and-systems), sprinkler, smoke control, and secured-egress hardware are tested as the integrated system they have to be in an emergency — the [one-vendor model](/blog/one-vendor-life-safety-denver/) matters most where lives depend on the interlocks
 - **Response that respects the occupancy** — scheduling and emergency response that account for the fact that you can't simply evacuate the building for a service call
 
-Red Rocks Fire Protection serves assisted living and [healthcare facilities](/industries/assisted-living) across [Lakewood](/service-areas/lakewood-co/) and [Jefferson County](#), with [inspections](/inspections) scoped to the realities of a defend-in-place building and reports formatted for West Metro Fire Rescue. Every system lives under one coordinated [service program](/services), which is what the interlocks in these buildings actually require.
+Red Rocks Fire Protection serves assisted living and [healthcare facilities](/industries/assisted-living) across [Lakewood](/service-areas/lakewood-co/) and [Jefferson County](/service-areas/counties/jefferson-county-co/), with [inspections](/inspections) scoped to the realities of a defend-in-place building and reports formatted for West Metro Fire Rescue. Every system lives under one coordinated [service program](/services), which is what the interlocks in these buildings actually require.
 
 ---
 

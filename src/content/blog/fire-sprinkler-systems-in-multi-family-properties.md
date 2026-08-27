@@ -31,7 +31,7 @@ featuredImageCaption: Annual NFPA 25 sprinkler testing in a Denver-area multifam
 
 # Fire Sprinkler Systems in Multi-Family Properties.
 
-If you manage a multi-family property in Colorado — apartment, condo, townhome, or stacked student housing — the fire sprinkler system is one of the most consequential pieces of equipment on your property, and the one most likely to drift out of compliance without anyone noticing. NFPA publishes three sprinkler standards. Multi-family buildings on the Front Range usually fall under one of two of them. The third applies to most single-family homes. Knowing which standard governs your property is the difference between a passing inspection and a year of corrective-action headaches.
+If you manage a multi-family property in Colorado — apartment, condo, townhome, or stacked student housing — the fire sprinkler system is one of the most consequential pieces of equipment on your property, and the one most likely to drift out of compliance without anyone noticing. NFPA publishes three sprinkler standards. Multi-family buildings on the Front Range usually fall under one of two of them. The third applies to most single-family homes. Knowing which standard governs your property is the difference between a passing inspection and a year of corrective-action headaches. (For the broader [multi-family management services](/industries/multi-family-management-companies) we coordinate across portfolios, that's a starting point for the conversation.)
 
 This guide explains how 13, 13R, and 13D apply to multi-family properties, what an annual RRFPS sprinkler inspection actually covers in Denver Metro, Lakewood, Centennial, Boulder, Fort Collins, and the surrounding AHJs, and what your records need to look like the next time a fire marshal walks through.
 
@@ -106,6 +106,8 @@ If you've read our fire alarm, fire extinguisher, or general inspection coverage
 - **Single-family properties** (most townhomes, single-family rentals, and duplexes in Colorado) are governed by NFPA 13D. The annual test cadence under NFPA 25 is lighter, and the system itself is simpler — there is rarely a fire pump and rarely a backflow preventer that needs annual certification.
 - **Multi-family properties** under NFPA 13R have a heavier annual test cadence — main drain tests, gauge calibrations, valve supervision, and visual on every head in every unit above a ceiling or in an attic.
 - **Multi-family properties** under NFPA 13 are commercial-class systems. They usually include a fire pump that gets its own annual test, and may include a standpipe that gets hydrostatic testing on a 5-year cycle.
+
+The full [sprinkler service and systems](/services/fire-sprinkler-service-and-systems) catalog covers everything from retrofit and modification work to fire-pump testing for properties that cross the line from residential into commercial scope.
 
 We size our inspection scope to the standard that actually applies to your property. Properties that started residential and converted to mixed-use often have a system built under one standard and an occupancy that triggers a different standard — that's the situation where a one-hour walk-through from a qualified inspector is worth more than a year of guesswork.
 

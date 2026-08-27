@@ -1,0 +1,291 @@
+---
+/**
+ * BlogArchiveGrid — shared post-grid + Load-More for the blog archive
+ * and per-category archives.
+ *
+ * Extracted from src/pages/blog/index.astro so that /blog/ and
+ * /blog/category/<slug>/ stay visually and behaviorally in lockstep —
+ * any change here shows up on every archive page.
+ *
+ * Props:
+ *   - posts: BlogCollection[] — full list to render (caller pre-filters
+ *           for category archives; passes the whole collection for /blog/).
+ *
+ * Behavior:
+ *   - Renders the same 2-up 420×420 blog cards as the original archive.
+ *   - Initial-visible count is encoded in `data-initial-visible="12"` and
+ *     in the `hidden` attribute on the Load More button. Posts past the
+ *     initial count are in the DOM but hidden via .blog-cards__item--hidden
+ *     until the JS toggle reveals them.
+ */
+
+interface BlogPostLike {
+  id: string;
+  data: {
+    title: string;
+    publishDate: Date;
+    category: string;
+    featuredImage: string;
+    featuredImageAlt: string;
+  };
+}
+
+interface Props {
+  posts: BlogPostLike[];
+}
+
+const { posts } = Astro.props;
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+const arrowPath =
+  'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.0910 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+---
+
+{posts.length === 0 ? (
+  <div style="background: var(--rr-bg-light); border-radius: var(--rr-radius-card); padding: 2rem;">
+    <p class="text-rr-grey">No posts in this category yet. Check back soon.</p>
+  </div>
+) : (
+  <div class="blog-cards-wrap">
+    <ul class="blog-cards" role="list" data-initial-visible="12">
+      {posts.map((post, i) => (
+        <li
+          class={`blog-cards__item${i >= 12 ? ' blog-cards__item--hidden' : ''}`}
+          data-post-index={i}
+        >
+          <a
+            href={`/blog/${post.id}/`}
+            class="blog-card"
+            aria-label={`Read: ${post.data.title}`}
+          >
+            <div
+              class="blog-card__bg"
+              style={`background-image: url('${post.data.featuredImage}');`}
+              aria-hidden="true"
+            ></div>
+            <div class="blog-card__overlay" aria-hidden="true"></div>
+
+            <span class="blog-card__badge">{post.data.category}</span>
+
+            <div class="blog-card__caption">
+              <div class="blog-card__caption-static">
+                <time
+                  class="blog-card__date"
+                  datetime={post.data.publishDate.toISOString()}
+                >
+                  {formatDate(post.data.publishDate)}
+                </time>
+                <h3 class="blog-card__title">{post.data.title}</h3>
+              </div>
+              <span class="blog-card__readmore" aria-hidden="true">
+                Read More
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+              </span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="blog-loadmore-wrap">
+      <button
+        type="button"
+        class="av-wgl-btn blog-loadmore"
+        data-loadmore
+        hidden={posts.length <= 12}
+      >
+        <span class="av-wgl-btn__text">Load More</span>
+        <span class="av-wgl-btn__icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+)}
+
+<style>
+  /* ── 2-up blog cards ────────────────────────────────────────── */
+  .blog-cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (max-width: 640px) {
+    .blog-cards { grid-template-columns: 1fr; }
+  }
+  .blog-cards__item { display: block; }
+  .blog-cards__item--hidden { display: none; }
+
+  .blog-loadmore-wrap {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+  }
+  .blog-loadmore {
+    --av-wgl-btn-bg: var(--rr-red, #d41226);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: var(--rr-red, #d41226);
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: var(--rr-black, #0a0a0a);
+    --av-wgl-btn-border-hover: var(--rr-black, #0a0a0a);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .blog-card {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    text-decoration: none;
+    color: #ffffff;
+  }
+  .blog-card__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    transition: transform 600ms ease;
+  }
+  .blog-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.45) 60%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: -1;
+  }
+  .blog-card:hover .blog-card__bg { transform: scale(1.05); }
+
+  .blog-card__badge {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    padding: 7px 12px;
+    background: var(--rr-red);
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .blog-card__caption {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 88px;
+    transition: height 320ms ease;
+  }
+  .blog-card:hover .blog-card__caption { height: 132px; }
+
+  .blog-card__caption-static {
+    flex: 0 0 auto;
+    padding-top: 8px;
+    transition: transform 320ms ease;
+  }
+  .blog-card:hover .blog-card__caption-static { transform: translateY(-8px); }
+
+  .blog-card__readmore {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transform: translateY(20px);
+    transition: transform 320ms ease;
+  }
+  .blog-card:hover .blog-card__readmore { transform: translateY(0); }
+
+  .blog-card__date {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .blog-card__title {
+    margin: 4px 0 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1.05rem, 1.5vw, 1.375rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-card__readmore svg {
+    width: 18px;
+    height: 18px;
+    background: var(--rr-red);
+    padding: 5px;
+    border-radius: 50%;
+    color: #ffffff;
+  }
+</style>
+
+<script>
+  /* ── "Load More" — extracted verbatim from blog/index.astro 2026-08.
+   * Initial-visible count lives in data-initial-visible on .blog-cards.
+   * The Load More button hides itself server-side when posts.length <= initial.
+   */
+  function initBlogLoadMore() {
+    const list = document.querySelector('.blog-cards');
+    const button = document.querySelector('[data-loadmore]');
+    if (!list || !button) return;
+
+    const STEP = Number(list.dataset.initialVisible) || 12;
+    const hiddenItems = Array.from(
+      list.querySelectorAll('.blog-cards__item--hidden')
+    );
+
+    function updateButton() {
+      const stillHidden = list.querySelectorAll('.blog-cards__item--hidden');
+      if (stillHidden.length === 0) {
+        button.hidden = true;
+      }
+    }
+
+    button.hidden = hiddenItems.length === 0;
+    button.addEventListener('click', () => {
+      const toReveal = hiddenItems.splice(0, STEP);
+      toReveal.forEach((el) => el.classList.remove('blog-cards__item--hidden'));
+      updateButton();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initBlogLoadMore);
+  document.addEventListener('astro:after-swap', initBlogLoadMore);
+  if (document.readyState !== 'loading') initBlogLoadMore();
+</script>

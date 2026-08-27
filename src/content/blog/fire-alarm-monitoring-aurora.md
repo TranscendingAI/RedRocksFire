@@ -52,7 +52,7 @@ That last point is the one split responsibilities tend to drop. Testing the smok
 
 The failure mode worth designing against is quiet: a system that detects and alarms locally but whose off-site signal never lands. The panel does its job, the horn sounds in an empty building, and nobody is notified because the communicator failed months ago and the failure was never supervised.
 
-This is why the communication path, the secondary power, and the verified end-to-end signal test aren't paperwork items. They're the difference between a monitored building and a building that only appears monitored. For an Aurora [commercial property](/industries/commercial-property) with tenants, after-hours vacancy, and an owner carrying the liability, that difference is the entire value of the service.
+This is why the communication path, the secondary power, and the verified end-to-end signal test aren't paperwork items. They're the difference between a monitored building and a building that only appears monitored. For an Aurora [commercial property](/industries/commercial-property) with tenants, after-hours vacancy, and an owner carrying the liability, that difference is the entire value of the service. Our [fire alarm monitoring service](/services/monitoring-services) runs through a UL-listed central station with end-to-end signal verification as part of every annual NFPA 72 test.
 
 ## What monitoring covers beyond fire
 
@@ -73,7 +73,7 @@ Three questions tell you whether your monitoring is real or nominal:
 2. **When was the monitoring signal last tested end to end?** Not the devices — the signal actually arriving at the central station from each zone.
 3. **When were the panel's backup batteries last load-tested?** If nobody knows, they're overdue.
 
-Red Rocks Fire Protection provides UL-listed 24/7 monitoring and NFPA 72 [fire alarm](#) testing across [Aurora](/service-areas/aurora-co/) and [Arapahoe County](/service-areas/counties/arapahoe-county-co/), with the alarm service and the monitoring under one roof so the end-to-end signal actually gets verified — not assumed. Explore the full range of [services](/services) we run as one team.
+Red Rocks Fire Protection provides UL-listed 24/7 monitoring and NFPA 72 [fire alarm](/services/fire-alarm-service-and-systems) testing across [Aurora](/service-areas/aurora-co/) and [Arapahoe County](/service-areas/counties/arapahoe-county-co/), with the alarm service and the monitoring under one roof so the end-to-end signal actually gets verified — not assumed. Explore the full range of [services](/services) we run as one team.
 
 ---
 
