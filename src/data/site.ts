@@ -406,9 +406,9 @@ export const about = {
     subCopyLine1: 'Want to learn more about what makes Red Rocks Fire Protection Services different?',
     subCopyLine2: 'Explore the pages below to discover our commitment to safety, our purpose, and the promises that guide every relationship we build.',
     buttons: [
-      { label: 'Our Promise', icon: 'solar:verified-check-bold-duotone', href: '#' },
-      { label: 'Our Mission', icon: 'solar:target-bold-duotone', href: '#' },
-      { label: 'The RRFPS Difference', icon: 'solar:users-group-rounded-bold-duotone', href: '#' },
+      { label: 'Meet the Team', icon: 'mdi:account-group', href: '/meet-the-team' },
+      { label: 'Our Services',  icon: 'mdi:cog-outline',    href: '/services' },
+      { label: 'The RRFPS Difference', icon: 'mdi:shield-star-outline', href: '/about#rrfps-difference' },
     ] as const,
   },
 } as const;

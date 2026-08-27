@@ -1,10 +1,416 @@
 ---
+/**
+ * Testimonials — /testimonials/
+ *
+ * Section order:
+ *   §0. Page-title banner — `.ptbanner` hero with a generated
+ *       Red Rocks Amphitheatre photo (Morrison, CO sandstone) as
+ *       the background. H1: "Testimonials.", breadcrumb Home /
+ *       Testimonials.
+ *   §1. Opening quote box — mirrors the `mt-quote__box` 2-column
+ *       layout from /meet-the-team/. First column: red-rocks
+ *       walk-the-property photo. Second column: paragraph
+ *       explaining the page's purpose + links to /about and
+ *       /industries.
+ *   §2. Four full testimonial blocks — each block has a
+ *       1/2 + 1/2 grid: left column is the quote highlight
+ *       ("title") in big black uppercase, right column is the
+ *       full testimonial paragraph followed by an avatar +
+ *       name + role row. A 1px divider separates each block.
+ *   §3. Closing CTA — site-wide <ClosingCTA> with the new
+ *       warehouse streetview photo. Buttons overridden in
+ *       data/site.ts to "Meet the Team" / "Our Services" /
+ *       "The RRFPS Difference".
+ *
+ * Content source: /reference/RRFPS-testimonials-page-content.md
+ * Avatar photos: existing /public/images/ assets (Brandon headshot,
+ *   greystar logo, user.png placeholder).
+ *
+ * Class prefix: `.tm-` for any new section-scoped styles. §0 + §1
+ * reuse the existing .ptbanner + .mt-quote* styles from
+ * meet-the-team.astro.
+ */
+
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+
+const heroImage = '/images/rrfps-testimonials-hero-bg.png';
+const ctaImage = '/images/rrfps-testimonials-cta-bg.png';
+const openImage = '/images/red-rocks-fire-protection-walk-the-property.jpg';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 0.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+/** Testimonial data — title is the highlighted quote highlight, body is
+ *  the full testimonial, attribution is name + role + avatar image.
+ *  Order matches the source md (Brandon first). */
+const testimonials = [
+  {
+    title: 'A Trusted Partner Across Multiple Communities',
+    body:
+      '“Consistently, they have proven to be honest, reliable, and professional in every aspect of their work. Their team is dependable, communicates clearly, and follows through on what they promise—something that is especially important when managing life safety systems across multiple communities. I trust them to do the right thing, not just the easy thing, and that level of integrity is hard to find. Whether it’s routine service, inspections, or addressing issues when they arise, they’ve always been responsive and thorough.”',
+    name: 'Brandon Cox',
+    role: 'Director of Maintenance, Bell Partners, Inc.',
+    avatar: '/images/Brandon-Cox-Director-of-Maintenance-Bell-Partners-Inc.jpg',
+  },
+  {
+    title: 'Preferred and Trusted Vendor',
+    body:
+      '“Red Rocks Fire Protection is my preferred and trusted vendor. Their employees are always professional, responsive in a timely manner, and complete all work with 100% satisfaction. I would highly recommend them for all your needs.”',
+    name: 'Melissa Malley',
+    role: 'Business Manager, Greystar Residential',
+    avatar: '/images/greystar_logo.jpg',
+  },
+  {
+    title: 'Consistent Excellence Over Time',
+    body:
+      '“I have had the pleasure of working with your team for years, and you have always offered the highest level of professionalism. I continue to be satisfied by your services and refer you to others in the industry. Here’s to many more years of working together.”',
+    name: 'Jorge Rene Lopez',
+    role: 'Maintenance Supervisor',
+    avatar: '/images/user.png',
+  },
+  {
+    title: 'Accountability and Expertise You Can Rely On',
+    body:
+      '“Their team takes ownership of their work, communicates clearly, and follows through on commitments—which is critical in both construction and life safety environments. They approach challenges with a solutions-oriented mindset and always act with integrity, ensuring the job is done right the first time.”',
+    name: 'Alex Martinez',
+    role: 'Senior Construction Manager, Greystar',
+    avatar: '/images/greystar_logo.jpg',
+  },
+] as const;
 ---
 
-<BaseLayout title="Testimonials | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">Testimonials</h1>
-    <p class="text-lg text-gray-700">Placeholder testimonials page — content coming soon.</p>
-  </section>
+<BaseLayout
+  title="Testimonials | Red Rocks Fire Protection"
+  description="Hear from property owners, managers, and industry professionals who rely on Red Rocks Fire Protection Services as a trusted life safety partner across the Colorado Front Range."
+>
+  <div class="av-page tm-page">
+
+    {/* ══════════════════════════════════════════════════════════
+       §0. PAGE-TITLE BANNER
+       ══════════════════════════════════════════════════════════ */}
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${heroImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Testimonials.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Testimonials</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ══════════════════════════════════════════════════════════
+       §1. OPENING QUOTE BOX — copied from meet-the-team.astro's
+       .mt-quote__box layout. First column: red-rocks walk-the-
+       property photo. Second column: page intro paragraph with
+       inline links to /about and /industries.
+       ══════════════════════════════════════════════════════════ */}
+    <section class="mt-quote">
+      <div class="mt-quote__box">
+        <div class="mt-quote__image">
+          <img
+            src={openImage}
+            alt="Red Rocks Fire Protection technician walking a Colorado property with a client"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div class="mt-quote__copy tm-open__copy">
+          <p class="tm-open__para">
+            At Red Rocks Fire Protection Services, trust is not something we claim, it is something we earn through consistent performance, clear communication, and long-term relationships.
+          </p>
+          <p class="tm-open__para">
+            The following testimonials reflect the real-world experience of property owners, managers, and industry professionals who rely on Red Rocks Fire Protection Services as a trusted life safety partner.
+          </p>
+          <p class="tm-open__para">
+            These voices reinforce the company&rsquo;s commitment to reliability, accountability, and advocacy, demonstrating <a href="/about" class="tm-open__link">how RRFPS shows up</a> in practice across the <a href="/industries" class="tm-open__link">industries</a> it serves.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+       §2. TESTIMONIALS — 4 blocks, 1/2 + 1/2 grid each.
+       Left column: title (highlighted quote) in big black uppercase.
+       Right column: full quote paragraph + avatar/name/role row.
+       1px divider between blocks.
+       ══════════════════════════════════════════════════════════ */}
+    <section class="tm-list">
+      <div class="tm-list__inner">
+        {testimonials.map((t, i) => (
+          <article class="tm-testimonial" data-testimonial-index={i}>
+            <div class="tm-testimonial__left">
+              <h2 class="tm-testimonial__title">{`“${t.title}”`}</h2>
+            </div>
+            <div class="tm-testimonial__right">
+              <blockquote class="tm-testimonial__quote">
+                {t.body}
+              </blockquote>
+              <div class="tm-testimonial__attribution">
+                <img
+                  class="tm-testimonial__avatar"
+                  src={t.avatar}
+                  alt={`${t.name}, ${t.role}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="tm-testimonial__author">
+                  <div class="tm-testimonial__name">{t.name}</div>
+                  <div class="tm-testimonial__role">{t.role}</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+       §3. CLOSING CTA — site-wide <ClosingCTA> with the new
+       warehouse streetview photo. Buttons overridden in
+       data/site.ts to "Meet the Team" / "Our Services" /
+       "The RRFPS Difference".
+       ══════════════════════════════════════════════════════════ */}
+    <ClosingCTA
+      backgroundImage={ctaImage}
+      paragraphs={[
+        'Choosing the right life safety partner is about more than installing equipment and meeting code. It is about trusting the team you put in front of your residents, your tenants, and your inspectors — and knowing the people behind the truck have real accountability for the work they do.',
+      ]}
+    />
+
+  </div>
 </BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+     §0. PAGE-TITLE BANNER — same rhythm as the rest of the site
+     ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    margin-bottom: 60px;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+     §1. OPENING QUOTE BOX — reuses .mt-quote* from meet-the-team
+     via global stylesheet copy. Local overrides for the testimonial
+     page open paragraph styling (3 stacked paragraphs vs 1 quote).
+     ══════════════════════════════════════════════════════════ */
+  .mt-quote {
+    background: #ffffff;
+    padding: 55px 80px 96px;
+  }
+  .mt-quote__box {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    background: #EEECED;
+    overflow: hidden;
+  }
+  .mt-quote__image {
+    position: relative;
+    aspect-ratio: 1 / 0.92;
+    overflow: hidden;
+  }
+  .mt-quote__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 28%;
+  }
+  .tm-open__copy {
+    position: relative;
+    padding: 60px 64px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+  }
+  .tm-open__para {
+    margin: 0;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(16px, 1.25vw, 18px);
+    line-height: 1.55;
+  }
+  .tm-open__link {
+    color: #d41226;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .tm-open__link:hover { color: #b01021; }
+
+  /* ══════════════════════════════════════════════════════════
+     §2. TESTIMONIALS — 4 blocks, 1/2 + 1/2 grid, divider between
+     ══════════════════════════════════════════════════════════ */
+  .tm-list {
+    background: #ffffff;
+    padding: 24px 80px 120px;
+  }
+  .tm-list__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .tm-testimonial {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    column-gap: 80px;
+    row-gap: 24px;
+    padding: 72px 0;
+    align-items: start;
+  }
+  .tm-testimonial + .tm-testimonial {
+    border-top: 1px solid rgba(10, 10, 10, 0.14);
+  }
+  .tm-testimonial__left { padding-top: 12px; }
+  .tm-testimonial__title {
+    margin: 0;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(28px, 2.6vw, 40px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .tm-testimonial__right {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  .tm-testimonial__quote {
+    margin: 0;
+    color: #303030;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(16px, 1.15vw, 18px);
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+  }
+  .tm-testimonial__attribution {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .tm-testimonial__avatar {
+    width: 64px;
+    height: 64px;
+    flex: 0 0 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ffffff;
+    border: 1px solid rgba(10, 10, 10, 0.08);
+  }
+  .tm-testimonial__author { display: flex; flex-direction: column; }
+  .tm-testimonial__name {
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .tm-testimonial__role {
+    margin-top: 4px;
+    color: #626262;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     Responsive
+     ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .mt-quote { padding: 55px 60px 80px; }
+    .mt-quote__copy { padding: 48px 44px 44px; }
+    .tm-list { padding: 24px 60px 96px; }
+    .tm-testimonial { column-gap: 56px; padding: 60px 0; }
+  }
+
+  @media (max-width: 900px) {
+    .mt-quote__box { grid-template-columns: 1fr; }
+    .mt-quote__image { aspect-ratio: 4 / 3; }
+    .tm-open__copy { padding: 40px 32px 36px; }
+    .tm-testimonial { grid-template-columns: 1fr; row-gap: 24px; padding: 48px 0; }
+  }
+
+  @media (max-width: 767px) {
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .mt-quote { padding: 55px 28px 64px; }
+    .tm-open__copy { padding: 32px 24px 28px; }
+    .tm-open__para { font-size: 15px; }
+    .tm-list { padding: 16px 28px 72px; }
+    .tm-testimonial { padding: 40px 0; column-gap: 0; }
+    .tm-testimonial__title { font-size: 26px; }
+    .tm-testimonial__avatar { width: 56px; height: 56px; flex-basis: 56px; }
+  }
+</style>
