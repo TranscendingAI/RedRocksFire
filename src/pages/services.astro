@@ -82,10 +82,13 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
               <span class="divider-icon" set:html={diamondIcon} />
               <span>{about.capabilities.eyebrow}</span>
             </div>
-            <h2 class="sv-capabilities__title">{about.capabilities.title}</h2>
+            <h2 class="sv-capabilities__title">
+              {about.capabilities.titleLine1}<br />
+              {about.capabilities.titleLine2}
+            </h2>
           </div>
           <a href="/services" class="av-wgl-btn sv-capabilities__cta">
-            <span class="av-wgl-btn__text">All Services</span>
+            <span class="av-wgl-btn__text">Industries We Serve</span>
             <span class="av-wgl-btn__icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
             </span>

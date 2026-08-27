@@ -230,6 +230,10 @@ export const about = {
   capabilities: {
     eyebrow: 'Our Capabilities',
     title: 'Comprehensive Life Safety, One Trusted Partner',
+    /** Pre-split title lines so both about.astro and services.astro render
+     *  the same two-line layout from a single source of truth. */
+    titleLine1: 'Comprehensive Life Safety,',
+    titleLine2: 'One Trusted Partner',
     items: [
       {
         title: 'Inspections',
