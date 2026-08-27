@@ -53,8 +53,10 @@
  *
  * Theme rhythm (no two same-theme back-to-back):
  *   §0 dark  → §1 white  → §2 dark-image  → §3 dark-accordion  →
- *   §4 white  → §5 black  → §6 black  ← §5 stays white below →
- *   §7 white  → §8 dark-image  → §9 black  → §10 white ✅
+ *   §4 white  → §5 light  → §6 black  ← §5 was red, now #DBDADA →
+ *   §7 white  → §9 light  → §8 dark-image  → §10 black  → §11 white ✅
+ *   (2026-08: §9 "Our Promise" was moved above §8 Industries so
+ *    the dark image band sits at the bottom of the content flow.)
  *
  * All copy comes verbatim from
  * reference/content/rrfps-fire-sprinkler-services-and-systems-page-content.txt,
@@ -90,6 +92,26 @@ const whyClientsIcons = [
   'solar:rocket-2-bold-duotone',            // We go the extra mile
   'solar:medal-ribbon-star-bold-duotone',   // We demonstrate character
   'solar:users-group-rounded-bold-duotone', // We operate as one family
+] as const;
+
+/* §2 Why Red Rocks — one icon per bullet, index-aligned to
+   fireSprinklerPage.intro.bullets (water / medal / 24-hr clock). */
+const bulletIcons = [
+  'mdi:water',                                // Comprehensive service across wet/dry/...
+  'mdi:medal',                                // NFPA-aligned maintenance...
+  'mdi:clock',                                // 24/7/365 emergency response...
+] as const;
+
+/* §3 Our Fire Sprinkler Services — one MDI icon per accordion panel,
+   index-aligned to fireSprinklerPage.accordion.panels. Matches the
+   reference layout (red icon left of each row, vertical divider, title,
+   caret). */
+const accordionIcons = [
+  'mdi:sprinkler-variant',           // Fire Sprinkler Service
+  'mdi:cog-outline',                // Fire Sprinkler System Modifications
+  'mdi:sync',                        // Fire Sprinkler System Replacement
+  'mdi:alert-circle-outline',       // Signs Your System May Need Replacement
+  'mdi:shield-check-outline',       // Your One Vendor Life Safety Solution
 ] as const;
 
 const bannerImage = fireSprinklerPage.banner.backgroundImage;
@@ -132,15 +154,14 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
             <span>What Fire Sprinkler Service Covers</span>
           </div>
           <h2 class="sol__title">
-            <span>Service,</span>
-            <span>Modifications,</span>
-            <span>Replacement,</span>
-            <span>and 24/7 Response.</span>
+            <span>Service &amp; Systems</span>
+            <span>Modifications – Replacement</span>
+            <span>&amp; 24/7 Response.</span>
           </h2>
           <div class="sol__spacer" aria-hidden="true"></div>
           <div class="sol__cta">
             <a href="/contact" class="av-wgl-btn av-wgl-btn--outline">
-              <span class="av-wgl-btn__text">request a walk-through</span>
+              <span class="av-wgl-btn__text">Schedule Site Visit to Receive Complimentary Quote</span>
               <span class="av-wgl-btn__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
               </span>
@@ -166,38 +187,46 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     </section>
 
     <!-- ══════════════════════════════════════════════════════════
-         §2. WHY RED ROCKS — solid black background, reveal-top
-            (revision RRFPS-2: removed bg image, switched from
-            inspections.astro's `rr-why` pattern to a clean
-            black-band pattern)
+         §2. WHY RED ROCKS — earth-toned bg image with horizontal
+            gradient overlay (tan #E0D9D3 on the right, fading to
+            low-opacity tan on the left) so the new generated
+            rocky-mountain bg + black/red text reads cleanly.
          ══════════════════════════════════════════════════════════ -->
-    <section class="fs-whyrr rr-band rr-band--reveal-top text-rr-white">
+    <section class="fs-whyrr rr-band rr-band--reveal-top">
       <div class="fs-whyrr__bg" aria-hidden="true"></div>
       <div class="fs-whyrr__overlay" aria-hidden="true"></div>
       <div class="rr-container fs-container">
         <div class="fs-why-grid">
           <div class="fs-why-grid__left">
-            <p class="rr-eyebrow mb-5" style="color: rgba(255,255,255,0.7);">{fireSprinklerPage.intro.eyebrow}</p>
+            <p class="rr-eyebrow fs-whyrr__eyebrow mb-5">{fireSprinklerPage.intro.eyebrow}</p>
             <h2
-              class="font-display font-black uppercase tracking-tight"
-              style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em; color: #fff;"
+              class="font-display font-black tracking-tight fs-whyrr__title"
+              style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em;"
             >
-              {fireSprinklerPage.intro.title}
+              <span class="fs-whyrr__title-black">Your Trusted</span>
+              <br />
+              <span class="fs-whyrr__title-black">Partner for</span>
+              <br />
+              <span class="fs-whyrr__title-red">Fire Sprinkler</span>
+              <br />
+              <span class="fs-whyrr__title-red">Service &amp; Systems.</span>
             </h2>
           </div>
 
           <div class="fs-why-grid__right">
-            <p class="fs-why-grid__body" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: rgba(255,255,255,0.85); margin-top: 0;">
+            <p class="fs-whyrr__body" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 0;">
               {fireSprinklerPage.intro.body}
             </p>
-            <p class="fs-why-grid__body" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: rgba(255,255,255,0.85); margin-top: 1.25rem;">
+            <p class="fs-whyrr__body" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 1.25rem;">
               {fireSprinklerPage.intro.body2}
             </p>
 
-            <ul class="rr-why__bullets">
-              {fireSprinklerPage.intro.bullets.map((b) => (
-                <li class="rr-why__bullet">
-                  <span class="rr-why__bullet-mark" aria-hidden="true">▸</span>
+            <ul class="fs-whyrr__bullets">
+              {fireSprinklerPage.intro.bullets.map((b, i) => (
+                <li class="fs-whyrr__bullet">
+                  <span class="fs-whyrr__bullet-icon" aria-hidden="true">
+                    <iconify-icon icon={bulletIcons[i]} width="20" height="20"></iconify-icon>
+                  </span>
                   <span>{b}</span>
                 </li>
               ))}
@@ -208,50 +237,57 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     </section>
 
     <!-- ══════════════════════════════════════════════════════════
-         §3. ACCORDION — 5 panels of service scope
-            (multi-family.astro §2 challenges, dark image-bg)
+         §3. ACCORDION — 5 panels of service scope (RRFPS-3 revision)
+            Stacked centered layout over the fire-sprinkler service
+            bg image: red eyebrow + divider, white title (with red
+            period accent), centered white body, then white-rectangle
+            accordion rows with a red MDI icon, vertical divider,
+            black title, and a black caret on the right.
          ══════════════════════════════════════════════════════════ -->
-    <section class="fs-accordion fs-accordion--light">
+    <section class="fs-accordion fs-accordion--centered">
+      <div class="fs-accordion__bg" aria-hidden="true"></div>
+      <div class="fs-accordion__overlay" aria-hidden="true"></div>
       <div class="fs-accordion__inner fs-container">
-        <div class="av-dblh__subtitle">
-          <span class="divider-icon" set:html={diamondIcon} />
-          <span>{fireSprinklerPage.accordion.eyebrow}</span>
+        <div class="fs-accordion__head">
+          <p class="av-dblh__subtitle fs-accordion__eyebrow">
+            <span class="fs-accordion__rule" aria-hidden="true"></span>
+            <span>{fireSprinklerPage.accordion.eyebrow}</span>
+            <span class="fs-accordion__rule" aria-hidden="true"></span>
+          </p>
+          <h3 class="fs-accordion__title">{fireSprinklerPage.accordion.title}</h3>
+          <p class="fs-accordion__intro">{fireSprinklerPage.accordion.intro}</p>
         </div>
-        <h3 class="fs-accordion__title">{fireSprinklerPage.accordion.title}</h3>
 
-        <div class="fs-accordion__layout">
-          <div class="fs-accordion__left">
-            <p class="fs-accordion__intro">{fireSprinklerPage.accordion.intro}</p>
-          </div>
-
-          <div class="acc fs-accordion__right">
-            {fireSprinklerPage.accordion.panels.map((p) => (
-              <div class:list={['acc__panel', p.open && 'is-active']} data-acc-panel>
-                <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>
-                  <span class="acc__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
-                  </span>
-                  <span class="acc__title">{p.title}</span>
-                </button>
-                <div class="acc__content" hidden={!p.open}>
-                  <p>{p.body}</p>
-                  {p.bullets && p.bullets.length > 0 && (
-                    <ul class="acc__bullets">
-                      {p.bullets.map((b) => (
-                        <li class="acc__bullet">
-                          <span class="acc__bullet-mark" aria-hidden="true">▸</span>
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {p.footer && (
-                    <p class="acc__footer">{p.footer}</p>
-                  )}
-                </div>
+        <div class="acc fs-accordion__list">
+          {fireSprinklerPage.accordion.panels.map((p, i) => (
+            <div class:list={['acc__panel', 'acc__panel--card', p.open && 'is-active']} data-acc-panel>
+              <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>
+                <span class="acc__panel-icon" aria-hidden="true">
+                  <iconify-icon icon={accordionIcons[i]} width="22" height="22"></iconify-icon>
+                </span>
+                <span class="acc__title">{p.title}</span>
+                <span class="acc__caret" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                </span>
+              </button>
+              <div class="acc__content" hidden={!p.open}>
+                <p>{p.body}</p>
+                {p.bullets && p.bullets.length > 0 && (
+                  <ul class="acc__bullets">
+                    {p.bullets.map((b) => (
+                      <li class="acc__bullet">
+                        <span class="acc__bullet-mark" aria-hidden="true">▸</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {p.footer && (
+                  <p class="acc__footer">{p.footer}</p>
+                )}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -280,20 +316,19 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
              on the right using the SplitPanel visual rhythm but
              with class-name overrides for the black-bg case)
          ══════════════════════════════════════════════════════════ -->
-    <section class="fs-edge rr-band rr-band--reveal-top text-rr-white fs-split">
+    <section class="fs-edge rr-band rr-band--reveal-top fs-split">
       <div class="rr-container fs-container">
         <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
           <div class="order-2 md:order-1">
-            <p class="rr-eyebrow mb-5" style="color: rgba(255,255,255,0.7);">{fireSprinklerPage.advocacy.eyebrow}</p>
+            <p class="rr-eyebrow mb-5 fs-edge__eyebrow">{fireSprinklerPage.advocacy.eyebrow}</p>
             <h2
-              class="font-display font-black uppercase tracking-tight rr-reveal"
-              style="font-size: var(--rr-text-section); line-height: 0.95; color: #fff;"
+              class="font-display font-black uppercase tracking-tight rr-reveal fs-edge__title"
+              style="font-size: var(--rr-text-section); line-height: 0.95;"
             >
               {fireSprinklerPage.advocacy.title}
             </h2>
             <p
-              class="mt-6 rr-reveal"
-              style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.9);"
+              class="mt-6 rr-reveal fs-edge__body"
               data-reveal-delay="120"
             >
               {fireSprinklerPage.advocacy.body}
@@ -402,7 +437,7 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
             <h2 class="font-display font-black uppercase tracking-tight rr-reveal" style="font-size: var(--rr-text-section); line-height: 0.95;">
               {fireSprinklerPage.experience.title}
             </h2>
-            <p class="mt-6 rr-reveal text-rr-grey" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh);" data-reveal-delay="120">
+            <p class="mt-6 rr-reveal fs-experience__body" data-reveal-delay="120">
               {fireSprinklerPage.experience.body}
             </p>
             {fireSprinklerPage.experience.ctaLabel && fireSprinklerPage.experience.ctaHref && (
@@ -426,19 +461,11 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     </section>
 
     <!-- ══════════════════════════════════════════════════════════
-         §8. INDUSTRIES — shared IndustriesGrid component
-            (identical to About's "Industries We Serve" card grid,
-             single source of truth: about.industries in site.ts.
-             Replaced the former dark bg-image titles-only grid.)
-         ══════════════════════════════════════════════════════════ -->
-    <IndustriesGrid />
-
-    <!-- ══════════════════════════════════════════════════════════
          §9. SPLITPANEL — Protecting What Matters Most
-            (revision RRFPS-2: flipped from black-bg to white-bg +
-             black-text — image swapped to rrfps-protect-what-matters-most.jpg.
-             reveal-top kept so the rounded-corner transition matches §8's
-             dark-image band above.)
+            (moved UP from after §8 to before §8 so it sits directly
+             above the Industries grid — per client request 2026-08.
+             The reveal-top + #DBDADA bg give it a distinct edge
+             before the dark Industries bg-image band below.)
          ══════════════════════════════════════════════════════════ -->
     <!-- ══════════════════════════════════════════════════════════
          §9. Our Promise — Protecting What Matters Most (inlined
@@ -449,11 +476,11 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
       <div class="rr-container fs-container">
         <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
           <div class="order-2 md:order-1">
-            <p class="rr-eyebrow mb-5 text-rr-grey">{fireSprinklerPage.protecting.eyebrow}</p>
+            <p class="rr-eyebrow mb-5 fs-promise__eyebrow">{fireSprinklerPage.protecting.eyebrow}</p>
             <h2 class="font-display font-black uppercase tracking-tight rr-reveal" style="font-size: var(--rr-text-section); line-height: 0.95;">
               {fireSprinklerPage.protecting.title}
             </h2>
-            <p class="mt-6 rr-reveal text-rr-grey" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh);" data-reveal-delay="120">
+            <p class="mt-6 rr-reveal fs-promise__body" data-reveal-delay="120">
               {fireSprinklerPage.protecting.body}
             </p>
           </div>
@@ -467,39 +494,15 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     </section>
 
     <!-- ══════════════════════════════════════════════════════════
-         §10. CLOSING BAND — Ready to Partner + phone
-            (revision RRFPS-2: flipped from white-bg + black-text
-             to black-bg + white-text. DualCTA immediately below
-             remains white per user instruction.)
+         §8. INDUSTRIES — shared IndustriesGrid component
+            (identical to About's "Industries We Serve" card grid,
+             single source of truth: about.industries in site.ts.
+             Replaced the former dark bg-image titles-only grid.)
          ══════════════════════════════════════════════════════════ -->
-    <section class="rr-band bg-rr-black text-rr-white">
-      <div class="rr-container">
-        <div class="rr-reveal max-w-3xl">
-          <p class="rr-eyebrow mb-5" style="color: rgba(255,255,255,0.7);">{fireSprinklerPage.closing.eyebrow}</p>
-          <h2
-            class="font-display font-black uppercase tracking-tight"
-            style="font-size: var(--rr-text-section); line-height: 0.95; color: #fff;"
-          >
-            {fireSprinklerPage.closing.title}
-          </h2>
-          <p
-            class="mt-6"
-            style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.9);"
-          >
-            {fireSprinklerPage.closing.body}
-          </p>
-          <div class="mt-6 inline-flex items-center gap-2" style="font-size: var(--rr-text-lead); color: #fff;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"></path>
-            </svg>
-            <span><strong>Talk to a life safety expert:</strong> {fireSprinklerPage.closing.phone}</span>
-          </div>
-        </div>
-      </div>
-    </section>
+    <IndustriesGrid />
 
     <!-- ══════════════════════════════════════════════════════════
-        §10b. CLOSING CTA — site-wide ClosingCTA (full-width-bleed).
+        §10. CLOSING CTA — site-wide ClosingCTA (full-width-bleed).
               Same component, copy, image, and buttons as About.
         ══════════════════════════════════════════════════════════ -->
     <ClosingCTA
@@ -703,29 +706,53 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
   .ibox:hover .ibox__title,
   .ibox:hover .ibox__text { color: #ffffff; }
 
-  /* ---- §2. Why-red-rocks — now carries the fire-sprinkler service bg
-     image (moved from §3) with a dark overlay so white text stays legible. */
+  /* ---- §2. Why-red-rocks — earth-toned bg image + horizontal tan
+     gradient overlay (right side #E0D9D3 → low-opacity tan on left).
+     Background image is the new generated rocky-mountain photo; the
+     overlay tints it warm and ensures the text reads cleanly on the
+     right side while keeping the mountains visible on the left. ---- */
   .fs-whyrr {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background-color: #0d0d0b;
+    background-color: #E0D9D3;
   }
   .fs-whyrr__bg {
     position: absolute;
     inset: 0;
-    background-image: url('/images/rrfps-our-fire-sprinklers-services-2.jpg');
+    background-image: url('/images/rrfps-fire-sprinkler-section-2-bg.png');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.35);
     z-index: -2;
   }
+  /* Per request: 50% right = #E0D9D3 (solid), with a continuous
+     gradient that blends smoothly through the middle of the banner
+     (low-opacity tan on the left → solid tan on the right). The
+     gradient now has 4 evenly-spaced stops so the blend is visible
+     across the whole section rather than snapping at 50%. */
   .fs-whyrr__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(
+      90deg,
+      rgba(224, 217, 211, 0.30) 0%,
+      rgba(224, 217, 211, 0.55) 25%,
+      rgba(224, 217, 211, 0.85) 50%,
+      #E0D9D3 75%,
+      #E0D9D3 100%
+    );
     z-index: -1;
   }
+  /* Eyebrow — red per request. */
+  .fs-whyrr__eyebrow {
+    color: var(--rr-red, #d41226);
+  }
+  /* Title split — "Your Trusted Partner for" black, "...Service & Systems." red. */
+  .fs-whyrr__title-black { color: #0a0a0a; }
+  .fs-whyrr__title-red { color: var(--rr-red, #d41226); }
+  /* Body text — black per request. */
+  .fs-whyrr__body { color: #0a0a0a; }
+
   .fs-why-grid {
     display: grid;
     gap: 48px;
@@ -738,8 +765,40 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
       grid-template-columns: 5fr 7fr;
     }
   }
-  .fs-why-grid__left h2 { color: #ffffff; max-width: 16ch; }
-  .fs-why-grid__body { color: rgba(255, 255, 255, 0.85); }
+  .fs-why-grid__left h2 { max-width: 16ch; }
+
+  /* Bullets — each row has an icon on the left in a small red square,
+     plus the bullet text in black. */
+  .fs-whyrr__bullets {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .fs-whyrr__bullet {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    align-items: center;
+    gap: 14px;
+    color: #0a0a0a;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  .fs-whyrr__bullet-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    background: var(--rr-red, #d41226);
+    color: #ffffff;
+    flex-shrink: 0;
+  }
+  .fs-whyrr__bullet-icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
 
   /* Bullets — used in §2 (renamed from .rr-why__bullets etc.) */
   .rr-why__bullets {
@@ -764,7 +823,14 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     line-height: 1;
   }
 
-  /* ---- §3. Accordion (5 panels) — LIGHT variant (#DBDADA), dark text ---- */
+  /* ---- §3. Accordion (5 panels) — CENTERED STACKED layout
+     (RRFPS-3). Dark bg image of the fire-sprinkler service photo
+     (visible on the left), with a soft dark overlay so the centered
+     white text reads cleanly. Eyebrow is red and larger, title is
+     white (with a red period accent via data-line), body is white
+     and centered. Each accordion row is a white-rectangle card with a
+     red MDI icon, vertical divider, black title, and a black caret
+     on the right. */
   .fs-accordion {
     position: relative;
     isolation: isolate;
@@ -772,8 +838,30 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     padding-block: 110px;
     background-color: #0d0d0b;
   }
-  /* Light restyle: solid #DBDADA background, no image/overlay, dark text. */
-  .fs-accordion--light { background-color: #DBDADA; }
+  /* Centered variant: stacked centered layout over the fire-sprinkler
+     service photo (left half of the bg). */
+  .fs-accordion--centered { background-color: #0d0d0b; }
+  .fs-accordion__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/rrfps-our-fire-sprinkler-service-bg.jpg');
+    background-size: cover;
+    background-position: left center;
+    z-index: -2;
+  }
+  .fs-accordion__overlay {
+    position: absolute;
+    inset: 0;
+    /* Slight right-side dim so the centered white text stays legible
+       without obscuring the photo's left detail (red sprinkler). */
+    background: linear-gradient(
+      90deg,
+      rgba(13, 13, 11, 0.55) 0%,
+      rgba(13, 13, 11, 0.45) 50%,
+      rgba(13, 13, 11, 0.55) 100%
+    );
+    z-index: -1;
+  }
   .fs-accordion__inner {
     width: 100%;
     max-width: 1280px;
@@ -783,14 +871,38 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
   @media (min-width: 768px) {
     .fs-accordion__inner { padding-inline: 2.5rem; }
   }
-  .fs-accordion .av-dblh__subtitle {
-    margin-bottom: 23px;
-    display: flex;
-    color: rgba(255, 255, 255, 0.7);
+  /* Centered header — eyebrow + title + intro all stacked centered. */
+  .fs-accordion__head {
+    max-width: 800px;
+    margin: 0 auto 48px;
+    text-align: center;
+    color: #ffffff;
   }
-  .fs-accordion--light .av-dblh__subtitle { color: #d41226; }
+  /* Eyebrow — red, larger than default subtitle. The horizontal rules
+     flanking the label mimic the reference layout. */
+  .fs-accordion__eyebrow {
+    color: var(--rr-red, #d41226) !important;
+    font-family: "Space Grotesk", sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    justify-content: center !important;
+    margin-bottom: 22px !important;
+  }
+  .fs-accordion__rule {
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background: var(--rr-red, #d41226);
+    vertical-align: middle;
+  }
+  .fs-accordion__eyebrow > span:not(.fs-accordion__rule) {
+    margin: 0 12px;
+  }
+  /* Title — large white, with a red period accent via inline color. */
   .fs-accordion__title {
-    margin: 0 0 60px;
+    margin: 0 0 22px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
     font-size: clamp(36px, 5vw, 56px);
@@ -799,117 +911,146 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     line-height: 1.05;
     letter-spacing: -0.02em;
   }
-  .fs-accordion--light .fs-accordion__title { color: #0a0a0a; }
-  .fs-accordion__layout {
-    display: grid;
-    gap: 48px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 1024px) {
-    .fs-accordion__layout { grid-template-columns: 5fr 7fr; gap: 80px; }
-  }
+  /* Body intro — black, centered (revised 2026-08 to match the new
+     red-eyebrow/white-title/light-bg palette of the redesigned
+     "How We Work" section). */
   .fs-accordion__intro {
-    margin: 0;
+    margin: 0 auto;
+    max-width: 640px;
     font-size: var(--rr-text-lead);
     line-height: var(--rr-text-lead-lh);
-    color: rgba(255, 255, 255, 0.85);
+    color: #303030;
   }
-  .fs-accordion--light .fs-accordion__intro { color: #303030; }
 
-  /* Accordion container styles */
-  .acc { max-width: 720px; }
-  .acc__panel {
-    overflow: hidden;
-    padding: 15px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
-    transition: border-color 0.4s;
+  /* Accordion list — wider than 440px so the cards have more room
+     for title + caret with breathing space. */
+  .fs-accordion__list {
+    max-width: 800px;
+    margin-inline: auto;
   }
-  .fs-accordion--light .acc__panel { border-top-color: rgba(10, 10, 10, 0.18); }
-  .acc__panel:first-child { border-top: none; }
-  .acc__panel:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
-  .fs-accordion--light .acc__panel:last-child { border-bottom-color: rgba(10, 10, 10, 0.18); }
-  .acc__panel:hover,
-  .acc__panel.is-active,
-  .acc__panel:hover + .acc__panel,
-  .acc__panel.is-active + .acc__panel { border-top-color: #d41226; }
-  .acc__panel.is-active:last-child,
-  .acc__panel:hover:last-child { border-bottom-color: #d41226; }
-  .acc__header {
-    display: flex;
-    align-items: flex-start;
+  /* Note: the previous `.acc { max-width: 100% }` override was
+     removed — it was a leftover from the old wrapper layout and was
+     silently overriding the .fs-accordion__list max-width at
+     equal selector specificity (Astro scoped [data-astro-cid]). */
+
+  /* White-rectangle accordion card */
+  .acc__panel--card {
+    overflow: hidden;
+    margin-bottom: 10px;
+    background: #ffffff;
+    border-radius: 6px;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .acc__panel--card:last-child { margin-bottom: 0; }
+  .acc__panel--card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    transform: translateY(-1px);
+  }
+  .acc__panel--card.is-active {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  }
+  /* The header itself becomes the click target with the icon | title
+     | caret grid. The title column stretches (1fr) to push the caret
+     to the far right. No vertical divider between icon and title. */
+  .acc__panel--card .acc__header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 18px;
     width: 100%;
     background: none;
     border: none;
-    padding: 13px 0;
+    padding: 18px 24px;
     cursor: pointer;
     text-align: left;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: 24px;
-    letter-spacing: -0.02em;
-    color: #ffffff;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: #0a0a0a;
   }
-  .fs-accordion--light .acc__header { color: #0a0a0a; }
-  .acc__icon {
-    display: inline-flex;
-    align-self: flex-start;
-    margin: 8px 18px -15px 2px;
-    color: #d41226;
+  /* Icon — red MDI glyph on the left of the card. */
+  .acc__panel-icon {
+    display: grid;
+    place-items: center;
+    color: var(--rr-red, #d41226);
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+  .acc__panel-icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 0.6;
+  }
+  /* Title (black) — fills the 1fr middle column so the caret is
+     pushed to the far right of the card. */
+  .acc__panel--card .acc__title {
+    color: #0a0a0a;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  /* Caret — black arrow on the right; rotates 180° when open. */
+  .acc__caret {
+    display: grid;
+    place-items: center;
+    color: #0a0a0a;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
     transform: rotate(90deg);
-    transition: transform 0.4s;
+    transition: transform 0.3s ease;
   }
-  .acc__panel.is-active .acc__icon { transform: rotate(-90deg); }
-  .acc__icon svg { width: 18px; height: 16px; }
-  .acc__content {
-    padding: 6px 5px 14px 39px;
-    color: rgba(255, 255, 255, 0.85);
+  .acc__panel--card.is-active .acc__caret { transform: rotate(-90deg); }
+  .acc__caret svg { width: 14px; height: 12px; }
+
+  /* Open content — black text on white card surface. */
+  .acc__panel--card .acc__content {
+    padding: 4px 24px 22px 70px;
+    color: #303030;
+    background: #ffffff;
     font-size: var(--rr-text-body);
     line-height: var(--rr-text-body-lh);
   }
-  .fs-accordion--light .acc__content { color: #303030; }
-  .acc__content p { margin: 0; }
-  .acc__bullets {
+  .acc__panel--card .acc__content p { margin: 0; }
+  .acc__panel--card .acc__bullets {
     list-style: none;
     margin: 14px 0 0;
     padding: 0;
     display: grid;
     gap: 8px;
   }
-  .acc__bullet {
+  .acc__panel--card .acc__bullet {
     display: grid;
     grid-template-columns: 22px 1fr;
     align-items: baseline;
     gap: 4px;
-    color: rgba(255, 255, 255, 0.85);
+    color: #303030;
     font-size: var(--rr-text-body);
     line-height: var(--rr-text-body-lh);
   }
-  .fs-accordion--light .acc__bullet { color: #303030; }
-  .acc__bullet-mark {
-    color: #d41226;
+  .acc__panel--card .acc__bullet-mark {
+    color: var(--rr-red, #d41226);
     font-size: 16px;
     line-height: 1;
   }
-  .acc__footer {
+  .acc__panel--card .acc__footer {
     margin: 14px 0 0 !important;
     font-style: italic;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(10, 10, 10, 0.7);
   }
-  .fs-accordion--light .acc__footer { color: rgba(10, 10, 10, 0.7); }
 
-  /* ---- §5. Advocacy image — taller container to match text column (RRFPS-2)
-   * The advocacy image (1280×2275, portrait) is allowed to fill the
-   * column at its natural aspect ratio. On desktop the column min-height
-   * tracks the text column so left/right line up evenly. */
-  .fs-why-img__wrap {
-    /* Container grows to at least 480px on desktop so the image column
-     * visually matches the text column's natural height. */
-    min-height: 360px;
+  /* ---- §5. Advocacy image — fixed height of 480px (capped) so the
+   * image container is shorter than the text column on the left.
+   * Vertically centered within its row via `align-items`. */
+  .fs-why-img {
+    display: flex;
+    align-items: center;
   }
-  @media (min-width: 1024px) {
-    .fs-why-img__wrap {
-      min-height: 520px;
-    }
+  .fs-why-img__wrap {
+    width: 100%;
+    height: 480px;
   }
   .fs-why-img__img {
     /* Image fills its wrap, preserves aspect, crops cleanly inside. */
@@ -967,11 +1108,23 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     color: #ffffff;
   }
 
-  /* ---- §5. Our Edge — brand-red background, white text, black button ---- */
+  /* ---- §5. Our Edge — #DBDADA background, black text, black button.
+   * Image container matches text column height (no fixed min-height)
+   * so the two columns align evenly on desktop. */
   .fs-edge {
-    background-color: #d41226;
+    background-color: #DBDADA;
   }
-  /* Black CTA button on the red field: black fill, white text, black border;
+  /* Text colors — black on the #DBDADA background. */
+  .fs-edge__eyebrow {
+    color: var(--rr-grey, #626262);
+  }
+  .fs-edge__title { color: #0a0a0a; }
+  .fs-edge__body {
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #303030;
+  }
+  /* Black CTA button on the #DBDADA field: black fill, white text, black border;
      inverts to white-on-black on hover for affordance. */
   .fs-edge__cta {
     --av-wgl-btn-bg: #0a0a0a;
@@ -1056,8 +1209,23 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
   /* The .fs-accordion__inner carries its own max-width/padding; align it too. */
   .fs-accordion__inner.fs-container { max-width: 1340px; padding-inline: 80px; }
 
-  /* ---- §9. Our Promise — light #DBDADA background per client ---- */
+  /* ---- §9. Our Promise — light #DBDADA background, red eyebrow,
+   * black body text (per client 2026-08). */
   .fs-promise { background-color: #DBDADA; }
+  .fs-promise__eyebrow { color: var(--rr-red, #d41226); }
+  .fs-promise__body {
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #0a0a0a;
+  }
+
+  /* ---- §7. Experience You Can Trust — white-bg SplitPanel; body
+   * text is black (per client 2026-08). */
+  .fs-experience__body {
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #0a0a0a;
+  }
 
   /* ---- §8. Industries — bg-image 14-card grid ---- */
   .fs-industries {

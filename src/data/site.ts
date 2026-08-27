@@ -1114,7 +1114,7 @@ export const fireSprinklerPage = {
     title: 'Advocacy That Protects Your Investment.',
     body:
       'Advocacy is one of the core values that defines Red Rocks Fire Protection Services and one of the qualities that sets us apart. Fire codes, NFPA standards, local jurisdiction requirements, and compliance regulations continue to evolve. Staying informed requires ongoing education and industry involvement. Our team continually monitors these changes so we can provide proactive guidance that helps our clients remain compliant while avoiding unnecessary surprises. We believe our customers deserve more than a contractor who simply completes inspections or repairs. They deserve a trusted advisor who communicates clearly, explains recommendations honestly, and helps them make informed decisions that protect both their property and the people who depend on it.',
-    ctaLabel: 'Schedule a Service Call',
+    ctaLabel: 'Schedule Site Visit to Receive Complimentary Quote',
     ctaHref: '/contact',
     image: '/images/rrfps-advocacy-that-protects-your-investment.jpg',
     imageAlt: 'Red Rocks Fire Protection advocacy in action',
