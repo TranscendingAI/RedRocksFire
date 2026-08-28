@@ -125,12 +125,6 @@ const credentials = [
                   <span class="mt-card__name">{m.name}</span>
                 </div>
                 <div class="mt-card__socials" aria-label={`${m.name} social media`}>
-                  <span class="mt-card__social" aria-label="X (Twitter)">
-                    <iconify-icon icon="mdi:twitter" width="20" height="20"></iconify-icon>
-                  </span>
-                  <span class="mt-card__social" aria-label="Facebook">
-                    <iconify-icon icon="mdi:facebook" width="20" height="20"></iconify-icon>
-                  </span>
                   <span class="mt-card__social" aria-label="Instagram">
                     <iconify-icon icon="mdi:instagram" width="20" height="20"></iconify-icon>
                   </span>
@@ -162,12 +156,19 @@ const credentials = [
     </section>
 
     {/* ══════════════════════════════════════════════════════════
-       §4. CLOSING CTA — shared component, meet-the-team-specific copy
+       §4. CLOSING CTA — shared component, meet-the-team-specific copy.
+            The default About CTA's "Meet the Team" button is replaced
+            with "Testimonials" since this page *is* the team page.
        ══════════════════════════════════════════════════════════ */}
     <ClosingCTA
       backgroundImage={ctaBg}
       paragraphs={[
         'Choosing the right life safety partner is about more than installing equipment and meeting code. It is about trusting the team you put in front of your residents, your tenants, and your inspectors — and knowing the people behind the truck have real accountability for the work they do.',
+      ]}
+      buttons={[
+        { label: 'Testimonials',         icon: 'mdi:comment-quote-outline',  href: '/testimonials' },
+        { label: 'Our Services',         icon: 'mdi:cog-outline',            href: '/services' },
+        { label: 'The RRFPS Difference', icon: 'mdi:shield-star-outline',    href: '/about#rrfps-difference' },
       ]}
     />
 
@@ -246,7 +247,8 @@ const credentials = [
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    /* 1/4 image + 3/4 quote per client request 2026-08 */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
     background: #EEECED;
     overflow: hidden;
   }

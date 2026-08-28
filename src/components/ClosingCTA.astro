@@ -21,6 +21,14 @@ interface Props {
   paragraphs?: readonly string[];
   backgroundImage?: string;
   /**
+   * Optional button override. When supplied, replaces the shared
+   * about.closingCta.buttons set; otherwise the component falls back
+   * to those defaults. Each button has { label, icon, href }. The
+   * icon string follows Iconify's `prefix:name` convention (e.g.
+   * `mdi:account-group`).
+   */
+  buttons?: ReadonlyArray<{ label: string; icon: string; href: string }>;
+  /**
    * When true (default), the background photo is mirrored horizontally via
    * `transform: scaleX(-1)` so the "weight" of a stock image faces the
    * copy panel on the right side of the gradient. Set to false when the
@@ -30,11 +38,12 @@ interface Props {
   flipBackground?: boolean;
 }
 
-const { paragraphs, backgroundImage, flipBackground = true } = Astro.props;
+const { paragraphs, backgroundImage, buttons, flipBackground = true } = Astro.props;
 
 const cta = about.closingCta;
 const introParagraphs = paragraphs ?? cta.paragraphs;
 const bgImage = backgroundImage ?? cta.backgroundImage;
+const buttonsToRender = buttons ?? cta.buttons;
 
 const arrowPath =
   'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
@@ -96,7 +105,7 @@ const flameIcon =
       </p>
 
       <div class="cta__buttons">
-        {cta.buttons.map((button) => (
+        {buttonsToRender.map((button) => (
           <a href={button.href} class="cta__btn">
             <span class="cta__btn-icon" aria-hidden="true">
               <iconify-icon icon={button.icon} width="22" height="22"></iconify-icon>
