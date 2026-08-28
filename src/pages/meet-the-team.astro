@@ -256,6 +256,12 @@ const credentials = [
     position: relative;
     aspect-ratio: 1 / 0.92;
     overflow: hidden;
+    /* Fill the full grid-row height (matches the taller copy column) so
+       the image stretches to the bottom of the box instead of leaving
+       empty grey space beneath it. The aspect-ratio above is preserved
+       but only acts as a fallback when the row is content-sized. */
+    height: 100%;
+    min-height: 0;
   }
   .mt-quote__image img {
     display: block;
@@ -266,10 +272,21 @@ const credentials = [
   }
   .mt-quote__copy {
     position: relative;
-    padding: 60px 64px 56px;
+    padding: 60px 64px 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* Top-aligned (was: justify-content: center). The 1/4 + 3/4 column
+       split makes the copy column naturally taller than the image, so
+       centering the copy left an empty grey band under the photo.
+       Anchoring the copy to the top of its column removes that gap and
+       keeps the image stretched to the box's bottom edge. */
+    justify-content: flex-start;
+  }
+  /* Desktop only — bump the left padding so the quote text never
+     overlaps the image column on the 1/4 + 3/4 split. Mobile uses the
+     stacked layout below and keeps the original 64px. */
+  @media (min-width: 901px) {
+    .mt-quote__copy { padding-left: 125px; }
   }
   .mt-quote__mark {
     font-family: "Space Grotesk", serif;
@@ -297,7 +314,10 @@ const credentials = [
     letter-spacing: -0.02em;
   }
   .mt-quote__author {
-    margin-top: 32px;
+    /* Tightened from 32px → 14px (2026-08 client edit) so the author +
+       tagline feel visually attached to the quote instead of leaving
+       empty grey space under the now-narrower image column. */
+    margin-top: 14px;
     color: #0a0a0a;
     font-family: "Space Grotesk", sans-serif;
     font-size: 17px;
