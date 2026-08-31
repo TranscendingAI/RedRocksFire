@@ -1080,7 +1080,7 @@ export const fireSprinklerPage = {
         body:
           'In addition to fire sprinkler systems, we provide comprehensive life safety services including:',
         bullets: [
-          'inspections',
+          'Inspections',
           'Fire Alarm Service & Systems',
           'Monitoring Services',
           'Backflow Prevention Assemblies',
