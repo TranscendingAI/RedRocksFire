@@ -175,7 +175,7 @@ const contactMenu = {
   intro: {
     title: 'Our Location',
     subhead: "Let's Protect What Matters Most – Together.",
-    body: 'Reach the team that protects property owners and managers across the Colorado Front Range – from fire alarms, sprinklers, inspections, to fire safety code requirements, 24-hour emergency response, and much more.',
+    body: '',
   },
   /** Address encoded for Google Maps embed; URL-escaped once. Matches the
    *  display string in contactMenu.info.address.value above. */
@@ -390,10 +390,10 @@ const socials = [
                           <div class="avh__contact-col">
                             <p class="avh__contact-title">{contactMenu.intro.title}</p>
                             {/* Subhead + body restored (2026-08) — column 2 has the
-                                "Our Location" title, a red subhead, the descriptive
-                                paragraph, then the map. Per client edit v4. */}
+                                "Our Location" title, a red subhead, then the map.
+                                (Body paragraph removed per client edit, 2026-08-31.)
+                                Per client edit v4. */}
                             <p class="avh__contact-subhead">{contactMenu.intro.subhead}</p>
-                            <p class="avh__contact-body">{contactMenu.intro.body}</p>
                             <div class="avh__contact-map">
                               <iframe
                                 src={contactMenu.mapsEmbedUrl}
