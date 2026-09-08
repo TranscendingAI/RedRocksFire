@@ -1,0 +1,725 @@
+---
+/**
+ * Message From The CEO — /about/ceo-message/
+ *
+ * Sub-page of /about. Brian Kakac's first-person note to prospective
+ * and current customers, plus a closing "Protecting Today. Building
+ * A Safer Tomorrow." values band.
+ *
+ * Design DNA (mirrors the rest of the site 1:1):
+ *   • about.astro              — ptbanner (full-bleed hero + breadcrumbs),
+ *                                `.section-inner` rhythm (1120px max,
+ *                                110/80px padding), `.section-title`
+ *                                typography, `.section-light` /
+ *                                `.section-dark` color blocks.
+ *   • meet-the-team.astro      — 1/4 image + 3/4 quote boxed layout
+ *                                (grid-template-columns:
+ *                                minmax(0,1fr) minmax(0,3fr))
+ *                                used for the CEO quote box. The
+ *                                same container, copy column, and
+ *                                breakpoints carry over here.
+ *   • fire-sprinkler-service-and-systems.astro
+ *                              — `.fs-why` bg-image + dark overlay
+ *                                pattern adapted for the closing
+ *                                "Protecting Today…" band.
+ *
+ * Sections, in order:
+ *   0. ptbanner hero (about.astro §0 pattern)
+ *   1. CEO message — 1/4 image (Brian side banner) + 3/4 copy column
+ *      on a light cream background, with a handwritten signature
+ *      glyph + nameplate at the bottom
+ *   2. Protecting Today — full-width bg-image band with centered
+ *      title + 4-icon values row at the bottom
+ *
+ * All copy comes verbatim from
+ * reference/content/rrfps-message-from-the-ceo-website-page.md.
+ *
+ * Image assets (all supplied by the client):
+ *   • §0 ptbanner   — rrfps-ceo-message-hero-bg.jpg (placeholder)
+ *   • §1 left col   — rrfps-brian-kakac-ceo-message-side-banner.png
+ *                     (725×2170 portrait, pre-designed with the
+ *                     "We exist to protect lives and property."
+ *                     quote + nameplate below the photo — we render
+ *                     it as a single tall image so the client's
+ *                     designed composition is preserved as-is)
+ *   • §2 background — rrfps-protecting-today-building-safer-tomorrow.png
+ *                     (1672×941 landscape, mountain range)
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Diamond divider icon — used in the double-heading subtitle pattern
+// across about.astro, fire-sprinkler-service-and-systems.astro, etc.
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+/* ══════════════════════════════════════════════════════════
+ * §0. PAGE-TITLE BANNER IMAGE
+ * PLACEHOLDER: rrfps-fire-sprinkler-systems-hero.jpg
+ *   Wide, on-brand dark hero photo already in /public/images.
+ *   Swap for a dedicated "Message from the CEO" hero photo when
+ *   supplied.
+ * ══════════════════════════════════════════════════════════ */
+const bannerImage = '/images/rrfps-fire-sprinkler-systems-hero.jpg';
+
+/* ══════════════════════════════════════════════════════════
+ * §1. CEO MESSAGE
+ * Brian's side banner image (725×2170 portrait, pre-designed
+ * with the "We exist to protect lives and property." quote +
+ * nameplate below the photo). Renders as a single tall image
+ * in the 1/4 column with object-position: top so Brian's face
+ * sits above the fold and the white text panel below flows
+ * naturally past the fold.
+ * ══════════════════════════════════════════════════════════ */
+const ceoImage = '/images/rrfps-brian-kakac-ceo-message-side-banner.png';
+
+/* ══════════════════════════════════════════════════════════
+ * §2. CLOSING BAND BACKGROUND
+ * 1672×941 mountain landscape, already dark enough at the top
+ * (sky) for white centered text with a moderate overlay.
+ * ══════════════════════════════════════════════════════════ */
+const protectingBg = '/images/rrfps-protecting-today-building-safer-tomorrow.png';
+
+/* ══════════════════════════════════════════════════════════
+ * PAGE CONTENT — verbatim from
+ * reference/content/rrfps-message-from-the-ceo-website-page.md
+ *
+ * Two content buckets:
+ *   • paragraphs[]       — every body paragraph in order, EXCEPT
+ *     "Sincerely," + the nameplate line. Rendered as <p> tags
+ *     in the 3/4 right column.
+ *   • finalSalutation    — "Sincerely," + the handwritten
+ *     signature + the printed name/title block. Rendered at
+ *     the bottom of the 3/4 column with the Allura Google Font
+ *     for the signature glyph.
+ *
+ * The greeting line ("Greetings from the CEO & Owner of Red Rocks
+ * Fire Protection Services.") is wrapped in **bold** in the .md
+ * file — surfaces here as the page's opening salutation, styled
+ * larger than the body paragraphs so it reads as the section's
+ * lead-in rather than another body line.
+ * ══════════════════════════════════════════════════════════ */
+
+/* Lead-in greeting — the bold line from the top of the .md file.
+ * Renders larger than the body text (same approach as the
+ * .os-intro__body p:first-of-type rule on the Our Story page). */
+const greeting = 'Greetings from the CEO & Owner of Red Rocks Fire Protection Services.';
+
+/* Body paragraphs — in order from the .md file, excluding the
+ * greeting (above), "Sincerely," and the signature line (below).
+ * Paraphrased section-by-section:
+ *   [0]  Intro / "Hi, I'm Brian Kakac..."
+ *   [1]  Since 2010 / protecting what matters
+ *   [2]  Built alongside father John
+ *   [3]  Father's influence continues
+ *   [4]  Our purpose is simple (protect lives & property)
+ *   [5]  Responsibility to employees + team culture
+ *   [6]  Partnership framing
+ *   [7]  One Vendor Life Safety Solution
+ *   [8]  We understand your challenges
+ *   [9]  Grateful for trust
+ *   [10] Looking for a responsive partner / CTA */
+const paragraphs = [
+  'Hi, I’m Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services.',
+  'Since 2010, we’ve proudly served property owners and managers across Colorado, helping protect what matters most: your employees, your residents, your tenants, your properties, your buildings, and your peace of mind. We live here, we work here, and we’re deeply committed to protecting the communities we serve like they’re our own. I would love the opportunity to earn your business.',
+  'Red Rocks Fire Protection Services was built alongside my father, John Kakac, whose leadership, work ethic, and commitment to people helped shape the foundation of this company from the very beginning. He believed in doing things the right way, treating people with respect, standing behind your work, and always showing up for others. Those values continue to guide how we operate every day.',
+  'Although my father has since passed, his influence remains deeply woven into our company, our team culture, and the way we serve our customers. It is a privilege to carry forward the vision we built together and continue growing a company rooted in family values, accountability, hard work, and genuine care for people.',
+  'At Red Rocks Fire Protection Services, our purpose is simple, but incredibly important: we exist to protect lives and property.',
+  'We also believe it is both a responsibility and a privilege to serve not only our customers, but also the employees and team members who help make this company what it is today. We have worked hard to build a culture where people support one another, work together, and take pride in doing meaningful work that truly impacts the safety of others.',
+  'When you partner with us, you’re not just hiring a fire protection company, you’re gaining a team that understands the responsibility you carry every day.',
+  'We built our company around a One Vendor Life Safety Solution, giving you one trusted partner to manage inspections, service, repairs, and compliance.',
+  'We understand your challenges: tight timelines, evolving regulations, and the responsibility of keeping people safe. Our job is to simplify that process and give you confidence.',
+  'We are grateful for the trust our customers place in us and proud of the long-term relationships we continue to build throughout Colorado. Every opportunity to serve is something we never take for granted.',
+  'If you’re looking for a responsive, experienced partner who shows up when it matters most, we’re ready and would love the opportunity to earn your business.',
+] as const;
+
+/* Closing block rendered at the bottom of the 3/4 column.
+ * Layout:
+ *   Sincerely,
+ *   [Brian Kakac signature — Allura font, large]
+ *   Brian Kakac
+ *   CEO & Owner
+ *   Red Rocks Fire Protection Services */
+const finalSalutation = 'Sincerely,';
+
+/* The four values rendered as the bottom row of §2. Icon strings
+ * follow Iconify's prefix:name convention. Each value renders with
+ * its icon on the left, the word in uppercase, all white on the
+ * bg-image section, separated by a vertical border.
+ *
+ * Icons deliberately match the MDI set used across the Header
+ * mega-menu (About → mdi:landscape, Meet the Team → mdi:account-group,
+ * Our Promise → mdi:handshake) so the values row feels native to
+ * the site's existing icon vocabulary rather than importing a
+ * second icon family (Solar) for a single section. */
+const values = [
+  { icon: 'mdi:badge',            word: 'PEOPLE' },
+  { icon: 'mdi:account-group',    word: 'PARTNERSHIP' },
+  { icon: 'mdi:image-filter-hdr', word: 'COMMUNITY' },
+  { icon: 'mdi:handshake',        word: 'TRUST' },
+] as const;
+---
+
+<BaseLayout
+  title="Message From The CEO | Red Rocks Fire Protection Services"
+  description="A personal note from Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services — on family values, advocacy, accountability, and the responsibility behind protecting lives and property across Colorado."
+>
+  {/* Google Fonts — load "Allura" for the handwritten-signature
+      glyph + "Space Grotesk" (already loaded by the site, but
+      explicit here so the signature renders even if BaseLayout
+      load order shifts). Dancing Script (used by ClosingCTA) is
+      intentionally NOT reused — it reads as decorative-cursive,
+      not as a real signature. Allura is a cleaner, more authentic
+      "actual signature" feel. */}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mr+De+Haviland&display=swap" />
+
+  <div class="av-page ceo-message">
+
+    {/* ══════════════════════════════════════════════════════════
+         §0. PAGE-TITLE BANNER (about.astro §0 pattern)
+         ══════════════════════════════════════════════════════════ */}
+    <header class="ptbanner">
+      <div
+        class="ptbanner__bg"
+        style={`background-image: url('${bannerImage}');`}
+        aria-hidden="true"
+      ></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Message From The CEO.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/about/">About</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Message From The CEO</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ══════════════════════════════════════════════════════════
+         §1. CEO MESSAGE — boxed 1/4 image + 3/4 copy layout
+         Mirrors meet-the-team.astro §1 (.mt-quote__box) 1:1: same
+         grid columns, same cream (#EEECED) bg, same 1400px max
+         outer container. Reuses the established `.section-light`
+         rhythm for the surrounding section so the box sits inside
+         a white page band (which lets the cream box pop visually
+         without competing with neighbouring sections).
+         ══════════════════════════════════════════════════════════ */}
+    <section class="cm-quote section-light">
+      <div class="cm-quote__box">
+        <div class="cm-quote__image">
+          <img
+            src={ceoImage}
+            alt="Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services — black-and-white portrait with the quote 'We exist to protect lives and property.'"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div class="cm-quote__copy">
+          <p class="cm-quote__greeting">{greeting}</p>
+          <div class="cm-quote__body">
+            {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          <div class="cm-quote__signoff">
+            <p class="cm-quote__salutation">{finalSalutation}</p>
+            {/* Signature glyph — Allura font (loaded above) renders
+                 "Brian Kakac" as a handwritten-looking flourish.
+                 `font-family: 'Allura', cursive` falls back to a
+                 system cursive if the Google Font fails to load. */}
+            <p class="cm-quote__signature">Brian Kakac</p>
+            <p class="cm-quote__nameplate"><strong>Brian Kakac</strong></p>
+            <p class="cm-quote__title">CEO &amp; Owner</p>
+            <p class="cm-quote__company">Red Rocks Fire Protection Services</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §2. PROTECTING TODAY. BUILDING A SAFER TOMORROW.
+         Full-width bg-image band with dark overlay + centered
+         title + 4-icon values row. Mirrors fire-sprinkler-
+         service-and-systems.astro's `.fs-why` bg + overlay
+         pattern (RRFPS-2 revision): bg image is darkened in two
+         passes — a `filter: brightness(0.35)` on the bg layer
+         PLUS a `rgba(0,0,0,0.5)` ::after overlay — so the white
+         centered title + icon row read clearly against the
+         mountain backdrop regardless of which part of the photo
+         scrolls into view.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="cm-protecting">
+      <div class="cm-protecting__bg" aria-hidden="true"></div>
+      <div class="cm-protecting__overlay" aria-hidden="true"></div>
+
+      <div class="rr-container cm-protecting__inner">
+        <h2 class="cm-protecting__title">Protecting Today.<br />Building A Safer Tomorrow.</h2>
+
+        <div class="cm-protecting__values">
+          {values.map((value) => (
+            <div class="cm-protecting__value">
+              <span class="cm-protecting__value-icon" aria-hidden="true">
+                <iconify-icon icon={value.icon} width="32" height="32"></iconify-icon>
+              </span>
+              <span class="cm-protecting__value-word">{value.word}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * Shared .section-light / .section-inner / .ptbanner /
+   * .ptbanner__bg / .ptbanner__overlay / .ptbanner__inner /
+   * .ptbanner__title / .ptbanner__breadcrumbs rules are
+   * Astro-scoped per page, so we own local copies that mirror
+   * about.astro's values 1:1.
+   * ══════════════════════════════════════════════════════════ */
+  .section-light { background: #ffffff; color: #0a0a0a; }
+  .section-inner {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 110px 80px;
+  }
+
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    margin-bottom: 60px;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__breadcrumbs a:hover { color: rgba(255, 255, 255, 0.72); }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §1. CEO MESSAGE BOX
+   * Mirrors meet-the-team.astro §1 (.mt-quote__box) 1:1 — same
+   * 1400px outer, 1/4 + 3/4 grid, cream (#EEECED) bg, copy column
+   * padding. Two adjustments specific to this page:
+   *   1. The image fills its grid track top-to-bottom (height:
+   *      100% + min-height: 0) so the side-banner's tall portrait
+   *      aspect ratio doesn't leave a horizontal cream band above
+   *      or below it.
+   *   2. The image sits inside the box at its natural aspect
+   *      ratio via object-fit: cover + object-position: top so
+   *      Brian's face is anchored above the fold even when the
+   *      box is taller than the viewport on small screens.
+   * ══════════════════════════════════════════════════════════ */
+  .cm-quote {
+    background: #ffffff;
+    /* Match meet-the-team.astro's tighter top padding (55px) so the
+     * white-space below the hero feels consistent across sub-pages. */
+    padding: 55px 80px 96px;
+  }
+  .cm-quote__box {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    /* 1/3 image + 2/3 copy per client revision — wider copy column
+     * gives the message text room to breathe and matches the visual
+     * weight of the tall side-banner image. Was 1/4 + 3/4. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    /* No background fill on the box — the parent .cm-quote section
+     * is section-light (white), so the box reads as a clean white
+     * band with just the side-banner image defining the left
+     * column. The original cream (#EEECED) panel was removed per
+     * client request. */
+    overflow: hidden;
+  }
+  .cm-quote__image {
+    position: relative;
+    /* Fill the full grid-row height (matches the taller copy column)
+     * so the side-banner's portrait stretches to the bottom of the
+     * box instead of leaving empty cream space beneath it. */
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    background: #0d0d0b;
+  }
+  .cm-quote__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Anchor Brian's face to the top of the frame — the source
+     * image has the photo in the upper portion and the "We exist
+     * to protect lives and property." quote panel below it. */
+    object-position: center top;
+  }
+  .cm-quote__copy {
+    padding: 60px 64px 40px;
+    display: flex;
+    flex-direction: column;
+  }
+  @media (min-width: 901px) {
+    /* Desktop: bump the left padding on the copy column so the
+     * first line of text doesn't crowd the image column's right
+     * edge. Matches meet-the-team.astro's desktop treatment. */
+    .cm-quote__copy { padding-left: 125px; }
+  }
+
+  /* Lead-in greeting — same lead-in treatment as .os-intro__body
+   * p:first-of-type on the Our Story page: larger type, tighter
+   * margin to the eyebrow above, black to read as the section's
+   * headline rather than another body line. */
+  .cm-quote__greeting {
+    margin: 0 0 36px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: var(--rr-text-lead);
+    font-weight: 700;
+    line-height: var(--rr-text-lead-lh);
+    letter-spacing: -0.01em;
+  }
+  .cm-quote__body p {
+    margin: 22px 0 0;
+    color: #303030;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §1. SIGNOFF BLOCK (rendered at the bottom of the 3/4 column)
+   * Layout:
+   *   Sincerely,
+   *   [Brian Kakac — handwritten signature in Allura]
+   *   Brian Kakac
+   *   CEO & Owner
+   *   Red Rocks Fire Protection Services
+   * Top padding separates the signoff from the last body paragraph.
+   * The signature glyph is intentionally the only Allura element on
+   * the page — gives it clear hierarchy against the sans-serif
+   * body text around it.
+   * ══════════════════════════════════════════════════════════ */
+  .cm-quote__signoff {
+    margin-top: 48px;
+  }
+  .cm-quote__salutation {
+    margin: 0;
+    color: #303030;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  /* Allura swapped for Mr De Haviland per client revision — a more
+   * realistic autograph feel (thin connected-script with a strong
+   * baseline slant). Falls back to cursive if the Google Font fails
+   * to load. */
+  .cm-quote__signature {
+    margin: 8px 0 0;
+    color: #0a0a0a;
+    font-family: 'Mr De Haviland', cursive;
+    /* Mr De Haviland ships much narrower than Allura, so the size
+     * needed to come down a touch (~36-44px reads as a real auto-
+     * graph at desktop scales; was 40-56 with Allura). */
+    font-size: clamp(34px, 3.8vw, 46px);
+    line-height: 1;
+    /* Slight left lean — actual signatures are rarely perfectly
+     * vertical. -3deg reads as natural without looking slanted. */
+    transform: rotate(-3deg);
+    transform-origin: left center;
+    /* Indent slightly so the rotated signature starts where the
+     * reader's eye expects, not flush with the salutation. */
+    margin-left: 8px;
+  }
+  .cm-quote__nameplate {
+    margin: 18px 0 0;
+    color: #0a0a0a;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .cm-quote__nameplate strong {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .cm-quote__title {
+    margin: 4px 0 0;
+    color: #303030;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .cm-quote__company {
+    margin: 2px 0 0;
+    color: #303030;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §2. PROTECTING TODAY. — full-width bg-image band
+   * Mirrors the `.fs-why` pattern from
+   * fire-sprinkler-service-and-systems.astro §6:
+   *   - `position: relative; isolation: isolate;` so the bg + overlay
+   *     stack behind the content via z-index.
+   *   - bg image uses `filter: brightness(0.35)` for an in-image
+   *     darken pass.
+   *   - A `::after` `rgba(0,0,0,0.5)` overlay adds the second
+   *     darken pass so the title + icons always read against the
+   *     brightest part of the photo (the sky in this case).
+   * ══════════════════════════════════════════════════════════ */
+  .cm-protecting {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 130px;
+    color: #ffffff;
+    background-color: #0d0d0b;
+  }
+  @media (min-width: 768px) { .cm-protecting { padding-block: 170px; } }
+  .cm-protecting__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/rrfps-protecting-today-building-safer-tomorrow.png');
+    background-size: cover;
+    background-position: center;
+    /* First darken pass — drops the photo's dynamic range so the
+     * bright sky doesn't blow out the white title text. */
+    filter: brightness(0.35);
+    z-index: -2;
+  }
+  .cm-protecting::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Second darken pass — adds a uniform black overlay on top of
+     * the brightness-filtered image to guarantee text legibility
+     * regardless of which part of the photo is behind the title. */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  .cm-protecting__inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    text-align: center;
+  }
+  @media (min-width: 768px) {
+    .cm-protecting__inner { padding-inline: 2.5rem; }
+  }
+  .cm-protecting__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(40px, 6vw, 88px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    text-transform: none;
+  }
+  .cm-protecting__values {
+    margin-top: 70px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    /* Width bumped from 880px to 1080px so the longest word
+     * (PARTNERSHIP at ~160px wide in Space Grotesk Bold at the
+     * current font-size) fits inside each cell with comfortable
+     * symmetric left + right padding. At 880px the cell was only
+     * 220px wide → 184px of content area → 134px available for the
+     * word (after 36px icon slot + 14px gap + 36px total padding),
+     * which made PARTNERSHIP overflow by ~26px and push the icon
+     * into the left vertical divider. At 1080px the cell is 270px →
+     * 234px content → 184px word area, leaving ~24px of right
+     * padding matching the 18px left padding. Comfortable. */
+    width: 100%;
+    max-width: 1080px;
+    margin-inline: auto;
+  }
+  .cm-protecting__value {
+    display: flex;
+    align-items: center;
+    /* Anchor the icon to the LEFT of the cell so every icon sits at
+     * the same x-offset relative to its left edge — the icon+gap+
+     * word pair flows naturally to the right from there.
+     *
+     * Was justify-content: center, but PARTNERSHIP (mdi:account-
+     * group) is the widest icon+word pair of the four. With center
+     * justification, the icon and word would be pushed outward
+     * until the icon touched the left vertical divider AND the
+     * word touched the right vertical divider — exactly the
+     * "touching both dividers" issue that prompted this fix.
+     *
+     * Left-aligning the pair eliminates the overflow entirely: the
+     * icon slot always starts at padding-left + 0px (since each
+     * cell has the same left padding and the icon slot has a fixed
+     * 36px width), and the word follows 14px after it. The visual
+     * centering effect comes from the cells themselves being equal
+     * width, not from per-cell centering. */
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 8px 18px;
+    color: #ffffff;
+  }
+  /* Vertical border between values (not before the first one).
+   * Implemented as a left border on each cell, with the first
+   * cell clearing it via :first-child. */
+  .cm-protecting__value {
+    border-left: 1px solid rgba(255, 255, 255, 0.32);
+  }
+  .cm-protecting__value:first-child {
+    border-left: 0;
+  }
+  /* EQUAL SPACING FIX — the 4 cells need to look visually
+   * identical (same icon-to-word gap, same icon offset within
+   * the cell) even though the MDI icons have very different
+   * intrinsic aspect ratios (mdi:image-filter-hdr is a wide
+   * mountain skyline, mdi:badge is a narrow shield, mdi:handshake
+   * is medium, mdi:account-group is medium-wide).
+   *
+   * Without this rule, each icon span collapses to the icon's
+   * intrinsic SVG bounding-box width, so the `gap: 14px` between
+   * the icon span and the word span starts at a different x-
+   * position per cell — and the icons themselves sit at
+   * different positions within their own spans (because MDI
+   * uses preserveAspectRatio="xMidYMid meet", which centers the
+   * glyph inside the SVG viewBox, not flush to the span's
+   * content edge).
+   *
+   * Fix: force every icon span to the same fixed 36×36 box
+   * (slightly wider than the 32×32 icon so there's a uniform
+   * gutter on either side of the glyph), and center the inner
+   * iconify-icon inside that box with `display: block;
+   * margin-inline: auto`. The result: every glyph lands in the
+   * same spot inside its cell, every gap to the word is exactly
+   * 14px, and the row reads as a tight, uniform 4-cell band. */
+  .cm-protecting__value-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    color: #ffffff;
+  }
+  .cm-protecting__value-icon iconify-icon {
+    /* belt-and-braces centering inside the 36×36 slot — the outer
+     * span is already inline-flex + justify-content: center, but
+     * the inner web-component element renders as inline by default.
+     * Forcing display: block + margin: 0 auto guarantees the SVG
+     * glyph centers horizontally inside the slot regardless of
+     * the icon's intrinsic viewBox aspect ratio. */
+    display: block;
+    margin: 0 auto;
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+  .cm-protecting__value-word {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(15px, 1.4vw, 20px);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive — matches about.astro / meet-the-team cascade.
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .section-inner { padding: 90px 60px; }
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .cm-quote { padding: 55px 60px 96px; }
+  }
+
+  @media (max-width: 900px) {
+    /* Below 900px, collapse the 1/4 + 3/4 grid into a single column
+     * and let the side-banner sit above the copy as a full-width
+     * image (aspect-ratio: 4/3 keeps it from going huge). Same
+     * breakpoint as meet-the-team.astro's mobile rule. */
+    .cm-quote__box { grid-template-columns: 1fr; }
+    .cm-quote__image { aspect-ratio: 4 / 3; height: auto; }
+    .cm-quote__image img { aspect-ratio: 4 / 3; height: auto; }
+    .cm-quote__copy { padding: 48px 36px 40px; }
+  }
+
+  @media (max-width: 767px) {
+    .section-inner { padding: 70px 28px; }
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .cm-quote { padding: 40px 24px 64px; }
+    .cm-quote__copy { padding: 36px 28px 32px; }
+    .cm-quote__signature { font-size: 40px; }
+    .cm-protecting { padding-block: 80px; }
+    /* Stack the 4 values into a 2×2 grid on mobile so the row
+     * doesn't squash the words into unreadable widths. */
+    .cm-protecting__values {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 420px;
+      gap: 28px 0;
+    }
+    /* Rebuild the vertical borders as a 2×2 grid: first cell on
+     * each ROW has no left border (it's the first column), but
+     * every cell gets a top border to act as the horizontal
+     * divider. */
+    .cm-protecting__value { border-left: 0; padding: 0 12px; }
+    .cm-protecting__value:nth-child(odd) { border-right: 1px solid rgba(255, 255, 255, 0.32); }
+    .cm-protecting__value:nth-child(-n+2) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+      padding-bottom: 28px;
+    }
+    .cm-protecting__value:nth-child(n+3) { padding-top: 28px; }
+  }
+</style>
