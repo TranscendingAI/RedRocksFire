@@ -47,6 +47,7 @@
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
 
 // Diamond divider icon — used in the double-heading subtitle pattern
 // across about.astro, fire-sprinkler-service-and-systems.astro, etc.
@@ -267,6 +268,25 @@ const values = [
         </div>
       </div>
     </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §3. CLOSING CTA — shared component, identical to the
+         other /about/ sub-pages' ClosingCTA so the page ends
+         on the same call-to-action pattern as the rest of the
+         site. Three custom buttons: Meet Our Team / The RRFPS
+         Difference / Contact Us.
+         ══════════════════════════════════════════════════════════ */}
+    <ClosingCTA
+      backgroundImage="/images/rrfps-about-cta-bg.jpg"
+      paragraphs={[
+        'Choosing the right life safety partner is about more than certifications and equipment. It is about having a team you can trust to communicate clearly, advocate for you, stay ahead of compliance, and take responsibility for protecting your people and property. If our values align with yours, we would welcome the opportunity to earn your trust.',
+      ]}
+      buttons={[
+        { label: 'Meet Our Team',         icon: 'mdi:account-group',         href: '/meet-the-team' },
+        { label: 'The RRFPS Difference',  icon: 'mdi:fire-circle',           href: '/about/rrfps-difference' },
+        { label: 'Contact Us',           icon: 'mdi:email-outline',         href: '/contact' },
+      ]}
+    />
 
   </div>
 </BaseLayout>
