@@ -1,0 +1,672 @@
+---
+/**
+ * Our Promise — /about/our-promise/
+ *
+ * Sub-page of /about. The 7-point Brand Promise that defines what
+ * customers can expect from Red Rocks Fire Protection Services.
+ *
+ * Sections (3):
+ *   0. ptbanner hero (about.astro §0 pattern)
+ *   1. "A Higher Standard. A Safer Tomorrow." — boxed-width
+ *      white intro section mirroring .mvv-values-intro on the
+ *      Mission/Vision/Values page
+ *   2. 7 promise cards in a 3-column grid (2 on tablet, 1 on
+ *      mobile). Each card has a bg image on top + numbered red
+ *      eyebrow + bold black title + body paragraph below.
+ *
+ * All copy comes verbatim from
+ * reference/content/rrfps-our-promise-website-page-content-wording.md.
+ *
+ * Image assets (placeholders pulled from existing /public/images
+ * pool that visually match each promise's concept — swap when
+ * dedicated assets supplied):
+ *   1. Lead with Safety         → rrfps-fire-sprinkler-systems-hero.jpg (fire system)
+ *   2. Advocate for Clients     → red-rocks-fire-protection-compliance.jpg (compliance)
+ *   3. Do What We Say           → rrfps-protect-what-matters-most.jpg (commitment)
+ *   4. Show Up When We Say      → meet-our-team-rrfps-cta-banner-bg.jpg (team)
+ *   5. Respond When It Matters  → red-rocks-fire-protection-the-call-when-it-counts.jpg (action)
+ *   6. Communicate + Price Fair → red-rocks-fire-protection-walk-the-property.jpg (transparent)
+ *   7. Take Ownership + Make It Right → red-rocks-fire-protection-why-inspections.jpg (quality)
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Diamond divider icon — used in the double-heading subtitle pattern
+// across about.astro, fire-sprinkler-service-and-systems.astro, etc.
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L0.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+/* ══════════════════════════════════════════════════════════
+ * §0. PAGE-TITLE BANNER IMAGE
+ * Generated via Higgsfield Nano Banana (2026-09-09): cinematic
+ * wide-angle Red Rocks (Morrison, CO) landscape at golden hour
+ * sunset. Central monolith glowing crimson with tilted slabs
+ * on the left and right, fiery orange → peach → lavender sky
+ * gradient behind the central rock, sandy foreground with
+ * blue-purple shadows. Designed so the bottom-left third is
+ * visually quiet for the H1 overlay.
+ * ══════════════════════════════════════════════════════════ */
+const bannerImage = '/images/rrfps-our-promise-hero-bg.jpg';
+
+/* ══════════════════════════════════════════════════════════
+ * §2. THE 7 PROMISE CARDS
+ * Each card carries:
+ *   - image   (path to a placeholder bg image)
+ *   - number  (1-7, rendered as a red eyebrow "PROMISE 01" etc.)
+ *   - title   (the headline shown in the card)
+ *   - body    (the supporting paragraph)
+ *
+ * Image choices (placeholders pulled from existing /public/images
+ * pool that visually match each promise's concept). Swap for
+ * dedicated assets when supplied.
+ * ══════════════════════════════════════════════════════════ */
+const promises = [
+  {
+    number: '01',
+    title: 'Lead with Safety.',
+    body: 'We promise to place safety at the center of every decision, every system, and every service we provide—protecting lives, property, and peace of mind with the highest level of responsibility and care.',
+    image: '/images/rrfps-our-promise-promise-1-safety-sprinkler.jpg',
+  },
+  {
+    number: '02',
+    title: 'Advocate for Our Clients.',
+    body: 'We promise to proactively stay ahead of evolving fire codes, legislation, and compliance requirements so we can help guide, educate, and protect our clients with confidence and clarity.',
+    image: '/images/rrfps-promise-to-advocate-for-clients.jpg',
+  },
+  {
+    number: '03',
+    title: 'Do What We Say.',
+    body: 'We promise to honor our commitments, communicate clearly, and follow through without surprises. If we say it, we do it.',
+    image: '/images/rrfps-our-promise-promise-3-do-what-we-say-handshake.jpg',
+  },
+  {
+    number: '04',
+    title: 'Show Up When We Say We Will.',
+    body: 'We promise to be reliable, responsive, prepared, and respectful of our clients’ time, operations, and responsibilities.',
+    image: '/images/rrfps-our-promise-promise-4-show-up-truck.jpg',
+  },
+  {
+    number: '05',
+    title: 'Respond When It Matters Most.',
+    body: 'We promise to provide 24-hour, 7 days a week emergency service with a 90-minute response window within the Denver Metro area, delivering fast communication and dependable action when our clients need it most.',
+    image: '/images/rrfps-our-promise-promise-5-respond-24-7-siren.jpg',
+  },
+  {
+    number: '06',
+    title: 'Communicate Clearly & Price Fairly.',
+    body: 'We promise to provide straightforward pricing with no added fees, no minimums, and no surprises, while maintaining honest communication and clear expectations from start to finish.',
+    image: '/images/rrfps-our-promise-promise-6-pricing-paperwork.jpg',
+  },
+  {
+    number: '07',
+    title: 'Take Ownership & Make It Right.',
+    body: 'We promise to take full responsibility when challenges arise. We will communicate openly, act quickly, and remain committed until every issue is fully resolved and every customer feels supported.',
+    image: '/images/rrfps-our-promise-promise-7-take-ownership-inspector.jpg',
+  },
+] as const;
+
+/* Closing line rendered below the card grid (matches the reference
+ * image's bottom panel — white text on a dark mountain landscape
+ * band, with the value-word ribbon at the bottom). */
+const closingLine = 'These promises represent the standard we hold ourselves to every day and reflect the level of accountability, reliability, and partnership our clients can expect from Red Rocks Fire Protection Services.';
+
+const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORROWS'] as const;
+---
+
+<BaseLayout
+  title="Our Promise | Red Rocks Fire Protection Services"
+  description="The seven-point Brand Promise that defines what customers can expect from Red Rocks Fire Protection Services — safety-first, advocacy, accountability, 24/7 response, transparent pricing, and full ownership of every commitment."
+>
+  <div class="av-page our-promise">
+
+    {/* ══════════════════════════════════════════════════════════
+         §0. PAGE-TITLE BANNER (about.astro §0 pattern)
+         ══════════════════════════════════════════════════════════ */}
+    <header class="ptbanner">
+      <div
+        class="ptbanner__bg"
+        style={`background-image: url('${bannerImage}');`}
+        aria-hidden="true"
+      ></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Our Promise.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/about/">About</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Our Promise</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ══════════════════════════════════════════════════════════
+         §1. OUR PROMISE — intro
+         Boxed-width white section with eyebrow + H2 + 2-paragraph
+         intro. Mirrors the §3 .mvv-values-intro reading rhythm
+         on the Mission/Vision/Values page (eyebrow + uppercase
+         H2 + lead-in paragraph + body paragraph).
+         ══════════════════════════════════════════════════════════ */}
+    <section class="op-intro section-light">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="av-dblh__subtitle section-eyebrow">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Our Promise</span>
+          </div>
+          <h2 class="section-title">A Higher Standard.<br />A Safer Tomorrow.</h2>
+        </div>
+        <div class="op-intro__body">
+          <p>
+            <strong>Red Rocks Fire Protection Services promises to serve as your trusted life safety partner by delivering reliable, compliant, and comprehensive protection through one point of contact and complete accountability.</strong>
+          </p>
+          <p>
+            At Red Rocks Fire Protection Services, our Brand Promise is built on the Core Values that guide our company every day. These promises define what our customers can expect from us in every interaction, every service call, and every long-term partnership.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §2. THE 7 PROMISE CARDS
+         3-column grid on desktop (2 on tablet, 1 on mobile).
+         Each card has a bg image on top + numbered red eyebrow +
+         bold black title + body paragraph below. White bg with
+         18px border-radius, matches the established site's
+         card visual language (see .capability-card in about.astro,
+         .fs-flowcard in fire-sprinkler-service-and-systems.astro).
+         ══════════════════════════════════════════════════════════ */}
+    {/*
+      Two rows with different grid templates per client revision:
+        Row 1 (promises 1-3): 3-col grid, original full-size card
+          internals (image 200px tall, body padding 28/28/36,
+          title 20-26px clamp).
+        Row 2 (promises 4-7): 4-col grid, narrower card internals
+          so the 4-col cards don't feel cramped or that the row
+          has suddenly shrunk vertically. Both rows share the same
+          outer container (.section-inner--wide) so their
+          left/right edges align flush to the section boundary.
+    */}
+    <section class="op-cards section-light">
+      <div class="section-inner section-inner--wide">
+        <div class="op-cards__row op-cards__row--top">
+          {promises.slice(0, 3).map((promise) => (
+            <article class="op-card op-card--wide">
+              <div
+                class="op-card__image"
+                style={`background-image: url('${promise.image}');`}
+                aria-hidden="true"
+              ></div>
+              <div class="op-card__body">
+                <p class="op-card__number">Promise {promise.number}</p>
+                <h3 class="op-card__title">{promise.title}</h3>
+                <p class="op-card__copy">{promise.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="op-cards__row op-cards__row--bottom">
+          {promises.slice(3, 7).map((promise) => (
+            <article class="op-card op-card--narrow">
+              <div
+                class="op-card__image"
+                style={`background-image: url('${promise.image}');`}
+                aria-hidden="true"
+              ></div>
+              <div class="op-card__body">
+                <p class="op-card__number">Promise {promise.number}</p>
+                <h3 class="op-card__title">{promise.title}</h3>
+                <p class="op-card__copy">{promise.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §3. CLOSING BAND
+         White text on a dark mountain landscape background band
+         (reuses the shared mvv-value media + overlay pattern)
+         with the closing line centered, followed by the
+         SAFER PEOPLE | STRONGER COMMUNITIES | BRIGHTER TOMORROWS
+         value-word ribbon at the bottom. Mirrors the bottom of
+         the reference layout exactly.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="op-closing">
+      <div class="op-closing__bg" aria-hidden="true"></div>
+      <div class="op-closing__overlay" aria-hidden="true"></div>
+
+      <div class="rr-container op-closing__inner">
+        <p class="op-closing__text">{closingLine}</p>
+        <p class="op-closing__values">
+          {closingValues.map((value, i) => (
+            <>
+              {i > 0 && <span class="op-closing__divider" aria-hidden="true">|</span>}
+              <span>{value}</span>
+            </>
+          ))}
+        </p>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * Shared base rules. Mirrors about.astro / ceo-message /
+   * mission-vision-values 1:1 so the page feels native.
+   * ══════════════════════════════════════════════════════════ */
+  .section-light { background: #ffffff; color: #0a0a0a; }
+  .section-inner {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 110px 80px;
+  }
+  .section-inner--wide { max-width: 1340px; }
+  .section-head { max-width: 850px; margin-bottom: 58px; }
+  .section-eyebrow { margin-bottom: 23px; display: flex; }
+  .section-title {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+
+  /* ptbanner — identical to about.astro / ceo-message / mvv. */
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    margin-bottom: 60px;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__breadcrumbs a:hover { color: rgba(255, 255, 255, 0.72); }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §1. OUR PROMISE — intro
+   * Boxed-width white section, eyebrow + H2 + 2-paragraph body.
+   * Same .section-inner + .section-head + .section-title +
+   * .av-dblh__subtitle pattern as the §3 intro on the Mission/
+   * Vision/Values page. First paragraph is the bold lead-in.
+   * ══════════════════════════════════════════════════════════ */
+  .op-intro .section-title {
+    /* Two-line H2 ("A Higher Standard." / "A Safer Tomorrow.")
+     * breaks naturally on the <br /> — the .section-title default
+     * line-height: 1.02 keeps the lines tight like the rest of
+     * the site's section headings. */
+  }
+  .op-intro__body p {
+    margin: 22px 0 0;
+    color: #232323;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .op-intro__body p:first-of-type {
+    margin-top: 0;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #0a0a0a;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §2. THE 7 PROMISE CARDS
+   * 3-column grid on desktop, 2 on tablet (≤900px), 1 on mobile
+   * (≤600px). Each card:
+   *   - white bg with 18px border-radius (matches the site's
+   *     established card visual language — see .capability-card
+   *     in about.astro, .fs-flowcard in fire-sprinkler-service-
+   *     and-systems.astro)
+   *   - bg image on top (fixed height 200px, cover) with a subtle
+   *     bottom gradient overlay so the image doesn't compete
+   *     with the card title below it
+   *   - "Promise NN" red eyebrow
+   *   - bold black H3 title (clamp 22-28px, sentence case —
+   *     different from the all-caps section-title pattern since
+   *     these are card-level headlines, not section banners)
+   *   - body paragraph in standard body text
+   *
+   * No inter-card border between rows so the grid reads as a
+   * clean 3×3 mosaic instead of a bordered table. The 18px
+   * border-radius + soft shadow give each card just enough
+   * lift to feel like a distinct unit.
+   * ══════════════════════════════════════════════════════════ */
+  .op-cards {
+    /* Override the shared .section-inner top padding so the card
+     * grid sits tighter to the intro section above (the intro
+     * already has 110px bottom padding which acts as the visual
+     * separator). Tighter top = the cards read as continuous
+     * content with the intro, not a new visual block. */
+    padding-top: 0;
+  }
+  /* Two separate grid containers, one per row, both flush to the
+   * same outer .section-inner--wide so the left/right edges of
+   * each row align to the section boundary (matching the
+   * reference image). The TOP row (3 promises) uses the original
+   * 3-col layout with full-size card internals; the BOTTOM row
+   * (4 promises) uses 4-col with slightly tighter card internals
+   * so the narrower cards still feel proportional, not squished. */
+  .op-cards__row {
+    display: grid;
+    gap: 28px;
+  }
+  .op-cards__row--top {
+    /* 3-col — uses the original wide cards (op-card--wide). */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 28px;
+  }
+  .op-cards__row--bottom {
+    /* 4-col — uses the narrower cards (op-card--narrow). */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .op-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    overflow: hidden;
+    /* Subtle shadow — matches the .capability-card treatment on
+     * about.astro's §4. Keeps cards grounded without making them
+     * feel heavy or "popping" too much. */
+    box-shadow: 0 8px 24px rgba(10, 10, 10, 0.06);
+  }
+  /* Top-row cards (3-col): use the original full-size card
+   * internals — image 200px tall, body padding 28/28/36, title
+   * 20-26px clamp. These match the project's pre-revision size. */
+  .op-card--wide .op-card__image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+  }
+  .op-card--wide .op-card__body {
+    padding: 28px 28px 36px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .op-card--wide .op-card__number {
+    margin: 0 0 12px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .op-card--wide .op-card__title {
+    margin: 0 0 14px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(20px, 1.6vw, 26px);
+    font-weight: 700;
+    line-height: 1.18;
+    text-transform: none;
+  }
+  .op-card--wide .op-card__copy {
+    margin: auto 0 0;
+    color: #303030;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  /* Bottom-row cards (4-col): slightly tighter card internals so
+   * the narrower cards still feel proportional. Image height +
+   * body padding + title font-size all drop by ~15-20% to
+   * match the reduced card width. */
+  .op-card--narrow .op-card__image {
+    width: 100%;
+    height: 170px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+  }
+  .op-card--narrow .op-card__body {
+    padding: 22px 22px 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .op-card--narrow .op-card__number {
+    margin: 0 0 10px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .op-card--narrow .op-card__title {
+    margin: 0 0 12px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(18px, 1.3vw, 22px);
+    font-weight: 700;
+    line-height: 1.18;
+    text-transform: none;
+  }
+  .op-card--narrow .op-card__copy {
+    margin: auto 0 0;
+    color: #303030;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §3. CLOSING BAND
+   * White text on a dark mountain landscape bg (uses a generic
+   * Red Rocks stock photo from /public/images — the user will
+   * swap to a dedicated asset later). Mirrors the bottom panel
+   * of the reference image: centered closing statement + the
+   * "SAFER PEOPLE | STRONGER COMMUNITIES | BRIGHTER TOMORROWS"
+   * value-word ribbon.
+   *
+   * Pattern mirrors the about.astro §9 .difference section
+   * (full-bleed bg + overlay stacked behind the content) +
+   * the .mvv-value text-on-bg-band layout.
+   * ══════════════════════════════════════════════════════════ */
+  .op-closing {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #0d0d0b;
+    color: #ffffff;
+    /* Generous vertical padding so the closing statement has
+     * breathing room above + below, mirroring the bottom panel
+     * proportions from the reference image. */
+    padding-block: 120px;
+  }
+  .op-closing__bg {
+    position: absolute;
+    inset: 0;
+    /* New closing band bg per client revision (2026-09):
+     * rrfps-protecting-today-building-safer-tomorrow.png — a
+     * black-and-white snow-capped mountain landscape with sky
+     * on top and dark forest on bottom. Replaces the previous
+     * the-red-rocks-of-the-canyon.jpg placeholder. */
+    background-image: url('/images/rrfps-protecting-today-building-safer-tomorrow.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .op-closing__overlay {
+    position: absolute;
+    inset: 0;
+    /* Slightly transparent white overlay per client revision
+     * (2026-09). Layered ON TOP of the existing dark gradient
+     * base so the bg is lightened for the "white overlay" effect
+     * while still retaining enough darkness behind the white text
+     * for legibility. White at 30% alpha — washes the image
+     * lighter (so the dark mountains/forest become medium grey)
+     * without obliterating the contrast needed for white text.
+     * If the text still reads as washed out in the user's review,
+     * flip the .op-closing__text / .op-closing__values colors
+     * to dark (--rr-text-dark) and drop the alpha to 0. */
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.50) 0%,
+      rgba(255, 255, 255, 0.46) 100%
+    ),
+    rgba(255, 255, 255, 0.30);
+    /* Combine the dark gradient (already a layered background)
+     * with the 30% white wash using background-blend-mode so
+     * they composite correctly. Default `normal` blends the
+     * layers like overlapping surfaces; the dark base layer's
+     * darkening happens first, then the white wash lightens the
+     * composited result. */
+    background-blend-mode: normal;
+    z-index: -1;
+  }
+  .op-closing__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    text-align: center;
+  }
+  .op-closing__text {
+    margin: 0;
+    max-width: 920px;
+    margin-inline: auto;
+    /* Per client revision (2026-09): body text flipped from white
+     * to dark to read cleanly against the light white-overlaid
+     * bg. Drop the text-shadow (was a halo for white text on
+     * mid-grey) since dark text on light bg already has plenty of
+     * contrast. Drop the font-weight back to 500 (the medium
+     * weight that reads well for dark text on a light bg; the 600
+     * compensation was only needed for white text against the
+     * washed-out mid-tone bg). */
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: var(--rr-text-lead);
+    font-weight: 500;
+    line-height: var(--rr-text-lead-lh);
+  }
+  .op-closing__values {
+    margin: 48px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(14px, 1.3vw, 18px);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    /* Subtle text-shadow on the red value ribbon too — keeps the
+     * red letters readable where the mountain ridges (mid-grey
+     * after the white wash) cross behind them. */
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  }
+  .op-closing__values span {
+    /* Each value word renders on its own line on mobile (when
+     * the ribbon wraps), so the dividers between them should
+     * NOT appear next to wrapped values. Hide the divider
+     * when its sibling value has wrapped below it. */
+    white-space: nowrap;
+  }
+  .op-closing__divider {
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive — matches about.astro / ceo-message /
+   * mission-vision-values cascade.
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .section-inner { padding: 90px 60px; }
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .op-cards__row { gap: 20px; }
+  }
+
+  @media (max-width: 900px) {
+    /* Tablet: top row goes 3-col → 2-col (since 3 cards can't fit
+     * comfortably at <900px viewport), bottom row goes 4-col →
+     * 2-col. Both rows end up as 2-col grids at tablet width so
+     * each card has enough horizontal space for the image + body
+     * copy to read cleanly. Single-column mobile fallback at
+     * 600px below. */
+    .op-cards__row--top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .op-cards__row--bottom { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .op-closing__inner { padding-inline: 1.25rem; }
+  }
+
+  @media (max-width: 767px) {
+    .section-inner { padding: 70px 28px; }
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .op-closing { padding-block: 80px; }
+    .op-closing__divider { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    /* Mobile: collapse both rows to a single column so each card
+     * spans the full container width with comfortable padding. */
+    .op-cards__row--top { grid-template-columns: 1fr; }
+    .op-cards__row--bottom { grid-template-columns: 1fr; }
+  }
+</style>
