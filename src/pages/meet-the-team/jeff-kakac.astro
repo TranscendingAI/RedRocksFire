@@ -1,0 +1,123 @@
+---
+/**
+ * Jeff Kakac — /meet-the-team/jeff-kakac/
+ *
+ * Individual bio page. Mirrors brian-kakac.astro 1:1:
+ *   §0. Page-title banner
+ *   §1. Bio — 1/3 photo + 2/3 copy
+ *   §2. Closing CTA
+ *
+ * Photo placeholder uses the same <iconify-icon icon="mdi:account">
+ * glyph the team grid renders for members without a real headshot.
+ * Swap to a real portrait once assets are supplied.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+
+const heroBg = '/images/rrfps-about-cta-bg.jpg';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+
+const bioParagraphs = [
+  'Jeff Kakac serves as Operations Manager and brings more than 23 years of experience in the fire protection industry. Throughout his career, he has developed extensive expertise in fire alarm systems, fire sprinkler systems, dry and pre-action systems, nitrogen generation systems, and backflow prevention assemblies. Having worked through virtually every aspect of the industry, Jeff provides both technical knowledge and operational leadership to support customers and field teams alike.',
+  'In his role, Jeff oversees technician recruiting, interviewing, onboarding, and training. He is responsible for preparing new team members with the tools, equipment, vehicles, and resources needed for success, while pairing them with experienced technicians for hands-on field training. He also manages employee development, performance reviews, company resources, fleet management, insurance coordination, fuel card programs, vehicle tracking systems, and other operational functions that help maintain an efficient and productive workforce. Jeff is passionate about building a positive company culture and enjoys organizing team events that promote collaboration and employee engagement.',
+  'Jeff was inspired to join the company by the opportunity to help establish new standards, build a stable platform for long-term success, and contribute to meaningful growth within the fire protection industry. He values creating systems and processes that support both employees and customers while helping the company continue to expand and evolve.',
+  'Outside of work, Jeff enjoys following Colorado sports, including the Denver Broncos and Colorado Avalanche, as well as PGA golf and the Olympic Games. In his free time, he can often be found golfing, hunting, fishing, photographing the outdoors, or grilling and smoking great food for family and friends.',
+] as const;
+---
+
+<BaseLayout
+  title="Jeff Kakac | Operations Manager, Red Rocks Fire Protection Services"
+  description="Meet Jeff Kakac, Operations Manager at Red Rocks Fire Protection Services \u2014 23+ years of fire-protection experience leading technician recruiting, training, fleet, and operations."
+>
+  <div class="av-page jk-page">
+
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${heroBg}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Jeff Kakac.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/meet-the-team">Meet Our Team</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Jeff Kakac</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="jk-bio" aria-label="Jeff Kakac bio">
+      <div class="jk-bio__inner">
+
+        <div class="jk-bio__photo" aria-hidden="true">
+          <iconify-icon icon="mdi:account" width="160" height="160"></iconify-icon>
+        </div>
+
+        <div class="jk-bio__copy">
+          <div class="jk-bio__name">Jeff Kakac</div>
+          <div class="jk-bio__role">Operations Manager | Red Rocks Fire Protection Services</div>
+          <div class="jk-bio__rule" aria-hidden="true"></div>
+
+          <div class="jk-bio__body">
+            {bioParagraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <ClosingCTA
+      backgroundImage={ctaBg}
+      paragraphs={[
+        'Choosing the right life safety partner is about more than installing equipment and meeting code. It is about trusting the team you put in front of your residents, your tenants, and your inspectors \u2014 and knowing the people behind the truck have real accountability for the work they do.',
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .ptbanner { position: relative; isolation: isolate; background: #0d0d0b; overflow: hidden; }
+  .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-position: center 32%; z-index: -2; }
+  .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%); z-index: -1; }
+  .ptbanner__inner { min-height: 448px; max-width: 1120px; margin-inline: auto; margin-bottom: 60px; padding: 136px 80px 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+  .ptbanner__title { margin: 0; max-width: 920px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 0.9; letter-spacing: -0.055em; text-transform: uppercase; }
+  .ptbanner__breadcrumbs { padding-bottom: 10px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 600; white-space: nowrap; }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  .jk-bio { background: #ffffff; padding: 96px 80px 120px; }
+  .jk-bio__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 56px; row-gap: 48px; align-items: start; }
+  .jk-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; color: #ffffff; display: grid; place-items: center; }
+  .jk-bio__photo iconify-icon { color: currentColor; }
+  .jk-bio__copy { display: flex; flex-direction: column; min-width: 0; }
+  .jk-bio__name { color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; text-transform: uppercase; }
+  .jk-bio__role { margin-top: 18px; color: #d41226; font-family: "Space Grotesk", sans-serif; font-size: clamp(15px, 1.1vw, 18px); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; }
+  .jk-bio__rule { margin-top: 28px; width: 100%; height: 2px; background: #d41226; }
+  .jk-bio__body { margin-top: 36px; color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: 17px; font-weight: 400; line-height: 1.6; }
+  .jk-bio__body p + p { margin-top: 22px; }
+
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .jk-bio { padding: 80px 60px 96px; }
+    .jk-bio__inner { column-gap: 40px; }
+    .jk-bio__body { font-size: 16px; }
+  }
+  @media (max-width: 900px) {
+    .jk-bio__inner { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
+    .jk-bio__photo { aspect-ratio: 4 / 3; max-width: 520px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner__inner { min-height: 312px; padding: 108px 28px 28px; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .jk-bio { padding: 64px 28px 80px; }
+    .jk-bio__rule { margin-top: 24px; }
+    .jk-bio__body { margin-top: 28px; font-size: 16px; }
+    .jk-bio__body p + p { margin-top: 18px; }
+  }
+</style>

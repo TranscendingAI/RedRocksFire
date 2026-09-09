@@ -1,0 +1,124 @@
+---
+/**
+ * Lisa Cordova — /meet-the-team/lisa-cordova/
+ *
+ * Individual bio page. Mirrors brian-kakac.astro 1:1:
+ *   §0. Page-title banner
+ *   §1. Bio — 1/3 photo + 2/3 copy
+ *   §2. Closing CTA
+ *
+ * Photo placeholder uses the same <iconify-icon icon="mdi:account">
+ * glyph the team grid renders for members without a real headshot.
+ * Swap to a real portrait once assets are supplied.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+
+const heroBg = '/images/rrfps-about-cta-bg.jpg';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+
+const bioParagraphs = [
+  'As Finance Manager for Red Rocks Fire Protection Services, Lisa Cordova oversees the financial processes and administrative functions that support the company\u2019s day-to-day operations. She works across the organization to help maintain accurate financial information, manage critical processes, and provide the financial organization RRFPS needs to serve its customers and continue growing.',
+  'With more than 32 years of experience in accounting and office management, Lisa brings extensive knowledge and attention to detail to her role. Her areas of expertise include accounts receivable and payable, invoicing and collections, purchase orders and vendor relations, inventory management and reconciliation, financial reporting, contract and document management, and administrative support.',
+  'At RRFPS, Lisa\u2019s responsibilities extend beyond the numbers. She works closely with customers, vendors, and members of the Red Rocks team, helping ensure that financial and administrative processes are handled accurately, efficiently, and with clear communication. Her combination of financial experience, organizational skills, and customer service makes her an important part of keeping the business operating smoothly behind the scenes.',
+  'Lisa joined Red Rocks Fire Protection Services because she was drawn to the company\u2019s family-oriented culture, commitment to its customers, and opportunity to contribute to a growing organization where teamwork and accountability are valued.',
+  'As a Colorado native, Lisa loves making the most of life in Colorado, whether that means spending time with family, enjoying the outdoors, or cheering on our local sports teams. When she\u2019s ready to slow down, you\u2019ll often find her with a book in hand\u2014as an avid reader, she believes there\u2019s always time for another great story.',
+] as const;
+---
+
+<BaseLayout
+  title="Lisa Cordova | Finance Manager, Red Rocks Fire Protection Services"
+  description="Meet Lisa Cordova, Finance Manager at Red Rocks Fire Protection Services \u2014 32+ years of accounting and office-management experience supporting RRFPS customers, vendors, and operations."
+>
+  <div class="av-page lc-page">
+
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${heroBg}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Lisa Cordova.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/meet-the-team">Meet Our Team</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Lisa Cordova</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="lc-bio" aria-label="Lisa Cordova bio">
+      <div class="lc-bio__inner">
+
+        <div class="lc-bio__photo" aria-hidden="true">
+          <iconify-icon icon="mdi:account" width="160" height="160"></iconify-icon>
+        </div>
+
+        <div class="lc-bio__copy">
+          <div class="lc-bio__name">Lisa Cordova</div>
+          <div class="lc-bio__role">Finance Manager | Red Rocks Fire Protection Services</div>
+          <div class="lc-bio__rule" aria-hidden="true"></div>
+
+          <div class="lc-bio__body">
+            {bioParagraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <ClosingCTA
+      backgroundImage={ctaBg}
+      paragraphs={[
+        'Choosing the right life safety partner is about more than installing equipment and meeting code. It is about trusting the team you put in front of your residents, your tenants, and your inspectors \u2014 and knowing the people behind the truck have real accountability for the work they do.',
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .ptbanner { position: relative; isolation: isolate; background: #0d0d0b; overflow: hidden; }
+  .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-position: center 32%; z-index: -2; }
+  .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%); z-index: -1; }
+  .ptbanner__inner { min-height: 448px; max-width: 1120px; margin-inline: auto; margin-bottom: 60px; padding: 136px 80px 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+  .ptbanner__title { margin: 0; max-width: 920px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 0.9; letter-spacing: -0.055em; text-transform: uppercase; }
+  .ptbanner__breadcrumbs { padding-bottom: 10px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 600; white-space: nowrap; }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  .lc-bio { background: #ffffff; padding: 96px 80px 120px; }
+  .lc-bio__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 56px; row-gap: 48px; align-items: start; }
+  .lc-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; color: #ffffff; display: grid; place-items: center; }
+  .lc-bio__photo iconify-icon { color: currentColor; }
+  .lc-bio__copy { display: flex; flex-direction: column; min-width: 0; }
+  .lc-bio__name { color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; text-transform: uppercase; }
+  .lc-bio__role { margin-top: 18px; color: #d41226; font-family: "Space Grotesk", sans-serif; font-size: clamp(15px, 1.1vw, 18px); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; }
+  .lc-bio__rule { margin-top: 28px; width: 100%; height: 2px; background: #d41226; }
+  .lc-bio__body { margin-top: 36px; color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: 17px; font-weight: 400; line-height: 1.6; }
+  .lc-bio__body p + p { margin-top: 22px; }
+
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .lc-bio { padding: 80px 60px 96px; }
+    .lc-bio__inner { column-gap: 40px; }
+    .lc-bio__body { font-size: 16px; }
+  }
+  @media (max-width: 900px) {
+    .lc-bio__inner { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
+    .lc-bio__photo { aspect-ratio: 4 / 3; max-width: 520px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner__inner { min-height: 312px; padding: 108px 28px 28px; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .lc-bio { padding: 64px 28px 80px; }
+    .lc-bio__rule { margin-top: 24px; }
+    .lc-bio__body { margin-top: 28px; font-size: 16px; }
+    .lc-bio__body p + p { margin-top: 18px; }
+  }
+</style>
