@@ -2,137 +2,91 @@
 /**
  * Our Story — /about/our-story/
  *
- * Sub-page of /about. Long-form narrative page covering:
- *   • Co-founding of RRFPS in 2010 by Brian + John Kakac
- *   • John's foundational influence and lasting principles
- *   • Brian's leadership and One Vendor Life Safety Solution
- *   • The Story Behind John's Truck
+ * Sub-page of /about. The client asked for this page to "be like
+ * a letter" — simpler than the original build, with no parallax
+ * bands, no grey-bg advocacy split, no closing pull-quote, and
+ * no ClosingCTA. The page now reads as one long-form white-bg
+ * letter followed by a single dark-bg section about John's
+ * truck (50/50 text + image, with a 1/1 reading row below).
  *
  * Design DNA (mirrors the rest of the site 1:1):
  *   • about.astro / fire-sprinkler-service-and-systems.astro —
- *     ptbanner (full-bleed hero + breadcrumbs), section-inner
- *     paddings, section-title typography, section-light / section-dark
- *     bg, diamond-icon eyebrow, SplitPanel 50/50 split for image+text
- *     sections.
- *   • inspections.astro — `rr-why` bg-image + overlay band adapted as
- *     a parallax pull-quote section (adds background-attachment: fixed
- *     for the actual parallax effect, with a scroll fallback for
- *     mobile/iOS).
- *   • ClosingCTA — shared component, identical to about.astro's.
+ *     ptbanner (full-bleed hero + breadcrumbs), .section-inner
+ *     padding rhythm (1120px max, 110/80px), .section-title
+ *     typography, .section-light / .section-dark bg blocks,
+ *     diamond-icon eyebrow.
+ *   • about.astro §2 .split-grid + .split-image — 50/50 split
+ *     with 18px border-radius on the image, reused for the
+ *     John's Truck 1/2 + 1/2 row.
  *
  * Sections, in order:
- *   0. Page-title banner (about.astro §0 pattern)
- *   1. Our Story — boxed-width white section with the long-form intro
- *      copy down through the "…handled by a partner you trust." line
- *   2. Parallax pull-quote — "This wasn't just about convenience; it
- *      was about accountability." + the systems list (rr-why pattern)
- *   3. Advocacy — grey-bg SplitPanel (image-left / text-right),
- *      modeled on about.astro's CEO message grid + section padding
- *   4. The Story Behind John's Truck — dark-bg SplitPanel with image
- *      on the right (text-left / image-right) so the two split panels
- *      mirror each other
- *   5. Closing parallax quote — "More Than A Truck — A Lasting
- *      Legacy" (same rr-why pattern, different bg)
- *   6. ClosingCTA — shared component
+ *   §0. Page-title banner (about.astro §0 pattern)
+ *   §1. The Letter — boxed-width white section. Long-form
+ *      prose stacked top-to-bottom with two <h4> sub-headings
+ *      mid-letter (advocacy + accountability) so the page
+ *      reads as a single continuous letter rather than a
+ *      series of split panels + parallax bands.
+ *   §2. The Story Behind John's Truck — dark-bg section.
+ *      Row 1: 50/50 split (1/2 text + 1/2 image, image on
+ *      the right so it mirrors the intro's left-aligned text
+ *      flow). Row 2: full 1/1 boxed-width text column that
+ *      picks up the rest of the truck narrative.
+ *   §3. More Than A Truck — A Lasting Legacy. Full-bleed
+ *      bg image + dark overlay band with the closing
+ *      pull-quote and 3 supporting body paragraphs (the
+ *      page's quiet contemplative closer).
  *
  * All copy comes verbatim from
- * reference/content/rrfps-our-story-page.md. Image placeholders use
- * existing public assets — swap to dedicated assets when supplied.
+ * reference/content/rrfps-our-story-page.md. Image placeholders
+ * use existing public assets — swap to dedicated assets when
+ * supplied.
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ClosingCTA from '../../components/ClosingCTA.astro';
 
 // Diamond divider icon — used in the double-heading subtitle pattern
 // across about.astro, fire-sprinkler-service-and-systems.astro, etc.
-const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L0.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-/* ══════════════════════════════════════════════════════════
- * §0. PAGE-TITLE BANNER IMAGE
- * PLACEHOLDER: rrfps-fire-sprinkler-systems-hero.jpg
- *   Wide, on-brand dark hero photo already in /public/images.
- *   Swap for a dedicated "Our Story" hero photo when supplied.
- * ══════════════════════════════════════════════════════════ */
-/* Generated via Higgsfield Nano Banana (2026-09): cinematic wide-angle
- * Red Rocks (Morrison, CO) landscape at sunset. No people, no
- * buildings, no signs — pure scenic hero. The big tilted sandstone
- * slab sits on the LEFT half of the frame with the orange sunset
- * gradient on the RIGHT, so the .ptbanner__title (which anchors to
- * the left of the inner) reads against a darker rock face rather
- * than competing with the sky. */
+/* §0. PAGE-TITLE BANNER IMAGE */
 const bannerImage = '/images/rrfps-our-story-hero.jpg';
 
-/* ══════════════════════════════════════════════════════════
- * §2. PARALLAX QUOTE #1 — "convenience / accountability"
- * PLACEHOLDER: red-rocks-fire-protection-the-call-when-it-counts.jpg
- *   Existing dark, dramatic photo — reads well behind a centered
- *   white pull-quote. Swap when supplied.
- * ══════════════════════════════════════════════════════════ */
-/* Generated via Higgsfield Nano Banana (2026-09): three fire inspectors
- * (2 men + 1 woman) in plain black collared polos, no logos, walking
- * on a sunlit sidewalk in front of a 3-story beige-stucco apartment
- * complex. The woman on the left holds a black iPad; the prompt
- * originally asked for 2+ iPads but the model only rendered one — if
- * we want strict adherence, this is the candidate to re-roll. For
- * now: composition works as a wide parallax bg since the people sit
- * mid-frame with the apartment building providing texture on the
- * upper-left and clear sky on the right (where the body column lands). */
-const accountabilityQuoteBg = '/images/rrfps-our-story-accountability.jpg';
-
-/* ══════════════════════════════════════════════════════════
- * §3. ADVOCACY SPLITPANEL — image-left / text-right, grey bg
- * PLACEHOLDER: brian-kakac-ceo-red-rocks-fire-protection-services.png
- *   Existing Brian portrait in /public/images.
- * ══════════════════════════════════════════════════════════ */
-/* Generated via Higgsfield Nano Banana (2026-09): inspector (man in
- * plain black collared polo, no logos) leaning across a wooden desk
- * pointing at a 3-ring binder of paperwork with a pen; client (woman
- * in grey blazer) sits across with hands folded. Laptop + coffee
- * mug + reading glasses on desk; blurred bookshelf + window light
- * in the background. Setting reads as a real modern office, no
- * visible logos on shirts or paperwork. */
-const advocacyImage = '/images/rrfps-our-story-advocacy.jpg';
-
-/* ══════════════════════════════════════════════════════════
- * §4. JOHN'S TRUCK SPLITPANEL — text-left / image-right, dark bg
- * ══════════════════════════════════════════════════════════ */
-/* Real asset (2026-09): rrfps-truck.png
+/* §2. JOHN'S TRUCK SPLITPANEL — text-left / image-right, dark bg
  * Source: 853x1280 portrait. The truck sits in the lower 40% of
  * the frame (Red Rocks formation dominates the upper portion), so
- * the §4 split uses object-position: center bottom to keep the
+ * the §2 split uses object-position: center bottom to keep the
  * truck visible after the 1:1 square crop. */
 const truckImage = '/images/rrfps-truck.png';
 
-/* ══════════════════════════════════════════════════════════
- * §5. PARALLAX QUOTE #2 — "More Than A Truck — A Lasting Legacy"
- * PLACEHOLDER: red-rocks-fire-protection-home-hero.jpg
- *   Existing dark hero photo — reads as a quiet, contemplative
- *   closer behind the white pull-quote.
- * ══════════════════════════════════════════════════════════ */
-/* Existing on-brand asset (2026-09): John's classic black Chevy
- * pickup parked in front of the Red Rocks formation. Used here as
- * the closing parallax bg for the §5 "More Than A Truck" pull-quote
- * (no new generation per client direction). The shot has the truck
- * in the lower-center of the frame with the red rock formation
- * rising above it — matches the §4 .os-split__image--square
- * subject so the two truck-themed sections share visual DNA. */
-const legacyQuoteBg = '/images/rrfps-johns-truck-legacy.jpg';
+/* §3. LASTING LEGACY — full-bleed bg image + dark overlay band.
+ * The classic black Chevy pickup parked in front of the Red
+ * Rocks formation. Used as the closing backdrop for the
+ * "More Than A Truck — A Lasting Legacy." pull-quote +
+ * supporting body copy. The shot has the truck in the
+ * lower-center of the frame with the red rock formation
+ * rising above it. */
+const legacyBg = '/images/rrfps-johns-truck-legacy.jpg';
 
 /* ══════════════════════════════════════════════════════════
  * PAGE CONTENT — verbatim from
  *   reference/content/rrfps-our-story-page.md
  *
- * Two content buckets:
- *   • introParagraphs — the long-form intro down through
- *     "…handled by a partner you trust." (everything ABOVE
- *     `## The Story Behind John's Truck`). Rendered in §1.
- *   • advocacyParagraphs — the 4 trailing paragraphs of the intro
- *     that read as Brian's ongoing leadership/advocacy manifesto
- *     (rendered in §3 below the §3 lede).
- *   • truckParagraphs — every paragraph under
- *     `## The Story Behind John's Truck` (rendered in §4).
+ * All copy now lives in two buckets, both rendered top-to-bottom
+ * inside the same .os-intro white-bg letter section:
  *
- * Pull-quotes (§2, §5) are surfaced as standalone statements.
+ *   • introParagraphs — co-founding through to "…handled by a
+ *     partner you trust." (9 paragraphs, the existing intro
+ *     body).
+ *   • letterTailHeadings + letterTailBlocks — the two <h4>
+ *     sub-headings (advocacy + accountability) and the
+ *     supporting paragraphs that used to live in §2 (parallax
+ *     quote), §3a (advocacy intro), and §3b (advocacy image
+ *     row). Stacked in the same order the client requested so
+ *     the page reads as one letter.
+ *
+ * The truck section (§2) renders the existing truckParagraphs
+ * (4 paragraphs) in the dark 1/2 copy column and truckStory (6
+ * paragraphs) in the 1/1 row below it.
  * ══════════════════════════════════════════════════════════ */
 const introParagraphs = [
   'Red Rocks Fire Protection Services was co-founded in 2010 by Brian Kakac and his father, John Kakac, with a shared vision centered on hard work, accountability, family values, and protecting people through dependable life safety services.',
@@ -146,43 +100,36 @@ const introParagraphs = [
   'Brian built Red Rocks Fire Protection Services around a One Vendor Life Safety Solution, a model designed to simplify compliance, streamline communication, and provide one trusted partner responsible for all life safety systems within a building.',
 ] as const;
 
-const accountabilityQuote = 'This wasn’t just about convenience; it was about accountability.';
-
-/* §2 split layout renders the quote uppercase via CSS to match every
- * other section title on the site (.section-title uses
- * text-transform: uppercase). Kept as a sentence in the source string
- * so it reads naturally in the HTML and the stylesheet decides the
- * visual treatment. */
-
-const accountabilitySystemsParagraphs = [
-  'With one team overseeing fire alarm systems, fire sprinkler systems, fire extinguishers, backflow prevention, kitchen hood suppression systems, bi-directional amplification (BDA) systems, area of refuge communication systems, and monitoring, clients no longer have to manage multiple relationships or worry about gaps in coverage. Instead, they gain a coordinated, proactive partner focused on keeping their properties safe and compliant.',
+/* Two <h4> sub-headings + the supporting body blocks that used to
+ * live in §2, §3a, and §3b. Rendered in order, each heading
+ * followed by its own paragraph(s). The first block (advocacy
+ * lede) carries the one paragraph that used to be the
+ * advocacyFirstParagraph plus the 4 paragraphs that used to live
+ * in the advocacy body. The second block (accountability) carries
+ * the single system-list paragraph. */
+const letterTailHeadings = [
+  'What truly sets Brian and the RRFPS team apart is its commitment to advocacy.',
+  'This wasn’t just about convenience; it was about accountability.',
 ] as const;
 
-const advocacyLede = 'What truly sets Brian and the RRFPS team apart is its commitment to advocacy.';
-
-/* First paragraph (right column of the new white intro section above
- * the grey image/text row). Standalone so it can render before the
- * remaining body copy without changing the order in advocacyBody. */
-const advocacyFirstParagraph = 'He dedicates significant time to staying ahead of changing fire codes, legislation, and jurisdictional requirements, ensuring clients are not only compliant, but informed and prepared. More importantly, this knowledge is shared proactively, helping clients avoid issues before they arise and giving them confidence in their life safety systems.';
-
-/* Remaining body copy for the right column of the grey image/text
- * row. Rendered after the landscape image so the visual narrative
- * reads: title → evidence (image) → consequences (text). */
-const advocacyBody = [
-  'Today, the original vision that Brian and John built together continues to guide the company. Their shared commitment to people, service, accountability, and family remains at the heart of Red Rocks Fire Protection Services.',
-  'While John is deeply missed, his legacy lives on through the continued growth of the company, the culture of the team, and the relationships built with clients throughout Colorado. Brian and the entire RRFPS team carry that vision forward every day, and there is great pride in knowing the company continues to honor the foundation John helped create.',
-  'Red Rocks Fire Protection Services is known not just for what it does, but for how it serves—showing up reliably, communicating clearly, supporting its employees like family, and standing behind every system, every service, and every commitment made.',
-  'Because at the end of the day, this business was built on a simple belief: protecting lives and property should never be reactive; it should be proactive, accountable, and handled by a partner you trust.',
+const letterTailBlocks = [
+  [
+    'He dedicates significant time to staying ahead of changing fire codes, legislation, and jurisdictional requirements, ensuring clients are not only compliant, but informed and prepared. More importantly, this knowledge is shared proactively, helping clients avoid issues before they arise and giving them confidence in their life safety systems.',
+    'Today, the original vision that Brian and John built together continues to guide the company. Their shared commitment to people, service, accountability, and family remains at the heart of Red Rocks Fire Protection Services.',
+    'While John is deeply missed, his legacy lives on through the continued growth of the company, the culture of the team, and the relationships built with clients throughout Colorado. Brian and the entire RRFPS team carry that vision forward every day, and there is great pride in knowing the company continues to honor the foundation John helped create.',
+    'Red Rocks Fire Protection Services is known not just for what it does, but for how it serves—showing up reliably, communicating clearly, supporting its employees like family, and standing behind every system, every service, and every commitment made.',
+    'Because at the end of the day, this business was built on a simple belief: protecting lives and property should never be reactive; it should be proactive, accountable, and handled by a partner you trust.',
+  ],
+  [
+    'With one team overseeing fire alarm systems, fire sprinkler systems, fire extinguishers, backflow prevention, kitchen hood suppression systems, bi-directional amplification (BDA) systems, area of refuge communication systems, and monitoring, clients no longer have to manage multiple relationships or worry about gaps in coverage. Instead, they gain a coordinated, proactive partner focused on keeping their properties safe and compliant.',
+  ],
 ] as const;
 
 const truckTitle = 'The Story Behind John’s Truck.';
 
-/* Paragraphs that live in the LEFT (text) column of the §4 dark
- * split panel — "For more than ten years…" through "January 2023…".
- * Sets up the dream, the loss, and the auction visit. The remaining
- * paragraphs (the actual spotting + buying + restoration + meaning)
- * live in their own §4b white-bg section below the split so they
- * read at a slower, more deliberate pace. */
+/* Left (text) column of the §2 dark split panel — "For more than
+ * ten years…" through "January 2023…". Sets up the dream, the
+ * loss, and the auction visit. */
 const truckParagraphs = [
   'For more than ten years, my dad, John, talked about finding an old-school pickup truck, restoring it, and putting the Red Rocks Fire Protection name on the doors. He loved classic vehicles and believed a truck like that would represent who we are as a company: hard-working, dependable, and built to last.',
   'Like many great ideas, life got busy, and he never had the opportunity to make it happen.',
@@ -190,11 +137,9 @@ const truckParagraphs = [
   'A few months later, in January 2023, I attended an automobile auction. Anyone who has spent time at auctions knows that early Friday mornings can be the best time to find a deal. If a vehicle crosses the block before the crowd arrives, sometimes you get lucky.',
 ] as const;
 
-/* Body copy for the new §4b white-bg boxed-width section below the
- * §4 dark split panel. Pulled out of truckParagraphs per client edit
- * so the "spotting → bidding → restoring → meaning" arc gets its own
- * reading column rather than fighting the side-by-side split layout
- * above it. */
+/* 1/1 boxed-width reading row that sits below the §2 dark split
+ * panel. Holds the 6 paragraphs of the truck narrative that
+ * previously lived in their own white-bg section. */
 const truckStory = [
   'As I walked through the staging lanes that morning, I spotted an old pickup truck. Something about it immediately reminded me of my dad and the dream he had talked about for so many years.',
   'I took my favorite seat in the auction lane, waited for the truck to come across, and, just as I had hoped, there wasn’t much bidding. I was able to buy it at a great price.',
@@ -204,13 +149,13 @@ const truckStory = [
   'We see it as John’s truck.',
 ] as const;
 
+/* §3. LASTING LEGACY — closing pull-quote + supporting body. */
 const legacyQuote = 'More Than A Truck — A Lasting Legacy.';
 
-/* Body copy that sits beneath the §5 legacy pull-quote (rendered inside
- * the same parallax band). Moved here from truckParagraphs per client
- * edit — the three "values / One Family / legacy rides with us"
- * paragraphs read more naturally as the closing statement of the
- * page rather than mid-narrative inside the truck story itself. */
+/* Body copy that sits beneath the §3 legacy pull-quote (rendered
+ * inside the same parallax band). Three "values / One Family /
+ * legacy rides with us" paragraphs that read as the closing
+ * statement of the page. */
 const legacyBody = [
   'For our team, it serves as a daily reminder of where we came from and the values that continue to guide us. It represents the work ethic, integrity, humility, and commitment to people that John demonstrated throughout his life. Those same principles have become the foundation of Red Rocks Fire Protection Services and continue to shape the way we serve our customers, support one another, and do business every day.',
   'One of our core values is One Family, and there is perhaps no better symbol of that than this truck. It reminds us that Red Rocks was built on family, strengthened by relationships, and continues to grow because every employee, customer, and partner becomes part of something bigger than themselves.',
@@ -247,10 +192,13 @@ const legacyBody = [
     </header>
 
     {/* ══════════════════════════════════════════════════════════
-         §1. OUR STORY — boxed-width white section with the long
-         form intro copy. Mirrors about.astro's `.section-inner`
-         rhythm (1120px max, 110px top/bottom, 80px side padding)
-         so the white reading column feels native to the site.
+         §1. THE LETTER — one long white-bg reading column that
+         stacks the 9 intro paragraphs with two mid-letter <h4>
+         sub-headings (advocacy + accountability) and their
+         supporting body copy. Designed to read as a single
+         continuous letter from top to bottom, per client
+         request. Mirrors the about.astro .section-inner
+         rhythm (1120px max, 110/80px padding).
          ══════════════════════════════════════════════════════════ */}
     <section class="os-intro section-light">
       <div class="section-inner">
@@ -264,126 +212,50 @@ const legacyBody = [
 
         <div class="os-intro__body">
           {introParagraphs.map((paragraph) => <p>{paragraph}</p>)}
-        </div>
-      </div>
-    </section>
 
-    {/* ══════════════════════════════════════════════════════════
-         §2. PARALLAX PULL-QUOTE #1 — accountability
-         Same .rr-why pattern as inspections.astro §2 (full-bleed
-         bg image + dark overlay + centered white text), with one
-         parallax twist: background-attachment: fixed so the bg
-         scrolls slower than the rest of the page (the iOS-safe
-         fallback is `scroll` via the media query at the bottom).
-         The pull-quote is centered with the system-list paragraph
-         below it so the rhythm reads as: statement → evidence.
-         ══════════════════════════════════════════════════════════ */}
-    <section class="rr-quote rr-quote--split">
-      <div
-        class="rr-quote__bg"
-        style={`background-image: url('${accountabilityQuoteBg}');`}
-        aria-hidden="true"
-      ></div>
-      <div class="rr-quote__overlay" aria-hidden="true"></div>
-
-      {/* Two-column layout: title + rule on the left, supporting body
-       * paragraph on the right. Same parallax bg + dark overlay as
-       * the default centered variant, but the content no longer
-       * stacks in a single centered column. */}
-      <div class="rr-container rr-quote__inner rr-quote__inner--split">
-        <div class="rr-quote__col rr-quote__col--title">
-          <h2 class="rr-quote__text">{accountabilityQuote}</h2>
-          <span class="rr-quote__rule" aria-hidden="true"></span>
-        </div>
-        <div class="rr-quote__col rr-quote__col--body">
-          {accountabilitySystemsParagraphs.map((paragraph) => (
-            <p class="rr-quote__body">{paragraph}</p>
+          {/* Mid-letter sub-headings + their supporting body. The
+              h4 sits between paragraphs so the body still flows
+              as a single letter; the rule for first-of-type
+              lead-in only fires on the FIRST <p> in the body
+              (the original lead-in), not on the paragraphs
+              after the h4. */}
+          {letterTailHeadings.map((heading, i) => (
+            <>
+              <h3 class="os-intro__h4">{heading}</h3>
+              {letterTailBlocks[i].map((paragraph) => <p>{paragraph}</p>)}
+            </>
           ))}
         </div>
       </div>
     </section>
 
     {/* ══════════════════════════════════════════════════════════
-         §3a. ADVOCACY INTRO — white-bg 2-column block
-         Title + eyebrow on the left, the first body paragraph
-         on the right. Pulled out of the §3 image/text row so the
-         lede gets its own breathing room above the photo. Same
-         .section-inner rhythm as the rest of the page.
-         ══════════════════════════════════════════════════════════ */}
-    <section class="os-advocacy-intro section-light">
-      <div class="section-inner">
-        <div class="os-advocacy-intro__grid">
-          <div class="os-advocacy-intro__title">
-            <div class="av-dblh__subtitle section-eyebrow">
-              <span class="divider-icon" set:html={diamondIcon} />
-              <span>Our Commitment to Advocacy</span>
-            </div>
-            <h2 class="section-title">{advocacyLede}</h2>
-          </div>
-          <div class="os-advocacy-intro__copy">
-            <p>{advocacyFirstParagraph}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* ══════════════════════════════════════════════════════════
-         §3b. ADVOCACY IMAGE/TEXT ROW — grey bg, square photo
-         Was originally combined with the title above (full §3 split
-         panel); now lives on its own so the lede + first paragraph
-         have their own white-bg block (§3a). Image is square (1/1
-         aspect ratio) so it fills more of the left column per client
-         edit. Background stays grey (#DBDADA) to break the dark/light
-         rhythm. Same `.section-inner` cap + 80px gap + 18px
-         border-radius as about.astro's `.split-image`.
-         ══════════════════════════════════════════════════════════ */}
-    <section class="os-advocacy">
-      <div class="section-inner">
-        <div class="os-split os-split--grey">
-          <div class="os-split__image os-split__image--landscape">
-            <img
-              src={advocacyImage}
-              alt="A Red Rocks Fire Protection inspector in a black collared shirt sits across a desk from a client, reviewing an inspection report together in a bright modern office"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div class="os-split__copy">
-            <h3 class="os-advocacy__heading">Why advocacy matters.</h3>
-            <div class="os-advocacy__body">
-              {advocacyBody.map((paragraph) => <p>{paragraph}</p>)}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* ══════════════════════════════════════════════════════════
-         §4. JOHN'S TRUCK SPLITPANEL — text-left / image-right
-         Mirrors §3 above but reverses the column order so the two
-         split panels visually rhyme (image-corners alternate
-         left/right). Dark bg (#0d0d0b) per spec, white text,
-         same 50/50 grid + 80px gap + 18px border-radius on the
-         image (matches about.astro .split-image).
+         §2. THE STORY BEHIND JOHN'S TRUCK
+         Dark-bg section. Two rows stacked inside the same
+         .section-inner (boxed width):
+           Row 1 — 50/50 split (text-left + image-right)
+                   mirrors the .os-split--reverse pattern from
+                   the original page so the eye lands on text
+                   first, then the truck photo.
+           Row 2 — 1/1 full-width reading column with the rest
+                   of the truck narrative (spotting → bidding →
+                   restoring → meaning), formatted exactly as it
+                   was in the old white-bg §4b section.
          ══════════════════════════════════════════════════════════ */}
     <section class="os-truck section-dark">
       <div class="section-inner">
-        <div class="os-split os-split--reverse">
-          <div class="os-split__copy">
+        <div class="os-truck__split">
+          <div class="os-truck__copy">
             <div class="av-dblh__subtitle section-eyebrow section-eyebrow--light">
               <span class="divider-icon" set:html={diamondIcon} />
               <span>The Story Behind John’s Truck</span>
             </div>
             <h2 class="section-title section-title--light os-truck__title">{truckTitle}</h2>
             <div class="os-truck__body">
-              {/* The truck section opens with a few short paragraphs
-               * that set the scene, then builds to longer ones. Render
-               * them all at the standard body size for a continuous
-               * reading rhythm. */}
               {truckParagraphs.map((paragraph) => <p>{paragraph}</p>)}
             </div>
           </div>
-          <div class="os-split__image os-split__image--square">
+          <div class="os-truck__image">
             <img
               src={truckImage}
               alt="John Kakac’s classic black Chevy pickup — restored with Red Rocks Fire Protection graphics on the door, photographed in front of the Red Rocks formation in Colorado"
@@ -392,60 +264,45 @@ const legacyBody = [
             />
           </div>
         </div>
-      </div>
-    </section>
 
-    {/* ══════════════════════════════════════════════════════════
-         §4b. TRUCK STORY — boxed-width white-bg reading section
-         Holds the 6 paragraphs of the truck narrative that lived
-         inside the §4 split above. Pulled out per client edit so the
-         "spotting → bidding → restoring → meaning" arc gets its own
-         dedicated reading column rather than fighting the side-by-
-         side split layout. Mirrors §1 .os-intro's white-bg rhythm:
-         white bg, 1120px max, 110/80px padding.
-         ══════════════════════════════════════════════════════════ */}
-    <section class="os-truck-story section-light">
-      <div class="section-inner">
-        <div class="os-truck-story__body">
+        {/* 1/1 boxed-width reading row that sits below the dark
+            split, holding the rest of the truck narrative. Kept
+            inside the same dark section (not a separate white
+            section) per client request. */}
+        <div class="os-truck__story">
           {truckStory.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
     </section>
 
     {/* ══════════════════════════════════════════════════════════
-         §5. PARALLAX PULL-QUOTE #2 — lasting legacy
-         Identical pattern to §2 (rr-why bg + overlay + parallax
-         attachment), used as a quiet contemplative closer before
-         the ClosingCTA. The headline is shorter so the visual
-         weight shifts to the wording rather than to a giant mark.
+         §3. MORE THAN A TRUCK — A LASTING LEGACY
+         Full-bleed bg image (John's classic truck parked in
+         front of the Red Rocks formation) with a dark
+         gradient overlay and centered white pull-quote +
+         3 supporting body paragraphs. Same pattern as the
+         original §5 legacy section (a quieter contemplative
+         closer before the page ends). The body paragraphs
+         render under the centered quote so the closing
+         statement reads as one cohesive "letter sign-off".
          ══════════════════════════════════════════════════════════ */}
-    <section class="rr-quote rr-quote--legacy">
+    <section class="os-legacy">
       <div
-        class="rr-quote__bg"
-        style={`background-image: url('${legacyQuoteBg}');`}
+        class="os-legacy__bg"
+        style={`background-image: url('${legacyBg}');`}
         aria-hidden="true"
       ></div>
-      <div class="rr-quote__overlay" aria-hidden="true"></div>
+      <div class="os-legacy__overlay" aria-hidden="true"></div>
 
-      <div class="rr-container rr-quote__inner">
-        <div class="rr-quote__mark" aria-hidden="true">&ldquo;</div>
-        <p class="rr-quote__text">{legacyQuote}</p>
-        <div class="rr-quote__rule" aria-hidden="true"></div>
-        {legacyBody.map((paragraph) => <p class="rr-quote__body">{paragraph}</p>)}
+      <div class="section-inner os-legacy__inner">
+        <div class="os-legacy__mark" aria-hidden="true">&ldquo;</div>
+        <h2 class="os-legacy__quote">{legacyQuote}</h2>
+        <span class="os-legacy__rule" aria-hidden="true"></span>
+        {legacyBody.map((paragraph) => (
+          <p class="os-legacy__body">{paragraph}</p>
+        ))}
       </div>
     </section>
-
-    {/* ══════════════════════════════════════════════════════════
-         §6. CLOSING CTA — shared component, identical to the
-         About page's ClosingCTA so the page ends on the same
-         call-to-action pattern as the rest of the site.
-         ══════════════════════════════════════════════════════════ */}
-    <ClosingCTA
-      backgroundImage="/images/rrfps-about-cta-bg.jpg"
-      paragraphs={[
-        'Choosing the right life safety partner is about more than maintaining systems and meeting requirements. It is about having a team you can trust to communicate clearly, advocate for you, stay ahead of compliance, and take responsibility for protecting your people and property.',
-      ]}
-    />
 
   </div>
 </BaseLayout>
@@ -453,10 +310,10 @@ const legacyBody = [
 <style>
   /* ══════════════════════════════════════════════════════════
    * Shared .section-light / .section-dark / .section-inner /
-   * .section-head / .section-title / .av-dblh__subtitle /
-   * .section-eyebrow rules come from about.astro (the source
-   * page). They are Astro-scoped per page so this file owns its
-   * own copies. Mirror those values exactly to stay cohesive.
+   * .section-head / .section-title / .section-eyebrow /
+   * .av-dblh__subtitle rules come from about.astro. Astro
+   * scopes styles per page, so this file owns its own copies
+   * that mirror those values exactly.
    * ══════════════════════════════════════════════════════════ */
   .section-light { background: #ffffff; color: #0a0a0a; }
   .section-dark { background: #0d0d0b; color: #ffffff; }
@@ -483,8 +340,8 @@ const legacyBody = [
   .section-title--light { color: #ffffff; }
 
   /* ══════════════════════════════════════════════════════════
-   * §0. PAGE-TITLE BANNER — identical to about.astro §0
-   * (and meet-the-team.astro, fire-sprinkler-service-and-systems.astro)
+   * §0. PAGE-TITLE BANNER — identical to about.astro §0 (and
+   * meet-the-team.astro, fire-sprinkler-service-and-systems.astro)
    * so the hero feels native to the site.
    * ══════════════════════════════════════════════════════════ */
   .ptbanner {
@@ -545,13 +402,22 @@ const legacyBody = [
   }
 
   /* ══════════════════════════════════════════════════════════
-   * §1. OUR STORY — long-form white reading column
+   * §1. THE LETTER — long-form white reading column
+   * The first paragraph keeps the lead-in style (larger
+   * text via .os-intro__body p:first-of-type). Mid-letter
+   * <h4> sub-headings sit between paragraphs as
+   * sub-section markers, not full section titles. They use
+   * the same Space Grotesk 700 family as the rest of the
+   * site but at a smaller size than .section-title, with
+   * normal case (sentence) so the page reads as a letter
+   * with internal sub-headings rather than a marketing
+   * page with section banners.
    * ══════════════════════════════════════════════════════════ */
   .os-intro .section-title {
-    /* Tighter line-height than the about.astro section-title default
-     * (1.02) so the 2-line title sits closer to the eyebrow above
-     * and the body below — long-form storytelling page, less
-     * billboard-y. */
+    /* Tighter line-height than the about.astro section-title
+     * default (1.02) so the 2-line title sits closer to the
+     * eyebrow above and the body below — long-form
+     * storytelling page, less billboard-y. */
     line-height: 1;
   }
   .os-intro__body p {
@@ -569,312 +435,44 @@ const legacyBody = [
     line-height: var(--rr-text-lead-lh);
     color: #0a0a0a;
   }
-
-  /* ══════════════════════════════════════════════════════════
-   * §2 / §5. PARALLAX PULL-QUOTE BAND
-   * Based on inspections.astro's `.rr-why` pattern (full-bleed
-   * bg image + dark overlay + content). The parallax effect
-   * comes from `background-attachment: fixed` on the bg layer;
-   * on iOS Safari and on touch devices we fall back to `scroll`
-   * because fixed-attachment inside any transformed ancestor is
-   * silently ignored (and Safari has historically buggy
-   * behavior with it inside scroll containers).
-   * ══════════════════════════════════════════════════════════ */
-  .rr-quote {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding-block: 140px;
-    color: #ffffff;
-    background-color: #0d0d0b;
-  }
-  @media (min-width: 768px) {
-    .rr-quote { padding-block: 180px; }
-  }
-  .rr-quote__bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    /* PARALLAX — fixed-attachment so the image scrolls slower
-     * than the foreground copy as the section passes through
-     * the viewport. Disabled for touch/legacy browsers below. */
-    background-attachment: fixed;
-    z-index: -2;
-  }
-  .rr-quote__overlay {
-    position: absolute;
-    inset: 0;
-    /* Heavier overlay than inspections.astro's `.rr-why__overlay`
-     * (0.78/0.65) so the centered white pull-quote stays legible
-     * without depending on the bg photo having a quiet area in
-     * the middle. */
-    background: linear-gradient(
-      180deg,
-      rgba(13, 13, 11, 0.78) 0%,
-      rgba(13, 13, 11, 0.72) 100%
-    );
-    z-index: -1;
-  }
-  .rr-quote__inner {
-    position: relative;
-    z-index: 1;
-    max-width: 1080px;
-    margin-inline: auto;
-    padding-inline: 80px;
-    text-align: center;
-  }
-  .rr-quote__mark {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 110px;
-    line-height: 0.7;
-    color: #d41226;
-    font-weight: 700;
-    user-select: none;
-  }
-  .rr-quote__text {
-    margin: -10px 0 0;
-    color: #ffffff;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(34px, 4.4vw, 56px);
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -0.035em;
-    text-transform: none;
-    max-width: 18ch;
-    margin-inline: auto;
-  }
-  .rr-quote__rule {
-    width: 80px;
-    height: 3px;
-    background: #d41226;
-    margin: 36px auto 30px;
-  }
-  .rr-quote__body {
-    max-width: 920px;
-    margin: 0 auto;
-    color: rgba(255, 255, 255, 0.92);
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
-  }
-
-  /* §2 SPLIT LAYOUT — accountability quote, title-left / body-right.
-   * Mirrors the 50/50 column ratio of the rest of the site's split
-   * panels so the parallax section reads as "statement + evidence"
-   * instead of a single centered pull-quote. The bg image + overlay
-   * stay full-bleed; only the inner content layout changes. */
-  .rr-quote--split .rr-quote__inner--split {
-    text-align: left;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 64px;
-    align-items: center;
-  }
-  /* The default centered .rr-quote__inner centers everything; the
-   * split variant needs every child back to left-aligned + 0
-   * auto-margins so the column widths actually drive the layout. */
-  .rr-quote--split .rr-quote__text,
-  .rr-quote--split .rr-quote__rule {
-    margin-inline: 0;
-    text-align: left;
-  }
-  /* Title column — slightly smaller type than the centered variant
-   * so it reads as a "strong lead" rather than a billboard, leaving
-   * room for the body column to hold a longer supporting paragraph
-   * without feeling pinched. Uppercased to match every other
-   * section-title on the site (.section-title uses
-   * text-transform: uppercase). */
-  .rr-quote--split .rr-quote__text {
-    max-width: none;
-    margin: 0;
-    font-size: clamp(28px, 3.4vw, 44px);
-    text-transform: uppercase;
-    letter-spacing: -0.025em;
-  }
-  /* Anchor the title column to the TOP of the grid row instead of
-   * vertically centering it (the parent grid uses
-   * align-items: center). Without this, the longer body paragraph
-   * pushes the title mid-column; with it, the title sits flush with
-   * the top of the body text and reads as the headline of the
-   * whole band. */
-  .rr-quote--split .rr-quote__col--title {
-    align-self: start;
-  }
-  /* The rule sits BELOW the title in the title column (was between
-   * title + body in the centered variant) so it visually anchors
-   * the title-block as its own element. */
-  .rr-quote--split .rr-quote__rule {
-    width: 64px;
-    margin: 28px 0 0;
-  }
-  /* Body column — same white-on-dark as the centered variant, but
-   * un-centered (left-aligned) and max-width removed so it fills
-   * its grid column. */
-  .rr-quote--split .rr-quote__body {
-    max-width: none;
-    margin: 0;
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
-  }
-  .rr-quote--split .rr-quote__body + .rr-quote__body {
-    margin-top: 18px;
-  }
-  /* On tablet, the two columns tighten. On mobile they stack back
-   * to a single column so the title reads above the body. */
-  @media (max-width: 1100px) {
-    .rr-quote--split .rr-quote__inner--split {
-      gap: 40px;
-    }
-    .rr-quote--split .rr-quote__text {
-      font-size: clamp(26px, 4vw, 38px);
-    }
-  }
-  @media (max-width: 767px) {
-    .rr-quote--split .rr-quote__inner--split {
-      grid-template-columns: 1fr;
-      gap: 36px;
-    }
-  }
-  /* §5 closing pull-quote — shorter, no body, slightly more
-   * breathing room above the ClosingCTA. */
-  .rr-quote--legacy { padding-block: 140px; }
-  @media (min-width: 768px) {
-    .rr-quote--legacy { padding-block: 170px; }
-  }
-  .rr-quote--legacy .rr-quote__text {
-    font-size: clamp(40px, 5vw, 68px);
-    max-width: 22ch;
-  }
-  /* Legacy body — narrower than the default .rr-quote__body (920px)
-   * so the 3 supporting paragraphs sit visually "underneath" the
-   * centered 22ch pull-quote above them instead of stretching out
-   * to the full text-frame width and looking like they belong to
-   * the next section. Slightly smaller type + lighter color than
-   * the default .rr-quote__body so they read as supporting copy
-   * for the pull-quote, not as a competing block of body text. */
-  .rr-quote--legacy .rr-quote__body {
-    max-width: 780px;
-    margin-inline: auto;
-    font-size: var(--rr-text-body);
-    line-height: var(--rr-text-body-lh);
-    color: rgba(255, 255, 255, 0.88);
-    text-align: center;
-  }
-  .rr-quote--legacy .rr-quote__body + .rr-quote__body {
-    margin-top: 22px;
-  }
-
-  /* ══════════════════════════════════════════════════════════
-   * §3 / §4. SPLIT-PANEL (50/50 image+text)
-   * Mirrors about.astro's `.split-grid` + `.ceo__grid` 50/50
-   * rhythm (80px gap, items-centered, 18px border-radius on
-   * the image). `.os-split--reverse` flips the column order
-   * via flexbox order so the two split panels visually rhyme
-   * without duplicating markup.
-   * ══════════════════════════════════════════════════════════ */
-  .os-split {
-    display: grid;
-    gap: 80px;
-    align-items: center;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-  .os-split__image {
-    overflow: hidden;
-    border-radius: 18px;
-    background: #0d0d0b;
-  }
-  .os-split__image img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 4.2;
-    object-fit: cover;
-  }
-  /* Landscape variant for §3b — 1/1 aspect ratio so the photo fills
-   * more of the left column (was 4/3 landscape, reverted per
-   * client edit). Scoped via the modifier class so the §4 truck
-   * split (no modifier) keeps its 4/4.2 portrait-leaning crop. */
-  .os-split__image--landscape img {
-    aspect-ratio: 1 / 1;
-  }
-  /* Square variant for §4 truck — 1/1 aspect ratio (was 4/4.2 per
-   * the default .os-split__image img rule). The source image is
-   * 853x1280 portrait, so a center-crop would slice off the
-   * wheels; object-position: center bottom keeps the truck (which
-   * sits in the lower 40% of the source frame) fully visible. */
-  .os-split__image--square img {
-    aspect-ratio: 1 / 1;
-    object-position: center bottom;
-  }
-  .os-split--reverse .os-split__copy { order: 1; }
-  .os-split--reverse .os-split__image { order: 2; }
-  @media (max-width: 767px) {
-    .os-split--reverse .os-split__copy,
-    .os-split--reverse .os-split__image { order: initial; }
-  }
-
-  /* §3. Advocacy — grey (#DBDADA) background, black text.
-   * Matches the `.learn-more` color block used in about.astro
-   * so the dark/grey/dark rhythm between the two split panels
-   * feels intentional rather than improvised. */
-  .os-advocacy { background: #dbdada; color: #0a0a0a; }
-  .os-advocacy__title { white-space: pre-line; }
-  /* Sub-heading inside the §3b image-row right column. Smaller than
-   * the lede (which now lives in §3a above) so it reads as a
-   * "continuation header" for the 4 supporting paragraphs rather
-   * than competing with the main H2. */
-  .os-advocacy__heading {
-    margin: 0;
+  /* Mid-letter <h4> sub-headings. Smaller + sentence case
+   * (not the uppercase section-title treatment) so they read
+   * as internal letter sub-headings rather than new page
+   * sections. The previous paragraph's bottom margin
+   * (paragraph p has margin-top: 22px + body text — the
+   * gap from the previous <p> bottom to the h4 top is
+   * just 0 + nothing) is too tight visually, so the h4
+   * carries a generous top margin of 90px to create the
+   * breathing room expected between letter body copy
+   * and a sub-heading. 0 below so the supporting paragraph
+   * sits flush with the h4. */
+  .os-intro__h4 {
+    margin: 90px 0 0;
     color: #0a0a0a;
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(22px, 1.7vw, 30px);
+    font-size: clamp(20px, 1.7vw, 26px);
     font-weight: 700;
-    line-height: 1.18;
-    text-transform: uppercase;
+    line-height: 1.28;
     letter-spacing: -0.01em;
-  }
-  .os-advocacy__body p {
-    margin: 22px 0 0;
-    color: #303030;
-    font-size: var(--rr-text-body);
-    line-height: var(--rr-text-body-lh);
+    text-transform: none;
   }
 
-  /* §3a. ADVOCACY INTRO — white-bg 2-column block.
-   * Mirrors the about.astro §2 company-overview split rhythm (50/50
-   * with 80px gap, items-centered) but reuses the same
-   * .section-inner (1120px max, 110/80px padding) for visual
-   * continuity with the rest of the page. The eyebrow + H2 sit on
-   * the left, the first body paragraph on the right — same
-   * information hierarchy as a `.split-grid` block, but with the
-   * title promoted to a real `section-title` rather than a single
-   * H3 inside a copy column. */
-  .os-advocacy-intro { background: #ffffff; color: #0a0a0a; }
-  .os-advocacy-intro__grid {
+  /* ══════════════════════════════════════════════════════════
+   * §2. JOHN'S TRUCK — dark section with a 1/2 + 1/2 split
+   * row on top and a 1/1 reading row below. All inside the
+   * same .section-inner so the two rows share the same
+   * boxed width and read as a single dark section.
+   * ══════════════════════════════════════════════════════════ */
+  .os-truck__split {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 80px;
     align-items: center;
+    /* 0 below so the second row (1/1 text) butts up to the
+     * split row without extra padding. The 1/1 row carries
+     * its own top margin instead. */
+    margin-bottom: 0;
   }
-  .os-advocacy-intro__title .section-title {
-    margin: 0;
-    /* Honor a single line break inside the lede string for clean
-     * display in the wider left column. */
-    white-space: pre-line;
-  }
-  .os-advocacy-intro__copy p {
-    margin: 0;
-    color: #303030;
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
-  }
-  @media (max-width: 1100px) {
-    .os-advocacy-intro__grid { gap: 48px; }
-  }
-  @media (max-width: 767px) {
-    .os-advocacy-intro__grid { grid-template-columns: 1fr; gap: 28px; }
-  }
-
-  /* §4. Truck — dark (#0d0d0b) background, white text. */
   .os-truck__title { white-space: pre-line; }
   .os-truck__body p {
     margin: 22px 0 0;
@@ -882,27 +480,153 @@ const legacyBody = [
     font-size: var(--rr-text-body);
     line-height: var(--rr-text-body-lh);
   }
+  .os-truck__image {
+    overflow: hidden;
+    border-radius: 18px;
+    background: #0d0d0b;
+  }
+  .os-truck__image img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    /* Source is 853x1280 portrait — the truck sits in the
+     * lower 40% of the source frame, so a center-crop would
+     * slice off the wheels. center-bottom keeps the truck
+     * (and Red Rocks formation above it) fully visible. */
+    object-position: center bottom;
+  }
 
-  /* §4b. TRUCK STORY — white-bg reading column that sits below the
-   * §4 dark split panel and holds the 6 paragraphs of the truck
-   * narrative. Mirrors the §1 .os-intro body rhythm so the page
-   * returns to the same "long-form reading column" feel before
-   * the §5 parallax legacy quote. First paragraph styled as a
-   * lead-in (same approach as .os-intro__body p:first-of-type)
-   * so the narrative has a clear entry point. */
-  .os-truck-story { background: #ffffff; color: #0a0a0a; }
-  .os-truck-story__body p {
-    margin: 22px 0 0;
-    color: #232323;
+  /* 1/1 reading row below the split. Same boxed-width column
+   * (.section-inner caps the width) so the text aligns with
+   * the 1/2 split row's copy column above. White-alpha copy
+   * on the dark bg so it reads as a continuation of the
+   * truck narrative, not a separate white section. The
+   * first paragraph uses a larger lead-in style (matches
+   * the .os-intro__body lead-in) so the narrative has a
+   * clear entry point; subsequent paragraphs use a
+   * generous 30px top margin so the 6-paragraph block
+   * reads with clear paragraph breaks instead of one
+   * continuous wall of text. */
+  .os-truck__story {
+    margin: 90px 0 0;
+    max-width: 920px;
+  }
+  .os-truck__story p {
+    margin: 30px 0 0;
+    color: rgba(255, 255, 255, 0.78);
     font-size: var(--rr-text-body);
     line-height: var(--rr-text-body-lh);
   }
-  .os-truck-story__body p:first-of-type {
+  .os-truck__story p:first-of-type {
     margin-top: 0;
     font-size: var(--rr-text-lead);
     line-height: var(--rr-text-lead-lh);
-    color: #0a0a0a;
+    color: #ffffff;
   }
+
+  /* ══════════════════════════════════════════════════════════
+   * §3. MORE THAN A TRUCK — A LASTING LEGACY
+   * Full-bleed bg image (the classic truck parked in front
+   * of the Red Rocks formation) with a dark gradient overlay
+   * and centered white content. Pattern mirrors the
+   * .rr-quote parallax band from the original page so the
+   * closing section reads as a quiet contemplative letter
+   * sign-off. Centered layout uses the same .section-inner
+   * cap (1120px) so the content width matches the rest of
+   * the page; padding-block is larger than the .section-inner
+   * default (110/80) so the centered quote + body have the
+   * visual breathing room expected of a closing band. The
+   * bg image uses cover so the photo fills the band
+   * regardless of viewport, with a top-to-bottom dark
+   * overlay so the centered white content stays legible.
+   * ══════════════════════════════════════════════════════════ */
+  .os-legacy {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #0d0d0b;
+    color: #ffffff;
+  }
+  .os-legacy__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .os-legacy__overlay {
+    position: absolute;
+    inset: 0;
+    /* Heavier overlay so the centered white content stays
+     * legible without depending on a quiet area in the bg
+     * photo. */
+    background: linear-gradient(
+      180deg,
+      rgba(13, 13, 11, 0.78) 0%,
+      rgba(13, 13, 11, 0.72) 100%
+    );
+    z-index: -1;
+  }
+  .os-legacy__inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    /* Slightly larger vertical padding than the .section-inner
+     * default (110/80) so the centered quote + body have the
+     * breathing room expected of a closing band. The 110/80
+     * still applies on the sides via the .section-inner rule
+     * above. */
+    padding-block: 140px;
+  }
+  @media (min-width: 768px) {
+    .os-legacy__inner { padding-block: 170px; }
+  }
+  .os-legacy__mark {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 110px;
+    line-height: 0.7;
+    color: #d41226;
+    font-weight: 700;
+    user-select: none;
+  }
+  .os-legacy__quote {
+    margin: -10px 0 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    text-transform: none;
+    max-width: 22ch;
+    margin-inline: auto;
+  }
+  .os-legacy__rule {
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #d41226;
+    margin: 36px auto 30px;
+  }
+  /* Body — narrower than the .os-truck__story reading column
+   * (920px) so the 3 supporting paragraphs sit visually
+   * "underneath" the centered 22ch pull-quote above them
+   * instead of stretching out to the full text-frame width
+   * and looking like they belong to the next section.
+   * Slightly smaller type + lighter color than the default
+   * body so they read as supporting copy for the pull-quote,
+   * not as a competing block of body text. */
+  .os-legacy__body {
+    max-width: 780px;
+    margin: 0 auto 22px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+    text-align: center;
+  }
+  .os-legacy__body:last-of-type { margin-bottom: 0; }
+  .os-legacy__body + .os-legacy__body { margin-top: 22px; }
 
   /* ══════════════════════════════════════════════════════════
    * Responsive — matches about.astro's @media cascade so the
@@ -911,11 +635,7 @@ const legacyBody = [
   @media (max-width: 1100px) {
     .section-inner { padding: 90px 60px; }
     .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
-    .rr-quote__inner { padding-inline: 60px; }
-    .os-split { gap: 48px; }
-    /* Parallax degrades to scroll below desktop — see (hover: none)
-     * override further down for the iOS/touch fallback. */
-    .rr-quote__bg { background-attachment: scroll; }
+    .os-truck__split { gap: 48px; }
   }
 
   @media (max-width: 767px) {
@@ -931,26 +651,12 @@ const legacyBody = [
     }
     .ptbanner__title { font-size: 54px; }
     .ptbanner__breadcrumbs { white-space: normal; }
-    .rr-quote { padding-block: 96px; }
-    .rr-quote__inner { padding-inline: 28px; }
-    .rr-quote__text { font-size: 30px; }
-    .rr-quote--legacy { padding-block: 110px; }
-    .rr-quote--legacy .rr-quote__text { font-size: 34px; }
-    .os-split { grid-template-columns: 1fr; gap: 36px; }
-    .os-split__image img { aspect-ratio: 4 / 3; }
-  }
-
-  /* Touch devices — fixed-attachment on iOS Safari and Android
-   * Chrome is either silently dropped or causes the bg to scroll
-   * with the page (i.e. no parallax effect). Disable explicitly so
-   * the bg stays anchored to the section without glitches. */
-  @media (hover: none) {
-    .rr-quote__bg { background-attachment: scroll; }
-  }
-
-  /* Reduced motion — drop the parallax effect entirely so the bg
-   * doesn't move at a different speed than the rest of the page. */
-  @media (prefers-reduced-motion: reduce) {
-    .rr-quote__bg { background-attachment: scroll; }
+    .os-intro__h4 { margin-top: 64px; }
+    .os-truck__split { grid-template-columns: 1fr; gap: 36px; }
+    .os-truck__image img { aspect-ratio: 4 / 3; }
+    .os-truck__story { margin-top: 70px; }
+    .os-truck__story p { margin-top: 24px; }
+    .os-legacy__inner { padding-block: 110px; }
+    .os-legacy__quote { font-size: 34px; }
   }
 </style>
