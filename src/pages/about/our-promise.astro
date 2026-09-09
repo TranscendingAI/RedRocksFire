@@ -30,6 +30,7 @@
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
 
 // Diamond divider icon — used in the double-heading subtitle pattern
 // across about.astro, fire-sprinkler-service-and-systems.astro, etc.
@@ -198,7 +199,7 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
                 aria-hidden="true"
               ></div>
               <div class="op-card__body">
-                <p class="op-card__number">Promise {promise.number}</p>
+                <p class="op-card__number">We Promise To</p>
                 <h3 class="op-card__title">{promise.title}</h3>
                 <p class="op-card__copy">{promise.body}</p>
               </div>
@@ -214,7 +215,7 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
                 aria-hidden="true"
               ></div>
               <div class="op-card__body">
-                <p class="op-card__number">Promise {promise.number}</p>
+                <p class="op-card__number">We Promise To</p>
                 <h3 class="op-card__title">{promise.title}</h3>
                 <p class="op-card__copy">{promise.body}</p>
               </div>
@@ -249,6 +250,24 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
         </p>
       </div>
     </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §4. CLOSING CTA — shared component, identical to
+         about.astro's ClosingCTA so the page ends on the same
+         call-to-action pattern as the rest of the site. Three
+         custom buttons: Meet the Team / The RRFPS Difference /
+         Contact Us.
+         ══════════════════════════════════════════════════════════ */}
+    <ClosingCTA
+      paragraphs={[
+        'Our Brand Promise is more than a statement — it is the standard we hold ourselves to every day, in every service call, and in every long-term partnership. If these promises align with what you are looking for in a life safety partner, we would welcome the opportunity to earn your trust.',
+      ]}
+      buttons={[
+        { label: 'Meet the Team',         icon: 'mdi:account-group',         href: '/meet-the-team' },
+        { label: 'The RRFPS Difference',  icon: 'mdi:fire-circle',           href: '/about/rrfps-difference' },
+        { label: 'Contact Us',           icon: 'mdi:email-outline',         href: '/contact' },
+      ]}
+    />
 
   </div>
 </BaseLayout>
@@ -339,16 +358,29 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
 
   /* ══════════════════════════════════════════════════════════
    * §1. OUR PROMISE — intro
-   * Boxed-width white section, eyebrow + H2 + 2-paragraph body.
-   * Same .section-inner + .section-head + .section-title +
-   * .av-dblh__subtitle pattern as the §3 intro on the Mission/
-   * Vision/Values page. First paragraph is the bold lead-in.
+   * Single-column stacked layout (reverted per client revision):
+   * eyebrow + H2 in the section head, then 2-paragraph body
+   * below, all stacked top-to-bottom. Same .section-head +
+   * .section-title + .av-dblh__subtitle pattern as the §3
+   * intro on the Mission/Vision/Values page. First paragraph
+   * is the bold lead-in.
    * ══════════════════════════════════════════════════════════ */
   .op-intro .section-title {
     /* Two-line H2 ("A Higher Standard." / "A Safer Tomorrow.")
      * breaks naturally on the <br /> — the .section-title default
      * line-height: 1.02 keeps the lines tight like the rest of
      * the site's section headings. */
+  }
+  .op-intro .section-inner {
+    /* Per client revision (latest): the gap between the intro
+     * and the cards section above (the .op-cards padding-top: 0
+     * + the intro's section-inner bottom padding) is reduced
+     * 50% twice in a row — first cut to 55px, then another 50%
+     * cut to 28px. Total gap is now 28px (down from the original
+     * 110px = 75% smaller overall). The cards section keeps
+     * padding-top: 0 so the 28px is owned entirely by the intro's
+     * bottom padding. */
+    padding-bottom: 28px;
   }
   .op-intro__body p {
     margin: 22px 0 0;
