@@ -254,12 +254,16 @@ const credentials = [
   }
   .mt-quote__image {
     position: relative;
-    aspect-ratio: 1 / 0.92;
     overflow: hidden;
     /* Fill the full grid-row height (matches the taller copy column) so
        the image stretches to the bottom of the box instead of leaving
-       empty grey space beneath it. The aspect-ratio above is preserved
-       but only acts as a fallback when the row is content-sized. */
+       empty grey space beneath it. No `aspect-ratio` here — when both
+       `aspect-ratio` and `height: 100%` were set, the derived width
+       could exceed the 1fr column at certain viewports and visually
+       overflow into the copy column, making the start of the quote
+       text appear to overlap the image. Letting the column width
+       drive the size (and the <img> `object-fit: cover` handle the
+       crop) keeps the image contained in its column at all widths. */
     height: 100%;
     min-height: 0;
   }
