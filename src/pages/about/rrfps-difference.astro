@@ -1,0 +1,1128 @@
+---
+/**
+ * The RRFPS Difference — /about/rrfps-difference/
+ *
+ * Sub-page of /about. Long-form pitch for the company's A-C-T
+ * (Advocacy / Comprehensive Solutions / Trust) framework, the
+ * "What the Difference Means for You" benefit row, the
+ * safety-first guarantee, the "You Are the Hero" guide framing,
+ * and the "How We Show Up" closer.
+ *
+ * Design DNA (mirrors the rest of the site 1:1):
+ *   • about.astro / our-promise.astro / credentials-and-certifications.astro
+ *     — ptbanner (full-bleed hero + breadcrumbs), `.section-inner` rhythm
+ *       (1120px max, 110/80px padding), `.section-title` typography,
+ *       `.section-light` / `.section-dark` color blocks, diamond-icon
+ *       eyebrow, `.op-card` rounded-corner card pattern (18px radius).
+ *   • about.astro §9 .difference — full-bleed bg image + dark gradient
+ *       overlay band with boxed-width copy column (white text). Used
+ *       here for §4 "Safety Is the Standard" and §7 "The Difference Is
+ *       How We Show Up".
+ *   • about.astro §2 .overview + .split-image — 1/1 split with rounded
+ *       image (18px radius) on the right and copy on the left. Used
+ *       here for §5 "You Are the Hero. We Are the Guide."
+ *   • ClosingCTA — shared component, identical to the other /about
+ *     sub-pages.
+ *
+ * Sections, in order:
+ *   §0. ptbanner hero
+ *   §1. Intro — boxed-width white section: eyebrow + H2 + 3
+ *       "We lead with safety. / We simplify compliance. / We protect
+ *       what matters most." statements + lead-in paragraphs
+ *   §2. The A–C–T Framework — boxed-width white 3-card grid
+ *       (Advocacy / Comprehensive Solutions / Trust), each card
+ *       has bg image + red icon + title + body + CTA
+ *   §2b. A–C–T Detail — three full pillars with the verbatim body
+ *       copy from the source md, plus the 12-item RRFPS services
+ *       grid rendered as a 4-col rounded card list (between the
+ *       3 ACT cards and the 9-cell benefits grid)
+ *   §3. What the RRFPS Difference Means for You — boxed-width white
+ *       9-cell icon grid (Proactive Guidance / One Vendor / Clear
+ *       Communication / Comprehensive Expertise / Local Knowledge /
+ *       Reliable Response / Fair Pricing / Complete Ownership /
+ *       Long-Term Partnership). 3-col desktop → 3-col tablet → 1-col
+ *       mobile.
+ *   §4. Safety Is the Standard — full-bleed dark bg + overlay band
+ *       with boxed-width white copy column (about.astro .difference
+ *       pattern, dark mode)
+ *   §5. You Are the Hero. We Are the Guide. — boxed-width 1/1 split
+ *       with rounded-corner image on the right (about.astro .overview
+ *       pattern)
+ *   §6. ClosingCTA — shared component
+ *
+ * Image assets (placeholders pulled from existing /public/images pool
+ * that visually match each section's concept — swap when real
+ * assets supplied):
+ *   §0 ptbanner    — rrfps-about-hero-bg.jpg (on-brand dark hero)
+ *   §2 card 1 (A)  — red-rocks-fire-protection-advocacy-is-the-job.jpg
+ *   §2 card 2 (C)  — red-rocks-fire-protection-compliance.jpg
+ *   §2 card 3 (T)  — red-rocks-fire-protection-the-call-when-it-counts.jpg
+ *   §4 safety band — rrfps-about-protecting-lives.jpg
+ *   §5 hero image  — rrfps-about-total-life-safety.jpg
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L0.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+const bannerImage = '/images/rrfps-difference-hero-bg.png';
+
+const actCards = [
+  {
+    letter: 'A',
+    label: 'Advocacy',
+    title: 'Advocacy is the foundation of how RRFPS serves its clients.',
+    body: 'Led by Owner Brian Kakac, the company stays ahead of evolving fire codes, legislation, and local jurisdiction requirements, proactively educating and guiding clients to remain compliant and protected.',
+    image: '/images/rrfps-difference-act-advocacy.jpg',
+    cta: { label: 'Our Advocacy in Action', href: '/about/our-promise' },
+  },
+  {
+    letter: 'C',
+    label: 'Comprehensive Solutions',
+    title: 'One Vendor. One Coordinated Team. One Life Safety Solution.',
+    body: 'Inspections, fire sprinklers, fire alarms, monitoring, backflow, extinguishers, kitchen hood suppression, DAS, security, area of refuge systems, consulting, and 24-hour service — all managed through one coordinated team.',
+    image: '/images/rrfps-difference-act-comprehensive.jpg',
+    cta: { label: 'Explore Our Services', href: '/services' },
+  },
+  {
+    letter: 'T',
+    label: 'Trust',
+    title: 'Trust is earned through consistency, accountability, and follow-through.',
+    body: 'RRFPS builds long-term relationships by delivering on its commitments, communicating clearly, and taking ownership of every outcome — so you never have to wonder who is responsible for your systems.',
+    image: '/images/rrfps-difference-act-trust.jpg',
+    cta: { label: 'Our Commitment to You', href: '/about/our-promise' },
+  },
+] as const;
+
+/* ══════════════════════════════════════════════════════════
+ * §2b. THE A–C–T DETAIL — verbatim body copy from the source md
+ * for each of the three principles, with the sub-headings and
+ * the 12-item services list rendered as a 4×3 rounded card
+ * grid (so it reads as part of the site's card language).
+ * ══════════════════════════════════════════════════════════ */
+const actPillars = [
+  {
+    letter: 'A',
+    label: 'Advocacy',
+    subhead: 'We Believe You Deserve More Than a Vendor. You Deserve an Advocate.',
+    body: [
+      'Life safety compliance can be complicated. Codes change. Requirements evolve. Jurisdictions can interpret and enforce requirements differently. A property manager overseeing multiple buildings may be working with different fire departments, inspectors, deadlines, systems, and compliance requirements at the same time.',
+      'We do not believe our clients should have to navigate that complexity alone. RRFPS takes a proactive approach to understanding the environment surrounding your life safety systems. Our team stays informed about evolving codes, legislation, compliance requirements, and local jurisdictional expectations so we can help you understand how those changes may affect your properties and your responsibilities.',
+      'But knowledge alone is not advocacy. Advocacy means putting that knowledge to work for you. It means communicating before an issue becomes a surprise. It means helping you understand what is required and why. It means looking beyond the immediate service call to consider the larger compliance picture. It means helping you plan instead of constantly react. And it means being willing to stand beside our clients as a knowledgeable life safety partner when questions, challenges, or changing requirements arise.',
+      'Our goal is not to make fire protection more complicated. Our job is to make it easier for you to manage.',
+    ],
+    transition: 'From Reactive to Proactive.',
+    transitionBody: [
+      'Too often, fire protection becomes a cycle of reacting: an inspection identifies a deficiency, a deadline approaches, a system develops a problem, or a jurisdiction requires action. RRFPS works to change that experience.',
+      'By combining proactive communication, compliance knowledge, inspection expertise, ongoing service, and coordinated life safety management, we help our clients identify needs earlier, make informed decisions, and reduce the uncertainty that comes from managing critical systems reactively.',
+      'Because the best life safety partner does more than respond to problems. They help you stay ahead of them.',
+    ],
+  },
+  {
+    letter: 'C',
+    label: 'Comprehensive Solutions',
+    subhead: 'One Vendor. One Coordinated Team. One Life Safety Solution.',
+    body: [
+      'The individual systems protecting a property may be different, but the responsibility for keeping that property safe ultimately comes together in one place: with you.',
+      'Traditionally, managing life safety can mean coordinating numerous vendors — one company for sprinklers, another for alarms, another for extinguishers, another for monitoring, and still others for specialized systems. Every additional vendor can mean another point of contact, another schedule, another invoice, another service history, another set of recommendations, and another opportunity for something to fall between the cracks.',
+      'RRFPS was built around a better model. Our One Vendor Life Safety Solution brings your life safety needs together through one coordinated company and one accountable relationship. That gives our team the ability to see beyond an individual piece of equipment or isolated service request and understand the broader life safety needs of your property.',
+      'For our clients, it means fewer moving pieces to manage. One team. One relationship. One partner who understands the bigger picture.',
+    ],
+    transition: 'Comprehensive Does Not Simply Mean "More Services."',
+    transitionBody: [
+      'For RRFPS, comprehensive means connected service. It means inspections can lead seamlessly to the appropriate service or repair. It means your different life safety systems are not being treated as unrelated responsibilities. It means communication can move through one coordinated organization rather than across multiple disconnected vendors. And it means there is a company taking responsibility for helping you manage the entire life safety picture.',
+      'Whether you are responsible for one building or a portfolio of properties, that coordination provides something extremely valuable: a clearer path forward.',
+    ],
+  },
+  {
+    letter: 'T',
+    label: 'Trust',
+    subhead: 'Trust Is Not Something We Ask For. It Is Something We Work to Earn.',
+    body: [
+      'In life safety, trust matters. You need to know the company responsible for your systems will show up. You need to know recommendations are being made with safety, compliance, and your best interests in mind. You need clear communication when something needs attention. You need people who will follow through on what they promise. And when a challenge occurs, you need a partner who will take ownership rather than pass responsibility somewhere else.',
+      'That is the standard RRFPS works to deliver. Our relationships are built through the everyday things that ultimately matter most: doing what we say, showing up when we say we will, communicating clearly, pricing fairly, taking responsibility, and remaining engaged until an issue is resolved.',
+      'We believe reliability should be expected, not exceptional. We believe accountability should continue after the service call. And we believe the strongest client relationships are built over years of consistently doing the right thing.',
+    ],
+    transition: 'Accountability Changes Everything.',
+    transitionBody: [
+      'One of the greatest advantages of a true life safety partnership is knowing who is accountable. When multiple vendors are involved, responsibility can become fragmented. When something goes wrong, the client can be left trying to determine who owns the issue and who is responsible for resolving it.',
+      'The RRFPS approach is different. We take ownership. If challenges arise, we communicate openly, act quickly, and remain committed to finding the solution.',
+      'That sense of responsibility is deeply rooted in the family values upon which Red Rocks Fire Protection Services was founded — hard work, integrity, loyalty, accountability, and taking care of people. Those principles have guided RRFPS since 2010, and they continue to define the kind of company we choose to be today.',
+    ],
+  },
+] as const;
+
+/* The full 12-item RRFPS services list — rendered as a 4-col
+ * rounded card grid inside the C pillar section, so it reads
+ * as part of the site's card language instead of a flat list. */
+const services = [
+  { label: 'Inspections',                                    href: '/inspections' },
+  { label: 'Fire Sprinkler Service & Systems',              href: '/services/fire-sprinkler-service-and-systems' },
+  { label: 'Fire Alarm Service & Systems',                  href: '/services/fire-alarm-service-and-systems' },
+  { label: 'Monitoring Services',                           href: '/services/monitoring-services' },
+  { label: 'Backflow Prevention Assemblies',                href: '/services/backflow-prevention-assemblies' },
+  { label: 'Portable Fire Extinguishers',                   href: '/services/portable-fire-extinguishers' },
+  { label: 'Distributed Antenna Systems (DAS)',             href: '/services/distributed-antenna-systems' },
+  { label: 'Security System Installation & Monitoring',     href: '/services/security-system-installation-and-monitoring' },
+  { label: 'Kitchen Hood Suppression Systems',              href: '/services/kitchen-hood-suppression-systems' },
+  { label: 'Area of Refuge Communication Systems',           href: '/services/area-of-refuge-communication-systems' },
+  { label: 'Consulting Services',                           href: '/services/consulting-services' },
+  { label: '24 Hour Service',                               href: '/services/24-hour-service' },
+] as const;
+
+const benefits = [
+  { icon: 'solar:shield-check-bold-duotone',          label: 'Proactive Guidance' },
+  { icon: 'solar:clipboard-check-bold-duotone',        label: 'One Vendor Accountability' },
+  { icon: 'solar:chat-round-dots-bold-duotone',        label: 'Clear Communication' },
+  { icon: 'solar:medal-ribbons-star-bold-duotone',     label: 'Comprehensive Expertise' },
+  { icon: 'solar:map-point-bold-duotone',              label: 'Local Knowledge' },
+  { icon: 'solar:bell-bing-bold-duotone',              label: 'Reliable Response' },
+  { icon: 'solar:tag-price-bold-duotone',              label: 'Fair, Straightforward Pricing' },
+  { icon: 'solar:check-circle-bold-duotone',           label: 'Complete Ownership' },
+  { icon: 'solar:users-group-rounded-bold-duotone',    label: 'Long-Term Partnership' },
+] as const;
+
+const safetyImage = '/images/rrfps-about-protecting-lives.jpg';
+const heroImage = '/images/rrfps-difference-hero-section.jpg';
+---
+
+<BaseLayout
+  title="The RRFPS Difference | Red Rocks Fire Protection Services"
+  description="The RRFPS Difference: Advocacy, Comprehensive Solutions, and Trust — one coordinated partner for every life safety system on your property. Less complexity. More confidence. Complete ownership."
+>
+  <div class="av-page rrfps-difference">
+
+    {/* ══════════════════════════════════════════════════════════
+         §0. PAGE-TITLE BANNER (about.astro §0 pattern)
+         ══════════════════════════════════════════════════════════ */}
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${bannerImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">The RRFPS Difference.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/about/">About</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">The RRFPS Difference</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ══════════════════════════════════════════════════════════
+         §1. INTRO — boxed-width white section
+         Mirrors our-promise.astro §1 (eyebrow + uppercase H2 +
+         lead-in paragraph + body paragraph) with a 3-statement
+         list under the lead-in (using the red-diamond bullet
+         treatment established on the rest of the site).
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-intro section-light">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="av-dblh__subtitle section-eyebrow">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>The RRFPS Difference</span>
+          </div>
+          <h2 class="section-title">More Than a Fire Protection Company.<br />A Partner in Life Safety.</h2>
+        </div>
+        <div class="rd-intro__body">
+          <p>
+            <strong>No other fire protection company combines advocacy, comprehensive service, and accountability into a single, unified experience.</strong>
+          </p>
+          <p>Protecting a property is about far more than maintaining equipment or completing an annual inspection. For property owners, managers, facility operators, and the professionals responsible for the safety of a building, life safety means managing multiple systems, changing requirements, deadlines, documentation, repairs, inspections, and the expectations of different jurisdictions — all while protecting the people who depend on you.</p>
+          <p>At Red Rocks Fire Protection Services, we understand the responsibility you carry. That is why we built RRFPS to be different. Since 2010, our approach has been centered on helping clients move away from fragmented, reactive fire protection and toward a more coordinated, proactive approach to life safety. We bring the systems, services, expertise, communication, and accountability together through one trusted partner — while helping our clients understand what is required, what is changing, and what needs to happen next.</p>
+          <p class="rd-intro__closer">The result is more than convenience. It is clarity, confidence, and accountability. And that is The RRFPS Difference.</p>
+        </div>
+
+        {/* Three guiding statements, lifted out of the copy above
+            and re-rendered as a full-width red banner with three
+            centered columns (mdi icon + white statement). The
+            banner sits inside the same .section-inner as the
+            body copy above so the two read as one continuous
+            intro section. */}
+        <ul class="rd-intro__banner" aria-label="Three guiding statements">
+          <li class="rd-intro__banner-item">
+            <span class="rd-intro__banner-icon" aria-hidden="true">
+              <iconify-icon icon="mdi:shield-check" width="40" height="40"></iconify-icon>
+            </span>
+            <span class="rd-intro__banner-text">We lead with safety.</span>
+          </li>
+          <li class="rd-intro__banner-item">
+            <span class="rd-intro__banner-icon" aria-hidden="true">
+              <iconify-icon icon="mdi:clipboard-check-outline" width="40" height="40"></iconify-icon>
+            </span>
+            <span class="rd-intro__banner-text">We simplify compliance.</span>
+          </li>
+          <li class="rd-intro__banner-item">
+            <span class="rd-intro__banner-icon" aria-hidden="true">
+              <iconify-icon icon="mdi:heart-pulse" width="40" height="40"></iconify-icon>
+            </span>
+            <span class="rd-intro__banner-text">We protect what matters most.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §2. THE A–C–T FRAMEWORK
+         Boxed-width white 3-card grid. Each card:
+           - bg image on top (200px, 18px top radius)
+           - red letter badge anchored over the image corner
+           - bold black title (clamp, uppercase)
+           - body paragraph
+           - red border-bottom CTA button (Learn-more style)
+         The 3-card pattern matches our-promise.astro §2 .op-card
+         with the 18px rounded corners established for all cards
+         on the site.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-act">
+      <div class="section-inner">
+        <div class="section-head section-head--center">
+          <div class="av-dblh__subtitle section-eyebrow">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Three principles. One experience.</span>
+          </div>
+          <h2 class="section-title">The A–C–T Framework.</h2>
+          <p class="section-intro rd-act__intro">Three principles define the RRFPS experience: <strong>Advocacy. Comprehensive Solutions. Trust.</strong> Together, they represent not simply what we provide, but how we serve.</p>
+        </div>
+
+        <div class="rd-act__grid">
+          {actCards.map((card) => (
+            <article class="rd-act-card">
+              <div class="rd-act-card__image" style={`background-image: url('${card.image}');`} aria-hidden="true">
+                <span class="rd-act-card__badge" aria-hidden="true">{card.letter}</span>
+              </div>
+              <div class="rd-act-card__body">
+                <p class="rd-act-card__label">{card.label}</p>
+                <h3 class="rd-act-card__title">{card.title}</h3>
+                <p class="rd-act-card__copy">{card.body}</p>
+                {/* Default .av-wgl-btn (red filled) — matches the
+                    "Industries We Serve" button on /services. */}
+                <a href={card.cta.href} class="av-wgl-btn rd-act-card__cta">
+                  <span class="av-wgl-btn__text">{card.cta.label}</span>
+                  <span class="av-wgl-btn__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                  </span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §2b. THE A–C–T DETAIL — three full pillars with the
+         verbatim body copy from the source md. Black bg, white
+         text. Each pillar has a red letter badge that matches
+         the height of the pillar headline so the badge fills
+         its grid row instead of leaving empty space below it
+         (align-items: stretch + min-height on the badge).
+         The C pillar carries the 12-item services grid below.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-pillars">
+      <div class="section-inner">
+        {actPillars.map((pillar) => (
+          <article class="rd-pillar">
+            <div class="rd-pillar__head">
+              <span class="rd-pillar__badge" aria-hidden="true">{pillar.letter}</span>
+              <div class="rd-pillar__headline">
+                <p class="rd-pillar__eyebrow">{pillar.label}</p>
+                <h3 class="rd-pillar__subhead">{pillar.subhead}</h3>
+              </div>
+            </div>
+            <div class="rd-pillar__body">
+              {pillar.body.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+            <h4 class="rd-pillar__transition">{pillar.transition}</h4>
+            <div class="rd-pillar__body">
+              {pillar.transitionBody.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §2c. OUR SERVICES — full 12-capability card grid copied
+         from /services/ (services.astro §1 .sv-capabilities)
+         so this page has the same service catalog as the
+         dedicated services landing page. 4-col desktop, 2-col
+         tablet, 1-col mobile.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-services-section">
+      <div class="rd-services-section__inner">
+        <div class="rd-services-section__head">
+          <div class="rd-services-section__head-copy">
+            <div class="av-dblh__subtitle rd-services-eyebrow">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>One Vendor. One Coordinated Team.</span>
+            </div>
+            <h2 class="rd-services-section__title">All 12 Services. One Team.</h2>
+          </div>
+          <a href="/industries-we-serve" class="av-wgl-btn rd-services-section__cta">
+            <span class="av-wgl-btn__text">Industries We Serve</span>
+            <span class="av-wgl-btn__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+            </span>
+          </a>
+        </div>
+
+        <div class="rd-services-section__grid">
+          {services.map((service) => (
+            <a href={service.href} class="rd-service-card">
+              <span class="rd-service-card__icon" aria-hidden="true">
+                <iconify-icon icon="mdi:cog-outline" width="40" height="40"></iconify-icon>
+              </span>
+              <h3>{service.label}</h3>
+              <span class="rd-service-card__link">
+                Learn more
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §3. WHAT THE RRFPS DIFFERENCE MEANS FOR YOU
+         Boxed-width white 9-cell icon grid. Each cell is a
+         rounded-corner card with a red iconify icon, a label,
+         and the standard card hover-lift (matching the
+         capability-card pattern on about.astro).
+         9-col desktop → 3-col tablet → 1-col mobile. The full
+         row sits inside .section-inner--wide so it stretches
+         to the same width as the A-C-T cards above.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-benefits">
+      <div class="section-inner section-inner--wide">
+        <div class="section-head section-head--center">
+          <div class="av-dblh__subtitle section-eyebrow">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Less Complexity. More Confidence.</span>
+          </div>
+          <h2 class="section-title">What the RRFPS Difference Means for You.</h2>
+          <p class="section-intro">When Advocacy, Comprehensive Solutions, and Trust work together, life safety becomes easier to manage. Instead of simply hiring companies to perform individual services, you gain a partner who understands your responsibility and helps you carry it.</p>
+        </div>
+
+        <div class="rd-benefits__grid">
+          {benefits.map((benefit) => (
+            <article class="rd-benefit">
+              <span class="rd-benefit__icon" aria-hidden="true">
+                <iconify-icon icon={benefit.icon} width="34" height="34"></iconify-icon>
+              </span>
+              <h3 class="rd-benefit__label">{benefit.label}</h3>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §4. SAFETY IS THE STANDARD — full-bleed dark bg + overlay
+         band. Mirrors about.astro §9 .difference pattern
+         (full-bleed bg image + dark left-weighted gradient
+         overlay + boxed-width white copy column).
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-safety">
+      <div class="rd-safety__bg" style={`background-image: url('${safetyImage}');`} aria-hidden="true"></div>
+      <div class="rd-safety__overlay" aria-hidden="true"></div>
+      <div class="section-inner rd-safety__inner">
+        <div class="rd-safety__copy">
+          <div class="av-dblh__subtitle section-eyebrow section-eyebrow--light">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Safety First. Always.</span>
+          </div>
+          <h2 class="section-title section-title--light">Safety Is the Standard Behind Everything We Do.</h2>
+          <p class="rd-safety__lead">Before Advocacy, before Comprehensive Solutions, and before Trust, there is one responsibility that guides all three: <strong>Protecting lives and property.</strong></p>
+          <p>Life safety systems are different from almost every other system within a building. They are designed for the moments when performance matters most.</p>
+          <p>That responsibility is why RRFPS maintains extensive company licensing and highly trained professionals with advanced industry certifications across fire alarms, fire sprinklers, inspections, extinguishers, kitchen hood suppression systems, backflow, and other life safety disciplines. Credentials matter because the work matters.</p>
+          <p>But our commitment to safety goes beyond certifications. It influences how we inspect. How we communicate. How we make recommendations. How we respond. How we solve problems. And how seriously we take every property entrusted to us.</p>
+          <p class="rd-safety__closer"><strong>Safety is not simply one of the services we provide. It is the reason we exist.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §5. YOU ARE THE HERO. WE ARE THE GUIDE.
+         Boxed-width 1/1 split: copy on the left, rounded-corner
+         image on the right. Mirrors about.astro §2 .overview
+         pattern (1fr 1fr grid, 18px image radius).
+         The "Because Your Responsibility Is Bigger Than Fire
+         Protection." sub-block has been pulled out into §5b
+         below so it can live on its own black-bg 2-column
+         section with the body paragraphs aligned to the start
+         of the second column.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-hero section-light">
+      <div class="section-inner">
+        <div class="rd-hero__grid">
+          <div class="rd-hero__copy">
+            <div class="av-dblh__subtitle section-eyebrow">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>Our Role. Your Responsibility.</span>
+            </div>
+            <h2 class="section-title">You Are the Hero.<br />We Are the Guide.</h2>
+            <p>At Red Rocks Fire Protection Services, the client is the hero of the story. Property owners, managers, and facility operators are responsible for protecting lives, maintaining compliance, and managing complex systems under pressure. They are not looking for another vendor, they are looking for clarity and confidence.</p>
+            <p>RRFPS serves as the guide. We simplify the complexity of life safety systems, provide direction, and deliver solutions that help our clients succeed in their role.</p>
+            <a href="/contact" class="av-wgl-btn rd-hero__cta">
+              <span class="av-wgl-btn__text">Let&apos;s Talk About Your Needs</span>
+              <span class="av-wgl-btn__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          </div>
+          <div class="rd-hero__image">
+            <img src={heroImage} alt="Red Rocks Fire Protection Services on a Colorado property" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §5b. BECAUSE YOUR RESPONSIBILITY IS BIGGER THAN FIRE
+         PROTECTION. — black-bg 2-column section. Title in the
+         first column, body paragraphs in the second column,
+         both aligned to the start (top) of their column.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="rd-responsibility">
+      <div class="section-inner rd-responsibility__inner">
+        <h2 class="rd-responsibility__title">Because Your Responsibility Is Bigger Than Fire Protection.</h2>
+        <div class="rd-responsibility__copy">
+          <p>Your residents depend on you. Your tenants depend on you. Your employees and visitors depend on you. Your ownership groups and clients expect you to maintain safe, compliant properties. And when something requires attention, you are often the person expected to know what happens next.</p>
+          <p>We understand that pressure. Our role is not to take your place at the center of that responsibility. Our role is to make you stronger in it. We bring the expertise. We help interpret the requirements. We coordinate the systems. We communicate what matters. We help solve the problems. And we stand beside you as a partner so you can make decisions with greater clarity and confidence.</p>
+          <p class="rd-responsibility__closer"><strong>You have enough to manage. Life safety should not be something you have to manage alone.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §6. CLOSING CTA — shared component, with the rrfps-
+         difference-specific paragraph and 3 closing actions:
+         Our Services / Industries We Serve / Contact Us.
+         ══════════════════════════════════════════════════════════ */}
+    <ClosingCTA
+      paragraphs={[
+        'Plenty of companies can perform a fire protection service. The RRFPS Difference is what happens around the service. It is the advocacy before a compliance issue becomes a problem. It is the coordination that eliminates unnecessary complexity. It is the communication that keeps you informed. It is the expertise behind the recommendation. It is the response when something cannot wait. It is the accountability when something needs to be made right. It is the confidence of knowing there is one team standing behind your life safety systems.',
+        'And ultimately, it is a relationship built around one shared priority: Protecting What Matters Most.',
+      ]}
+      buttons={[
+        { label: 'Our Services',         icon: 'mdi:cog-outline',            href: '/services' },
+        { label: 'Industries We Serve',  icon: 'mdi:domain',                  href: '/industries' },
+        { label: 'Contact Us',           icon: 'mdi:email-outline',           href: '/contact' },
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * Shared base rules — mirror about.astro / our-promise.astro
+   * / credentials-and-certifications.astro 1:1 so the page
+   * feels native.
+   * ══════════════════════════════════════════════════════════ */
+  .section-light { background: #ffffff; color: #0a0a0a; }
+  .section-dark { background: #0d0d0b; color: #ffffff; }
+  .section-inner {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 110px 80px;
+  }
+  .section-inner--wide { max-width: 1340px; }
+  .section-head { max-width: 850px; margin-bottom: 58px; }
+  .section-head--center { margin-inline: auto; text-align: center; }
+  .section-head--center .section-eyebrow { justify-content: center; }
+  .section-eyebrow { margin-bottom: 23px; display: flex; }
+  .section-eyebrow--light { color: rgba(255, 255, 255, 0.72); }
+  .section-title {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+  .section-title--light { color: #ffffff; }
+  .section-intro {
+    max-width: 760px;
+    margin: 24px auto 0;
+    color: #232323;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §0. ptbanner — same as every other /about sub-page
+   * ══════════════════════════════════════════════════════════ */
+  .ptbanner { position: relative; isolation: isolate; background: #0d0d0b; overflow: hidden; }
+  .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-position: center 32%; z-index: -2; }
+  .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%); z-index: -1; }
+  .ptbanner__inner { min-height: 448px; max-width: 1120px; margin-inline: auto; margin-bottom: 60px; padding: 136px 80px 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+  .ptbanner__title { margin: 0; max-width: 920px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 0.9; letter-spacing: -0.055em; text-transform: uppercase; }
+  .ptbanner__breadcrumbs { padding-bottom: 10px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 600; white-space: nowrap; }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__breadcrumbs a:hover { color: rgba(255, 255, 255, 0.72); }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §1. INTRO
+   * Boxed-width white section, eyebrow + uppercase H2 +
+   * 3-statement bullet list (using the red diamond
+   * glyph established across the site) + lead-in paragraphs.
+   * ══════════════════════════════════════════════════════════ */
+  .rd-intro__body p { margin: 22px 0 0; color: #232323; font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh); }
+  .rd-intro__body p:first-of-type { margin-top: 0; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #0a0a0a; }
+  .rd-intro__closer { color: #d41226; font-weight: 600; }
+  .rd-intro__statements {
+    list-style: none;
+    margin: 26px 0 0;
+    padding: 0;
+  }
+  .rd-intro__statements li {
+    position: relative;
+    padding: 10px 0 10px 28px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(18px, 1.7vw, 24px);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .rd-intro__statements li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    background: #d41226;
+    transform: rotate(45deg);
+  }
+
+  /* Three guiding statements re-rendered as a row of three
+     red rounded cards. Each card carries an mdi icon above
+     a white Space Grotesk statement, sits in its own 18px
+     rounded red box, and is stretched to the same height as
+     its siblings so the three cards line up even when the
+     text inside is shorter or longer. The row breaks out of
+     the .section-inner padding to span the full section
+     width, matching the previous banner's footprint. */
+  .rd-intro__banner {
+    list-style: none;
+    margin: 60px -80px 0;
+    padding: 0 80px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .rd-intro__banner-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 14px;
+    background: #d41226;
+    color: #ffffff;
+    border-radius: 18px;
+    padding: 36px 28px;
+    /* Stretch every card to the tallest sibling so the three
+       cards line up regardless of how many words each
+       statement contains. */
+    min-height: 180px;
+  }
+  .rd-intro__banner-icon { color: #ffffff; display: inline-flex; }
+  .rd-intro__banner-text {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(18px, 1.5vw, 22px);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §2. A–C–T FRAMEWORK — 3 cards on a grey section background
+   * (per revision). 3-col grid on desktop (1/2-col tablet, 1-col
+   * mobile). Each card has the same shape as our-promise.astro
+   * .op-card: top image (200px, 18px top radius), body below
+   * with red letter badge anchored over the image corner, label,
+   * title, body, and the default .av-wgl-btn (red filled — same
+   * style as the "Industries We Serve" button on /services).
+   * ══════════════════════════════════════════════════════════ */
+  .rd-act { background: #eeeced; color: #0a0a0a; }
+  .rd-act__intro { margin-top: 22px; }
+  .rd-act__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .rd-act-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.10);
+  }
+  .rd-act-card__image {
+    position: relative;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+  }
+  .rd-act-card__image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.32) 100%);
+  }
+  .rd-act-card__badge {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    z-index: 1;
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    background: #d41226;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .rd-act-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 28px 32px;
+    flex: 1;
+  }
+  .rd-act-card__label {
+    margin: 0 0 6px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .rd-act-card__title {
+    margin: 0 0 14px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(20px, 1.6vw, 24px);
+    font-weight: 700;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+  .rd-act-card__copy {
+    margin: 0 0 26px;
+    color: #232323;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .rd-act-card__cta {
+    margin-top: auto;
+    align-self: flex-start;
+    /* Shrink the inline button font-size so the label fits on
+       2 lines (instead of 3) on the wider card titles like
+       "Our Advocacy in Action" and "Our Commitment to You".
+       The default 16px .av-wgl-btn font-size is the source
+       of the 3-line break; 12px is the smallest size that
+       still keeps the label legible in uppercase + tracked. */
+    font-size: 12px;
+  }
+  .rd-act-card__cta .av-wgl-btn__text { font-size: 12px; padding-inline: 18px; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §2b. A–C–T PILLARS — three full pillar articles stacked
+   * vertically inside one black-bg section. Each pillar:
+   *   - top: red letter badge (stretched to match the headline
+   *     row height — no empty space below the badge) + label
+   *     eyebrow + sentence-case H3 in white
+   *   - body: source-md paragraphs in white-on-black
+   *   - red-transitioned H4 sub-heading + a second body block
+   * Pillar-to-pillar spacing is controlled by the parent
+   * `.section-inner` padding (110/80px on top, 110/80px on
+   * bottom). The pillars themselves are separated by a thin
+   * white-alpha divider line so they read as 3 distinct
+   * principles, not one continuous wall of text.
+   * ══════════════════════════════════════════════════════════ */
+  .rd-pillars { background: #0d0d0b; color: #ffffff; }
+  .rd-pillar {
+    display: flex;
+    flex-direction: column;
+    padding: 60px 0 70px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  .rd-pillar:first-child { border-top: 0; padding-top: 30px; }
+  .rd-pillar:last-child { padding-bottom: 30px; }
+  .rd-pillar__head {
+    display: flex;
+    /* Stretch the row so the badge's height matches the
+       headline's height — no empty space below the badge. */
+    align-items: stretch;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .rd-pillar__badge {
+    width: 72px;
+    flex: 0 0 72px;
+    display: grid;
+    place-items: center;
+    background: #d41226;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .rd-pillar__headline { display: flex; flex-direction: column; justify-content: center; padding: 0; }
+  .rd-pillar__eyebrow {
+    margin: 0 0 8px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .rd-pillar__subhead {
+    margin: 0;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    max-width: 820px;
+  }
+  .rd-pillar__body p { margin: 0 0 18px; color: rgba(255, 255, 255, 0.84); font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh); max-width: 920px; }
+  .rd-pillar__body p:last-child { margin-bottom: 0; }
+  .rd-pillar__transition {
+    margin: 36px 0 18px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(20px, 1.8vw, 26px);
+    font-weight: 700;
+    line-height: 1.22;
+    letter-spacing: -0.015em;
+  }
+  .rd-pillar__subhead { color: #ffffff; }
+
+  /* The old inline rd-services (C-pillar services list) is no
+     longer used — the 12 services now live in their own
+     §2c dedicated section below, so its styles are removed. */
+
+  /* ══════════════════════════════════════════════════════════
+   * §2c. OUR SERVICES — full 12-capability card grid copied
+   * from /services/ (services.astro §1 .sv-capabilities),
+   * renamed with the rd- prefix to keep BEM consistent with
+   * the rest of this page. White bg + red icons (light
+   * variant) so the section breaks the page rhythm after the
+   * black-bg pillars above it.
+   * ══════════════════════════════════════════════════════════ */
+  .rd-services-section { background: #ffffff; color: #0a0a0a; }
+  .rd-services-section__inner {
+    width: 100%;
+    max-width: 1340px;
+    margin-inline: auto;
+    padding: 110px 80px;
+  }
+  .rd-services-section__head {
+    max-width: none;
+    margin-bottom: 34px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px;
+  }
+  .rd-services-section__head-copy { max-width: 780px; }
+  .rd-services-section__title {
+    margin: 0;
+    max-width: 860px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(40px, 4.6vw, 66px);
+    font-weight: 700;
+    line-height: 1.02;
+    text-transform: uppercase;
+  }
+  .rd-services-eyebrow {
+    margin-bottom: 23px;
+    display: flex;
+    color: #d41226;
+  }
+  .rd-services-section__cta { flex-shrink: 0; margin-bottom: 10px; }
+  .rd-services-section__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+  }
+  .rd-service-card {
+    min-height: 280px;
+    padding: 18px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    color: #0a0a0a;
+    text-decoration: none;
+    border: 1px solid rgba(10, 10, 10, 0.18);
+    background: #ffffff;
+    transition: border-color 0.35s, transform 0.35s;
+  }
+  .rd-service-card__icon {
+    width: 74px;
+    height: 74px;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    background: #d41226;
+    flex: 0 0 auto;
+  }
+  .rd-service-card__icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+  .rd-service-card h3 {
+    margin: 22px 0 14px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(17px, 1.3vw, 20px);
+    font-weight: 700;
+    line-height: 1.22;
+    text-transform: none;
+  }
+  .rd-service-card__link {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    min-width: 0;
+    padding: 12px 18px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid rgba(10, 10, 10, 0.82);
+  }
+  .rd-service-card__link svg { width: 16px; height: 14px; }
+  .rd-service-card:hover {
+    border-color: #d41226;
+    transform: translateY(-3px);
+  }
+  .rd-service-card:hover .rd-service-card__link {
+    background: #d41226;
+    color: #ffffff;
+    border-color: #d41226;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §3. WHAT THE DIFFERENCE MEANS FOR YOU
+   * 9-cell icon grid (3-col × 3 rows desktop, 3-col × 3 rows
+   * tablet, 1-col × 9 rows mobile). Each cell is a rounded-
+   * corner card (18px radius) with a red icon-square icon
+   * and a short label. Same visual language as the
+   * capability-card grid on about.astro.
+   * ══════════════════════════════════════════════════════════ */
+  .rd-benefits { background: #eeeced; color: #0a0a0a; padding-top: 0; }
+  .rd-benefits__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+  .rd-benefit {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 24px;
+    background: #ffffff;
+    border: 1px solid rgba(10, 10, 10, 0.10);
+    border-radius: 18px;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.35s ease,
+                background-color 0.35s ease;
+  }
+  .rd-benefit:hover {
+    transform: translateY(-3px);
+    border-color: rgba(212, 18, 38, 0.55);
+    background: #fafafa;
+  }
+  .rd-benefit__icon {
+    width: 60px;
+    height: 60px;
+    flex: 0 0 60px;
+    display: grid;
+    place-items: center;
+    background: #d41226;
+    color: #ffffff;
+  }
+  .rd-benefit__icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 0.9;
+  }
+  .rd-benefit__label {
+    margin: 0;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(15px, 1.2vw, 18px);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §4. SAFETY IS THE STANDARD — full-bleed dark bg + overlay
+   * (about.astro §9 .difference pattern, dark mode)
+   * ══════════════════════════════════════════════════════════ */
+  .rd-safety {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #0d0d0b;
+    color: #ffffff;
+  }
+  .rd-safety__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .rd-safety__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.72) 55%, rgba(0, 0, 0, 0.44) 100%);
+    z-index: -1;
+  }
+  .rd-safety__copy { max-width: 820px; }
+  .rd-safety__lead {
+    margin: 30px 0 0;
+    max-width: 760px;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  .rd-safety p { margin: 22px 0 0; color: rgba(255, 255, 255, 0.78); font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh); }
+  .rd-safety__closer { color: #ffffff; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); }
+
+  /* ══════════════════════════════════════════════════════════
+   * §5. YOU ARE THE HERO. WE ARE THE GUIDE.
+   * 1/1 split: copy on the left, rounded-corner image on the
+   * right (about.astro §2 .overview pattern).
+   * ══════════════════════════════════════════════════════════ */
+  .rd-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 80px;
+    align-items: center;
+  }
+  .rd-hero__copy p { margin: 22px 0 0; color: #232323; font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh); }
+  .rd-hero__cta {
+    margin-top: 34px;
+    --av-wgl-btn-bg: #d41226;
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: #d41226;
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: #0a0a0a;
+    --av-wgl-btn-border-hover: #ffffff;
+  }
+  .rd-hero__image { overflow: hidden; border-radius: 18px; }
+  .rd-hero__image img { display: block; width: 100%; aspect-ratio: 4 / 4.2; object-fit: cover; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §5b. BECAUSE YOUR RESPONSIBILITY IS BIGGER THAN FIRE
+   * PROTECTION. — black-bg 2-column section. Title in the
+   * first column, body paragraphs in the second column,
+   * both top-aligned (align-items: start) to the start of
+   * their column.
+   * ══════════════════════════════════════════════════════════ */
+  .rd-responsibility { background: #0d0d0b; color: #ffffff; }
+  .rd-responsibility .section-inner { padding: 110px 80px; }
+  .rd-responsibility__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 80px;
+    align-items: start;
+  }
+  .rd-responsibility__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(28px, 2.6vw, 40px);
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .rd-responsibility__copy p {
+    margin: 0 0 22px;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .rd-responsibility__copy p:last-child { margin-bottom: 0; }
+  .rd-responsibility__closer { color: #ffffff; }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .section-inner { padding: 90px 60px; }
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .rd-act__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rd-benefits__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rd-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+    .rd-hero__image { max-width: 640px; }
+    .rd-pillar { padding: 50px 0 56px; }
+    .rd-pillar__head { gap: 18px; }
+    .rd-pillar__badge { width: 60px; flex-basis: 60px; font-size: 30px; }
+    .rd-intro__banner { margin-inline: -60px; padding-inline: 60px; }
+    .rd-services-section__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rd-services-section__head { flex-direction: column; align-items: flex-start; }
+    .rd-services-section__cta { margin-bottom: 0; }
+    .rd-responsibility__inner { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  }
+
+  @media (max-width: 767px) {
+    .section-inner { padding: 70px 28px; }
+    .section-head { margin-bottom: 40px; }
+    .section-title { font-size: 36px; }
+    .ptbanner__inner { min-height: 312px; padding: 108px 28px 28px; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .rd-act__grid { grid-template-columns: 1fr; gap: 24px; }
+    .rd-act-card__image { height: 200px; }
+    .rd-benefits__grid { grid-template-columns: 1fr; }
+    .rd-safety__overlay { background: rgba(0, 0, 0, 0.78); }
+    .rd-pillar { padding: 40px 0 44px; }
+    .rd-pillar__head { flex-direction: column; gap: 14px; margin-bottom: 24px; }
+    .rd-pillar__badge { width: 52px; flex-basis: 52px; font-size: 24px; }
+    .rd-pillar__transition { margin-top: 28px; }
+    .rd-intro__banner { margin-inline: -28px; padding: 0 28px; gap: 18px; grid-template-columns: 1fr; }
+    .rd-services-section__grid { grid-template-columns: 1fr; }
+    .rd-service-card { min-height: 0; }
+    .rd-responsibility__title { font-size: 26px; }
+  }
+</style>
