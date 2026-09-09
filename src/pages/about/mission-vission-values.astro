@@ -1,0 +1,981 @@
+---
+/**
+ * Mission / Vision / Core Values — /about/mission-vission-values/
+ *
+ * Sub-page of /about. Brian Kakac's first-person message to prospective
+ * and current customers, plus a closing "Protecting Today. Building
+ * A Safer Tomorrow." values band.
+ *
+ * (Note: comment header copied from prior page during scaffold; see
+ * sections below for the actual structure of THIS page.)
+ *
+ * Section order (8 sections, mirroring the reference layout at
+ * reference/mission-vision-core-layout.png with the top "our purpose
+ * / our direction / our people" band replaced by our standard hero):
+ *   0. ptbanner hero (about.astro §0 pattern)
+ *   1. WHY WE EXIST — Our Core Purpose — full-bleed white section
+ *      with text-left + image-right (per client direction, NOT
+ *      boxed-width — full width "just like in the reference")
+ *   2. OUR MISSION / OUR VISION — boxed-width dark 2-card grid
+ *      (50/50 columns, red circular icon top-left per card)
+ *   3. OUR CORE VALUES intro — boxed-width white section with
+ *      eyebrow + H2 + 2-paragraph intro
+ *   4-8. The 5 values (Safety First / Advocacy / Go the Extra Mile /
+ *        Character / One Family) — full-bleed dark bg image bands
+ *        with boxed-width text content (text-left + bg image fills
+ *        viewport, pattern from about.astro §9 .difference).
+ *        Each value carries its own bg image + red icon.
+ *
+ * All copy comes verbatim from
+ * reference/content/rrfps-mission-vision-core-values-website-page-content.md.
+ *
+ * Image assets (all placeholders, swap when real assets supplied):
+ *   • §0 ptbanner   — rrfps-protect-what-matters-most.jpg
+ *   • §1 purpose   — rrfps-mission-vision-purpose-side.jpg
+ *   • §2-8 icons   — Inline iconify-icon glyphs (no images)
+ *   • §2-3 N/A
+ *   • §4 safety       — rrfps-mission-vision-safety-bg.jpg
+ *   • §5 advocacy     — rrfps-mission-vision-advocacy-bg.jpg
+ *   • §6 extra-mile   — rrfps-mission-vision-extra-mile-bg.jpg
+ *   • §7 character    — rrfps-mission-vision-character-bg.jpg
+ *   • §8 one-family   — rrfps-mission-vision-one-family-bg.jpg
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Diamond divider icon — used in the double-heading subtitle pattern
+// across about.astro, fire-sprinkler-service-and-systems.astro, etc.
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+/* ══════════════════════════════════════════════════════════
+ * §0. PAGE-TITLE BANNER IMAGE
+ * PLACEHOLDER: rrfps-protect-what-matters-most.jpg
+ *   Existing on-brand wide photo in /public/images that reads
+ *   naturally as a mission-statement hero. Swap for a dedicated
+ *   "Mission / Vision / Values" hero when supplied.
+ * ══════════════════════════════════════════════════════════ */
+const bannerImage = '/images/rrfps-protect-what-matters-most.jpg';
+
+/* ══════════════════════════════════════════════════════════
+ * §1. OUR CORE PURPOSE — full-width bg band
+ * PLACEHOLDER: rrfps-our-core-purpose-bg.png (real asset supplied
+ * by client). Source is 1624×968 landscape with the red fire-
+ * sprinkler assembly on the RIGHT half and empty white space on
+ * the LEFT. Used as a full-bleed section background per client
+ * revision; the dark text content overlays the left (white) half
+ * of the image, which keeps the text readable without needing a
+ * heavy overlay across the whole band.
+ * ══════════════════════════════════════════════════════════ */
+const purposeImage = '/images/rrfps-our-core-purpose-bg.png';
+
+/* ══════════════════════════════════════════════════════════
+ * §2. OUR MISSION + OUR VISION — per-card bg images
+ * Per client revision (2026-09), the dark solid-bg 2-card grid
+ * was replaced with a per-card full-bleed bg image pattern.
+ * Each card now carries its own background photo + dark overlay,
+ * mirroring the §4-8 value band treatment so the section reads
+ * as a "mini-cards" version of the value bands below.
+ *
+ * Image choices (client-supplied):
+ *   - Mission   — rrfps-fire-sprinkler-section-2-bg.png
+ *                 (warm sepia mountain landscape; left half is
+ *                 quiet sky/foreground — text reads cleanly)
+ *   - Vision    — rrfps-centennial-cta-bg.jpg
+ *                 (apartment complex at sunset + snow-capped red
+ *                 rocks; left half has building detail so a
+ *                 heavier overlay is applied via the gradient)
+ * ══════════════════════════════════════════════════════════ */
+const missionBg = '/images/rrfps-fire-sprinkler-section-2-bg.png';
+const visionBg = '/images/rrfps-centennial-cta-bg.jpg';
+
+/**
+ * Page content — verbatim from
+ * reference/content/rrfps-mission-vision-core-values-website-page-content.md.
+ * Each value carries:
+ *   - icon       (Iconify mdi: id — matches Header mega-menu icon family)
+ *   - title      (the headline shown in the card)
+ *   - body       (the supporting paragraph)
+ *   - bgImage    (path to the bg image for the full-bleed band)
+ *
+ * Icon choices match the MDI set used across the site (Header +
+ * ceo-message page). The five icons are visually distinct and
+ * each maps to the value's concept:
+ *   - Safety First — Always        → mdi:shield-check (shield + checkmark)
+ *   - Advocacy for Our Clients      → mdi:account-voice (person speaking)
+ *   - Go the Extra Mile             → mdi:rocket-launch (forward motion)
+ *   - Character                     → mdi:medal (integrity / recognition)
+ *   - One Family                    → mdi:account-group (people together)
+ */
+const mission = {
+  eyebrow: 'Our Mission',
+  title: 'A Trusted Life Safety Partner.',
+  body: 'To protect lives and property by delivering proactive, reliable, and fully integrated life safety solutions, while guiding clients through compliance with clarity and accountability.',
+  icon: 'mdi:shield-account',
+  bgImage: missionBg,
+} as const;
+
+const vision = {
+  eyebrow: 'Our Vision',
+  title: 'The Most Trusted In Colorado.',
+  body: 'To become the most trusted life safety partner in Colorado, recognized for simplifying compliance, protecting communities, and delivering unmatched service.',
+  icon: 'mdi:telescope',
+  bgImage: visionBg,
+} as const;
+
+const values = [
+  {
+    title: 'Safety First — Always',
+    body: 'Safety is at the center of everything we do. We believe protecting lives and property is both a responsibility and a privilege. Every system, service call, inspection, and interaction is approached with a deep sense of duty, accountability, and care for the people who depend on us.',
+    icon: 'mdi:shield-check',
+    /* PLACEHOLDER: rrfps-hard-hat-cta.jpg — existing hard-hat /
+     * worker-in-harness shot that reads perfectly as the
+     * "Safety First — Always" band bg. */
+    bgImage: '/images/rrfps-hard-hat-cta.jpg',
+    /* Alternating CTA-style gradient blend color. "light" = the
+     * band uses #F0F0F0 on the LEFT (dark text on the band);
+     * "dark" = the band uses #262626 on the LEFT (light text).
+     * Pattern per client revision (2026-09):
+     *   1. Safety First — Always    → light
+     *   2. Advocacy for Our Clients  → dark
+     *   3. Go the Extra Mile         → light
+     *   4. Character                 → dark
+     *   5. One Family                → light */
+    blend: 'light' as const,
+  },
+  {
+    title: 'Advocacy for Our Clients',
+    body: 'We believe our responsibility goes beyond providing life safety services, we serve as proactive advocates for our clients. We stay ahead of evolving fire codes, legislation, compliance requirements, and jurisdictional changes so we can help guide, educate, and protect the people and properties that depend on us. Through clear communication, trusted guidance, and long-term partnership, we help our clients navigate complexity with confidence.',
+    icon: 'mdi:account-voice',
+    /* PLACEHOLDER: red-rocks-fire-protection-compliance.jpg —
+     * existing compliance / inspection site shot that reads
+     * as "client advocacy" / staying ahead of regulations. */
+    bgImage: '/images/red-rocks-fire-protection-compliance.jpg',
+    blend: 'dark' as const,
+  },
+  {
+    title: 'Go the Extra Mile',
+    body: 'We take personal ownership to make sure the job is done right, the customer is informed, and nothing is left unresolved. We believe reliability is non-negotiable, and we remain committed until every issue is fully addressed and every customer feels supported.',
+    icon: 'mdi:rocket-launch',
+    /* PLACEHOLDER: red-rocks-fire-protection-the-call-when-it-counts.jpg
+     * — existing wide photo that reads as action / commitment
+     * / going the distance. */
+    bgImage: '/images/red-rocks-fire-protection-the-call-when-it-counts.jpg',
+    blend: 'light' as const,
+  },
+  {
+    title: 'Character',
+    body: 'We do the right thing—always—by acting with integrity, respect, accountability, and professionalism. Character is reflected in how we communicate, honor our commitments, perform our work, and represent RRFPS every day. We hold ourselves to a high standard and stand behind our work, creating trust with our customers, strengthening our team, and contributing to the long-term success of our company.',
+    icon: 'mdi:medal',
+    /* PLACEHOLDER: red-rocks-fire-protection-why-inspections.jpg —
+     * existing on-brand photo that reads as professional
+     * integrity / commitment to standards. */
+    bgImage: '/images/red-rocks-fire-protection-why-inspections.jpg',
+    blend: 'dark' as const,
+  },
+  {
+    title: 'One Family',
+    body: 'We believe the strongest outcomes happen when people embrace a team above self mindset, support one another, collaborate openly, and work toward a common purpose. We treat our employees, customers, and partners like family, supporting one another with respect, care, and accountability. This value reflects the foundation John and Brian Kakac built from the very beginning: a culture of trust, teamwork, mentorship, and genuine care for people.',
+    icon: 'mdi:account-group',
+    /* PLACEHOLDER: meet-our-team-rrfps-cta-banner-bg.jpg —
+     * existing team / company photo that reads perfectly as
+     * "One Family" — the team-as-family metaphor is exactly
+     * what this image conveys. */
+    bgImage: '/images/meet-our-team-rrfps-cta-banner-bg.jpg',
+    blend: 'light' as const,
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Mission, Vision & Core Values | Red Rocks Fire Protection Services"
+  description="Our purpose, mission, vision, and the five core values that guide every decision at Red Rocks Fire Protection Services — Safety First, Advocacy, Going the Extra Mile, Character, and One Family."
+>
+  <div class="av-page mission-vision-values">
+
+    {/* ══════════════════════════════════════════════════════════
+         §0. PAGE-TITLE BANNER (about.astro §0 pattern)
+         Same ptbanner rhythm as the rest of the site.
+         ══════════════════════════════════════════════════════════ */}
+    <header class="ptbanner">
+      <div
+        class="ptbanner__bg"
+        style={`background-image: url('${bannerImage}');`}
+        aria-hidden="true"
+      ></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Mission. Vision. Values.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/about/">About</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Mission, Vision &amp; Values</span>
+        </div>
+      </div>
+    </header>
+
+    {/* ══════════════════════════════════════════════════════════
+         §1. WHY WE EXIST — Our Core Purpose
+         FULL-WIDTH bg band per client revision (was 1/2 + 1/2
+         split with the purpose image on the right; now the bg
+         image fills the entire viewport edge-to-edge with the
+         text content centered on top). The bg image has empty
+         white space on the LEFT half + the red sprinkler
+         assembly on the RIGHT, so the dark text in the centered
+         container reads cleanly against the white space without
+         needing a heavy overlay.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="mvv-purpose">
+      <div
+        class="mvv-purpose__bg"
+        style={`background-image: url('${purposeImage}');`}
+        aria-hidden="true"
+      ></div>
+      <div class="mvv-purpose__overlay" aria-hidden="true"></div>
+
+      <div class="section-inner mvv-purpose__inner">
+        <div class="mvv-purpose__copy">
+          <div class="av-dblh__subtitle section-eyebrow">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Why We Exist</span>
+          </div>
+          <h2 class="section-title mvv-purpose__title">Our Core Purpose.</h2>
+          <p class="mvv-purpose__lead">
+            <strong>We exist to protect lives and property by simplifying life safety compliance and serving as a proactive partner for property owners and managers.</strong>
+          </p>
+          <p class="mvv-purpose__body">
+            At Red Rocks Fire Protection Services, we believe safety is not optional—and delivering it is both a responsibility and a privilege. We take that responsibility seriously, approaching every system, every service, and every client relationship with a deep sense of duty and passion. Our purpose is to bring clarity, reliability, and confidence to every client we serve.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §2. OUR MISSION + OUR VISION
+         Per client revision (2026-09), the dark solid-bg 2-card
+         grid was replaced with a per-card full-bleed bg image
+         pattern. Each card now carries its own background photo
+         + dark overlay, mirroring the §4-8 value band treatment
+         so the section reads as a "mini-cards" version of the
+         value bands below.
+
+         Per client revision (latest): full-width 2-column grid
+         with 0 gap. Cards bleed to the viewport edges (no
+         .section-inner wrapper), only the inner TEXT column
+         (.mvv-card__inner) is capped to 1120px max-width so the
+         body copy stays in a comfortable reading column.
+
+         Each card uses `aspect-ratio: 1 / 1` (true square per
+         latest client revision — was 4/5 which was too tall).
+         On mobile they stack into a single column at the same
+         aspect ratio.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="mvv-mission-vision">
+      <div class="mvv-cards">
+        <article class="mvv-card">
+          <div
+            class="mvv-card__bg"
+            style={`background-image: url('${mission.bgImage}');`}
+            aria-hidden="true"
+          ></div>
+          <div class="mvv-card__overlay" aria-hidden="true"></div>
+          <div class="mvv-card__inner">
+            <span class="mvv-card__icon" aria-hidden="true">
+              <iconify-icon icon={mission.icon} width="32" height="32"></iconify-icon>
+            </span>
+            <p class="mvv-card__eyebrow">{mission.eyebrow}</p>
+            <h3 class="mvv-card__title">{mission.title}</h3>
+            <p class="mvv-card__body">{mission.body}</p>
+          </div>
+        </article>
+        <article class="mvv-card">
+          <div
+            class="mvv-card__bg"
+            style={`background-image: url('${vision.bgImage}');`}
+            aria-hidden="true"
+          ></div>
+          <div class="mvv-card__overlay" aria-hidden="true"></div>
+          <div class="mvv-card__inner">
+            <span class="mvv-card__icon" aria-hidden="true">
+              <iconify-icon icon={vision.icon} width="32" height="32"></iconify-icon>
+            </span>
+            <p class="mvv-card__eyebrow">{vision.eyebrow}</p>
+            <h3 class="mvv-card__title">{vision.title}</h3>
+            <p class="mvv-card__body">{vision.body}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §3. OUR CORE VALUES — intro
+         Boxed-width white section with eyebrow + H2 + 2-paragraph
+         intro. Mirrors the §1 .os-intro reading rhythm on the
+         Our Story page.
+         ══════════════════════════════════════════════════════════ */}
+    <section class="mvv-values-intro" style="background: #ffffff; color: #0a0a0a;">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="av-dblh__subtitle section-eyebrow">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Our Core Values</span>
+          </div>
+          <h2 class="section-title">The Standards That Guide Us.</h2>
+        </div>
+        <div class="mvv-values-intro__body">
+          <p>
+            At Red Rocks Fire Protection Services, our Core Values are more than words, they are the standards that guide every decision, every interaction, and every commitment we make to our customers, employees, and community.
+          </p>
+          <p>
+            These values define how we operate as a company, how we support one another as a team, and how we fulfill our responsibility to protect lives and property every day.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════════════════════════════════════════════════════
+         §4-8. THE 5 CORE VALUES
+         Full-bleed dark bg image band per value. Bg image fills
+         the viewport edge-to-edge; content sits inside a boxed-
+         width .section-inner container (1120px max, 110/80px
+         padding). Mirrors about.astro §9 .difference pattern.
+         ══════════════════════════════════════════════════════════ */}
+    {values.map((value) => (
+      <section class:list={['mvv-value', value.blend === 'dark' && 'mvv-value--dark']}>
+        <div class="mvv-value__media" aria-hidden="true">
+          <div
+            class="mvv-value__bg"
+            style={`background-image: url('${value.bgImage}');`}
+            aria-hidden="true"
+          ></div>
+        </div>
+        <div class:list={['mvv-value__overlay', value.blend === 'dark' && 'mvv-value__overlay--dark']} aria-hidden="true"></div>
+
+        <div class="section-inner mvv-value__inner">
+          <span class="mvv-value__icon" aria-hidden="true">
+            <iconify-icon icon={value.icon} width="36" height="36"></iconify-icon>
+          </span>
+          <div class="mvv-value__copy">
+            <p class="mvv-value__eyebrow">Our Core Values</p>
+            <h2 class="section-title section-title--light mvv-value__title">{value.title}</h2>
+            <p class="mvv-value__body">{value.body}</p>
+          </div>
+        </div>
+      </section>
+    ))}
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * Shared base rules. Mirrors about.astro / ceo-message.astro
+   * 1:1 so the page feels native to the site.
+   * ══════════════════════════════════════════════════════════ */
+  .section-light { background: #ffffff; color: #0a0a0a; }
+  .section-dark { background: #0d0d0b; color: #ffffff; }
+  .section-inner {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 110px 80px;
+  }
+  .section-head { max-width: 850px; margin-bottom: 58px; }
+  .section-eyebrow { margin-bottom: 23px; display: flex; }
+  .section-title {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+  .section-title--light { color: #ffffff; }
+
+  /* ptbanner — identical to about.astro / ceo-message.astro */
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background: #0d0d0b;
+    overflow: hidden;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 32%;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%);
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    min-height: 448px;
+    max-width: 1120px;
+    margin-inline: auto;
+    margin-bottom: 60px;
+    padding: 136px 80px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    max-width: 920px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__breadcrumbs a:hover { color: rgba(255, 255, 255, 0.72); }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ══════════════════════════════════════════════════════════
+   * §1. WHY WE EXIST — Our Core Purpose
+   * FULL-WIDTH bg band per client revision (was 1/2 + 1/2
+   * split with a separate purpose image on the right; now the
+   * bg image fills the entire viewport edge-to-edge with the
+   * text content centered on top via .section-inner).
+   *
+   * The bg image has empty white space on the LEFT half + the
+   * red sprinkler assembly on the RIGHT, so the dark text in
+   * the centered container reads cleanly against the white
+   * space without needing a heavy overlay. A subtle 0.20 black
+   * gradient overlay ensures the text reads even when the
+   * viewport is narrow and the text overlaps the sprinkler.
+   *
+   * Pattern mirrors about.astro §9 .difference (full-bleed bg +
+   * overlay stacked behind a boxed-width .section-inner
+   * container) — but with a much lighter overlay since the bg
+   * is already light enough in the text region.
+   * ══════════════════════════════════════════════════════════ */
+  .mvv-purpose {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #ffffff;
+    color: #0a0a0a;
+  }
+  .mvv-purpose__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .mvv-purpose__overlay {
+    position: absolute;
+    inset: 0;
+    /* Very subtle overlay (0.20) — the bg image already has the
+     * white "quiet zone" on the left half where the text sits.
+     * A heavier overlay would dim the red sprinkler on the
+     * right half unnecessarily. */
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.05) 55%,
+      rgba(255, 255, 255, 0.20) 100%
+    );
+    z-index: -1;
+  }
+  .mvv-purpose__inner {
+    position: relative;
+    z-index: 1;
+    min-height: 520px;
+    display: grid;
+    align-items: center;
+  }
+  .mvv-purpose__copy {
+    /* Same 110/80 padding as the shared .section-inner so the
+     * text has a consistent inset from the viewport edge. */
+    padding: 80px 0;
+  }
+  .mvv-purpose__title {
+    margin: 0 0 36px;
+  }
+  .mvv-purpose__lead {
+    margin: 0 0 22px;
+    max-width: 640px;
+    color: #0a0a0a;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: var(--rr-text-lead);
+    font-weight: 700;
+    line-height: var(--rr-text-lead-lh);
+    letter-spacing: -0.01em;
+  }
+  .mvv-purpose__body {
+    margin: 0;
+    max-width: 640px;
+    color: #303030;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §2. OUR MISSION + OUR VISION
+   * Per client revision (2026-09): the original dark solid-bg
+   * 2-card grid is replaced with a per-card full-bleed bg image
+   * pattern. Each card carries its own background photo + dark
+   * overlay, with the content in a centered inner card. The
+   * cards read as squares (aspect-ratio: 1 / 1) so they look
+   * like the square cards from the reference layout.
+   * reference layout.
+   *
+   * Per client revision (latest): the section went FULL-WIDTH
+   * with 0 gap between cards. .section-inner was removed so
+   * the cards bleed to the viewport edges. The section gets
+   * its own vertical padding directly on .mvv-mission-vision
+   * (110px top/bottom). The text inside each card stays capped
+   * to a comfortable 1120px column via .mvv-card__inner
+   * max-width.
+   *
+   * Since the cards are 0-gap edge-to-edge, a 1px hairline
+   * border on the top + left of each card (and right of the
+   * last) acts as the visual divider between the Mission and
+   * Vision cards so they don't visually merge. The bg-image
+   * sits beneath the divider so the cards stay seamless on the
+   * outside edges.
+   * ══════════════════════════════════════════════════════════ */
+  .mvv-mission-vision {
+    color: #ffffff;
+    /* Background and padding removed per client revision — the
+     * cards already carry their own bg images + dark overlays,
+     * so the section itself doesn't need a dark backdrop or its
+     * own vertical padding. The cards now butt directly against
+     * the sections above (§1) and below (§3) with no visual
+     * gutter. */
+  }
+  @media (max-width: 1100px) {
+    /* No padding override needed now that section padding is gone */
+  }
+  @media (max-width: 767px) {
+    /* No padding override needed now that section padding is gone */
+  }
+  .mvv-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    /* gap: 0 per client direction — cards sit flush against each
+     * other with no gutter. The visual divider between Mission
+     * and Vision is a thin top border on the second card (below)
+     * which creates a hairline where the cards meet. */
+    gap: 0;
+    width: 100%;
+  }
+  .mvv-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    /* Square card per client revision (was 4/5 portrait — too
+     * tall). With 2 columns at 0 gap on desktop, each card is
+     * 50vw wide; aspect-ratio: 1/1 makes each card 50vw tall
+     * so the two cards together form a 50vw × 100vw square
+     * block (since they're side-by-side at 1:1 each, the
+     * combined shape is 2:1 — a wide rectangle). */
+    aspect-ratio: 1 / 1;
+    /* No background-color fallback needed since both cards have
+     * their own bg image, but keeping #0d0d0b for safety in case
+     * either image fails to load. */
+    background-color: #0d0d0b;
+  }
+  /* Hairline divider between the 0-gap cards. Drawn on the
+   * second card's top edge so the line lives in the card (not
+   * on the section bg) and stays crisp regardless of the bg
+   * image's lighting. White at 18% opacity matches the value-
+   * band section dividers elsewhere on the page. */
+  .mvv-card + .mvv-card {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .mvv-card__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .mvv-card__overlay {
+    position: absolute;
+    inset: 0;
+    /* Strong overlay since the card content sits in the LEFT half
+     * of the card (icon + eyebrow + title + body all left-aligned),
+     * so the LEFT half needs to be readable. The gradient runs
+     * darker on the left, fading to lighter on the right so the
+     * bg photo is still visible on the right side of the card. */
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.78) 35%,
+      rgba(0, 0, 0, 0.50) 65%,
+      rgba(0, 0, 0, 0.40) 100%
+    );
+    z-index: -1;
+  }
+  .mvv-card__inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    /* Card width is now full-width (each card = 50vw), so the
+     * inner text column is capped to 1120px max-width with
+     * auto horizontal margins to keep it centered inside the
+     * card. Without the auto margins the text would align to
+     * the left edge of the card on wide viewports (since 50vw
+     * exceeds 1120px). */
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .mvv-card__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #d41226;
+    color: #ffffff;
+    margin-bottom: 28px;
+  }
+  .mvv-card__icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+  .mvv-card__eyebrow {
+    margin: 0 0 14px;
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .mvv-card__title {
+    margin: 0 0 22px;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(28px, 2.4vw, 38px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    text-transform: none;
+  }
+  .mvv-card__body {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §3. OUR CORE VALUES intro
+   * Boxed-width white section — same rhythm as the §1 .os-intro
+   * reading column on /about/our-story. Single column with the
+   * eyebrow + H2 head + 2-paragraph body below.
+   * ══════════════════════════════════════════════════════════ */
+  .mvv-values-intro__body p {
+    margin: 22px 0 0;
+    color: #232323;
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
+  }
+  .mvv-values-intro__body p:first-of-type {
+    margin-top: 0;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #0a0a0a;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * §4-8. THE 5 CORE VALUES
+   * Full-bleed dark bg image band per value. The bg image fills
+   * the viewport edge-to-edge (no max-width); the content sits
+   * inside a boxed-width .section-inner container so the text
+   * has a comfortable gutter from the viewport edges while the
+   * bg photo reads as a panoramic dramatic band.
+   *
+   * Pattern mirrors about.astro §9 .difference: position:
+   * relative; isolation: isolate; bg + overlay stack behind
+   * the content; overlay darkens the photo for legibility.
+   *
+   * Per client revision (2026-09): the band is significantly
+   * shorter now (40px top/bottom vs the shared .section-inner's
+   * 110px) so all 5 cards together read as a compact stacked
+   * list rather than 5 full-page-height bands. The text column
+   * also widens (max-width: 1100px vs the old 720px) so the
+   * title and body read as a wider editorial band. The icon now
+   * sits on the LEFT of the copy block (icon + copy grid) so
+   * the layout reads as a horizontal row rather than a stacked
+   * "icon above text" column.
+   *
+   * Per client revision (latest): each value band now uses the
+   * CTA-style "alternating gradient blend" — the bg image sits
+   * full-strength on the RIGHT side, while a SOLID color bleeds
+   * from the LEFT edge (via a left→right linear-gradient
+   * overlay) to fill the text area with a flat color that
+   * gives the band its own visual identity. Text + icon colors
+   * flip based on the bg-color lightness (light bg → dark text,
+   * dark bg → light text).
+   *
+   * Per-band blend colors (5 cards, alternating light/dark):
+   *   1. Safety First — Always        → #F0F0F0 (light)
+   *   2. Advocacy for Our Clients      → #262626 (dark)
+   *   3. Go the Extra Mile             → #F0F0F0 (light)
+   *   4. Character                     → #262626 (dark)
+   *   5. One Family                    → #F0F0F0 (light)
+   * ══════════════════════════════════════════════════════════ */
+  .mvv-value {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #0d0d0b;
+    color: #ffffff;
+    /* Override .section-inner's 110/80 padding down to 40/0 so
+     * the band is significantly shorter. Horizontal padding
+     * stays 0 so the bg image bleeds edge-to-edge. The text
+     * column gets its own horizontal padding via .mvv-value-
+     * __inner so the copy doesn't sit flush with the viewport. */
+    padding-block: 40px;
+  }
+  /* CTA-style alternating gradient blend — the bg photo sits in a
+   * dedicated .mvv-value__media wrapper anchored to the RIGHT
+   * 25% of the band (so it physically lives on the right side,
+   * not just visually obscured by the gradient). The wrapper
+   * contains the .mvv-value__bg div which uses background-size:
+   * cover to fill the wrapper completely — this means every
+   * image (whether portrait or landscape) is auto-cropped to
+   * fill the right-25%-wide × band-height-tall panel with no
+   * empty space, regardless of the source image's aspect ratio. */
+  .mvv-value__media {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /* The wrapper takes up the RIGHT 25% of the band width and
+     * the FULL height of the band (top:0 + bottom:0 = 100% height).
+     * With `left: auto` and an explicit right offset, the
+     * wrapper is constrained to the right edge. */
+    width: 25%;
+    overflow: hidden;
+    z-index: -2;
+  }
+  .mvv-value__bg {
+    position: absolute;
+    inset: 0;
+    /* background-size: cover fills the wrapper completely with
+     * the image, auto-cropping to fit. The 4 landscape images
+     * (1.75:1) crop to show only a horizontal slice of the
+     * photo's middle; the 1 portrait image (0.667:1) crops to
+     * show the photo's full height with a horizontal slice cut
+     * off. Either way, every image fills the band height —
+     * matching the Go-the-Extra-Mile band (the-call-when-it-
+     * counts.jpg) which already rendered correctly because its
+     * portrait aspect ratio happened to match the band height
+     * via background-size: 25% auto. */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -2;
+  }
+  /* CTA-style alternating gradient overlay. Solid bg color
+   * from the LEFT edge fills the left 75% of the band, then
+   * fades to fully transparent by 100% so the bg photo (which
+   * sits in the right 25%) shows through cleanly. Each band
+   * gets its own --blend-light or --blend-dark modifier (set
+   * inline on the section element via the values loop below)
+   * which controls the gradient stops. */
+  .mvv-value__overlay {
+    position: absolute;
+    inset: 0;
+    /* Default = light blend (#F0F0F0). The dark-blend modifier
+     * overrides these stops via its own rule below. */
+    background: linear-gradient(
+      90deg,
+      #f0f0f0 0%,
+      #f0f0f0 75%,
+      rgba(240, 240, 240, 0) 100%
+    );
+    z-index: -1;
+  }
+  .mvv-value__overlay--dark {
+    background: linear-gradient(
+      90deg,
+      #262626 0%,
+      #262626 75%,
+      rgba(38, 38, 38, 0) 100%
+    );
+  }
+  .mvv-value__inner {
+    position: relative;
+    z-index: 1;
+    /* Horizontal grid: icon on the LEFT (auto-sized to its 56px
+     * box), copy block on the RIGHT. Copy block expands to fill
+     * the rest of the container up to a much wider 1100px
+     * max-width so the title and body read as a wider editorial
+     * column instead of a narrow text column with empty space
+     * to the right. */
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 32px;
+    max-width: 1100px;
+    /* The .section-inner class also on this element would
+     * normally apply its shared padding: 110px 80px (top/
+     * bottom of the inner container). Per client revision
+     * (2026-09), the value bands need a much tighter vertical
+     * rhythm — 50px top/bottom here plus the .mvv-value
+     * section's own padding-block: 40px = 90px total band
+     * breathing room, vs the 220px (110 + 110) the shared
+     * .section-inner + inherited section padding would give.
+     * Horizontal padding stays 0 so the icon-to-edge spacing
+     * is consistent with the other full-bleed bands. */
+    padding-block: 50px;
+  }
+  .mvv-value__icon {
+    display: inline-grid;
+    place-items: center;
+    /* Slightly smaller icon (56px vs 64px) since the bands are
+     * shorter now — keeps the icon proportional to the new
+     * 60px vertical padding instead of dwarfing it. */
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #d41226;
+    color: #ffffff;
+    /* Drop the margin-bottom (was 32px) — the icon no longer
+     * stacks above the text, so it doesn't need a bottom
+     * gutter. Vertical centering via `align-items: center` on
+     * the parent grid handles the icon's vertical placement. */
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .mvv-value__icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+  .mvv-value__eyebrow {
+    margin: 0 0 8px;
+    /* Eyebrow defaults to the dark-text color (light bg); the
+     * dark-band modifier overrides below. */
+    color: #d41226;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .mvv-value__title {
+    margin: 0 0 14px;
+    /* Title defaults to black (light bg); the dark-band modifier
+     * overrides below. */
+    color: #0a0a0a;
+    /* Smaller headline size than the shared .section-title default
+     * (clamp(38px, 5vw, 64px)) so the value names read as band
+     * headers rather than page-level banners. */
+    font-size: clamp(26px, 3vw, 40px);
+    line-height: 1.05;
+    /* Uppercase per the rest of the site's section-title pattern
+     * — makes the value names feel like section banners rather than
+     * inline headings. */
+    text-transform: uppercase;
+  }
+  .mvv-value__body {
+    margin: 0;
+    /* No max-width on the body — the wider copy column handles
+     * its own line wrapping naturally. Default body color = dark
+     * text on light bg; dark-band modifier overrides below. */
+    max-width: none;
+    color: #232323;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  /* Dark-band color overrides — text + icon flip to white/light
+   * so they read against the dark #262626 bg color. The red icon
+   * stays red (still high-contrast on dark) but its inner
+   * iconify-icon glyph flips to white via the existing
+   * `color: currentColor` chain (the span's color is now white). */
+  .mvv-value--dark .mvv-value__icon {
+    color: #ffffff;
+  }
+  .mvv-value--dark .mvv-value__title {
+    color: #ffffff;
+  }
+  .mvv-value--dark .mvv-value__body {
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .mvv-value--dark .mvv-value__eyebrow {
+    /* Eyebrow stays red on dark too — same high-contrast brand
+     * color works on both backgrounds. */
+    color: #d41226;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive — matches about.astro / ceo-message cascade.
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .section-inner { padding: 90px 60px; }
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    /* .mvv-cards gap override removed — cards are 0-gap at all
+     * breakpoints now per client revision. */
+  }
+
+  @media (max-width: 900px) {
+    /* §1 purpose tablet — section collapses to a tighter
+     * min-height and copy gets smaller padding. (Was: stack
+     * the inner into 1fr + 1fr and resize the image — we no
+     * longer have an image element since §1 is now a full-
+     * width bg band instead of a 2-column split.) */
+    .mvv-purpose__inner { min-height: 0; }
+    .mvv-purpose__copy { padding: 70px 60px; }
+  }
+
+  @media (max-width: 767px) {
+    .section-inner { padding: 70px 28px; }
+    .ptbanner__inner {
+      min-height: 312px;
+      padding: 108px 28px 28px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    /* §1 purpose mobile */
+    .mvv-purpose__inner { min-height: 0; }
+    .mvv-purpose__copy { padding: 56px 28px; }
+    /* §2 mission+vision stacks vertically on mobile. Cards keep
+     * the 0-gap directive — the top border on the second card
+     * (via .mvv-card + .mvv-card) provides the visual divider
+     * between them. */
+    .mvv-cards { grid-template-columns: 1fr; }
+    .mvv-card__inner { padding: 40px 32px; }
+    /* §4-8 values band — on mobile, stack the icon back ABOVE
+     * the copy block (reverts to a vertical pattern) so the
+     * narrow viewport isn't crowded by side-by-side icon + text.
+     * Also tighten the band padding further. */
+    .mvv-value { padding-block: 30px; }
+    .mvv-value__inner { grid-template-columns: 1fr; gap: 24px; padding-block: 36px; }
+    .mvv-value__body { font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh); }
+  }
+</style>
