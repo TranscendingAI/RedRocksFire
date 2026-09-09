@@ -42,6 +42,7 @@
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
 
 // Diamond divider icon — used in the double-heading subtitle pattern
 // across about.astro, fire-sprinkler-service-and-systems.astro, etc.
@@ -83,17 +84,12 @@ const purposeImage = '/images/rrfps-our-core-purpose-bg.png';
  * mirroring the §4-8 value band treatment so the section reads
  * as a "mini-cards" version of the value bands below.
  *
- * Image choices (client-supplied):
- *   - Mission   — rrfps-fire-sprinkler-section-2-bg.png
- *                 (warm sepia mountain landscape; left half is
- *                 quiet sky/foreground — text reads cleanly)
- *   - Vision    — rrfps-centennial-cta-bg.jpg
- *                 (apartment complex at sunset + snow-capped red
- *                 rocks; left half has building detail so a
- *                 heavier overlay is applied via the gradient)
+ * Per client revision: swapped to the dedicated mission + vision
+ * statement images. Both source images are ~2000px wide, so they
+ * crop cleanly to the square card.
  * ══════════════════════════════════════════════════════════ */
-const missionBg = '/images/rrfps-fire-sprinkler-section-2-bg.png';
-const visionBg = '/images/rrfps-centennial-cta-bg.jpg';
+const missionBg = '/images/rrfps-our-mission-statement.png';
+const visionBg  = '/images/rrfps-our-vision-statement.png';
 
 /**
  * Page content — verbatim from
@@ -273,10 +269,10 @@ const values = [
          (.mvv-card__inner) is capped to 1120px max-width so the
          body copy stays in a comfortable reading column.
 
-         Each card uses `aspect-ratio: 1 / 1` (true square per
-         latest client revision — was 4/5 which was too tall).
-         On mobile they stack into a single column at the same
-         aspect ratio.
+         Each card uses `aspect-ratio: 16 / 9` (per client
+         revision — was 4/3, which was still too tall, was
+         1/1 before that). On mobile they stack into a single
+         column at the same aspect ratio.
          ══════════════════════════════════════════════════════════ */}
     <section class="mvv-mission-vision">
       <div class="mvv-cards">
@@ -371,6 +367,24 @@ const values = [
         </div>
       </section>
     ))}
+
+    {/* ══════════════════════════════════════════════════════════
+         §9. CLOSING CTA — shared component, identical to
+         about.astro's ClosingCTA so the page ends on the same
+         call-to-action pattern as the rest of the site. Three
+         custom buttons: Meet the Team / The RRFPS Difference /
+         Contact Us.
+         ══════════════════════════════════════════════════════════ */}
+    <ClosingCTA
+      paragraphs={[
+        'Our mission, vision, and values come together every day in the work we do for our clients. They shape how we protect lives, how we serve, and how we show up for the people and properties that depend on us. If our values align with yours, we would welcome the opportunity to partner with you.',
+      ]}
+      buttons={[
+        { label: 'Meet the Team',         icon: 'mdi:account-group',         href: '/meet-the-team' },
+        { label: 'The RRFPS Difference',  icon: 'mdi:fire-circle',           href: '/about/rrfps-difference' },
+        { label: 'Contact Us',           icon: 'mdi:email-outline',         href: '/contact' },
+      ]}
+    />
 
   </div>
 </BaseLayout>
@@ -592,13 +606,17 @@ const values = [
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    /* Square card per client revision (was 4/5 portrait — too
-     * tall). With 2 columns at 0 gap on desktop, each card is
-     * 50vw wide; aspect-ratio: 1/1 makes each card 50vw tall
-     * so the two cards together form a 50vw × 100vw square
-     * block (since they're side-by-side at 1:1 each, the
-     * combined shape is 2:1 — a wide rectangle). */
-    aspect-ratio: 1 / 1;
+    /* 16/9 aspect ratio per client revision (latest) — a
+     * SECOND 25% height reduction from the previous 4/3 cards.
+     * Original was 1/1 (square). First revision (4/3) was 25%
+     * shorter: 0.75 × original height. This revision (16/9)
+     * is another 25% shorter than 4/3: 0.75 × 0.75 = 0.5625
+     * × original height. So the cards are now 56.25% of the
+     * original square height. On desktop each card is 50vw
+     * wide × 28.125vw tall so the two cards together form
+     * a 50vw × 56.25vw rectangle — closer to a widescreen
+     * 16:9 rectangle than a square. */
+    aspect-ratio: 16 / 9;
     /* No background-color fallback needed since both cards have
      * their own bg image, but keeping #0d0d0b for safety in case
      * either image fails to load. */
@@ -622,16 +640,20 @@ const values = [
   .mvv-card__overlay {
     position: absolute;
     inset: 0;
-    /* Strong overlay since the card content sits in the LEFT half
-     * of the card (icon + eyebrow + title + body all left-aligned),
-     * so the LEFT half needs to be readable. The gradient runs
-     * darker on the left, fading to lighter on the right so the
-     * bg photo is still visible on the right side of the card. */
+    /* Bottom-to-top gradient per client revision (latest).
+     * Previously this was a left-to-right gradient (90deg) so
+     * the LEFT half of the card was the darkest. Now the BOTTOM
+     * of the card is the darkest (0.92 black), fading to lighter
+     * (0.40 black) at the TOP. This keeps the text region
+     * (which sits at the bottom of the card via
+     * `justify-content: flex-end` on .mvv-card__inner) the
+     * most readable part of the bg, while letting more of the
+     * photo show through at the top. */
     background: linear-gradient(
-      90deg,
+      0deg,
       rgba(0, 0, 0, 0.92) 0%,
       rgba(0, 0, 0, 0.78) 35%,
-      rgba(0, 0, 0, 0.50) 65%,
+      rgba(0, 0, 0, 0.55) 65%,
       rgba(0, 0, 0, 0.40) 100%
     );
     z-index: -1;
