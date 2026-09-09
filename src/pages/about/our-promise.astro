@@ -460,7 +460,14 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
     text-transform: none;
   }
   .op-card--wide .op-card__copy {
-    margin: auto 0 0;
+    /* Body copy sits immediately below the title with a small
+     * gap (was `margin: auto 0 0` — the auto top margin absorbed
+     * all available column space, pushing the copy to the bottom
+     * of the card. This looked broken on the narrow (bottom) row
+     * because their shorter body text left more empty space
+     * above. Aligned the rules so all 7 cards render with the
+     * text starting directly under the title). */
+    margin: 0;
     color: #303030;
     font-size: 15px;
     line-height: 1.65;
@@ -501,7 +508,11 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
     text-transform: none;
   }
   .op-card--narrow .op-card__copy {
-    margin: auto 0 0;
+    /* Aligned with the wide card body copy — text starts
+     * directly under the title instead of being pushed to the
+     * bottom by an `auto` top margin. See wide rule above for
+     * the full rationale. */
+    margin: 0;
     color: #303030;
     font-size: 14px;
     line-height: 1.6;
