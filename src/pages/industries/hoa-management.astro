@@ -1,10 +1,15 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+/**
+ * HOA Management Companies — /industries/hoa-management/
+ *
+ * Data-driven layout via the shared IndustryPage component (template:
+ * industries/multi-family-management-companies.astro). Copy source:
+ * src/data/industries/hoa-management.ts (verbatim from the
+ * industries-we-serve content MD).
+ */
+
+import IndustryPage from '../../components/IndustryPage.astro';
+import { hoaManagementPage } from '../../data/industries/hoa-management';
 ---
 
-<BaseLayout title="HOA Management Companies | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">HOA Management Companies</h1>
-    <p class="text-lg text-gray-700">HOA and community association fire protection services. Content coming soon.</p>
-  </section>
-</BaseLayout>
+<IndustryPage data={hoaManagementPage} />

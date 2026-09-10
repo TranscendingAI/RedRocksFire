@@ -1,0 +1,593 @@
+---
+/**
+ * IndustryPage — shared data-driven layout for all /industries/ sub pages.
+ *
+ * Template source of truth: src/pages/industries/multi-family-management-companies.astro.
+ * Cohesion comes from the same component library the site already uses
+ * (ptbanner, SplitPanel, accordion band, 3-photo slider, ClosingCTA).
+ *
+ * Section order is driven by the page's data object (src/data/industries/*.ts),
+ * rendered in array order between the ptbanner and the site-wide ClosingCTA.
+ *
+ * Per Zack (2026-09): every industry page opens with the ptbanner hero
+ * component and closes with the ClosingCTA banner component.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ClosingCTA from './ClosingCTA.astro';
+import type { IndustryPageData, IndustrySection } from '../data/industries/types';
+
+interface Props {
+  data: IndustryPageData;
+}
+
+const { data } = Astro.props;
+
+// Arrow + diamond icons — same path data as the built pages so the visual
+// rhythm matches 1:1.
+const arrowPath =
+  'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 6.64916 0.283741 6.46748C0.102065 6.28581 0 6.0394 0 5.78247Z';
+
+const diamondIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941 14.3396 0.939992Z"></path></svg>';
+
+// SplitPanel background → props (mirrors SplitPanel.astro).
+const splitBgClass: Record<string, string> = {
+  white: 'bg-rr-white',
+  light: 'bg-rr-bg-light',
+  panel: 'bg-rr-bg-panel',
+  black: 'bg-rr-black text-rr-white',
+};
+
+/** Alternate bg between adjacent split sections for visual rhythm. */
+const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | 'black' => {
+  switch (bg) {
+    case 'black':
+      return 'black';
+    case 'panel':
+      return 'panel';
+    case 'light':
+      return 'light';
+    default:
+      return 'white';
+  }
+};
+---
+
+<BaseLayout title={data.seo.title} description={data.seo.description}>
+  <div class="av-page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         0. PAGE-TITLE BANNER — hero component, every industry page
+            (industry.astro §0 pattern, duplicated from the
+            multi-family template so scope stays decoupled)
+         ══════════════════════════════════════════════════════════ -->
+    <div class="ptbanner" style={`background-image: url('${data.banner.backgroundImage}');`}>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">{data.banner.title}</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">{data.banner.subtitle}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         1..n — data-driven middle sections, rendered in array order.
+         Cohesion from repeating the same section shapes the
+         multi-family template uses; variation from order/shape.
+         ══════════════════════════════════════════════════════════ -->
+    {data.sections.map((section: IndustrySection) => {
+      if (section.type === 'split') {
+        const bg = splitSectionBg(section.background);
+        const textColor = bg === 'black' ? '#fff' : undefined;
+        return (
+          <section
+            class:list={['rr-band ip-split', splitBgClass[bg]]}
+            data-split-bg={bg}
+          >
+            <div class="rr-container">
+              <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+                <div class:list={['order-2', section.reverse ? 'md:order-2' : 'md:order-1']}>
+                  {section.eyebrow && (
+                    <p class="rr-eyebrow mb-5" style={bg === 'black' ? 'color:#fff;opacity:.7;' : ''}>
+                      {section.eyebrow}
+                    </p>
+                  )}
+                  <h2
+                    class="ip-split__title rr-reveal"
+                    style={`color:${textColor ?? '#0a0a0a'};`}
+                  >
+                    {section.title}
+                  </h2>
+                  {section.body.map((paragraph) => (
+                    <p
+                      class="ip-split__body rr-reveal"
+                      style={`color:${bg === 'black' ? 'rgba(255,255,255,0.85)' : 'var(--rr-grey, #626262)'};`}
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                  {section.cta && (
+                    <a href={section.cta.href} class="ip-split__cta">
+                      {section.cta.label}
+                      <span class="ip-split__cta-arrow" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                      </span>
+                    </a>
+                  )}
+                </div>
+                <div class:list={['order-1', section.reverse ? 'md:order-1' : 'md:order-2']}>
+                  <div class:list={['ip-split__imgwrap', bg === 'black' && 'ip-split__imgwrap--dark']}>
+                    <img
+                      src={section.image}
+                      alt={section.imageAlt}
+                      loading="lazy"
+                      decoding="async"
+                      class="ip-split__img"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      if (section.type === 'accordion') {
+        return (
+          <section class="ip-acc">
+            <div class="ip-acc__bg" style={`background-image: url('${section.bgImage}');`} aria-hidden="true"></div>
+            <div class="ip-acc__inner">
+              <div class="av-dblh__subtitle ip-acc__subtitle">
+                <span class="divider-icon" set:html={diamondIcon} />
+                <span>{section.eyebrow}</span>
+              </div>
+              <h3 class="ip-acc__title">{section.title}</h3>
+              <div class="ip-acc__layout">
+                <div class="ip-acc__left">
+                  <p class="ip-acc__intro">{section.intro}</p>
+                </div>
+                <div class="acc ip-acc__right">
+                  {section.panels.map((p) => (
+                    <div class:list={['acc__panel', p.open && 'is-active']} data-acc-panel>
+                      <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>
+                        <span class="acc__icon" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                        </span>
+                        <span class="acc__title">{p.title}</span>
+                      </button>
+                      <div class="acc__content" hidden={!p.open}>
+                        <p>{p.body}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      // slider
+      return (
+        <section class="ip-slider">
+          <div class="av-dblh__subtitle ip-slider__subtitle">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>{section.eyebrow}</span>
+          </div>
+          <h2 class="ip-slider__title">{section.title}</h2>
+          <div class="ip-slider__strip">
+            {section.panels.map((p) => (
+              <div class="slider__col" style={`--slider-bg: url('${p.image}');`}>
+                <span class="slider__overlay" aria-hidden="true"></span>
+                <span class="slider__content">
+                  <span class="slider__number">{p.number}</span>
+                  <span class="slider__title">{p.title}</span>
+                  <span class="slider__desc">{p.body}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+
+    <!-- ══════════════════════════════════════════════════════════
+         LAST — site-wide ClosingCTA banner component with per-page
+            paragraphs + background image.
+         ══════════════════════════════════════════════════════════ -->
+    <div class="ip-cta">
+      <ClosingCTA
+        backgroundImage={data.cta.backgroundImage}
+        paragraphs={data.cta.paragraphs}
+        flipBackground={data.cta.flipBackground ?? true}
+      >
+      </ClosingCTA>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ClosingCTA body copy on the industry pages — uniformly 18px
+     (scoped via the .ip-cta wrapper so other ClosingCTA instances
+     across the site keep their existing sizing). */
+  .ip-cta :global(.cta__para),
+  .ip-cta :global(.cta__subcopy),
+  .ip-cta :global(.cta__phone) {
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  /* ══════════════════════════════════════════════════════════
+   * 0. Page-title banner — duplicated from the multi-family
+   *    template so the visual language matches 1:1.
+   * ══════════════════════════════════════════════════════════ */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Split section — SplitPanel-pattern layout rendered inline so
+   * per-section props (reverse, background, paragraphs) stay in
+   * one place with the data contract.
+   * ══════════════════════════════════════════════════════════ */
+  .ip-split { padding-block: 90px; }
+  @media (min-width: 768px) { .ip-split { padding-block: 130px; } }
+  .ip-split__title {
+    margin: 0 0 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: var(--rr-text-section, clamp(34px, 4.2vw, 56px));
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .ip-split__body {
+    margin: 0 0 18px;
+    /* Lead role (18px / 1.7) to match the multi-family template's
+       SplitPanel hero + advocacy bodies — all other body copy on the
+       industry pages (accordion, slider, CTA) uses the standard
+       --rr-text-body 14px role, same as the template. */
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  .ip-split__body:first-of-type { margin-top: 0; }
+  .ip-split__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    transition: background 0.25s;
+  }
+  .ip-split__cta:hover { background: #d41226; }
+  .ip-split__cta-arrow svg { width: 15px; height: 14px; }
+  .ip-split__imgwrap {
+    overflow: hidden;
+    border-radius: 24px;
+    aspect-ratio: 4 / 3;
+    background: var(--rr-bg-panel, #EEECED);
+  }
+  .ip-split__imgwrap--dark { background: #0d0d0b; }
+  .ip-split__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ══════════════════════════════════════════════════════════
+   * Accordion band — dark bg photo + overlay, 5fr/7fr layout.
+   *    (multi-family template §2)
+   * ══════════════════════════════════════════════════════════ */
+  .ip-acc {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 110px;
+    background-color: #0d0d0b;
+  }
+  .ip-acc__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.35);
+    z-index: -2;
+  }
+  .ip-acc::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  .ip-acc__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .ip-acc__inner { padding-inline: 2.5rem; }
+  }
+  .ip-acc__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .ip-acc__title {
+    margin: 0 0 60px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .ip-acc__layout {
+    display: grid;
+    gap: 48px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 1024px) {
+    .ip-acc__layout { grid-template-columns: 5fr 7fr; gap: 80px; }
+  }
+  /* Body text on the industry pages is uniformly 18px (--rr-text-lead)
+     per Zack (2026-09) — accordion, slider, and CTA paragraphs included. */
+  .ip-acc__intro {
+    margin: 0;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .acc { max-width: 720px; }
+  .acc__panel {
+    overflow: hidden;
+    padding: 15px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    transition: border-color 0.4s;
+  }
+  .acc__panel:first-child { border-top: none; }
+  .acc__panel:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
+  .acc__panel:hover,
+  .acc__panel.is-active,
+  .acc__panel:hover + .acc__panel,
+  .acc__panel.is-active + .acc__panel { border-top-color: #d41226; }
+  .acc__panel.is-active:last-child,
+  .acc__panel:hover:last-child { border-bottom-color: #d41226; }
+  .acc__header {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 13px 0;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+  .acc__icon {
+    display: inline-flex;
+    align-self: flex-start;
+    margin: 8px 18px -15px 2px;
+    color: #d41226;
+    transform: rotate(90deg);
+    transition: transform 0.4s;
+  }
+  .acc__panel.is-active .acc__icon { transform: rotate(-90deg); }
+  .acc__icon svg { width: 18px; height: 16px; }
+  .acc__content {
+    padding: 6px 5px 14px 39px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  .acc__content p { margin: 0; }
+
+  /* ══════════════════════════════════════════════════════════
+   * Slider — 3 full-bleed photo columns (multi-family §3).
+   * ══════════════════════════════════════════════════════════ */
+  .ip-slider {
+    padding: 110px 0 0;
+    background: #ffffff;
+  }
+  @media (min-width: 768px) { .ip-slider { padding-top: 150px; } }
+  .ip-slider__subtitle {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto 23px;
+    padding-inline: 1.25rem;
+    display: flex;
+  }
+  @media (min-width: 768px) {
+    .ip-slider__subtitle { padding-inline: 2.5rem; }
+  }
+  .ip-slider__title {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto 60px;
+    padding-inline: 1.25rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #0a0a0a;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 768px) {
+    .ip-slider__title { padding-inline: 2.5rem; }
+  }
+  .ip-slider__strip {
+    display: flex;
+    height: 520px;
+    margin-top: 8px;
+  }
+  .slider__col {
+    position: relative;
+    width: 33.3333%;
+    background-image: var(--slider-bg);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    display: flex;
+  }
+  .slider__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.05) 100%);
+  }
+  .slider__content {
+    position: relative;
+    z-index: 1;
+    align-self: flex-end;
+    padding: 32px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+  }
+  .slider__number {
+    font-family: 'Inter', sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+  .slider__title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(20px, 1.9vw, 26px);
+    font-weight: 700;
+    line-height: 1.15;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .slider__desc {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ══════════════════════════════════════════════════════════
+   * Responsive — matches the multi-family template breakpoints.
+   * ══════════════════════════════════════════════════════════ */
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+    .ip-slider { padding-top: 90px; }
+    .ip-slider__strip { height: 460px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .ip-split { padding-block: 70px; }
+    .ip-acc { padding-block: 70px; }
+    .ip-acc__layout { gap: 32px; }
+    .ip-acc__title { font-size: 28px; margin-bottom: 40px; }
+    .ip-slider { padding-top: 70px; }
+    .ip-slider__title { font-size: 28px; margin-bottom: 36px; }
+    .ip-slider__strip { flex-direction: column; height: auto; }
+    .slider__col { width: 100%; height: 320px; }
+  }
+</style>
+
+<script>
+  /**
+   * Accordion toggle for any [data-acc-panel] on the page.
+   * Mirrors the multi-family template: one panel open at a time,
+   * clicking the open one closes it. Bound on astro:page-load so it
+   * also works with view transitions.
+   */
+  function initIndustryAccordions() {
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-acc-panel]'));
+    panels.forEach((panel) => {
+      if (panel.dataset.accBound === 'true') return;
+      panel.dataset.accBound = 'true';
+      const header = panel.querySelector<HTMLElement>('.acc__header');
+      const content = panel.querySelector<HTMLElement>('.acc__content');
+      if (!header || !content) return;
+      header.addEventListener('click', () => {
+        const group = panel.closest('.acc');
+        const groupPanels = group
+          ? Array.from(group.querySelectorAll<HTMLElement>('[data-acc-panel]'))
+          : panels;
+        const wasOpen = panel.classList.contains('is-active');
+        groupPanels.forEach((p) => {
+          p.classList.remove('is-active');
+          p.querySelector<HTMLElement>('.acc__header')?.setAttribute('aria-expanded', 'false');
+          const c = p.querySelector<HTMLElement>('.acc__content');
+          if (c) c.hidden = true;
+        });
+        if (!wasOpen) {
+          panel.classList.add('is-active');
+          header.setAttribute('aria-expanded', 'true');
+          content.hidden = false;
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initIndustryAccordions);
+  if (document.readyState !== 'loading') initIndustryAccordions();
+</script>

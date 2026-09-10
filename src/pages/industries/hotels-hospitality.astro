@@ -1,10 +1,15 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+/**
+ * Hotels & Hospitality — /industries/hotels-hospitality/
+ *
+ * Data-driven layout via the shared IndustryPage component (template:
+ * industries/multi-family-management-companies.astro). Copy source:
+ * src/data/industries/hotels-hospitality.ts (verbatim from the
+ * industries-we-serve content MD).
+ */
+
+import IndustryPage from '../../components/IndustryPage.astro';
+import { hotelsHospitalityPage } from '../../data/industries/hotels-hospitality';
 ---
 
-<BaseLayout title="Hotels & Hospitality | Red Rocks Fire Protection">
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <h1 class="text-4xl font-bold mb-4">Hotels & Hospitality</h1>
-    <p class="text-lg text-gray-700">Hotel and hospitality fire protection services. Content coming soon.</p>
-  </section>
-</BaseLayout>
+<IndustryPage data={hotelsHospitalityPage} />
