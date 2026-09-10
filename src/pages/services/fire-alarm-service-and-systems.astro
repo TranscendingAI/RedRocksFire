@@ -1,16 +1,1625 @@
 ---
 /**
- * Fire Alarm Service & Systems — RRFPS placeholder page.
+ * Fire Alarm Service & Systems — RRFPS landing page for
+ * /services/fire-alarm-service-and-systems/.
  *
- * Full content coming soon. Built now so the Services mega menu links
- * resolve to a real page with the standard page-title banner + body
- * pattern used across the site. Reuse PlaceholderPage so every nav
- * link resolves cleanly until the real landing content lands.
+ * Layout cloned 1:1 from fire-sprinkler-service-and-systems.astro
+ * (per Zack's direction) with the copy swapped verbatim from
+ * reference/content/rrfps-complete-fire-alarms-website-content.md.
+ *
+ * Sections, in order:
+ *   0. ptbanner                          — same hero pattern as the
+ *                                          sprinkler page (dark image
+ *                                          bg + light overlay). Every
+ *                                          section on this page uses
+ *                                          the site-wide .rr-reveal
+ *                                          fade-up entrance with a
+ *                                          data-reveal-delay stagger
+ *                                          (consumed by the scoped
+ *                                          --reveal-delay rule + the
+ *                                          page script; see the
+ *                                          <script> block).
+ *   1. 2×2 ibox grid                     — sticky headline left + 4
+ *                                          iboxes right (Service /
+ *                                          Modifications / Replacement /
+ *                                          24/7 Emergency Response)
+ *   2. `fa-whyrr` tan bg-image intro     — "Your Trusted Partner for
+ *                                          Fire Alarm Service & Systems."
+ *   3. 4-panel accordion                 — service scope with bullet
+ *                                          lists (Service / Modifications /
+ *                                          Replacement / Signs You Need
+ *                                          Replacement)
+ *   4. GAMEWELL AUTHORIZED DEALER        — NEW 3-column section (client
+ *                                          priority): description text |
+ *                                          benefits bullets | Gamewell-FCI
+ *                                          logo card, separated by vertical
+ *                                          dividers. White bg + red accent
+ *                                          border + red H2 eyebrow so it
+ *                                          stands out.
+ *   5. More Than a Fire Alarm Contractor — white-bg SplitPanel rhythm
+ *                                          (3 paragraphs, image right)
+ *   6. Advocacy                           — #DBDADA bg panel (image right)
+ *   7. Why Clients Stay                   — dark bg-image + 5 value cards
+ *   8. Experience                         — white-bg SplitPanel (image right)
+ *   9. Our Promise — Ready When You Are.  — #DBDADA bg panel (image right)
+ *  10. IndustriesGrid                     — shared component
+ *  11. ClosingCTA                        — shared component with the
+ *                                          fire-alarm closing copy
+ *
+ * Theme rhythm (no two same-theme back-to-back where avoidable):
+ *   §0 dark → §1 white → §2 tan-image → §3 dark-image → §4 black-solid
+ *   (red-accented) → §5 white → §6 #DBDADA → §7 dark-image → §8 white
+ *   → §9 #DBDADA → §10 white → §11 CTA
+ *
+ * Image assets (all generated via Higgsfield Nano Banana — inspectors
+ * in plain black collared shirts with no logos, per client direction):
+ *   • Hero            — red-rocks-fire-alarm-hero-bg.png
+ *   • §2 tan band bg  — red-rocks-fire-alarm-why-bg.jpg
+ *   • Accordion bg    — red-rocks-fire-alarm-accordion-bg.jpg
+ *   • §5 More Than    — rrfps-fa-more-than-contractor.jpg
+ *   • §6 Advocacy     — rrfps-fa-advocacy.jpg
+ *   • §7 values bg    — rrfps-fa-why-clients-stay-bg.jpg
+ *   • §8 Experience   — rrfps-fa-experience.jpg
+ *   • §9 Promise      — rrfps-fa-promise.jpg
+ *   • ClosingCTA bg   — rrfps-services-cta-bg.png (shared asset)
+ *   • Gamewell logo   — rrfps-fci-gamewell-logo.webp (client asset)
  */
-import PlaceholderPage from '../../components/PlaceholderPage.astro';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+import IndustriesGrid from '../../components/IndustriesGrid.astro';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+/* ── Image assets (all generated via Higgsfield Nano Banana) ────── */
+const bannerImage = '/images/red-rocks-fire-alarm-hero-bg.png';
+
+/* §1 ibox — 4 fire-alarm service lines. */
+const categories = [
+  {
+    title: 'Fire Alarm System Service.',
+    icon: 'mdi:bell-ring-outline',
+    body: 'A properly functioning fire alarm system is critical to protecting lives, property, and business operations — providing early warning and notification during an emergency so occupants can evacuate safely and responders can react quickly.',
+  },
+  {
+    title: 'System Modifications.',
+    icon: 'mdi:cog-outline',
+    body: 'Building renovations, tenant improvements, occupancy changes, and code upgrades often require modifications to existing fire alarm systems. We design and install code-compliant modifications that maintain proper system functionality.',
+  },
+  {
+    title: 'System Replacement.',
+    icon: 'mdi:sync',
+    body: 'As fire alarm systems age, components become obsolete and reliability can decrease. From small control panel upgrades to complete building-wide replacements, replacing an aging system is often the more cost-effective long-term solution.',
+  },
+  {
+    title: '24/7 Emergency Response.',
+    icon: 'mdi:clock',
+    body: 'Trouble signals, ground faults, failed devices, and communication issues cannot wait. Our certified technicians provide emergency service calls and 24/7 emergency response for fire alarm systems across Colorado.',
+  },
+] as const;
+
+/* §2 Why Red Rocks — one icon per bullet, index-aligned. */
+const bulletIcons = [
+  'mdi:fire-circle',           // Comprehensive fire alarm expertise
+  'mdi:certificate-outline',   // Code-focused NFPA 72 service
+  'mdi:shield-check-outline',  // Authorized Gamewell-FCI Dealer
+  'mdi:clock',                 // 24/7 emergency response
+] as const;
+
+/* §3 accordion — one MDI icon per panel, index-aligned. */
+const accordionIcons = [
+  'mdi:bell-ring-outline',   // Fire Alarm System Service
+  'mdi:cog-outline',         // Fire Alarm System Modifications
+  'mdi:sync',                // Fire Alarm System Replacement
+  'mdi:alert-circle-outline', // Signs Your System May Need Replacement
+] as const;
+
+/* §3 accordion panels — copy verbatim from the source .md. */
+const accordionPanels = [
+  {
+    title: 'Fire Alarm System Service',
+    body: 'Red Rocks Fire Protection provides comprehensive fire alarm service for commercial, multifamily, healthcare, retail, industrial, and assisted living facilities throughout Colorado. Our certified technicians diagnose system troubles, perform repairs, replace failed devices, troubleshoot communication issues, and maintain system reliability to ensure compliance with NFPA 72 and local fire code requirements.',
+    bullets: [
+      'Troubleshooting and diagnostics',
+      'Smoke detector replacement',
+      'Heat detector replacement',
+      'Pull station replacement',
+      'Horn and strobe replacement',
+      'Control panel service and repair',
+      'Power supply replacement',
+      'Battery testing and replacement',
+      'Monitoring communication repairs',
+      'Ground fault troubleshooting',
+      'Emergency service calls',
+      '24/7 emergency response',
+    ],
+    open: false,
+  },
+  {
+    title: 'Fire Alarm System Modifications',
+    body: 'Red Rocks Fire Protection specializes in designing and installing fire alarm system modifications that maintain proper system functionality and code compliance. Our team works with property owners, management companies, contractors, and local Authorities Having Jurisdiction (AHJs) to ensure all modifications meet applicable codes and project requirements.',
+    bullets: [
+      'Tenant finish projects',
+      'Office remodels',
+      'Device relocations',
+      'Additional smoke detectors',
+      'Additional notification appliances',
+      'New pull stations',
+      'Elevator recall modifications',
+      'Duct detector additions',
+      'New monitoring points',
+      'Building expansions',
+      'Code compliance upgrades',
+    ],
+    footer: 'Our team handles the entire process, including design, permitting, installation, programming, testing, and final acceptance.',
+    open: false,
+  },
+  {
+    title: 'Fire Alarm System Replacement',
+    body: 'Red Rocks Fire Protection provides complete fire alarm system replacement services, from small control panel upgrades to complete building-wide system replacements.',
+    bullets: [
+      'Fire alarm control panels',
+      'Remote annunciators',
+      'Power supplies',
+      'Smoke detectors',
+      'Heat detectors',
+      'Pull stations',
+      'Horns and strobes',
+      'Communication equipment',
+      'Monitoring equipment',
+      'Voice evacuation systems',
+      'Emergency responder communication systems (BDA/ERRCS)',
+    ],
+    open: false,
+  },
+  {
+    title: 'Signs Your System May Need Replacement',
+    body: 'As fire alarm systems age, components become obsolete, replacement parts become difficult to obtain, and reliability can decrease. In many cases, replacing an aging system provides a more cost-effective and dependable long-term solution than continued repairs. Here are the indicators that replacement is typically the right call:',
+    bullets: [
+      'Obsolete equipment',
+      'Discontinued replacement parts',
+      'Frequent trouble conditions',
+      'Recurring service calls',
+      'Failed communication equipment',
+      'Expansion limitations',
+      'Repeated false alarms',
+      'Code compliance concerns',
+      'Aging infrastructure',
+    ],
+    footer: 'Our replacement projects are designed to improve reliability, simplify maintenance, and provide long-term life safety protection.',
+    open: false,
+  },
+] as const;
+
+/* §7 Why Clients Stay — one icon per value card, index-aligned. */
+const whyClientsIcons = [
+  'solar:shield-check-bold-duotone',        // We lead with safety
+  'solar:hand-heart-bold-duotone',          // We advocate for our clients
+  'solar:rocket-2-bold-duotone',            // We go the extra mile
+  'solar:medal-ribbon-star-bold-duotone',   // We demonstrate character
+  'solar:users-group-rounded-bold-duotone', // We operate as one family
+] as const;
+
+const whyClientsValues = [
+  { title: 'We lead with safety.', body: 'Protecting lives and property is both our responsibility and our privilege.' },
+  { title: 'We advocate for our clients.', body: 'We stay ahead of changing codes and help simplify compliance.' },
+  { title: 'We go the extra mile.', body: 'We take ownership of every project until the job is completed correctly.' },
+  { title: 'We demonstrate character.', body: 'Integrity, professionalism, accountability, and respect guide every interaction.' },
+  { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
+] as const;
+
+/* SplitPanel / panel images — generated via Nano Banana (technicians
+ * in plain black collared shirts, no logos, per client wardrobe spec). */
+const moreThanImage = '/images/rrfps-fa-more-than-contractor.jpg';
+const advocacyImage = '/images/rrfps-fa-advocacy.jpg';
+const experienceImage = '/images/rrfps-fa-experience.jpg';
+const promiseImage = '/images/rrfps-fa-promise.jpg';
 ---
 
-<PlaceholderPage
-  title="Fire Alarm Service & Systems"
-  heroImage="/images/rrfps-fire-sprinkler-systems-hero.jpg"
-/>
+<BaseLayout
+  title="Fire Alarm Service & Systems | Red Rocks Fire Protection | Colorado"
+  description="Comprehensive fire alarm service, modifications, and replacement for commercial, multifamily, healthcare, retail, industrial, and assisted living facilities across Colorado. NFPA 72 compliance, Gamewell-FCI authorized dealer, 24/7 emergency response."
+>
+  <div class="av-page">
+
+    <!-- ══════════════════════════════════════════════════════════
+         §0. PAGE-TITLE BANNER (sprinkler-page §0 pattern)
+         ══════════════════════════════════════════════════════════ -->
+    <div class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${bannerImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title rr-reveal">Fire Alarm Service &amp; Systems</h1>
+        <div class="ptbanner__breadcrumbs rr-reveal" data-reveal-delay="100">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/services">Services</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Fire Alarm Service &amp; Systems</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §1. SOLUTIONS GRID — 2×2 ibox (sprinkler-page §1, white)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="sol">
+      <div class="sol__left">
+        <div class="sol__sticky">
+          <div class="av-dblh__subtitle rr-reveal">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>What Fire Alarm Service Covers</span>
+          </div>
+          <h2 class="sol__title rr-reveal" data-reveal-delay="100">
+            <span>Service &amp; Systems</span>
+            <span>Modifications – Replacement</span>
+            <span>&amp; 24/7 Response.</span>
+          </h2>
+          <div class="sol__spacer" aria-hidden="true"></div>
+          <div class="sol__cta rr-reveal" data-reveal-delay="200">
+            <a href="/contact" class="av-wgl-btn av-wgl-btn--outline">
+              <span class="av-wgl-btn__text">Schedule Site Visit to Receive Complimentary Quote</span>
+              <span class="av-wgl-btn__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sol__grid">
+        {categories.map((c, i) => (
+          <a href="/contact" class="ibox rr-reveal" data-icon-slot={i} data-reveal-delay={i * 100}>
+            <span class="ibox__bg" aria-hidden="true"></span>
+            <span class="ibox__icon" aria-hidden="true">
+              <iconify-icon icon={c.icon} width="50" height="50"></iconify-icon>
+            </span>
+            <span class="ibox__content">
+              <h3 class="ibox__title">{c.title}</h3>
+              <span class="ibox__text">{c.body}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §2. WHY RED ROCKS — tan bg image + gradient overlay
+            (sprinkler-page §2 pattern)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-whyrr rr-band rr-band--reveal-top">
+      <div class="fa-whyrr__bg" aria-hidden="true"></div>
+      <div class="fa-whyrr__overlay" aria-hidden="true"></div>
+      <div class="rr-container fa-container">
+        <div class="fa-why-grid">
+          <div class="fa-why-grid__left">
+            <p class="rr-eyebrow fa-whyrr__eyebrow mb-5 rr-reveal">Why Red Rocks Fire Alarms</p>
+            <h2
+              class="font-display font-black tracking-tight fa-whyrr__title rr-reveal"
+              data-reveal-delay="100"
+              style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em;"
+            >
+              <span class="fa-whyrr__title-black">Your Trusted</span>
+              <br />
+              <span class="fa-whyrr__title-black">Partner for</span>
+              <br />
+              <span class="fa-whyrr__title-red">Fire Alarm</span>
+              <br />
+              <span class="fa-whyrr__title-red">Service &amp; Systems.</span>
+            </h2>
+          </div>
+
+          <div class="fa-why-grid__right">
+            <p class="fa-whyrr__body rr-reveal" data-reveal-delay="200" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 0;">
+              At Red Rocks Fire Protection Services, we understand that a fire alarm system is far more than a network of panels, detectors, notification devices, and communication equipment. It is one of the most critical life safety systems in your building, providing the early warning occupants need to respond quickly and helping emergency personnel react when every second matters.
+            </p>
+            <p class="fa-whyrr__body rr-reveal" data-reveal-delay="300" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 1.25rem;">
+              Since 2010, Red Rocks Fire Protection Services has proudly served customers throughout Colorado as a trusted, family-owned life safety company. Our purpose is simple: to protect lives and property by simplifying life safety compliance and providing dependable service our clients can trust. Every fire alarm service call, repair, modification, system replacement, and installation is guided by that commitment.
+            </p>
+
+            <ul class="fa-whyrr__bullets rr-reveal" data-reveal-delay="400">
+              <li class="fa-whyrr__bullet">
+                <span class="fa-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[0]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Comprehensive fire alarm expertise — from troubleshooting and repairs to system modifications and complete replacements.</span>
+              </li>
+              <li class="fa-whyrr__bullet">
+                <span class="fa-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[1]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Code-focused service and solutions designed to support compliance with NFPA 72 and local fire code requirements.</span>
+              </li>
+              <li class="fa-whyrr__bullet">
+                <span class="fa-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[2]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Authorized Gamewell-FCI Dealer with factory-trained technicians, authorized programming capabilities, technical support, and access to genuine replacement parts.</span>
+              </li>
+              <li class="fa-whyrr__bullet">
+                <span class="fa-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[3]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>24/7 emergency response when fire alarm system problems cannot wait.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §3. ACCORDION — 4 panels of service scope
+            (sprinkler-page §3 pattern: dark bg image + centered
+             white header + white-rectangle accordion cards)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-accordion">
+      <div class="fa-accordion__bg" aria-hidden="true"></div>
+      <div class="fa-accordion__overlay" aria-hidden="true"></div>
+      <div class="fa-accordion__inner fa-container">
+        <div class="fa-accordion__head">
+          <p class="av-dblh__subtitle fa-accordion__eyebrow rr-reveal">
+            <span class="fa-accordion__rule" aria-hidden="true"></span>
+            <span>How We Serve</span>
+            <span class="fa-accordion__rule" aria-hidden="true"></span>
+          </p>
+          <h3 class="fa-accordion__title rr-reveal" data-reveal-delay="100">Our Fire Alarm Services.</h3>
+          <p class="fa-accordion__intro rr-reveal" data-reveal-delay="200">
+            The work breaks into three primary service lines plus the warning signs that replacement may be the right call. Click each panel for the full scope.
+          </p>
+        </div>
+
+        <div class="acc fa-accordion__list">
+          {accordionPanels.map((p, i) => (
+            <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal', p.open && 'is-active']} data-acc-panel data-reveal-delay={i * 100}>
+              <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>
+                <span class="acc__panel-icon" aria-hidden="true">
+                  <iconify-icon icon={accordionIcons[i]} width="22" height="22"></iconify-icon>
+                </span>
+                <span class="acc__title">{p.title}</span>
+                <span class="acc__caret" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                </span>
+              </button>
+              <div class="acc__content" hidden={!p.open}>
+                <p>{p.body}</p>
+                {p.bullets && p.bullets.length > 0 && (
+                  <ul class="acc__bullets">
+                    {p.bullets.map((b) => (
+                      <li class="acc__bullet">
+                        <span class="acc__bullet-mark" aria-hidden="true">▸</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {p.footer && (
+                  <p class="acc__footer">{p.footer}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §4. GAMEWELL AUTHORIZED DEALER — client-priority section.
+            White bg (matches the logo's white background) with dark
+            text and a red accent border so it still stands out.
+            3 equal columns separated by full-height vertical
+            dividers:
+              col 1 — headline + description paragraphs
+              col 2 — benefits bullet list
+              col 3 — Gamewell-FCI logo card
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-gamewell">
+      <div class="fa-container fa-gamewell__inner">
+        <div class="fa-gamewell__head">
+          <h2 class="fa-gamewell__eyebrow rr-reveal">Authorized Gamewell-FCI Dealer</h2>
+        </div>
+
+        <div class="fa-gamewell__grid">
+          <div class="fa-gamewell__col fa-gamewell__col--copy rr-reveal" data-reveal-delay="100">
+            <h3 class="fa-gamewell__title">
+              Factory-Trained.<br />
+              Factory-Backed. <span class="fa-gamewell__title-red">Authorized.</span>
+            </h3>
+            <p class="fa-gamewell__body">
+              Red Rocks Fire Protection is proud to be an Authorized Gamewell-FCI Dealer, providing our customers with access to one of the most respected fire alarm manufacturers in the industry.
+            </p>
+            <p class="fa-gamewell__body">
+              As an authorized dealer, our technicians receive factory training and support directly from Gamewell-FCI, allowing us to properly design, install, program, service, and maintain Gamewell systems. We have access to factory-authorized programming software, technical support, replacement parts, and the latest product updates.
+            </p>
+            <p class="fa-gamewell__body fa-gamewell__body--closer">
+              Whether you need service on an existing Gamewell system or are considering a new fire alarm installation, Red Rocks Fire Protection has the expertise and factory backing to support your facility.
+            </p>
+          </div>
+
+          <div class="fa-gamewell__col fa-gamewell__col--benefits rr-reveal" data-reveal-delay="200">
+            <h3 class="fa-gamewell__benefits-title">Benefits of Working with a Gamewell Authorized Dealer</h3>
+            <ul class="fa-gamewell__benefits">
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>Factory-trained technicians</span></li>
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>Authorized programming capabilities</span></li>
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>Access to genuine replacement parts</span></li>
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>Manufacturer technical support</span></li>
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>System design assistance</span></li>
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>Warranty support</span></li>
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>Code-compliant installations</span></li>
+              <li class="fa-gamewell__benefit"><span aria-hidden="true">▸</span><span>Long-term system support</span></li>
+            </ul>
+          </div>
+
+          <div class="fa-gamewell__col fa-gamewell__col--logo rr-reveal" data-reveal-delay="300">
+            <div class="fa-gamewell__logo-card">
+              <img
+                src="/images/rrfps-fci-gamewell-logo.webp"
+                alt="Gamewell-FCI — Authorized Dealer"
+                loading="lazy"
+                decoding="async"
+                class="fa-gamewell__logo"
+              />
+              <span class="fa-gamewell__logo-caption">Authorized Dealer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §5. MORE THAN A FIRE ALARM CONTRACTOR
+            (white-bg SplitPanel rhythm — 3 paragraphs, image right)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container fa-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">How We Work</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              More Than a Fire Alarm Contractor.
+            </h2>
+            <div class="mt-6 rr-reveal fa-split-body" data-reveal-delay="200">
+              <p>While many companies can repair or replace fire alarm equipment, Red Rocks Fire Protection Services takes a different approach. We believe our responsibility extends well beyond completing a service call.</p>
+              <p>Our goal is to become a long-term life safety partner who understands your facility, helps maintain the reliability of your systems, and assists you in navigating fire alarm requirements and evolving codes with confidence.</p>
+              <p>Whether we're troubleshooting a recurring system trouble, replacing a failed device, modifying an alarm system for a tenant improvement, or planning the replacement of aging equipment, our team focuses on finding the right long-term solution, not simply addressing the immediate problem.</p>
+            </div>
+            <div class="mt-8 rr-reveal" data-reveal-delay="240">
+              <a href="/services" class="av-wgl-btn av-wgl-btn--outline">
+                <span class="av-wgl-btn__text">See All Services</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={moreThanImage} alt="Red Rocks Fire Protection technician servicing a fire alarm system" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §6. ADVOCACY — #DBDADA bg panel (sprinkler-page §5 pattern)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-edge rr-band rr-band--reveal-top">
+      <div class="rr-container fa-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 fa-edge__eyebrow rr-reveal">Our Edge</p>
+            <h2
+              class="font-display font-black uppercase tracking-tight rr-reveal fa-edge__title"
+              data-reveal-delay="100"
+              style="font-size: var(--rr-text-section); line-height: 0.95;"
+            >
+              Advocacy That Protects Your People, Property &amp; Investment.
+            </h2>
+            <div class="mt-6 rr-reveal fa-edge__body" data-reveal-delay="200">
+              <p>Advocacy is one of the core values that defines Red Rocks Fire Protection Services and one of the qualities that sets us apart.</p>
+              <p>Fire alarm technology, NFPA standards, local jurisdiction requirements, and compliance regulations continue to evolve. Building renovations, occupancy changes, aging equipment, obsolete components, and changing code requirements can also affect the performance and compliance of an existing system. Our team continually stays current with these changes so we can provide proactive guidance that helps our clients make informed decisions about their fire alarm systems.</p>
+              <p>We believe our customers deserve more than a contractor who simply responds when something goes wrong. They deserve a trusted advisor who communicates clearly, explains recommendations honestly, helps identify potential issues, and works with property owners, management companies, contractors, and local Authorities Having Jurisdiction (AHJs) to help protect both the property and the people who depend on it.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 fa-edge-img rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card bg-rr-black fa-edge-img__wrap">
+              <img
+                src={advocacyImage}
+                alt="Red Rocks Fire Protection advocacy in action for fire alarm clients"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover fa-edge-img__img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §7. WHY CLIENTS STAY — dark bg image + 5 value cards
+            (sprinkler-page §6 pattern)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-why">
+      <div class="fa-why__bg" aria-hidden="true"></div>
+
+      <div class="fa-why__inner">
+        <div class="rr-reveal max-w-3xl mb-12 md:mb-16">
+          <p class="rr-eyebrow mb-5" style="color: rgba(255,255,255,0.7);">Why Clients Stay</p>
+          <h2
+            class="font-display font-black uppercase tracking-tight"
+            style="font-size: var(--rr-text-section); line-height: 0.95; color: #fff;"
+          >
+            Why Clients Continue to Choose RRFPS.
+          </h2>
+          <p class="mt-6" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.9);">
+            Everything we do is built upon the values that have guided our company since its founding. These principles are reflected in our Brand Promise: we communicate clearly, we honor our commitments, we arrive prepared, we respond when it matters most, we price fairly, we stand behind our work, and we remain committed until every issue has been fully resolved.
+          </p>
+        </div>
+
+        <div class="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          {whyClientsValues.map((v, i) => (
+            <article class="rr-reveal fa-flowcard rounded-rr-card p-6 flex flex-col" data-reveal-delay={i * 100}>
+              <span class="fa-flowcard__icon" aria-hidden="true">
+                <iconify-icon icon={whyClientsIcons[i]} width="40" height="40"></iconify-icon>
+              </span>
+              <h3 class="font-display font-bold tracking-tight" style="font-size: var(--rr-text-card); line-height: 1.05; color: #fff;">
+                {v.title}
+              </h3>
+              <p class="mt-3 leading-relaxed flex-1" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.85);">
+                {v.body}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §8. EXPERIENCE — white-bg SplitPanel rhythm (image right)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container fa-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">Experience</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              Fire Alarm Experience You Can Trust.
+            </h2>
+            <div class="mt-6 rr-reveal fa-split-body" data-reveal-delay="200">
+              <p>When it comes to fire alarm systems, technical knowledge, training, and qualifications matter. These systems require specialized expertise to properly diagnose problems, program equipment, perform modifications, maintain communication, and ensure the system functions as intended.</p>
+              <p>Red Rocks Fire Protection Services invests in training, technical expertise, and staying current with evolving codes and regulations. As an Authorized Gamewell-FCI Dealer, our technicians also receive factory training and support directly from Gamewell-FCI, with access to authorized programming capabilities, genuine replacement parts, manufacturer technical support, and current product information.</p>
+              <p>Combined with responsive customer service, dependable scheduling, and our commitment to accountability, that expertise allows our clients to move forward with confidence knowing their fire alarm systems are in capable hands.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={experienceImage} alt="Red Rocks Fire Protection certified fire alarm technicians" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §9. OUR PROMISE — #DBDADA bg panel (image right)
+         ══════════════════════════════════════════════════════════ -->
+    <section class="fa-splitpanel fa-promise rr-band rr-band--reveal-top">
+      <div class="rr-container fa-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 fa-promise__eyebrow rr-reveal">Our Promise</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              Ready When You Are.
+            </h2>
+            <div class="mt-6 rr-reveal fa-promise__body" data-reveal-delay="200">
+              <p>At Red Rocks Fire Protection Services, we believe fire alarm protection should never be treated as an afterthought. Your system needs to be reliable, properly maintained, code compliant, and ready to perform when it matters most.</p>
+              <p>Whether you need troubleshooting and diagnostics, device replacement, emergency repairs, system modifications, programming, communication repairs, upgrades, or a complete fire alarm system replacement, our experienced team is ready to provide the responsive service, technical expertise, and long-term partnership you deserve.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={promiseImage} alt="Red Rocks Fire Protection keeping fire alarm systems ready" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+         §10. INDUSTRIES — shared IndustriesGrid component
+         ══════════════════════════════════════════════════════════ -->
+    <IndustriesGrid />
+
+    <!-- ══════════════════════════════════════════════════════════
+        §11. CLOSING CTA — site-wide ClosingCTA with the
+              fire-alarm closing copy from the source .md.
+        ══════════════════════════════════════════════════════════ -->
+    <ClosingCTA
+      backgroundImage="/images/rrfps-services-cta-bg.png"
+      paragraphs={[
+        "Choosing the right fire alarm partner is about more than repairing devices, programming a panel, or meeting code. It's about having a team you can trust to communicate clearly, advocate for you, understand your system, stay ahead of compliance requirements, and take responsibility for protecting your people and property.",
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════════
+   * All patterns cloned from fire-sprinkler-service-and-systems.astro
+   * with fs- prefixes renamed to fa- so the two pages stay
+   * independently editable. Values are identical.
+   * ══════════════════════════════════════════════════════════ */
+
+  /* ---- §0. Page-title banner ---- */
+  .ptbanner {
+    position: relative;
+    isolation: isolate;
+    background-color: #0d0d0b;
+  }
+  .ptbanner__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    z-index: -2;
+  }
+  .ptbanner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(13, 13, 11, 0.35) 0%,
+      rgba(13, 13, 11, 0.45) 60%,
+      rgba(13, 13, 11, 0.55) 100%
+    );
+    z-index: -1;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    min-height: 450px;
+    margin-bottom: 60px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: 32px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ---- §1. Solutions + ibox grid ---- */
+  .sol {
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto 80px;
+  }
+  .sol__left { width: 50%; }
+  .sol__sticky {
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 0;
+  }
+  .sol__sticky > * { width: 100%; max-width: 585px; }
+  .sol__sticky .av-dblh__subtitle {
+    margin-bottom: 23px;
+    display: flex;
+  }
+  .sol__title {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.178em;
+    padding-bottom: 5px;
+    color: #0a0a0a;
+  }
+  .sol__title span { display: inline-block; }
+  .sol__spacer { height: 34px; }
+  .sol__cta .av-wgl-btn { display: inline-flex; }
+  .sol__cta .av-wgl-btn__text { padding: 17px 35px; }
+
+  .sol__grid {
+    width: 50%;
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 30px;
+  }
+  .sol__grid .ibox { width: 50%; }
+
+  .ibox {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    transition: 0.4s;
+  }
+  .ibox__bg {
+    position: absolute;
+    inset: 0;
+    border: 1px solid #0a0a0a26;
+    transition: 0.4s;
+    pointer-events: none;
+  }
+  .ibox:hover { background-color: #D51126; }
+  .ibox:hover .ibox__bg { border-color: transparent; }
+  .ibox__icon {
+    display: inline-flex;
+    background-color: #d41226;
+    padding: 16px;
+    transition: 0.4s;
+    color: #ffffff;
+  }
+  .ibox__icon :global(svg) {
+    width: 50px;
+    height: 50px;
+    fill: #ffffff;
+    transition: 0.4s;
+  }
+  .ibox:hover .ibox__icon { background-color: #ffffff; color: #0a0a0a; }
+  .ibox:hover .ibox__icon :global(svg) { fill: #0a0a0a; }
+  .ibox__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 306px;
+    padding: 51px 40px 30px 40px;
+  }
+  .ibox__title {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(26px, 1.9vw, 30px);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.4em;
+    color: #0a0a0a;
+    transition: 0.4s;
+  }
+  .ibox__text {
+    padding-top: 16px;
+    color: #626262;
+    /* 18px lead token so all paragraph copy on the page matches
+       (was 16px, cloned from the sprinkler page). */
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    transition: 0.4s;
+  }
+  .ibox:hover .ibox__title,
+  .ibox:hover .ibox__text { color: #ffffff; }
+
+  /* ---- §2. Why Red Rocks — tan bg image + horizontal gradient ---- */
+  .fa-whyrr {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #E0D9D3;
+  }
+  .fa-whyrr__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/red-rocks-fire-alarm-why-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .fa-whyrr__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(224, 217, 211, 0.30) 0%,
+      rgba(224, 217, 211, 0.55) 25%,
+      rgba(224, 217, 211, 0.85) 50%,
+      #E0D9D3 75%,
+      #E0D9D3 100%
+    );
+    z-index: -1;
+  }
+  .fa-whyrr__eyebrow { color: var(--rr-red, #d41226); }
+  .fa-whyrr__title-black { color: #0a0a0a; }
+  .fa-whyrr__title-red { color: var(--rr-red, #d41226); }
+  .fa-whyrr__body { color: #0a0a0a; }
+
+  .fa-why-grid {
+    display: grid;
+    gap: 48px;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .fa-why-grid {
+      gap: 80px;
+      grid-template-columns: 5fr 7fr;
+    }
+  }
+  .fa-why-grid__left h2 { max-width: 16ch; }
+
+  .fa-whyrr__bullets {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .fa-whyrr__bullet {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    align-items: center;
+    gap: 14px;
+    color: #0a0a0a;
+    /* 18px lead token so all paragraph copy on the page matches. */
+    font-size: var(--rr-text-lead);
+    line-height: 1.55;
+  }
+  .fa-whyrr__bullet-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    background: var(--rr-red, #d41226);
+    color: #ffffff;
+    flex-shrink: 0;
+  }
+  .fa-whyrr__bullet-icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  /* ---- §3. Accordion (4 panels) — centered stacked over bg image ---- */
+  .fa-accordion {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 110px;
+    background-color: #0d0d0b;
+  }
+  .fa-accordion__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/red-rocks-fire-alarm-accordion-bg.jpg');
+    background-size: cover;
+    background-position: left center;
+    z-index: -2;
+  }
+  .fa-accordion__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(13, 13, 11, 0.55) 0%,
+      rgba(13, 13, 11, 0.45) 50%,
+      rgba(13, 13, 11, 0.55) 100%
+    );
+    z-index: -1;
+  }
+  .fa-accordion__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .fa-accordion__inner { padding-inline: 2.5rem; }
+  }
+  .fa-accordion__head {
+    max-width: 800px;
+    margin: 0 auto 48px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .fa-accordion__eyebrow {
+    color: var(--rr-red, #d41226) !important;
+    font-family: "Space Grotesk", sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    justify-content: center !important;
+    margin-bottom: 22px !important;
+  }
+  .fa-accordion__rule {
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background: var(--rr-red, #d41226);
+    vertical-align: middle;
+  }
+  .fa-accordion__eyebrow > span:not(.fa-accordion__rule) {
+    margin: 0 12px;
+  }
+  .fa-accordion__title {
+    margin: 0 0 22px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 56px);
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .fa-accordion__intro {
+    margin: 0 auto;
+    max-width: 640px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #ffffff;
+  }
+
+  .fa-accordion__list {
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  /* White-rectangle accordion card */
+  .acc__panel--card {
+    overflow: hidden;
+    margin-bottom: 10px;
+    background: #ffffff;
+    border-radius: 6px;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .acc__panel--card:last-child { margin-bottom: 0; }
+  .acc__panel--card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    transform: translateY(-1px);
+  }
+  .acc__panel--card.is-active {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  }
+  .acc__panel--card .acc__header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 18px 24px;
+    cursor: pointer;
+    text-align: left;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: #0a0a0a;
+  }
+  .acc__panel-icon {
+    display: grid;
+    place-items: center;
+    color: var(--rr-red, #d41226);
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+  .acc__panel-icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 0.6;
+  }
+  .acc__panel--card .acc__title {
+    color: #0a0a0a;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .acc__caret {
+    display: grid;
+    place-items: center;
+    color: #0a0a0a;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+  }
+  .acc__panel--card.is-active .acc__caret { transform: rotate(-90deg); }
+  .acc__caret svg { width: 14px; height: 12px; }
+
+  /* Open content — black text on white card surface. 18px lead token
+     so all paragraph copy on the page matches (was the 14px body token,
+     cloned from the sprinkler page). */
+  .acc__panel--card .acc__content {
+    padding: 4px 24px 22px 70px;
+    color: #303030;
+    background: #ffffff;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  /* !important: the global `p {}` rule (14px) plus this rule land at
+     equal page scope; !important guarantees the 18px lead token wins
+     for the accordion body copy. */
+  .acc__panel--card .acc__content p {
+    margin: 0;
+    font-size: var(--rr-text-lead) !important;
+    line-height: var(--rr-text-lead-lh);
+  }
+  .acc__panel--card .acc__bullets {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .acc__panel--card .acc__bullet {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    align-items: baseline;
+    gap: 4px;
+    color: #303030;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+  }
+  .acc__panel--card .acc__bullet-mark {
+    color: var(--rr-red, #d41226);
+    font-size: 16px;
+    line-height: 1;
+  }
+  .acc__panel--card .acc__footer {
+    margin: 14px 0 0 !important;
+    font-style: italic;
+    /* 18px lead token so all paragraph copy on the page matches. */
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(10, 10, 10, 0.7);
+  }
+
+  /* ---- §4. GAMEWELL AUTHORIZED DEALER ----
+   * White bg (the Gamewell-FCI logo has a white background, so the
+   * whole section is white for a seamless logo presentation) with
+   * dark text. The red accent top border keeps the "stand out" cue
+   * from the previous black treatment. 3 EQUAL columns separated by
+   * full-height vertical dividers (equal grid tracks + stretch make
+   * the divider rules run the same height); the logo card carries
+   * a border + shadow so it reads as a card on the white field.
+   * Columns: copy | benefits | logo. */
+  .fa-gamewell {
+    position: relative;
+    background-color: #DBDADA;
+    /* Red accent strip along the top edge — the "stand out" cue. */
+    border-top: 6px solid var(--rr-red, #d41226);
+    padding-block: 96px;
+    color: #0a0a0a;
+  }
+  @media (min-width: 768px) { .fa-gamewell { padding-block: 120px; } }
+  .fa-gamewell__inner {
+    width: 100%;
+    max-width: 1340px;
+    margin-inline: auto;
+  }
+  .fa-gamewell__head {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  /* Eyebrow — an H2 per client request, red so it stands out as the
+     section's headline. font-size uses the same var(--rr-h2-size)
+     token as every other section H2 on the site (via the global
+     override in global-overrides.css, whose :not() carve-out list
+     no longer excludes this class). */
+  .fa-gamewell__eyebrow {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rr-red, #d41226);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: var(--rr-h2-size) !important;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1.15;
+  }
+
+  /* 3 EQUAL columns with full-height vertical dividers.
+   * Equal tracks (1fr 1fr 1fr) so the logo column is as wide as
+   * the copy columns and the logo can render larger. align-items:
+   * stretch (default) + border-right on the columns makes the
+   * dividers run the full height of the tallest column. */
+  .fa-gamewell__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+  @media (min-width: 1024px) {
+    .fa-gamewell__grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    /* Vertical dividers between the three columns — full height
+       because every column stretches to the tallest track. */
+    .fa-gamewell__col--copy {
+      padding-right: 48px;
+      border-right: 1px solid rgba(10, 10, 10, 0.18);
+    }
+    .fa-gamewell__col--benefits {
+      padding-inline: 48px;
+      border-right: 1px solid rgba(10, 10, 10, 0.18);
+    }
+    .fa-gamewell__col--logo {
+      padding-left: 48px;
+    }
+  }
+  /* Mobile/tablet: columns stack with horizontal dividers instead. */
+  @media (max-width: 1023px) {
+    .fa-gamewell__col {
+      padding-block: 40px;
+      border-bottom: 1px solid rgba(10, 10, 10, 0.18);
+    }
+    .fa-gamewell__col:last-child { border-bottom: none; padding-bottom: 0; }
+    .fa-gamewell__col:first-child { padding-top: 0; }
+  }
+  .fa-gamewell__title {
+    margin: 0 0 26px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    /* Matches the "Benefits of Working with a Gamewell Authorized
+       Dealer" H3 (17px) per client request. */
+    font-size: 17px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+  .fa-gamewell__title-red { color: var(--rr-red, #d41226); }
+  .fa-gamewell__body {
+    margin: 0 0 16px;
+    /* 18px lead token so all paragraph copy on the page matches. */
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #303030;
+  }
+  .fa-gamewell__body--closer { color: #0a0a0a; }
+  .fa-gamewell__benefits-title {
+    margin: 0 0 22px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #0a0a0a;
+  }
+  .fa-gamewell__benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .fa-gamewell__benefit {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    align-items: baseline;
+    gap: 6px;
+    color: #303030;
+    /* 18px lead token so all paragraph copy on the page matches. */
+    font-size: var(--rr-text-lead);
+    line-height: 1.55;
+  }
+  .fa-gamewell__benefit > span:first-child {
+    color: var(--rr-red, #d41226);
+    font-size: 16px;
+    line-height: 1;
+  }
+  /* Logo card — border + shadow removed per client request; sits
+   * directly on the grey field. */
+  .fa-gamewell__col--logo {
+    display: flex;
+    align-items: center;
+  }
+  .fa-gamewell__logo-card {
+    width: 100%;
+    padding: 44px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .fa-gamewell__logo {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    object-fit: contain;
+  }
+  .fa-gamewell__logo-caption {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rr-red, #d41226);
+    padding-top: 18px;
+    border-top: 1px solid rgba(10, 10, 10, 0.14);
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ---- §5 / §8. White SplitPanel body text ---- */
+  .fa-split-body p {
+    margin: 0 0 16px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #303030;
+  }
+  .fa-split-body p:last-child { margin-bottom: 0; }
+
+  /* ---- §6. Advocacy — #DBDADA background, black text ---- */
+  .fa-edge {
+    background-color: #DBDADA;
+  }
+  .fa-edge__eyebrow { color: var(--rr-grey, #626262); }
+  .fa-edge__title { color: #0a0a0a; }
+  .fa-edge__body p {
+    margin: 0 0 16px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: #303030;
+  }
+  .fa-edge__body p:last-child { margin-bottom: 0; }
+  .fa-edge-img {
+    display: flex;
+    align-items: center;
+  }
+  .fa-edge-img__wrap {
+    width: 100%;
+    height: 480px;
+  }
+  .fa-edge-img__img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* ---- §7. Why-clients — bg-image section with 5 flow-border cards ---- */
+  .fa-why {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: 110px;
+    background-color: #0d0d0b;
+  }
+  @media (min-width: 768px) { .fa-why { padding-block: 150px; } }
+  .fa-why__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/rrfps-fa-why-clients-stay-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.35);
+    z-index: -2;
+  }
+  .fa-why::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  .fa-why__inner {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    color: #ffffff;
+  }
+  @media (min-width: 768px) {
+    .fa-why__inner { padding-inline: 2.5rem; }
+  }
+
+  @property --fa-flow-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  .fa-flowcard {
+    position: relative;
+    isolation: isolate;
+    background: rgba(255, 255, 255, 0.10);
+    border: 0;
+    border-radius: 0;
+  }
+  .fa-flowcard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--fa-flow-angle),
+      rgba(255, 255, 255, 0.28) 0deg,
+      #ff2438 70deg,
+      #d41226 130deg,
+      rgba(255, 255, 255, 0.28) 200deg,
+      rgba(255, 255, 255, 0.28) 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: fa-flow-spin 4s linear infinite;
+  }
+  @keyframes fa-flow-spin {
+    to { --fa-flow-angle: 360deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fa-flowcard::before { animation: none; }
+  }
+  .fa-flowcard__icon {
+    width: 74px;
+    height: 74px;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    background: #d41226;
+    flex: 0 0 auto;
+    margin-bottom: 22px;
+  }
+  .fa-flowcard__icon iconify-icon {
+    color: currentColor;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  /* ---- §9. Our Promise — black background, white text (per client
+   * request; was #DBDADA). Red eyebrow stays for brand pop on the
+   * dark field. ---- */
+  .fa-promise { background-color: #0d0d0b; }
+  .fa-promise__eyebrow { color: var(--rr-red, #d41226); }
+  .fa-promise__body p {
+    margin: 0 0 16px;
+    font-size: var(--rr-text-lead);
+    line-height: var(--rr-text-lead-lh);
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .fa-promise__body p:last-child { margin-bottom: 0; }
+  /* The section's H2 ("Ready When You Are.") — forced white: the
+   * .av-page h2 global rule paints headings black, which would be
+   * invisible on the black bg. */
+  .fa-promise h2 {
+    color: #ffffff;
+  }
+
+  /* ---- Gutter alignment — matches IndustriesGrid (1340px / 80px) ---- */
+  .fa-container {
+    max-width: 1340px;
+    padding-inline: 80px;
+  }
+  .fa-accordion__inner.fa-container { max-width: 1340px; padding-inline: 80px; }
+  .fa-gamewell__inner.fa-container { max-width: 1340px; padding-inline: 80px; }
+
+  /* ---- Entrance-animation stagger ----
+   * The global .rr-reveal / .is-visible rules (global.css) handle the
+   * base fade-up. This page-scoped rule reads the data-reveal-delay
+   * attribute (which the global system sets but never consumes) so
+   * elements within a section enter in sequence: eyebrow → title →
+   * body → image, 100ms apart. The delay is removed once the element
+   * is visible (see the cleanup script below) so hover transitions
+   * (ibox color, accordion shadow, button fills) stay instant. */
+  .rr-reveal[data-reveal-delay] {
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .rr-reveal.is-visible[data-reveal-delay] {
+    /* Cleared at runtime; this is only a non-JS fallback (delays
+       persist after entrance if JS is disabled — acceptable since
+       the elements are already fully visible at that point). */
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1200px) {
+    .fa-container { padding-inline: 60px; }
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+    .sol { margin-top: 0; padding: 0 30px; flex-wrap: wrap; }
+    .sol__left { width: 100%; }
+    .sol__sticky { position: sticky; top: 30px; align-items: flex-start; }
+    .sol__sticky > * { max-width: 340px; }
+    .sol__title { font-size: 42px; }
+    .sol__title span { display: inline; }
+    .sol__grid { width: 100%; margin-top: 30px; }
+    .sol__grid .ibox { width: 100%; }
+    .ibox__content { min-height: 235px; padding: 31px 30px 20px 30px; }
+    .ibox__icon :global(svg) { width: 40px; height: 40px; }
+    .ibox__title { font-size: 26px; }
+  }
+
+  @media (max-width: 767px) {
+    .fa-container { padding-inline: 28px; }
+    .ptbanner__inner { min-height: 320px; padding-top: 120px; grid-template-columns: 1fr; row-gap: 12px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .sol { padding: 0; row-gap: 30px; }
+    .sol__sticky { position: relative; top: 0; padding: 0 15px; }
+    .sol__title { font-size: 28px; }
+    .sol__grid { padding: 0 15px; }
+    .ibox__content { min-height: 180px; }
+    .fa-accordion { padding-block: 70px; }
+    .fa-accordion__title { font-size: 28px; margin-bottom: 40px; }
+    .fa-gamewell { padding-block: 70px; }
+    .fa-gamewell__col { padding-block: 32px; }
+    .fa-why { padding-block: 70px; }
+  }
+</style>
+
+<script>
+  /**
+   * Accordion toggle for the §3 "Our Fire Alarm Services" section.
+   * Same defensive binding pattern as the fire-sprinkler page:
+   * one panel open at a time; clicking the open panel closes it.
+   *
+   * IMPORTANT: kept to plain JavaScript (no TypeScript casts) — the
+   * previous `(header as any)` TS syntax compiled fine in the
+   * production Rollup build but was silently dropped by the dev
+   * server's esbuild transform, leaving the accordion dead in dev.
+   * Re-registers on astro:page-load / after-swap / DOMContentLoaded
+   * so View Transitions navigations get wired too.
+   */
+  function initFireAlarmAccordion() {
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-acc-panel]'));
+    if (!panels.length) return false;
+    panels.forEach(function (panel) {
+      var header = panel.querySelector('.acc__header');
+      var content = panel.querySelector('.acc__content');
+      if (!header || !content) return;
+      if (header.__faAccordionWired) return;
+      header.__faAccordionWired = true;
+      header.addEventListener('click', function () {
+        var wasOpen = panel.classList.contains('is-active');
+        panels.forEach(function (p) {
+          p.classList.remove('is-active');
+          var h = p.querySelector('.acc__header');
+          if (h) h.setAttribute('aria-expanded', 'false');
+          var c = p.querySelector('.acc__content');
+          if (c) c.hidden = true;
+        });
+        if (!wasOpen) {
+          panel.classList.add('is-active');
+          header.setAttribute('aria-expanded', 'true');
+          content.hidden = false;
+        }
+      });
+    });
+    return true;
+  }
+
+  function bindFireAlarmAccordion() {
+    if (!initFireAlarmAccordion()) {
+      setTimeout(initFireAlarmAccordion, 100);
+    }
+  }
+
+  document.addEventListener('astro:page-load', bindFireAlarmAccordion);
+  document.addEventListener('astro:after-swap', bindFireAlarmAccordion);
+  document.addEventListener('DOMContentLoaded', bindFireAlarmAccordion);
+  if (document.readyState !== 'loading') bindFireAlarmAccordion();
+
+  /**
+   * Entrance-animation support for the fire-alarm page.
+   *
+   * 1. STAGGER — the global reveal system (BaseLayout's Intersection-
+   *    Observer on .rr-reveal) never consumes the data-reveal-delay
+   *    attribute this page sets on its elements. This script copies
+   *    each value into a --reveal-delay CSS custom property (consumed
+   *    by the scoped transition-delay rule above) and clears it once
+   *    the element has entered, so hover transitions stay instant.
+   *
+   * 2. SHARED COMPONENTS — IndustriesGrid and ClosingCTA are shared
+   *    files used verbatim across the site, so instead of editing
+   *    them this script animates their top-level blocks at runtime,
+   *    on this page only: the industries section head + its 15 cards
+   *    (staggered), and the ClosingCTA body copy.
+   *
+   * All plain JS (no TS casts) so the dev server's esbuild transform
+   * doesn't drop the module.
+   */
+  function initFireAlarmRevealStagger() {
+    // 1. Copy data-reveal-delay → --reveal-delay on page-owned elements.
+    document.querySelectorAll('.rr-reveal[data-reveal-delay]').forEach(function (el) {
+      el.style.setProperty('--reveal-delay', el.getAttribute('data-reveal-delay') + 'ms');
+    });
+
+    // 2. Animate the shared IndustriesGrid on this page only.
+    var industries = document.querySelector('section.industries');
+    if (industries && !industries.classList.contains('rr-reveal')) {
+      var indHead = industries.querySelector('.industries__head');
+      if (indHead) {
+        indHead.classList.add('rr-reveal');
+      }
+      var cards = industries.querySelectorAll('.industry-card');
+      cards.forEach(function (card, i) {
+        card.classList.add('rr-reveal');
+        card.setAttribute('data-reveal-delay', String(Math.min(i, 8) * 80));
+        card.style.setProperty('--reveal-delay', Math.min(i, 8) * 80 + 'ms');
+      });
+    }
+
+    // 3. Animate the shared ClosingCTA body on this page only.
+    var ctaBody = document.querySelector('.cta__body');
+    if (ctaBody && !ctaBody.classList.contains('rr-reveal')) {
+      ctaBody.classList.add('rr-reveal');
+    }
+
+    /* 3b. The global reveal observer (BaseLayout) registers its
+     * astro:page-load listener BEFORE this script, so it never sees
+     * the .rr-reveal classes added to the shared components above.
+     * Observe any not-yet-visible reveal element with a matching
+     * observer (same threshold/rootMargin) so nothing stays hidden.
+     * Idempotent: elements already handled by the global observer
+     * are .is-visible and skipped here. */
+    var pending = document.querySelectorAll('.rr-reveal:not(.is-visible)');
+    if (pending.length) {
+      var pageObserver = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            entries[i].target.classList.add('is-visible');
+            pageObserver.unobserve(entries[i].target);
+          }
+        }
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+      pending.forEach(function (el) { pageObserver.observe(el); });
+    }
+
+    // 4. Clean up delays once elements have entered, so hover
+    //    transitions (ibox bg, accordion shadow, buttons) are
+    //    instant after the entrance finishes. Watch for both the
+    //    page-owned elements and the ones added above.
+    document.querySelectorAll('.rr-reveal').forEach(function (el) {
+      if (el.classList.contains('is-visible')) {
+        el.style.removeProperty('--reveal-delay');
+        return;
+      }
+      // Fires once, when the global observer adds .is-visible.
+      var cleanup = new MutationObserver(function () {
+        if (el.classList.contains('is-visible')) {
+          el.style.removeProperty('--reveal-delay');
+          cleanup.disconnect();
+        }
+      });
+      cleanup.observe(el, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+
+  function bindFireAlarmReveal() {
+    initFireAlarmRevealStagger();
+  }
+
+  document.addEventListener('astro:page-load', bindFireAlarmReveal);
+  document.addEventListener('DOMContentLoaded', bindFireAlarmReveal);
+  if (document.readyState !== 'loading') bindFireAlarmReveal();
+</script>

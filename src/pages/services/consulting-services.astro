@@ -1,16 +1,676 @@
 ---
 /**
- * Consulting Services — RRFPS placeholder page.
+ * Consulting Services – Fire & Life Safety — RRFPS landing page
+ * for /services/consulting-services/.
  *
- * Full content coming soon. Built now so the Services mega menu links
- * resolve to a real page with the standard page-title banner + body
- * pattern used across the site. Reuse PlaceholderPage so every nav
- * link resolves cleanly until the real landing content lands.
+ * Layout cloned 1:1 from fire-sprinkler-service-and-systems.astro
+ * (per Zack's direction) with the copy swapped verbatim from
+ * reference/content/rrfps-9-service-pages-with-why-red-rocks-sections.md
+ * (Page 8 — Consulting Services – Fire & Life Safety).
+ *
+ * DEVIATION from template: §3 accordion is replaced with a 4-row white
+ * card block (per Zack's explicit OK that a page may drop the accordion
+ * if its copy doesn't fit that format). Consulting is fundamentally an
+ * advisory offering, not an equipment/service catalog, so the
+ * accordion pattern would be awkward. The 4 cards surface the page's
+ * 4 consulting sub-areas (Code Compliance / Capital Planning / System
+ * Assessments / Construction & Renovation) as stacked rows with red ▸
+ * markers. Same template shape, different content block.
+ *
+ * Sections, in order:
+ *   0. ptbanner
+ *   1. 2×2 ibox grid (4 consulting service categories)
+ *   2. `cs-whyrr` tan bg-image intro band
+ *   3. FOUR-ROW WHITE CARD block (replaces the 5-panel accordion) —
+ *      4 consulting sub-areas with red ▸ bullet lists
+ *   4. SplitPanel — More Than a Service Contractor
+ *   5. SplitPanel — Advocacy (#DBDADA bg)
+ *   6. Why Clients Stay — dark bg + 5 value cards
+ *   7. SplitPanel — Experience (white bg)
+ *   8. SplitPanel — Ready When You Are. (#DBDADA bg)
+ *   9. IndustriesGrid (shared)
+ *  10. ClosingCTA (shared, consulting-themed paragraph)
+ *
+ * Image assets — all placeholders, to be swapped for page-specific
+ * Nano Banana imagery after the batch build:
+ *   • Hero           — /images/rrfps-consulting-services-page-hero.png
+ *   • §2 tan band bg — /images/rrfps-backflow-prevention-why-red-rocks-bg.jpg
+ *   • §3 white card bg — /images/rrfps-consulting-services-services-accordion-bg.jpg
+ *   • §4 more than    — /images/rrfps-consulting-services-more-than-a-service-contractor.jpg
+ *   • §5 advocacy     — /images/rrfps-consulting-services-advocacy.jpg
+ *   • §6 values bg    — /images/rrfps-consulting-services-why-clients-stay-bg.jpg
+ *   • §7 experience   — /images/rrfps-consulting-services-experience.jpg
+ *   • §8 promise      — /images/rrfps-consulting-services-ready-when-you-are.jpg
+ *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.png
  */
-import PlaceholderPage from '../../components/PlaceholderPage.astro';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+import IndustriesGrid from '../../components/IndustriesGrid.astro';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+const bannerImage = '/images/rrfps-consulting-services-page-hero.png';
+
+const categories = [
+  {
+    title: 'Code Compliance.',
+    icon: 'mdi:scale-balance',
+    body: 'Fire code reviews, life safety evaluations, AHJ coordination, occupancy and use evaluations, deficiency reviews, and corrective action planning for properties throughout Colorado.',
+  },
+  {
+    title: 'Capital Planning & Budgeting.',
+    icon: 'mdi:chart-line',
+    body: 'Long-term capital planning and budget forecasting for fire alarm, sprinkler, backflow, extinguisher, kitchen hood, fire pump, ERRCS, and Area of Refuge systems — eliminating the surprise of unexpected life safety costs.',
+  },
+  {
+    title: 'System Assessments.',
+    icon: 'mdi:clipboard-text-search-outline',
+    body: 'Independent condition assessments, age and reliability reviews, repair-versus-replace evaluations, and actionable reports — for properties, portfolios, and properties under consideration for acquisition.',
+  },
+  {
+    title: 'Construction & Renovation Support.',
+    icon: 'mdi:hard-hat-outline',
+    body: 'Pre-construction planning, design coordination, submittal review, system sizing review, and AHJ interface support — helping projects stay on schedule, on budget, and aligned with code from day one.',
+  },
+] as const;
+
+const bulletIcons = [
+  'mdi:shield-check-outline',          // One Vendor Life Safety Solution
+  'mdi:account-group-outline',         // Locally Owned & Family Operated
+  'mdi:cellphone-link',                // 24/7 Central Station Monitoring
+  'mdi:domain',                        // Commercial / Multifamily / Retail
+] as const;
+
+const consultingAreas = [
+  {
+    title: 'Code Compliance Consulting',
+    body: 'Fire and building codes are constantly evolving. Our team helps clients understand and comply with applicable fire, building, and life safety requirements.',
+    bullets: [
+      'Fire code reviews',
+      'Life safety evaluations',
+      'AHJ coordination and support',
+      'Inspection deficiency reviews',
+      'Compliance planning',
+      'Corrective action recommendations',
+      'Fire marshal meeting support',
+      'Occupancy and use evaluations',
+    ],
+  },
+  {
+    title: 'Capital Planning & Budget Forecasting',
+    body: 'Many fire and life safety systems have required inspection, testing, maintenance, and replacement intervals that can create unexpected expenses if not properly planned. Red Rocks Fire Protection helps property owners and managers identify upcoming requirements and develop long-term budgets for:',
+    bullets: [
+      'Fire alarm systems',
+      'Fire sprinkler systems',
+      'Backflow preventers',
+      'Fire extinguishers',
+      'Kitchen hood suppression systems',
+      'Fire pumps',
+      'ERRCS / BDA systems',
+      'Area of Refuge communication systems',
+    ],
+  },
+  {
+    title: 'System Assessments & Reports',
+    body: 'When you need an honest assessment of existing fire and life safety systems, Red Rocks Fire Protection provides independent system assessments that help clients make informed decisions. Our assessments are valuable for property owners, managers, prospective buyers, lenders, and anyone evaluating the condition and reliability of a property\'s life safety infrastructure.',
+    bullets: [
+      'Condition assessments',
+      'Repair-versus-replace evaluations',
+      'Age and reliability reviews',
+      'Code compliance evaluations',
+      'Property acquisition support',
+      'Risk assessments',
+      'Inspection deficiency analysis',
+      'Long-term improvement planning',
+    ],
+  },
+  {
+    title: 'Construction & Renovation Support',
+    body: 'Red Rocks Fire Protection works alongside property owners, design teams, general contractors, and project managers to support fire and life safety considerations throughout construction and renovation projects. Our team helps projects stay on schedule, on budget, and aligned with code from planning through completion.',
+    bullets: [
+      'Pre-construction planning',
+      'Design coordination support',
+      'Submittal review',
+      'System sizing review',
+      'AHJ interface and inspection support',
+      'New construction projects',
+      'Tenant improvements and remodels',
+      'Project closeout documentation',
+    ],
+  },
+] as const;
+
+const whyClientsIcons = [
+  'solar:shield-check-bold-duotone',
+  'solar:hand-heart-bold-duotone',
+  'solar:rocket-2-bold-duotone',
+  'solar:medal-ribbon-star-bold-duotone',
+  'solar:users-group-rounded-bold-duotone',
+] as const;
+
+const whyClientsValues = [
+  { title: 'We lead with safety.', body: 'Protecting lives and property is both our responsibility and our privilege.' },
+  { title: 'We advocate for our clients.', body: 'We stay ahead of changing requirements and help simplify compliance.' },
+  { title: 'We go the extra mile.', body: 'We take ownership of every project until the job is completed correctly.' },
+  { title: 'We demonstrate character.', body: 'Integrity, professionalism, accountability, and respect guide every interaction.' },
+  { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
+] as const;
+
+const moreThanImage = '/images/rrfps-consulting-services-more-than-a-service-contractor.jpg';
+const advocacyImage = '/images/rrfps-consulting-services-advocacy.jpg';
+const experienceImage = '/images/rrfps-consulting-services-experience.jpg';
+const promiseImage = '/images/rrfps-consulting-services-ready-when-you-are.jpg';
 ---
 
-<PlaceholderPage
-  title="Consulting Services"
-  heroImage="/images/rrfps-fire-sprinkler-systems-hero.jpg"
-/>
+<BaseLayout
+  title="Consulting Services | Red Rocks Fire Protection | Colorado"
+  description="Professional fire and life safety consulting for property owners, managers, contractors, engineers, and developers throughout Colorado. Code compliance reviews, capital planning, system assessments, and construction support. Independent reports, AHJ coordination, and long-term planning for fire alarm, sprinkler, backflow, extinguisher, kitchen hood, fire pump, ERRCS, and area of refuge systems."
+>
+  <div class="av-page">
+
+    <!-- §0. PAGE-TITLE BANNER -->
+    <div class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${bannerImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title rr-reveal">Consulting Services</h1>
+        <div class="ptbanner__breadcrumbs rr-reveal" data-reveal-delay="100">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/services">Services</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Consulting Services</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- §1. SOLUTIONS GRID — 2×2 ibox -->
+    <section class="sol">
+      <div class="sol__left">
+        <div class="sol__sticky">
+          <div class="av-dblh__subtitle rr-reveal">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>What Consulting Service Covers</span>
+          </div>
+          <h2 class="sol__title rr-reveal" data-reveal-delay="100">
+            <span>Code Compliance –</span>
+            <span>Capital Planning, Assessments</span>
+            <span>&amp; Construction Support.</span>
+          </h2>
+          <div class="sol__spacer" aria-hidden="true"></div>
+          <div class="sol__cta rr-reveal" data-reveal-delay="200">
+            <a href="/contact" class="av-wgl-btn av-wgl-btn--outline">
+              <span class="av-wgl-btn__text">Schedule Site Visit to Receive Complimentary Quote</span>
+              <span class="av-wgl-btn__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sol__grid">
+        {categories.map((c, i) => (
+          <a href="/contact" class="ibox rr-reveal" data-icon-slot={i} data-reveal-delay={i * 100}>
+            <span class="ibox__bg" aria-hidden="true"></span>
+            <span class="ibox__icon" aria-hidden="true">
+              <iconify-icon icon={c.icon} width="50" height="50"></iconify-icon>
+            </span>
+            <span class="ibox__content">
+              <h3 class="ibox__title">{c.title}</h3>
+              <span class="ibox__text">{c.body}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- §2. WHY RED ROCKS — tan bg image + gradient overlay -->
+    <section class="cs-whyrr rr-band rr-band--reveal-top">
+      <div class="cs-whyrr__bg" aria-hidden="true"></div>
+      <div class="cs-whyrr__overlay" aria-hidden="true"></div>
+      <div class="rr-container cs-container">
+        <div class="cs-why-grid">
+          <div class="cs-why-grid__left">
+            <p class="rr-eyebrow cs-whyrr__eyebrow mb-5 rr-reveal">Why Red Rocks Consulting</p>
+            <h2
+              class="font-display font-black tracking-tight cs-whyrr__title rr-reveal"
+              data-reveal-delay="100"
+              style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em;"
+            >
+              <span class="cs-whyrr__title-black">Practical Fire &amp;</span>
+              <br />
+              <span class="cs-whyrr__title-black">Life Safety Guidance</span>
+              <br />
+              <span class="cs-whyrr__title-red">Built on Real-World</span>
+              <br />
+              <span class="cs-whyrr__title-red">Service Experience.</span>
+            </h2>
+          </div>
+
+          <div class="cs-why-grid__right">
+            <p class="cs-whyrr__body rr-reveal" data-reveal-delay="200" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 0;">
+              Navigating fire and life safety requirements can be complex. Red Rocks Fire Protection provides professional consulting services to help property owners, managers, contractors, engineers, and developers make informed decisions regarding fire protection and life safety systems.
+            </p>
+            <p class="cs-whyrr__body rr-reveal" data-reveal-delay="300" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 1.25rem;">
+              Our consulting services are designed to help clients maintain compliance, improve system performance, reduce risk, and plan for future capital expenditures while protecting lives and property.
+            </p>
+
+            <ul class="cs-whyrr__bullets rr-reveal" data-reveal-delay="400">
+              <li class="cs-whyrr__bullet">
+                <span class="cs-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[0]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Code compliance, AHJ coordination, deficiency review, occupancy and use evaluation, and corrective action planning.</span>
+              </li>
+              <li class="cs-whyrr__bullet">
+                <span class="cs-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[1]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Long-term capital planning and budget forecasting across every life safety system in your facility or portfolio.</span>
+              </li>
+              <li class="cs-whyrr__bullet">
+                <span class="cs-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[2]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Independent system assessments, repair-versus-replace evaluations, and acquisition support for properties and portfolios.</span>
+              </li>
+              <li class="cs-whyrr__bullet">
+                <span class="cs-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[3]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Pre-construction planning, design coordination, submittal review, and AHJ interface support for new builds and renovations.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §3. FOUR-ROW WHITE CARD block (replaces the 5-panel accordion — see file header) -->
+    <section class="cs-areas">
+      <div class="cs-areas__inner cs-container">
+        <div class="cs-areas__head">
+          <p class="av-dblh__subtitle cs-areas__eyebrow rr-reveal">
+            <span class="cs-areas__rule" aria-hidden="true"></span>
+            <span>How We Serve</span>
+            <span class="cs-areas__rule" aria-hidden="true"></span>
+          </p>
+          <h3 class="cs-areas__title rr-reveal" data-reveal-delay="100">Our Consulting Services.</h3>
+          <p class="cs-areas__intro rr-reveal" data-reveal-delay="200">
+            Each of our four consulting areas is built around the questions property owners, managers, contractors, engineers, and developers are asking about their fire and life safety systems.
+          </p>
+        </div>
+
+        <div class="cs-areas__grid">
+          {consultingAreas.map((area, i) => (
+            <article class="cs-card rr-reveal" data-reveal-delay={i * 100}>
+              <h4 class="cs-card__title">{area.title}</h4>
+              <p class="cs-card__body">{area.body}</p>
+              <ul class="cs-card__bullets">
+                {area.bullets.map((b) => (
+                  <li class="cs-card__bullet">
+                    <span class="cs-card__bullet-mark" aria-hidden="true">▸</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- §4. MORE THAN A SERVICE CONTRACTOR -->
+    <section class="cs-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container cs-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">How We Work</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              More Than a Service Contractor.
+            </h2>
+            <div class="mt-6 rr-reveal cs-split-body" data-reveal-delay="200">
+              <p>Consulting is most useful when it draws on real-world service experience. Our team works with fire alarm, sprinkler, backflow, extinguisher, kitchen hood, fire pump, ERRCS, and area of refuge systems every day. That practical experience shapes how we approach code questions, system assessments, capital planning, and construction support — providing advice that is grounded in the way systems actually perform, fail, and need to be maintained over time.</p>
+            </div>
+            <div class="mt-8 rr-reveal" data-reveal-delay="240">
+              <a href="/services" class="av-wgl-btn av-wgl-btn--outline">
+                <span class="av-wgl-btn__text">See All Services</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={moreThanImage} alt="Red Rocks Fire Protection consulting team meeting with a property owner to discuss compliance and capital plans" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §5. ADVOCACY — #DBDADA bg panel -->
+    <section class="cs-edge rr-band rr-band--reveal-top">
+      <div class="rr-container cs-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 cs-edge__eyebrow rr-reveal">Our Edge</p>
+            <h2
+              class="font-display font-black uppercase tracking-tight rr-reveal cs-edge__title"
+              data-reveal-delay="100"
+              style="font-size: var(--rr-text-section); line-height: 0.95;"
+            >
+              Advocacy That Protects Your People, Property &amp; Investment.
+            </h2>
+            <div class="mt-6 rr-reveal cs-edge__body" data-reveal-delay="200">
+              <p>Code interpretation, AHJ expectations, and the right path for an aging system can all be unclear. Our role is to help clients see the full picture, understand their options, and choose a path that protects occupants, satisfies inspectors, and supports the long-term operation of the property. We advocate for decisions grounded in code, in service reality, and in your operational needs — not in what is easiest or most profitable for any single contractor.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 cs-edge-img rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card bg-rr-black cs-edge-img__wrap">
+              <img
+                src={advocacyImage}
+                alt="Red Rocks Fire Protection advocating for the right consulting path for a client's compliance and capital goals"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover cs-edge-img__img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §6. WHY CLIENTS STAY — dark bg + 5 value cards -->
+    <section class="cs-why">
+      <div class="cs-why__bg" aria-hidden="true"></div>
+      <div class="cs-why__inner">
+        <div class="rr-reveal max-w-3xl mb-12 md:mb-16">
+          <p class="rr-eyebrow mb-5" style="color: rgba(255,255,255,0.7);">Why Clients Stay</p>
+          <h2
+            class="font-display font-black uppercase tracking-tight"
+            style="font-size: var(--rr-text-section); line-height: 0.95; color: #fff;"
+          >
+            Why Clients Continue to Choose RRFPS.
+          </h2>
+          <p class="mt-6" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.9);">
+            Everything we do is built upon the values that have guided our company since its founding. These principles are reflected in our Brand Promise: we communicate clearly, we honor our commitments, we arrive prepared, we respond when it matters most, we price fairly, we stand behind our work, and we remain committed until every issue has been fully resolved.
+          </p>
+        </div>
+
+        <div class="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          {whyClientsValues.map((v, i) => (
+            <article class="rr-reveal cs-flowcard rounded-rr-card p-6 flex flex-col" data-reveal-delay={i * 100}>
+              <span class="cs-flowcard__icon" aria-hidden="true">
+                <iconify-icon icon={whyClientsIcons[i]} width="40" height="40"></iconify-icon>
+              </span>
+              <h3 class="font-display font-bold tracking-tight" style="font-size: var(--rr-text-card); line-height: 1.05; color: #fff;">
+                {v.title}
+              </h3>
+              <p class="mt-3 leading-relaxed flex-1" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.85);">
+                {v.body}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- §7. EXPERIENCE — white-bg SplitPanel -->
+    <section class="cs-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container cs-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">Experience</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              Consulting Experience You Can Trust.
+            </h2>
+            <div class="mt-6 rr-reveal cs-split-body" data-reveal-delay="200">
+              <p>Our consultants work with property owners, managers, contractors, engineers, and developers across a wide range of building types and property conditions. That experience allows us to support compliance, capital planning, and construction efforts with a realistic understanding of how systems perform, what inspectors actually look for, and where the practical risks and opportunities tend to appear.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={experienceImage} alt="Red Rocks Fire Protection experienced consultant preparing a system assessment report for a client" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §8. READY WHEN YOU ARE — #DBDADA bg panel -->
+    <section class="cs-splitpanel cs-promise rr-band rr-band--reveal-top">
+      <div class="rr-container cs-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 cs-promise__eyebrow rr-reveal">Our Promise</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              Ready When You Are.
+            </h2>
+            <div class="mt-6 rr-reveal cs-promise__body" data-reveal-delay="200">
+              <p>Whether you need help interpreting a code question, building a long-term capital plan, evaluating an aging system, coordinating with the AHJ, or supporting a new construction or renovation project, our consulting team is ready to provide clear, practical, and accountable guidance.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={promiseImage} alt="Red Rocks Fire Protection ready to support your consulting and compliance needs" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §9. INDUSTRIES — shared IndustriesGrid component -->
+    <IndustriesGrid />
+
+    <!-- §10. CLOSING CTA — site-wide ClosingCTA with consulting copy -->
+    <ClosingCTA
+      backgroundImage="/images/rrfps-services-cta-bg.png"
+      paragraphs={[
+        "Choosing the right consulting partner is about more than getting an opinion in a report. It's about having a team that understands how fire and life safety systems actually perform, what inspectors look for, and how to translate code into practical decisions for your property. Whether you need help interpreting a code question, building a long-term capital plan, evaluating an aging system, coordinating with the AHJ, or supporting a new construction or renovation project, Red Rocks Fire Protection Services brings the same responsive service and accountability to every engagement we take on.",
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .ptbanner { position: relative; isolation: isolate; background-color: #0d0d0b; }
+  .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; background-position: center bottom; z-index: -2; }
+  .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 13, 11, 0.35) 0%, rgba(13, 13, 11, 0.45) 60%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
+  .ptbanner__inner { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 15px; min-height: 450px; margin-bottom: 60px; padding-top: 154px; padding-bottom: 20px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: 32px; }
+  .ptbanner__title { margin: 0; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 104px; letter-spacing: -0.05em; text-transform: uppercase; }
+  .ptbanner__breadcrumbs { color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 16px; line-height: 30px; letter-spacing: -0.04em; padding-bottom: 14px; }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; transition: 0.4s; }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  .sol { display: flex; max-width: 1600px; margin: 0 auto 80px; }
+  .sol__left { width: 50%; }
+  .sol__sticky { position: sticky; top: 120px; display: flex; flex-direction: column; align-items: flex-end; padding-right: 0; }
+  .sol__sticky > * { width: 100%; max-width: 585px; }
+  .sol__sticky .av-dblh__subtitle { margin-bottom: 23px; display: flex; }
+  .sol__title { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 56px; font-weight: 700; text-transform: uppercase; line-height: 1.178em; padding-bottom: 5px; color: #0a0a0a; }
+  .sol__title span { display: inline-block; }
+  .sol__spacer { height: 34px; }
+  .sol__cta .av-wgl-btn { display: inline-flex; }
+  .sol__cta .av-wgl-btn__text { padding: 17px 35px; }
+  .sol__grid { width: 50%; margin-top: 8px; display: flex; flex-wrap: wrap; row-gap: 30px; }
+  .sol__grid .ibox { width: 50%; }
+
+  .ibox { position: relative; display: block; text-decoration: none; transition: 0.4s; }
+  .ibox__bg { position: absolute; inset: 0; border: 1px solid #0a0a0a26; transition: 0.4s; pointer-events: none; }
+  .ibox:hover { background-color: #D51126; }
+  .ibox:hover .ibox__bg { border-color: transparent; }
+  .ibox__icon { display: inline-flex; background-color: #d41226; padding: 16px; transition: 0.4s; color: #ffffff; }
+  .ibox__icon :global(svg) { width: 50px; height: 50px; fill: #ffffff; transition: 0.4s; }
+  .ibox:hover .ibox__icon { background-color: #ffffff; color: #0a0a0a; }
+  .ibox:hover .ibox__icon :global(svg) { fill: #0a0a0a; }
+  .ibox__content { display: flex; flex-direction: column; min-height: 306px; padding: 51px 40px 30px 40px; }
+  .ibox__title { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(26px, 1.9vw, 30px); font-weight: 700; text-transform: uppercase; line-height: 1.4em; color: #0a0a0a; transition: 0.4s; }
+  .ibox__text { padding-top: 16px; color: #626262; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); transition: 0.4s; }
+  .ibox:hover .ibox__title, .ibox:hover .ibox__text { color: #ffffff; }
+
+  .cs-whyrr { position: relative; isolation: isolate; overflow: hidden; background-color: #E0D9D3; }
+  .cs-whyrr__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-backflow-prevention-why-red-rocks-bg.jpg'); background-size: cover; background-position: center; z-index: -2; }
+  .cs-whyrr__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(224, 217, 211, 0.30) 0%, rgba(224, 217, 211, 0.55) 25%, rgba(224, 217, 211, 0.85) 50%, #E0D9D3 75%, #E0D9D3 100%); z-index: -1; }
+  .cs-whyrr__eyebrow { color: var(--rr-red, #d41226); }
+  .cs-whyrr__title-black { color: #0a0a0a; }
+  .cs-whyrr__title-red { color: var(--rr-red, #d41226); }
+  .cs-whyrr__body { color: #0a0a0a; }
+  .cs-why-grid { display: grid; gap: 48px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 1024px) { .cs-why-grid { gap: 80px; grid-template-columns: 5fr 7fr; } }
+  .cs-why-grid__left h2 { max-width: 16ch; }
+  .cs-whyrr__bullets { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; gap: 14px; }
+  .cs-whyrr__bullet { display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 14px; color: #0a0a0a; font-size: var(--rr-text-lead); line-height: 1.55; }
+  .cs-whyrr__bullet-icon { width: 38px; height: 38px; display: grid; place-items: center; background: var(--rr-red, #d41226); color: #ffffff; flex-shrink: 0; }
+  .cs-whyrr__bullet-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
+
+  /* ---- §3. FOUR-ROW WHITE CARD block (replaces the 5-panel accordion) ----
+   * Stacked centered layout: eyebrow + title + intro, then 4 white-card rows
+   * each with a red ▸ bullet list of the area's contents. Same section rhythm
+   * and visual weight as the sprinkler page's accordion — just a different
+   * content shape (more prose, no expandable rows). */
+  .cs-areas { background-color: #0d0d0b; padding-block: 110px; color: #ffffff; }
+  .cs-areas__inner { max-width: 1340px; margin-inline: auto; padding-inline: 80px; }
+  @media (min-width: 768px) and (max-width: 1200px) { .cs-areas__inner { padding-inline: 60px; } }
+  @media (max-width: 767px) { .cs-areas__inner { padding-inline: 28px; } }
+  .cs-areas__head { max-width: 800px; margin: 0 auto 48px; text-align: center; }
+  .cs-areas__eyebrow { color: var(--rr-red, #d41226) !important; font-family: "Space Grotesk", sans-serif !important; font-weight: 700 !important; font-size: 16px !important; letter-spacing: 0.04em !important; text-transform: uppercase !important; justify-content: center !important; margin-bottom: 22px !important; }
+  .cs-areas__rule { display: inline-block; width: 36px; height: 2px; background: var(--rr-red, #d41226); vertical-align: middle; }
+  .cs-areas__eyebrow > span:not(.cs-areas__rule) { margin: 0 12px; }
+  .cs-areas__title { margin: 0 0 22px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(36px, 5vw, 56px); color: #ffffff; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.02em; }
+  .cs-areas__intro { margin: 0 auto; max-width: 720px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #ffffff; }
+
+  .cs-areas__grid { display: grid; gap: 24px; grid-template-columns: 1fr; max-width: 1100px; margin-inline: auto; }
+  @media (min-width: 1024px) { .cs-areas__grid { grid-template-columns: 1fr 1fr; gap: 28px; } }
+
+  .cs-card { background: #ffffff; border-radius: 6px; padding: 36px 32px; transition: box-shadow 0.25s ease, transform 0.25s ease; }
+  .cs-card:hover { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25); transform: translateY(-2px); }
+  .cs-card__title { margin: 0 0 14px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(20px, 1.5vw, 24px); text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.2; color: #0a0a0a; }
+  .cs-card__body { margin: 0 0 18px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
+  .cs-card__bullets { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cs-card__bullet { display: grid; grid-template-columns: 22px 1fr; align-items: baseline; gap: 4px; color: #303030; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); }
+  .cs-card__bullet-mark { color: var(--rr-red, #d41226); font-size: 16px; line-height: 1; }
+
+  .cs-edge-img { display: flex; align-items: center; }
+  .cs-edge-img__wrap { width: 100%; height: 480px; }
+  .cs-edge-img__img { object-fit: cover; object-position: center; }
+  .cs-edge { background-color: #DBDADA; }
+  .cs-edge__eyebrow { color: var(--rr-grey, #626262); }
+  .cs-edge__title { color: #0a0a0a; }
+  .cs-edge__body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
+  .cs-edge__body p:last-child { margin-bottom: 0; }
+
+  .cs-why { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
+  @media (min-width: 768px) { .cs-why { padding-block: 150px; } }
+  .cs-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-consulting-services-why-clients-stay-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
+  .cs-why::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: -1; }
+  .cs-why__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; color: #ffffff; }
+  @media (min-width: 768px) { .cs-why__inner { padding-inline: 2.5rem; } }
+
+  @property --cs-flow-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  .cs-flowcard { position: relative; isolation: isolate; background: rgba(255, 255, 255, 0.10); border: 0; border-radius: 0; }
+  .cs-flowcard::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 2px; background: conic-gradient(from var(--cs-flow-angle), rgba(255, 255, 255, 0.28) 0deg, #ff2438 70deg, #d41226 130deg, rgba(255, 255, 255, 0.28) 200deg, rgba(255, 255, 255, 0.28) 360deg); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; animation: cs-flow-spin 4s linear infinite; }
+  @keyframes cs-flow-spin { to { --cs-flow-angle: 360deg; } }
+  @media (prefers-reduced-motion: reduce) { .cs-flowcard::before { animation: none; } }
+  .cs-flowcard__icon { width: 74px; height: 74px; display: grid; place-items: center; color: #ffffff; background: #d41226; flex: 0 0 auto; margin-bottom: 22px; }
+  .cs-flowcard__icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
+
+  .cs-split-body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
+  .cs-split-body p:last-child { margin-bottom: 0; }
+
+  .cs-promise { background-color: #DBDADA; }
+  .cs-promise__eyebrow { color: var(--rr-red, #d41226); }
+  .cs-promise__body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #0a0a0a; }
+  .cs-promise__body p:last-child { margin-bottom: 0; }
+
+  .cs-container { max-width: 1340px; padding-inline: 80px; }
+  .cs-whyrr .cs-container, .cs-splitpanel .cs-container, .cs-areas .cs-areas__inner, .cs-areas .cs-container { max-width: 1340px; padding-inline: 80px; }
+  /* Sections that use .rr-container (not .cs-container) — align their gutters too. */
+  .cs-whyrr, .cs-edge, .cs-promise, .cs-splitpanel { padding-inline: 0; }
+
+  .rr-reveal[data-reveal-delay] { transition-delay: var(--reveal-delay, 0ms); }
+
+  @media (max-width: 1200px) {
+    .cs-container { padding-inline: 60px; }
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+    .sol { margin-top: 0; padding: 0 30px; flex-wrap: wrap; }
+    .sol__left { width: 100%; }
+    .sol__sticky { position: sticky; top: 30px; align-items: flex-start; }
+    .sol__sticky > * { max-width: 340px; }
+    .sol__title { font-size: 42px; }
+    .sol__title span { display: inline; }
+    .sol__grid { width: 100%; margin-top: 30px; }
+    .sol__grid .ibox { width: 100%; }
+    .ibox__content { min-height: 235px; padding: 31px 30px 20px 30px; }
+    .ibox__icon :global(svg) { width: 40px; height: 40px; }
+    .ibox__title { font-size: 26px; }
+  }
+  @media (max-width: 767px) {
+    .cs-container { padding-inline: 28px; }
+    .ptbanner__inner { min-height: 320px; padding-top: 120px; grid-template-columns: 1fr; row-gap: 12px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .sol { padding: 0; row-gap: 30px; }
+    .sol__sticky { position: relative; top: 0; padding: 0 15px; }
+    .sol__title { font-size: 28px; }
+    .sol__grid { padding: 0 15px; }
+    .ibox__content { min-height: 180px; }
+    .cs-areas { padding-block: 70px; }
+    .cs-areas__title { font-size: 28px; }
+    .cs-card { padding: 28px 24px; }
+    .cs-why { padding-block: 70px; }
+  }
+</style>
+
+<script>
+  // §3 on this page is a 4-card grid, not an accordion — no accordion wiring needed.
+  // Only the entrance-reveal + IndustriesGrid/ClosingCTA animation observer runs here.
+  function initCSRevealStagger() {
+    document.querySelectorAll('.rr-reveal[data-reveal-delay]').forEach(function (el) {
+      el.style.setProperty('--reveal-delay', el.getAttribute('data-reveal-delay') + 'ms');
+    });
+    var industries = document.querySelector('section.industries');
+    if (industries && !industries.classList.contains('rr-reveal')) {
+      var indHead = industries.querySelector('.industries__head');
+      if (indHead) indHead.classList.add('rr-reveal');
+      industries.querySelectorAll('.industry-card').forEach(function (card, i) {
+        card.classList.add('rr-reveal');
+        var d = Math.min(i, 8) * 80;
+        card.setAttribute('data-reveal-delay', String(d));
+        card.style.setProperty('--reveal-delay', d + 'ms');
+      });
+    }
+    var ctaBody = document.querySelector('.cta__body');
+    if (ctaBody && !ctaBody.classList.contains('rr-reveal')) ctaBody.classList.add('rr-reveal');
+    var pending = document.querySelectorAll('.rr-reveal:not(.is-visible)');
+    if (pending.length) {
+      var pageObserver = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            entries[i].target.classList.add('is-visible');
+            pageObserver.unobserve(entries[i].target);
+          }
+        }
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+      pending.forEach(function (el) { pageObserver.observe(el); });
+    }
+    document.querySelectorAll('.rr-reveal').forEach(function (el) {
+      if (el.classList.contains('is-visible')) { el.style.removeProperty('--reveal-delay'); return; }
+      var cleanup = new MutationObserver(function () {
+        if (el.classList.contains('is-visible')) { el.style.removeProperty('--reveal-delay'); cleanup.disconnect(); }
+      });
+      cleanup.observe(el, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+  function bindCSReveal() { initCSRevealStagger(); }
+  document.addEventListener('astro:page-load', bindCSReveal);
+  document.addEventListener('DOMContentLoaded', bindCSReveal);
+  if (document.readyState !== 'loading') bindCSReveal();
+</script>
