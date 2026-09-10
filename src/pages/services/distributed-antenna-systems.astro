@@ -1,16 +1,715 @@
 ---
 /**
- * Distributed Antenna Systems (DAS) — RRFPS placeholder page.
+ * Distributed Antenna Systems (DAS) — RRFPS landing page for
+ * /services/distributed-antenna-systems/.
  *
- * Full content coming soon. Built now so the Services mega menu links
- * resolve to a real page with the standard page-title banner + body
- * pattern used across the site. Reuse PlaceholderPage so every nav
- * link resolves cleanly until the real landing content lands.
+ * Layout cloned 1:1 from fire-sprinkler-service-and-systems.astro
+ * (per Zack's direction) with the copy swapped verbatim from
+ * reference/content/rrfps-9-service-pages-with-why-red-rocks-sections.md
+ * (Page 4 — Distributed Antenna Systems (DAS)).
+ *
+ * Sections, in order:
+ *   0. ptbanner
+ *   1. 2×2 ibox grid (4 DAS service categories)
+ *   2. `da-whyrr` tan bg-image intro band
+ *   3. 3-panel accordion (Annual Testing / Service & Repair /
+ *      Replacement & Upgrades — the .md H2s)
+ *   4. SplitPanel — More Than a Service Contractor
+ *   5. SplitPanel — Advocacy (#DBDADA bg)
+ *   6. Why Clients Stay — dark bg + 5 value cards
+ *   7. SplitPanel — Experience (white bg)
+ *   8. SplitPanel — Ready When You Are. (#DBDADA bg)
+ *   9. IndustriesGrid (shared)
+ *  10. ClosingCTA (shared, DAS-themed paragraph)
+ *
+ * Image assets — all placeholders, to be swapped for page-specific
+ * Nano Banana imagery after the batch build:
+ *   • Hero           — /images/rrfps-fire-sprinkler-systems-hero.jpg
+ *   • §2 tan band bg — /images/red-rocks-fire-alarm-why-bg.jpg
+ *   • §3 accordion bg — /images/red-rocks-fire-alarm-accordion-bg.jpg
+ *   • §4 more than    — /images/rrfps-fa-more-than-contractor.jpg
+ *   • §5 advocacy     — /images/rrfps-fa-advocacy.jpg
+ *   • §6 values bg    — /images/rrfps-fa-why-clients-stay-bg.jpg
+ *   • §7 experience   — /images/rrfps-fa-experience.jpg
+ *   • §8 promise      — /images/rrfps-fa-promise.jpg
+ *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.png
  */
-import PlaceholderPage from '../../components/PlaceholderPage.astro';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+import IndustriesGrid from '../../components/IndustriesGrid.astro';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+
+const bannerImage = '/images/rrfps-fire-sprinkler-systems-hero.jpg';
+
+const categories = [
+  {
+    title: 'ERRCS / BDA Annual Testing.',
+    icon: 'mdi:antenna',
+    body: 'Annual inspections verify ERRCS/BDA system performance, coverage, and compliance with local fire department requirements, IFC, and NFPA standards.',
+  },
+  {
+    title: 'Service & Repair.',
+    icon: 'mdi:tools',
+    body: 'Complete service and repair solutions for existing BDA systems regardless of manufacturer — diagnostics, amplifier repairs, battery replacement, donor antenna service, and communication pathway troubleshooting.',
+  },
+  {
+    title: 'Replacement & Upgrades.',
+    icon: 'mdi:rocket-launch-outline',
+    body: 'Complete ERRCS/BDA replacement and upgrade services for aging, unsupported, or repeatedly failing systems — including head-end equipment, BBUs, distributed antenna systems, donor antennas, and amplifiers.',
+  },
+  {
+    title: 'Coverage & Compliance Support.',
+    icon: 'mdi:signal-cellular-3',
+    body: 'Signal strength verification, coverage testing support, battery backup testing, alarm and supervisory signal testing, and monitoring verification — keeping your system compliant and operational.',
+  },
+] as const;
+
+const bulletIcons = [
+  'mdi:check-decagram-outline',         // Annual testing
+  'mdi:wrench-outline',                  // Service & repair
+  'mdi:rocket-launch-outline',           // Replacements & upgrades
+  'mdi:shield-lock-outline',             // Dead zones / code changes
+] as const;
+
+const accordionIcons = [
+  'mdi:clipboard-text-search-outline',  // Annual Testing
+  'mdi:wrench',                          // Service & Repair
+  'mdi:sync',                            // Replacement & Upgrades
+] as const;
+
+const accordionPanels = [
+  {
+    title: 'ERRCS / BDA Annual Testing',
+    body: 'Emergency Responder Radio Communication Systems (ERRCS), commonly known as Bi-Directional Amplifier (BDA) systems, are critical life safety systems designed to ensure reliable radio communication for emergency responders inside buildings. Red Rocks Fire Protection provides comprehensive ERRCS/BDA testing services to verify system performance, coverage, and compliance with local fire department requirements, IFC, and NFPA standards.',
+    bullets: [
+      'Annual system inspections',
+      'Signal strength verification',
+      'Battery backup testing',
+      'Donor antenna inspections',
+      'Amplifier testing',
+      'Coverage testing support',
+      'Alarm and supervisory signal testing',
+      'Monitoring verification',
+      'Deficiency reporting and recommendations',
+    ],
+    open: false,
+  },
+  {
+    title: 'ERRCS / BDA Service & Repair',
+    body: 'Like any life safety system, ERRCS/BDA systems require ongoing maintenance and occasional repairs to ensure reliable operation. Red Rocks Fire Protection provides complete service and repair solutions for existing BDA systems, regardless of manufacturer. Our experienced technicians can quickly identify system issues and restore reliable emergency responder communications.',
+    bullets: [
+      'System diagnostics and troubleshooting',
+      'Amplifier repairs and replacement',
+      'Battery replacement',
+      'Power supply replacement',
+      'Donor antenna repairs',
+      'DAS component repairs',
+      'Communication pathway troubleshooting',
+      'Alarm monitoring repairs',
+      'Emergency service response',
+    ],
+    open: false,
+  },
+  {
+    title: 'ERRCS / BDA Replacement & Upgrades',
+    body: 'As ERRCS/BDA technology evolves, older systems may become obsolete, unsupported, or unable to meet current jurisdictional requirements. In these cases, replacement or system upgrades may be the most reliable long-term solution. Red Rocks Fire Protection provides complete ERRCS/BDA replacement and upgrade services for commercial, multifamily, healthcare, industrial, and mixed-use facilities throughout Colorado.',
+    bullets: [
+      'BDA head-end equipment',
+      'Battery backup units (BBUs)',
+      'Distributed Antenna Systems (DAS)',
+      'Donor antennas',
+      'Power supplies',
+      'Monitoring interfaces',
+      'Coaxial infrastructure',
+      'Amplifiers and repeaters',
+    ],
+    footer: 'Signs Your System May Need Replacement: failed annual testing, unsupported equipment, repeated service issues, communication dead zones, failed battery backup systems, jurisdictional code changes, aging infrastructure.',
+    open: false,
+  },
+] as const;
+
+const whyClientsIcons = [
+  'solar:shield-check-bold-duotone',
+  'solar:hand-heart-bold-duotone',
+  'solar:rocket-2-bold-duotone',
+  'solar:medal-ribbon-star-bold-duotone',
+  'solar:users-group-rounded-bold-duotone',
+] as const;
+
+const whyClientsValues = [
+  { title: 'We lead with safety.', body: 'Protecting lives and property is both our responsibility and our privilege.' },
+  { title: 'We advocate for our clients.', body: 'We stay ahead of changing requirements and help simplify compliance.' },
+  { title: 'We go the extra mile.', body: 'We take ownership of every project until the job is completed correctly.' },
+  { title: 'We demonstrate character.', body: 'Integrity, professionalism, accountability, and respect guide every interaction.' },
+  { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
+] as const;
+
+const moreThanImage = '/images/rrfps-fa-more-than-contractor.jpg';
+const advocacyImage = '/images/rrfps-fa-advocacy.jpg';
+const experienceImage = '/images/rrfps-fa-experience.jpg';
+const promiseImage = '/images/rrfps-fa-promise.jpg';
 ---
 
-<PlaceholderPage
-  title="Distributed Antenna Systems (DAS)"
-  heroImage="/images/rrfps-fire-sprinkler-systems-hero.jpg"
-/>
+<BaseLayout
+  title="Distributed Antenna Systems (DAS) | Red Rocks Fire Protection | Colorado"
+  description="ERRCS / BDA (Emergency Responder Radio Communication System / Bi-Directional Amplifier) annual testing, service, repair, and replacement for commercial, multifamily, healthcare, industrial, and mixed-use facilities throughout Colorado. NFPA and IFC compliant, signal strength verification, donor antenna service, coverage testing."
+>
+  <div class="av-page">
+
+    <!-- §0. PAGE-TITLE BANNER -->
+    <div class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${bannerImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title rr-reveal">Distributed Antenna Systems (DAS)</h1>
+        <div class="ptbanner__breadcrumbs rr-reveal" data-reveal-delay="100">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/services">Services</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Distributed Antenna Systems (DAS)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- §1. SOLUTIONS GRID — 2×2 ibox -->
+    <section class="sol">
+      <div class="sol__left">
+        <div class="sol__sticky">
+          <div class="av-dblh__subtitle rr-reveal">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>What ERRCS / BDA Service Covers</span>
+          </div>
+          <h2 class="sol__title rr-reveal" data-reveal-delay="100">
+            <span>Annual Testing –</span>
+            <span>Service, Repair &amp;</span>
+            <span>Replacement &amp; Upgrades.</span>
+          </h2>
+          <div class="sol__spacer" aria-hidden="true"></div>
+          <div class="sol__cta rr-reveal" data-reveal-delay="200">
+            <a href="/contact" class="av-wgl-btn av-wgl-btn--outline">
+              <span class="av-wgl-btn__text">Schedule Site Visit to Receive Complimentary Quote</span>
+              <span class="av-wgl-btn__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sol__grid">
+        {categories.map((c, i) => (
+          <a href="/contact" class="ibox rr-reveal" data-icon-slot={i} data-reveal-delay={i * 100}>
+            <span class="ibox__bg" aria-hidden="true"></span>
+            <span class="ibox__icon" aria-hidden="true">
+              <iconify-icon icon={c.icon} width="50" height="50"></iconify-icon>
+            </span>
+            <span class="ibox__content">
+              <h3 class="ibox__title">{c.title}</h3>
+              <span class="ibox__text">{c.body}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- §2. WHY RED ROCKS — tan bg image + gradient overlay -->
+    <section class="da-whyrr rr-band rr-band--reveal-top">
+      <div class="da-whyrr__bg" aria-hidden="true"></div>
+      <div class="da-whyrr__overlay" aria-hidden="true"></div>
+      <div class="rr-container da-container">
+        <div class="da-why-grid">
+          <div class="da-why-grid__left">
+            <p class="rr-eyebrow da-whyrr__eyebrow mb-5 rr-reveal">Why Red Rocks DAS</p>
+            <h2
+              class="font-display font-black tracking-tight da-whyrr__title rr-reveal"
+              data-reveal-delay="100"
+              style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em;"
+            >
+              <span class="da-whyrr__title-black">Reliable Emergency</span>
+              <br />
+              <span class="da-whyrr__title-black">Responder Communications</span>
+              <br />
+              <span class="da-whyrr__title-red">Inside Your</span>
+              <br />
+              <span class="da-whyrr__title-red">Building.</span>
+            </h2>
+          </div>
+
+          <div class="da-why-grid__right">
+            <p class="da-whyrr__body rr-reveal" data-reveal-delay="200" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 0;">
+              Emergency Responder Radio Communication Systems (ERRCS), commonly known as BDA or Distributed Antenna Systems, support something essential during an emergency: the ability of first responders to communicate reliably inside a building. At Red Rocks Fire Protection Services, we understand that system coverage, equipment condition, backup power, monitoring, and ongoing testing all contribute to that reliability.
+            </p>
+            <p class="da-whyrr__body rr-reveal" data-reveal-delay="300" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 1.25rem;">
+              Since 2010, Red Rocks Fire Protection Services has built its reputation around dependable life safety service and long-term client partnerships. Our ERRCS/BDA services help property owners and managers test, maintain, repair, upgrade, and replace systems so emergency responder communications remain operational and aligned with jurisdictional requirements.
+            </p>
+
+            <ul class="da-whyrr__bullets rr-reveal" data-reveal-delay="400">
+              <li class="da-whyrr__bullet">
+                <span class="da-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[0]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Annual inspections, signal strength verification, battery backup testing, amplifier testing, and monitoring verification.</span>
+              </li>
+              <li class="da-whyrr__bullet">
+                <span class="da-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[1]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Diagnostics, troubleshooting, component repair, donor antenna service, and communication pathway troubleshooting.</span>
+              </li>
+              <li class="da-whyrr__bullet">
+                <span class="da-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[2]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>System replacements and upgrades for aging, unsupported, or repeatedly failing equipment.</span>
+              </li>
+              <li class="da-whyrr__bullet">
+                <span class="da-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon={bulletIcons[3]} width="20" height="20"></iconify-icon>
+                </span>
+                <span>Practical recommendations addressing dead zones, infrastructure condition, code changes, and long-term reliability.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §3. ACCORDION — 3 panels (the .md H2s) -->
+    <section class="da-accordion">
+      <div class="da-accordion__bg" aria-hidden="true"></div>
+      <div class="da-accordion__overlay" aria-hidden="true"></div>
+      <div class="da-accordion__inner da-container">
+        <div class="da-accordion__head">
+          <p class="av-dblh__subtitle da-accordion__eyebrow rr-reveal">
+            <span class="da-accordion__rule" aria-hidden="true"></span>
+            <span>How We Serve</span>
+            <span class="da-accordion__rule" aria-hidden="true"></span>
+          </p>
+          <h3 class="da-accordion__title rr-reveal" data-reveal-delay="100">Our ERRCS / BDA Services.</h3>
+          <p class="da-accordion__intro rr-reveal" data-reveal-delay="200">
+            Click each panel for the full scope of our testing, service, and replacement services.
+          </p>
+        </div>
+
+        <div class="acc da-accordion__list">
+          {accordionPanels.map((p, i) => (
+            <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal', p.open && 'is-active']} data-acc-panel data-reveal-delay={i * 100}>
+              <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>
+                <span class="acc__panel-icon" aria-hidden="true">
+                  <iconify-icon icon={accordionIcons[i]} width="22" height="22"></iconify-icon>
+                </span>
+                <span class="acc__title">{p.title}</span>
+                <span class="acc__caret" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                </span>
+              </button>
+              <div class="acc__content" hidden={!p.open}>
+                <p>{p.body}</p>
+                {p.bullets && p.bullets.length > 0 && (
+                  <ul class="acc__bullets">
+                    {p.bullets.map((b) => (
+                      <li class="acc__bullet">
+                        <span class="acc__bullet-mark" aria-hidden="true">▸</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {p.footer && (
+                  <p class="acc__footer">{p.footer}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- §4. MORE THAN A SERVICE CONTRACTOR -->
+    <section class="da-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container da-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">How We Work</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              More Than a Service Contractor.
+            </h2>
+            <div class="mt-6 rr-reveal da-split-body" data-reveal-delay="200">
+              <p>ERRCS/BDA systems combine specialized equipment, distributed infrastructure, monitoring interfaces, antennas, power supplies, and battery backup. When a system fails testing or develops communication issues, our team looks at the system as a whole. We work to identify the source of the problem, restore reliable operation, and help clients understand whether repair, component replacement, or a broader upgrade is the right long-term solution.</p>
+            </div>
+            <div class="mt-8 rr-reveal" data-reveal-delay="240">
+              <a href="/services" class="av-wgl-btn av-wgl-btn--outline">
+                <span class="av-wgl-btn__text">See All Services</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={moreThanImage} alt="Red Rocks Fire Protection technician evaluating a BDA / DAS installation with a building engineer" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §5. ADVOCACY — #DBDADA bg panel -->
+    <section class="da-edge rr-band rr-band--reveal-top">
+      <div class="rr-container da-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 da-edge__eyebrow rr-reveal">Our Edge</p>
+            <h2
+              class="font-display font-black uppercase tracking-tight rr-reveal da-edge__title"
+              data-reveal-delay="100"
+              style="font-size: var(--rr-text-section); line-height: 0.95;"
+            >
+              Advocacy That Protects Your People, Property &amp; Investment.
+            </h2>
+            <div class="mt-6 rr-reveal da-edge__body" data-reveal-delay="200">
+              <p>Jurisdictional requirements and emergency communication technology can evolve, and aging systems may no longer meet current expectations. Advocacy means helping our clients understand what a failed test, coverage issue, unsupported component, or code change means for their facility. We provide clear recommendations and help clients plan improvements rather than waiting for repeated failures to dictate the next step.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 da-edge-img rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card bg-rr-black da-edge-img__wrap">
+              <img
+                src={advocacyImage}
+                alt="Red Rocks Fire Protection advocating for the right DAS / BDA path for the client's building"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover da-edge-img__img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §6. WHY CLIENTS STAY — dark bg + 5 value cards -->
+    <section class="da-why">
+      <div class="da-why__bg" aria-hidden="true"></div>
+      <div class="da-why__inner">
+        <div class="rr-reveal max-w-3xl mb-12 md:mb-16">
+          <p class="rr-eyebrow mb-5" style="color: rgba(255,255,255,0.7);">Why Clients Stay</p>
+          <h2
+            class="font-display font-black uppercase tracking-tight"
+            style="font-size: var(--rr-text-section); line-height: 0.95; color: #fff;"
+          >
+            Why Clients Continue to Choose RRFPS.
+          </h2>
+          <p class="mt-6" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.9);">
+            Everything we do is built upon the values that have guided our company since its founding. These principles are reflected in our Brand Promise: we communicate clearly, we honor our commitments, we arrive prepared, we respond when it matters most, we price fairly, we stand behind our work, and we remain committed until every issue has been fully resolved.
+          </p>
+        </div>
+
+        <div class="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          {whyClientsValues.map((v, i) => (
+            <article class="rr-reveal da-flowcard rounded-rr-card p-6 flex flex-col" data-reveal-delay={i * 100}>
+              <span class="da-flowcard__icon" aria-hidden="true">
+                <iconify-icon icon={whyClientsIcons[i]} width="40" height="40"></iconify-icon>
+              </span>
+              <h3 class="font-display font-bold tracking-tight" style="font-size: var(--rr-text-card); line-height: 1.05; color: #fff;">
+                {v.title}
+              </h3>
+              <p class="mt-3 leading-relaxed flex-1" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.85);">
+                {v.body}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- §7. EXPERIENCE — white-bg SplitPanel -->
+    <section class="da-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container da-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">Experience</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              ERRCS / BDA Experience You Can Trust.
+            </h2>
+            <div class="mt-6 rr-reveal da-split-body" data-reveal-delay="200">
+              <p>These systems require specialized knowledge of signal coverage, amplifiers, donor antennas, distributed antenna infrastructure, backup power, alarm and supervisory signals, and monitoring interfaces. Our technicians provide testing, diagnostics, repair, and replacement support across existing systems and building types, helping clients maintain reliable emergency responder communications when they are needed most.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={experienceImage} alt="Red Rocks Fire Protection experienced ERRCS / BDA technicians at work" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §8. READY WHEN YOU ARE — #DBDADA bg panel -->
+    <section class="da-splitpanel da-promise rr-band rr-band--reveal-top">
+      <div class="rr-container da-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 da-promise__eyebrow rr-reveal">Our Promise</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              Ready When You Are.
+            </h2>
+            <div class="mt-6 rr-reveal da-promise__body" data-reveal-delay="200">
+              <p>Whether you need annual testing, troubleshooting, battery or amplifier replacement, donor antenna repairs, monitoring repairs, system upgrades, or complete ERRCS/BDA replacement, our team is ready to help protect the communication infrastructure emergency responders depend on.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img src={promiseImage} alt="Red Rocks Fire Protection ready to support your ERRCS / BDA needs" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §9. INDUSTRIES — shared IndustriesGrid component -->
+    <IndustriesGrid />
+
+    <!-- §10. CLOSING CTA — site-wide ClosingCTA with DAS copy -->
+    <ClosingCTA
+      backgroundImage="/images/rrfps-services-cta-bg.png"
+      paragraphs={[
+        "Choosing the right ERRCS / BDA partner is about more than an annual test. It's about having a team that understands signal coverage, donor antennas, amplifiers, battery backup, and the monitoring connections that keep emergency responder communications reliable. Whether you need annual testing, troubleshooting, battery or amplifier replacement, donor antenna repairs, system upgrades, or complete ERRCS/BDA replacement, Red Rocks Fire Protection Services brings the same responsive service and accountability to every property we serve.",
+      ]}
+    />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .ptbanner { position: relative; isolation: isolate; background-color: #0d0d0b; }
+  .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; background-position: center bottom; z-index: -2; }
+  .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 13, 11, 0.35) 0%, rgba(13, 13, 11, 0.45) 60%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
+  .ptbanner__inner { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 15px; min-height: 450px; margin-bottom: 60px; padding-top: 154px; padding-bottom: 20px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .ptbanner__title { margin: 0; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 104px; letter-spacing: -0.05em; text-transform: uppercase; }
+  .ptbanner__breadcrumbs { color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 16px; line-height: 30px; letter-spacing: -0.04em; padding-bottom: 14px; }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; transition: 0.4s; }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  .sol { display: flex; max-width: 1600px; margin: 0 auto 80px; }
+  .sol__left { width: 50%; }
+  .sol__sticky { position: sticky; top: 120px; display: flex; flex-direction: column; align-items: flex-end; padding-right: 0; }
+  .sol__sticky > * { width: 100%; max-width: 585px; }
+  .sol__sticky .av-dblh__subtitle { margin-bottom: 23px; display: flex; }
+  .sol__title { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 56px; font-weight: 700; text-transform: uppercase; line-height: 1.178em; padding-bottom: 5px; color: #0a0a0a; }
+  .sol__title span { display: inline-block; }
+  .sol__spacer { height: 34px; }
+  .sol__cta .av-wgl-btn { display: inline-flex; }
+  .sol__cta .av-wgl-btn__text { padding: 17px 35px; }
+  .sol__grid { width: 50%; margin-top: 8px; display: flex; flex-wrap: wrap; row-gap: 30px; }
+  .sol__grid .ibox { width: 50%; }
+
+  .ibox { position: relative; display: block; text-decoration: none; transition: 0.4s; }
+  .ibox__bg { position: absolute; inset: 0; border: 1px solid #0a0a0a26; transition: 0.4s; pointer-events: none; }
+  .ibox:hover { background-color: #D51126; }
+  .ibox:hover .ibox__bg { border-color: transparent; }
+  .ibox__icon { display: inline-flex; background-color: #d41226; padding: 16px; transition: 0.4s; color: #ffffff; }
+  .ibox__icon :global(svg) { width: 50px; height: 50px; fill: #ffffff; transition: 0.4s; }
+  .ibox:hover .ibox__icon { background-color: #ffffff; color: #0a0a0a; }
+  .ibox:hover .ibox__icon :global(svg) { fill: #0a0a0a; }
+  .ibox__content { display: flex; flex-direction: column; min-height: 306px; padding: 51px 40px 30px 40px; }
+  .ibox__title { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(26px, 1.9vw, 30px); font-weight: 700; text-transform: uppercase; line-height: 1.4em; color: #0a0a0a; transition: 0.4s; }
+  .ibox__text { padding-top: 16px; color: #626262; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); transition: 0.4s; }
+  .ibox:hover .ibox__title, .ibox:hover .ibox__text { color: #ffffff; }
+
+  .da-whyrr { position: relative; isolation: isolate; overflow: hidden; background-color: #E0D9D3; }
+  .da-whyrr__bg { position: absolute; inset: 0; background-image: url('/images/red-rocks-fire-alarm-why-bg.jpg'); background-size: cover; background-position: center; z-index: -2; }
+  .da-whyrr__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(224, 217, 211, 0.30) 0%, rgba(224, 217, 211, 0.55) 25%, rgba(224, 217, 211, 0.85) 50%, #E0D9D3 75%, #E0D9D3 100%); z-index: -1; }
+  .da-whyrr__eyebrow { color: var(--rr-red, #d41226); }
+  .da-whyrr__title-black { color: #0a0a0a; }
+  .da-whyrr__title-red { color: var(--rr-red, #d41226); }
+  .da-whyrr__body { color: #0a0a0a; }
+  .da-why-grid { display: grid; gap: 48px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 1024px) { .da-why-grid { gap: 80px; grid-template-columns: 5fr 7fr; } }
+  .da-why-grid__left h2 { max-width: 16ch; }
+  .da-whyrr__bullets { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; gap: 14px; }
+  .da-whyrr__bullet { display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 14px; color: #0a0a0a; font-size: var(--rr-text-lead); line-height: 1.55; }
+  .da-whyrr__bullet-icon { width: 38px; height: 38px; display: grid; place-items: center; background: var(--rr-red, #d41226); color: #ffffff; flex-shrink: 0; }
+  .da-whyrr__bullet-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
+
+  .da-accordion { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
+  .da-accordion__bg { position: absolute; inset: 0; background-image: url('/images/red-rocks-fire-alarm-accordion-bg.jpg'); background-size: cover; background-position: left center; z-index: -2; }
+  .da-accordion__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 13, 11, 0.55) 0%, rgba(13, 13, 11, 0.45) 50%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
+  .da-accordion__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; }
+  @media (min-width: 768px) { .da-accordion__inner { padding-inline: 2.5rem; } }
+  .da-accordion__head { max-width: 800px; margin: 0 auto 48px; text-align: center; color: #ffffff; }
+  .da-accordion__eyebrow { color: var(--rr-red, #d41226) !important; font-family: "Space Grotesk", sans-serif !important; font-weight: 700 !important; font-size: 16px !important; letter-spacing: 0.04em !important; text-transform: uppercase !important; justify-content: center !important; margin-bottom: 22px !important; }
+  .da-accordion__rule { display: inline-block; width: 36px; height: 2px; background: var(--rr-red, #d41226); vertical-align: middle; }
+  .da-accordion__eyebrow > span:not(.da-accordion__rule) { margin: 0 12px; }
+  .da-accordion__title { margin: 0 0 22px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(36px, 5vw, 56px); color: #ffffff; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.02em; }
+  .da-accordion__intro { margin: 0 auto; max-width: 640px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #ffffff; }
+  .da-accordion__list { max-width: 800px; margin-inline: auto; }
+
+  .acc__panel--card { overflow: hidden; margin-bottom: 10px; background: #ffffff; border-radius: 6px; transition: box-shadow 0.25s ease, transform 0.25s ease; }
+  .acc__panel--card:last-child { margin-bottom: 0; }
+  .acc__panel--card:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); transform: translateY(-1px); }
+  .acc__panel--card.is-active { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+  .acc__panel--card .acc__header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 18px; width: 100%; background: none; border: none; padding: 18px 24px; cursor: pointer; text-align: left; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: #0a0a0a; }
+  .acc__panel-icon { display: grid; place-items: center; color: var(--rr-red, #d41226); width: 28px; height: 28px; flex-shrink: 0; }
+  .acc__panel-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 0.6; }
+  .acc__panel--card .acc__title { color: #0a0a0a; font-size: 18px; font-weight: 700; line-height: 1.3; }
+  .acc__caret { display: grid; place-items: center; color: #0a0a0a; width: 24px; height: 24px; flex-shrink: 0; transform: rotate(90deg); transition: transform 0.3s ease; }
+  .acc__panel--card.is-active .acc__caret { transform: rotate(-90deg); }
+  .acc__caret svg { width: 14px; height: 12px; }
+
+  .acc__panel--card .acc__content { padding: 4px 24px 22px 70px; color: #303030; background: #ffffff; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); }
+  .acc__panel--card .acc__content p { margin: 0; font-size: var(--rr-text-lead) !important; line-height: var(--rr-text-lead-lh); }
+  .acc__panel--card .acc__bullets { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+  .acc__panel--card .acc__bullet { display: grid; grid-template-columns: 22px 1fr; align-items: baseline; gap: 4px; color: #303030; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); }
+  .acc__panel--card .acc__bullet-mark { color: var(--rr-red, #d41226); font-size: 16px; line-height: 1; }
+  .acc__panel--card .acc__footer { margin: 14px 0 0 !important; font-style: italic; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: rgba(10, 10, 10, 0.7); }
+
+  .da-edge-img { display: flex; align-items: center; }
+  .da-edge-img__wrap { width: 100%; height: 480px; }
+  .da-edge-img__img { object-fit: cover; object-position: center; }
+  .da-edge { background-color: #DBDADA; }
+  .da-edge__eyebrow { color: var(--rr-grey, #626262); }
+  .da-edge__title { color: #0a0a0a; }
+  .da-edge__body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
+  .da-edge__body p:last-child { margin-bottom: 0; }
+
+  .da-why { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
+  @media (min-width: 768px) { .da-why { padding-block: 150px; } }
+  .da-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-fa-why-clients-stay-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
+  .da-why::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: -1; }
+  .da-why__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; color: #ffffff; }
+  @media (min-width: 768px) { .da-why__inner { padding-inline: 2.5rem; } }
+
+  @property --da-flow-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  .da-flowcard { position: relative; isolation: isolate; background: rgba(255, 255, 255, 0.10); border: 0; border-radius: 0; }
+  .da-flowcard::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 2px; background: conic-gradient(from var(--da-flow-angle), rgba(255, 255, 255, 0.28) 0deg, #ff2438 70deg, #d41226 130deg, rgba(255, 255, 255, 0.28) 200deg, rgba(255, 255, 255, 0.28) 360deg); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; animation: da-flow-spin 4s linear infinite; }
+  @keyframes da-flow-spin { to { --da-flow-angle: 360deg; } }
+  @media (prefers-reduced-motion: reduce) { .da-flowcard::before { animation: none; } }
+  .da-flowcard__icon { width: 74px; height: 74px; display: grid; place-items: center; color: #ffffff; background: #d41226; flex: 0 0 auto; margin-bottom: 22px; }
+  .da-flowcard__icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
+
+  .da-split-body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
+  .da-split-body p:last-child { margin-bottom: 0; }
+
+  .da-promise { background-color: #DBDADA; }
+  .da-promise__eyebrow { color: var(--rr-red, #d41226); }
+  .da-promise__body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #0a0a0a; }
+  .da-promise__body p:last-child { margin-bottom: 0; }
+
+  .da-container { max-width: 1340px; padding-inline: 80px; }
+  .da-accordion__inner.da-container { max-width: 1340px; padding-inline: 80px; }
+
+  .rr-reveal[data-reveal-delay] { transition-delay: var(--reveal-delay, 0ms); }
+
+  @media (max-width: 1200px) {
+    .da-container { padding-inline: 60px; }
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+    .sol { margin-top: 0; padding: 0 30px; flex-wrap: wrap; }
+    .sol__left { width: 100%; }
+    .sol__sticky { position: sticky; top: 30px; align-items: flex-start; }
+    .sol__sticky > * { max-width: 340px; }
+    .sol__title { font-size: 42px; }
+    .sol__title span { display: inline; }
+    .sol__grid { width: 100%; margin-top: 30px; }
+    .sol__grid .ibox { width: 100%; }
+    .ibox__content { min-height: 235px; padding: 31px 30px 20px 30px; }
+    .ibox__icon :global(svg) { width: 40px; height: 40px; }
+    .ibox__title { font-size: 26px; }
+  }
+  @media (max-width: 767px) {
+    .da-container { padding-inline: 28px; }
+    .ptbanner__inner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .sol { padding: 0; row-gap: 30px; }
+    .sol__sticky { position: relative; top: 0; padding: 0 15px; }
+    .sol__title { font-size: 28px; }
+    .sol__grid { padding: 0 15px; }
+    .ibox__content { min-height: 180px; }
+    .da-accordion { padding-block: 70px; }
+    .da-accordion__title { font-size: 28px; margin-bottom: 40px; }
+    .da-why { padding-block: 70px; }
+  }
+</style>
+
+<script>
+  function initDASAccordion() {
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-acc-panel]'));
+    if (!panels.length) return false;
+    panels.forEach(function (panel) {
+      var header = panel.querySelector('.acc__header');
+      var content = panel.querySelector('.acc__content');
+      if (!header || !content) return;
+      if (header.__daAccordionWired) return;
+      header.__daAccordionWired = true;
+      header.addEventListener('click', function () {
+        var wasOpen = panel.classList.contains('is-active');
+        panels.forEach(function (p) {
+          p.classList.remove('is-active');
+          var h = p.querySelector('.acc__header');
+          if (h) h.setAttribute('aria-expanded', 'false');
+          var c = p.querySelector('.acc__content');
+          if (c) c.hidden = true;
+        });
+        if (!wasOpen) {
+          panel.classList.add('is-active');
+          header.setAttribute('aria-expanded', 'true');
+          content.hidden = false;
+        }
+      });
+    });
+    return true;
+  }
+  function bindDASAccordion() { if (!initDASAccordion()) setTimeout(initDASAccordion, 100); }
+  document.addEventListener('astro:page-load', bindDASAccordion);
+  document.addEventListener('astro:after-swap', bindDASAccordion);
+  document.addEventListener('DOMContentLoaded', bindDASAccordion);
+  if (document.readyState !== 'loading') bindDASAccordion();
+
+  function initDASRevealStagger() {
+    document.querySelectorAll('.rr-reveal[data-reveal-delay]').forEach(function (el) {
+      el.style.setProperty('--reveal-delay', el.getAttribute('data-reveal-delay') + 'ms');
+    });
+    var industries = document.querySelector('section.industries');
+    if (industries && !industries.classList.contains('rr-reveal')) {
+      var indHead = industries.querySelector('.industries__head');
+      if (indHead) indHead.classList.add('rr-reveal');
+      industries.querySelectorAll('.industry-card').forEach(function (card, i) {
+        card.classList.add('rr-reveal');
+        var d = Math.min(i, 8) * 80;
+        card.setAttribute('data-reveal-delay', String(d));
+        card.style.setProperty('--reveal-delay', d + 'ms');
+      });
+    }
+    var ctaBody = document.querySelector('.cta__body');
+    if (ctaBody && !ctaBody.classList.contains('rr-reveal')) ctaBody.classList.add('rr-reveal');
+    var pending = document.querySelectorAll('.rr-reveal:not(.is-visible)');
+    if (pending.length) {
+      var pageObserver = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            entries[i].target.classList.add('is-visible');
+            pageObserver.unobserve(entries[i].target);
+          }
+        }
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+      pending.forEach(function (el) { pageObserver.observe(el); });
+    }
+    document.querySelectorAll('.rr-reveal').forEach(function (el) {
+      if (el.classList.contains('is-visible')) { el.style.removeProperty('--reveal-delay'); return; }
+      var cleanup = new MutationObserver(function () {
+        if (el.classList.contains('is-visible')) { el.style.removeProperty('--reveal-delay'); cleanup.disconnect(); }
+      });
+      cleanup.observe(el, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+  function bindDASReveal() { initDASRevealStagger(); }
+  document.addEventListener('astro:page-load', bindDASReveal);
+  document.addEventListener('DOMContentLoaded', bindDASReveal);
+  if (document.readyState !== 'loading') bindDASReveal();
+</script>
