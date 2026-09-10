@@ -24,14 +24,14 @@
  *
  * Image assets — all placeholders, to be swapped for page-specific
  * Nano Banana imagery after the batch build:
- *   • Hero           — /images/rrfps-fire-sprinkler-systems-hero.jpg
- *   • §2 tan band bg — /images/red-rocks-fire-alarm-why-bg.jpg
- *   • §3 accordion bg — /images/red-rocks-fire-alarm-accordion-bg.jpg
- *   • §4 more than    — /images/rrfps-fa-more-than-contractor.jpg
- *   • §5 advocacy     — /images/rrfps-fa-advocacy.jpg
- *   • §6 values bg    — /images/rrfps-fa-why-clients-stay-bg.jpg
- *   • §7 experience   — /images/rrfps-fa-experience.jpg
- *   • §8 promise      — /images/rrfps-fa-promise.jpg
+ *   • Hero           — /images/rrfps-distributed-antenna-systems-page-hero.png
+ *   • §2 tan band bg — /images/rrfps-backflow-prevention-why-red-rocks-bg.jpg
+ *   • §3 accordion bg — /images/rrfps-distributed-antenna-systems-services-accordion-bg.jpg
+ *   • §4 more than    — /images/rrfps-distributed-antenna-systems-more-than-a-service-contractor.jpg
+ *   • §5 advocacy     — /images/rrfps-distributed-antenna-systems-advocacy.jpg
+ *   • §6 values bg    — /images/rrfps-distributed-antenna-systems-why-clients-stay-bg.jpg
+ *   • §7 experience   — /images/rrfps-distributed-antenna-systems-experience.jpg
+ *   • §8 promise      — /images/rrfps-distributed-antenna-systems-ready-when-you-are.jpg
  *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.png
  */
 
@@ -43,7 +43,7 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-const bannerImage = '/images/rrfps-fire-sprinkler-systems-hero.jpg';
+const bannerImage = '/images/rrfps-distributed-antenna-systems-page-hero.png';
 
 const categories = [
   {
@@ -148,10 +148,10 @@ const whyClientsValues = [
   { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
 ] as const;
 
-const moreThanImage = '/images/rrfps-fa-more-than-contractor.jpg';
-const advocacyImage = '/images/rrfps-fa-advocacy.jpg';
-const experienceImage = '/images/rrfps-fa-experience.jpg';
-const promiseImage = '/images/rrfps-fa-promise.jpg';
+const moreThanImage = '/images/rrfps-distributed-antenna-systems-more-than-a-service-contractor.jpg';
+const advocacyImage = '/images/rrfps-distributed-antenna-systems-advocacy.jpg';
+const experienceImage = '/images/rrfps-distributed-antenna-systems-experience.jpg';
+const promiseImage = '/images/rrfps-distributed-antenna-systems-ready-when-you-are.jpg';
 ---
 
 <BaseLayout
@@ -489,7 +489,7 @@ const promiseImage = '/images/rrfps-fa-promise.jpg';
   .ptbanner { position: relative; isolation: isolate; background-color: #0d0d0b; }
   .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; background-position: center bottom; z-index: -2; }
   .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 13, 11, 0.35) 0%, rgba(13, 13, 11, 0.45) 60%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
-  .ptbanner__inner { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 15px; min-height: 450px; margin-bottom: 60px; padding-top: 154px; padding-bottom: 20px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .ptbanner__inner { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 15px; min-height: 450px; margin-bottom: 60px; padding-top: 154px; padding-bottom: 20px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: 32px; }
   .ptbanner__title { margin: 0; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 104px; letter-spacing: -0.05em; text-transform: uppercase; }
   .ptbanner__breadcrumbs { color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 16px; line-height: 30px; letter-spacing: -0.04em; padding-bottom: 14px; }
   .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; transition: 0.4s; }
@@ -524,7 +524,7 @@ const promiseImage = '/images/rrfps-fa-promise.jpg';
   .ibox:hover .ibox__title, .ibox:hover .ibox__text { color: #ffffff; }
 
   .da-whyrr { position: relative; isolation: isolate; overflow: hidden; background-color: #E0D9D3; }
-  .da-whyrr__bg { position: absolute; inset: 0; background-image: url('/images/red-rocks-fire-alarm-why-bg.jpg'); background-size: cover; background-position: center; z-index: -2; }
+  .da-whyrr__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-backflow-prevention-why-red-rocks-bg.jpg'); background-size: cover; background-position: center; z-index: -2; }
   .da-whyrr__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(224, 217, 211, 0.30) 0%, rgba(224, 217, 211, 0.55) 25%, rgba(224, 217, 211, 0.85) 50%, #E0D9D3 75%, #E0D9D3 100%); z-index: -1; }
   .da-whyrr__eyebrow { color: var(--rr-red, #d41226); }
   .da-whyrr__title-black { color: #0a0a0a; }
@@ -539,7 +539,7 @@ const promiseImage = '/images/rrfps-fa-promise.jpg';
   .da-whyrr__bullet-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
 
   .da-accordion { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
-  .da-accordion__bg { position: absolute; inset: 0; background-image: url('/images/red-rocks-fire-alarm-accordion-bg.jpg'); background-size: cover; background-position: left center; z-index: -2; }
+  .da-accordion__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-distributed-antenna-systems-services-accordion-bg.jpg'); background-size: cover; background-position: left center; z-index: -2; }
   .da-accordion__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 13, 11, 0.55) 0%, rgba(13, 13, 11, 0.45) 50%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
   .da-accordion__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; }
   @media (min-width: 768px) { .da-accordion__inner { padding-inline: 2.5rem; } }
@@ -581,7 +581,7 @@ const promiseImage = '/images/rrfps-fa-promise.jpg';
 
   .da-why { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
   @media (min-width: 768px) { .da-why { padding-block: 150px; } }
-  .da-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-fa-why-clients-stay-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
+  .da-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-distributed-antenna-systems-why-clients-stay-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
   .da-why::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: -1; }
   .da-why__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; color: #ffffff; }
   @media (min-width: 768px) { .da-why__inner { padding-inline: 2.5rem; } }
@@ -624,7 +624,7 @@ const promiseImage = '/images/rrfps-fa-promise.jpg';
   }
   @media (max-width: 767px) {
     .da-container { padding-inline: 28px; }
-    .ptbanner__inner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__inner { min-height: 320px; padding-top: 120px; grid-template-columns: 1fr; row-gap: 12px; }
     .ptbanner__title { font-size: 40px; line-height: 48px; }
     .sol { padding: 0; row-gap: 30px; }
     .sol__sticky { position: relative; top: 0; padding: 0 15px; }
