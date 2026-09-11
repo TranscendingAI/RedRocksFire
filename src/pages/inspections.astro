@@ -2,90 +2,168 @@
 /**
  * Inspections — RRFPS landing page for /inspections.
  *
- * Design DNA pulled from existing pages so the layout feels cohesive:
- *   • industry.astro  — ptbanner (full-bleed hero + 96px title + breadcrumbs),
- *                       2×2 ibox grid (red icon corner + hover-to-orange).
- *   • about.astro     — SplitPanel-style intro band (text + supporting image
- *                       with overlay), DualCTA in the white footer pattern.
- *   • index.astro     — diamond subtitle eyebrow, marquee text style for
- *                       the closing band.
+ * Sections, in order (style alternation so no two adjacent sections look alike):
+ *   §0. ptbanner                                   — full-bleed dark hero
+ *   §1. 2×2 ibox solutions grid                    — Annual / 3-Year / 5-Year / Special Hazard
+ *   §2. ins-whyrr (tan bg-image band)              — intro + 3 trust bullets
+ *   §3. ins-3yr (dark accordion)                   — 3-Year Inspection & Testing Services
+ *   §4. ins-5yr (white SplitPanel)                 — 5-Year Fire Sprinkler Inspection & Testing
+ *   §5. ins-purpose (full-bleed bg + red badge)    — One Company to Manage Your Inspection Requirements
+ *   §6. ins-tracking (white icon-grid)             — Inspection & Compliance Tracking (10 cards)
+ *   §7. ins-whychoose (light SplitPanel)           — Why Choose Red Rocks Fire Protection? (10)
+ *   §8. ins-howwework (white SplitPanel)           — How We Work / More Than an Inspection Company.
+ *   §9. ins-edge (#DBDADA SplitPanel)              — Our Edge / Advocacy That Helps You Stay Ahead
+ *  §10. ins-why (dark bg + 5 value cards)          — Why Clients Stay (brand promise values)
+ *  §11. ins-experience (white SplitPanel)          — Experience / Inspection & Compliance Experience You Can Trust
+ *  §12. ins-promise (#DBDADA SplitPanel)           — Our Promise / Ready for Today's Inspection
+ *  §13. ClosingCTA                                 — phone + "Let's Protect What Matters Most Together."
  *
- * Sections, in order (kept small/medium per Zack's direction):
- *   0. Page-title banner (industry.astro §0)
- *   1. Solutions grid — 2×2 ibox of inspection categories (industry.astro §1)
- *   2. Why inspections — bg-image intro panel with photo overlay (about.astro §3
- *      meets industry.astro §2 split-half layout), but lighter than the
- *      priority/accordion block so the page stays small.
- *   3. Inspection process — black-bg SplitPanel with new copy (modeled on
- *      about.astro's "Our Core Values" section). Same image placeholder.
- *   4. Closing marquee + DualCTA.
- *
- * All copy comes from src/data/site.ts → `inspectionsPage`.
+ * CSS namespace: .ins-* (avoids collisions with industry.astro's `.sol/.ibox`,
+ * about.astro's `.purpose/.facts/.capabilities/.difference`, and the
+ * kitchen-hood page's `.kh-*`).
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SplitPanel from '../components/SplitPanel.astro';
 import ClosingCTA from '../components/ClosingCTA.astro';
-import { inspectionsPage } from '../data/site';
 
-// Same arrow path & diamond icon used across the demo pages — keep them here
-// for visual cohesion (one source per page).
 const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-// Page-title banner image — reuse the same pt-philosophy.webp that industry.astro
-// uses (it's wide, on-brand dark, and the only banner candidate in the repo).
-const bannerImage = inspectionsPage.banner.backgroundImage;
-
-// Intro panel — dedicated inspection-jobsite photo for the Why Inspections
-// band. Replaces the previous jobsite.jpg placeholder with a fully on-topic
-// image so the overlay text reads against inspected-system content rather
-// than generic trade work.
+const bannerImage = '/images/red-rocks-fire-protection-inspection-hero.jpg';
 const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
+
+/* §1 — 2×2 ibox grid: cadence-based categories from the new MD */
+const categories = [
+  {
+    title: 'Annual NFPA Inspections.',
+    icon: 'mdi:clipboard-text-search-outline',
+    body:
+      'By code, fire-protection systems must be inspected annually. We evaluate every component against the current NFPA standard for that system, capture findings in a detailed written report, and hand you a correction summary your AHJ will accept.',
+  },
+  {
+    title: '3-Year Inspection Services.',
+    icon: 'mdi:calendar-clock-outline',
+    body:
+      'Certain fire protection system components require testing or maintenance at intervals beyond the standard annual inspection. We review each property to identify applicable 3-year requirements and coordinate the required work.',
+  },
+  {
+    title: '5-Year Sprinkler Testing.',
+    icon: 'mdi:wrench-outline',
+    body:
+      'Internal inspections of sprinkler piping, check valves, alarm valves, and dry pipe valves — plus standpipe testing, hydrostatic testing, obstruction investigation, and gauge replacement — performed to NFPA 25.',
+  },
+  {
+    title: 'Special Hazard & Suppression.',
+    icon: 'mdi:fire-extinguisher',
+    body:
+      'Kitchen hood suppression, clean-agent systems, BDA/DAS radio coverage, area-of-refuge communications, and backflow prevention — each with its own cadence and inspection checklist, all in one report.',
+  },
+] as const;
+
+/* §3 — 3-Year accordion panel (1 panel: the 3-year overview + services + AHJ note) */
+const threeYearPanel = {
+  title: '3-Year Inspection & Testing Services.',
+  body:
+    'Certain fire protection system components require testing or maintenance at intervals beyond the standard annual inspection. Depending on the system, equipment, adopted code edition, and local jurisdiction, 3-year requirements may apply. Red Rocks Fire can review your property’s existing systems and inspection history to identify applicable 3-year requirements and coordinate the required work.',
+  bullets: [
+    'Dry sprinkler system air/gas leakage testing.',
+    'Full-flow testing of pressure-reducing and pressure-regulating devices where applicable.',
+    'Additional system-specific testing required by the adopted NFPA standards.',
+    'Documentation and deficiency reporting.',
+    'Coordination of required repairs.',
+  ],
+  footer:
+    'Because requirements vary by system and jurisdiction, our team reviews each property individually rather than applying a one-size-fits-all testing schedule.',
+  open: true,
+};
+
+/* §6 — Inspection & Compliance Tracking (11 cards, Iconify icons) */
+const trackingItems = [
+  { icon: 'mdi:calendar-check-outline',            title: 'Annual inspection scheduling.',       body: 'Coordinate recurring annual inspections across all installed fire and life safety systems.' },
+  { icon: 'mdi:calendar-month-outline',            title: 'Quarterly & semi-annual requirements.', body: 'Track and complete quarterly and semi-annual requirements so nothing slips through the calendar.' },
+  { icon: 'mdi:calendar-clock-outline',            title: '3-year testing requirements.',         body: 'Identify upcoming 3-year inspections and schedule them before they become overdue.' },
+  { icon: 'mdi:calendar-refresh-outline',          title: '5-year testing requirements.',         body: 'Plan and coordinate 5-year sprinkler and standpipe testing well in advance of the due date.' },
+  { icon: 'mdi:spray-bottle',                      title: 'Sprinkler head testing requirements.', body: 'Monitor and manage sprinkler head testing requirements over the long-term service life.' },
+  { icon: 'mdi:fire-hydrant',                      title: 'Fire pump testing.',                   body: 'Schedule and document annual and periodic fire pump testing to NFPA 25.' },
+  { icon: 'mdi:pipe-valve',                        title: 'Backflow certification.',             body: 'Manage backflow preventer testing and certification with proper documentation.' },
+  { icon: 'mdi:alert-decagram-outline',            title: 'Deficiency tracking.',                 body: 'Track open deficiencies across properties and inspections to closure.' },
+  { icon: 'mdi:wrench-clock',                      title: 'Repair recommendations.',             body: 'Provide clear repair recommendations with priorities and timelines for every deficiency.' },
+  { icon: 'mdi:finance',                           title: 'Long-term capital planning.',          body: 'Help plan for replacement and capital needs based on system age and inspection history.' },
+  { icon: 'mdi:office-building-cog-outline',       title: 'Multi-property coordination.',         body: 'Coordinate inspections across multiple properties through one life safety provider.' },
+] as const;
+
+/* §7 — Why Choose Red Rocks? (10 cards, Iconify icons) */
+const whyChooseItems = [
+  { icon: 'mdi:shield-check-outline',           title: 'One Vendor Life Safety Solution.',                 body: 'Sprinklers, alarms, monitoring, suppression, backflow, and consulting all under one roof.' },
+  { icon: 'mdi:home-heart',                     title: 'Locally Owned & Family Operated Since 2010.',      body: 'A trusted, family-owned life safety company serving Colorado for over a decade.' },
+  { icon: 'mdi:medal-outline',                  title: 'NICET-Certified Technicians.',                     body: 'Inspections performed by NICET- or CSA-certified technicians against current adopted standards.' },
+  { icon: 'mdi:cog-outline',                    title: 'Multi-System Expertise.',                          body: 'Fire alarm, sprinkler, backflow, extinguisher, BDA, and communication system expertise in one team.' },
+  { icon: 'mdi:calendar-check-outline',         title: 'Annual, 3-Year & 5-Year Testing Programs.',        body: 'Coordinated recurring inspection and testing programs aligned to your installed systems.' },
+  { icon: 'mdi:file-document-outline',          title: 'Detailed Inspection & Deficiency Reporting.',      body: 'Reports your AHJ, lender, and insurer will accept — with correction summaries, not just checkboxes.' },
+  { icon: 'mdi:office-building-outline',        title: 'Multi-Property & Portfolio Management.',           body: 'Coordinated inspection schedules, reporting, deficiencies, and future testing across a portfolio.' },
+  { icon: 'mdi:clock-alert-outline',            title: '24-Hour Emergency Service.',                       body: 'Responsive emergency service when something unexpected happens on site.' },
+  { icon: 'mdi:map-marker-outline',             title: 'Serving Colorado.',                                body: 'Commercial and multifamily properties throughout the Colorado Front Range.' },
+  { icon: 'mdi:account-check-outline',          title: 'One Point of Contact.',                            body: 'One provider. One point of contact. One comprehensive approach to compliance.' },
+] as const;
+
+/* §10 — Why Clients Stay (5 brand-promise values with icons) */
+const whyClientsIcons = [
+  'solar:shield-check-bold-duotone',
+  'solar:hand-heart-bold-duotone',
+  'solar:rocket-2-bold-duotone',
+  'solar:medal-ribbon-star-bold-duotone',
+  'solar:users-group-rounded-bold-duotone',
+] as const;
+
+const whyClientsValues = [
+  { title: 'We lead with safety.',          body: 'Protecting lives and property is both our responsibility and our privilege.' },
+  { title: 'We advocate for our clients.',  body: 'We stay ahead of changing codes and help simplify compliance.' },
+  { title: 'We go the extra mile.',         body: 'We take ownership of every project until the job is completed correctly.' },
+  { title: 'We demonstrate character.',     body: 'Integrity, professionalism, accountability, and respect guide every interaction.' },
+  { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
+] as const;
 ---
 
 <BaseLayout
-  title={inspectionsPage.seo.title}
-  description={inspectionsPage.seo.description}
+  title="Fire Safety Inspections Denver | NFPA Reports | Red Rocks Fire Protection"
+  description="Annual, 3-year, and 5-year NFPA fire safety inspections across Colorado — sprinklers, alarms, extinguishers, backflow, suppression. Detailed written reports. Codes, legislations, and jurisdictional navigation handled."
 >
   <div class="av-page">
 
-    <!-- ══════════════════════════════════════════════════════════
-         0. PAGE-TITLE BANNER (industry.astro §0, replicated)
-         ══════════════════════════════════════════════════════════ -->
-    <div
-      class="ptbanner"
-      style={`background-image: url('${bannerImage}');`}
-    >
+    <!-- ═══════════════════════════════════════════════════════
+         §0. PAGE-TITLE BANNER
+         ═══════════════════════════════════════════════════════ -->
+    <div class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${bannerImage}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
       <div class="ptbanner__inner">
-        <h1 class="ptbanner__title">{inspectionsPage.banner.title}</h1>
-        <div class="ptbanner__breadcrumbs">
+        <h1 class="ptbanner__title rr-reveal">Inspections</h1>
+        <div class="ptbanner__breadcrumbs rr-reveal" data-reveal-delay="100">
           <a href="/">Home</a>
           <span class="ptbanner__divider">-</span>
-          <span class="ptbanner__current">{inspectionsPage.banner.subtitle}</span>
+          <span class="ptbanner__current">FIRE PROTECTION INSPECTIONS</span>
         </div>
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════════════════════
-         1. SOLUTIONS GRID — 2×2 of inspection categories
-            (industry.astro §1 pattern: sticky headline left + ibox grid right)
-         ══════════════════════════════════════════════════════════ -->
+    <!-- ═══════════════════════════════════════════════════════
+         §1. SOLUTIONS GRID — 2×2 ibox (cadence-based)
+         ═══════════════════════════════════════════════════════ -->
     <section class="sol">
       <div class="sol__left">
         <div class="sol__sticky">
-          <div class="av-dblh__subtitle">
+          <div class="av-dblh__subtitle rr-reveal">
             <span class="divider-icon" set:html={diamondIcon} />
             <span>What an Inspection Covers</span>
           </div>
-          <h2 class="sol__title">
-            <span>Every</span>
-            <span>System We Touch,</span>
-            <span>Inspected Right.</span>
+          <h2 class="sol__title rr-reveal" data-reveal-delay="100">
+            <span>Annual,</span>
+            <span>3-Year &amp;</span>
+            <span>5-Year Testing.</span>
           </h2>
           <div class="sol__spacer" aria-hidden="true"></div>
-          <div class="sol__cta">
+          <div class="sol__cta rr-reveal" data-reveal-delay="200">
             <a href="/contact" class="av-wgl-btn av-wgl-btn--outline">
               <span class="av-wgl-btn__text">schedule a walk-through</span>
               <span class="av-wgl-btn__icon">
@@ -97,8 +175,8 @@ const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
       </div>
 
       <div class="sol__grid">
-        {inspectionsPage.categories.map((c, i) => (
-          <a href="/contact" class="ibox" data-icon-slot={i}>
+        {categories.map((c, i) => (
+          <a href="/contact" class="ibox rr-reveal" data-icon-slot={i} data-reveal-delay={i * 100}>
             <span class="ibox__bg" aria-hidden="true"></span>
             <span class="ibox__icon" aria-hidden="true">
               <iconify-icon icon={c.icon} width="50" height="50"></iconify-icon>
@@ -112,79 +190,440 @@ const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════
-         2. WHY INSPECTIONS — bg-image intro with dark overlay
-            (about.astro §3 benefits grid BG + a split two-column layout,
-             simpler than the priority/accordion block from industry.astro)
-         ══════════════════════════════════════════════════════════ -->
-    <section class="rr-why">
-      <div
-        class="rr-why__bg"
-        style={`background-image: url('${introImage}');`}
-        aria-hidden="true"
-      ></div>
-      <div class="rr-why__overlay" aria-hidden="true"></div>
-
-      <div class="rr-container">
-        <div class="rr-why__grid">
-          <div class="rr-why__left">
-            <p class="rr-eyebrow rr-eyebrow--light mb-5">{inspectionsPage.intro.eyebrow}</p>
+    <!-- ═══════════════════════════════════════════════════════
+         §2. WHY INSPECTIONS — tan bg-image band (intro + 3 trust bullets)
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-whyrr rr-band rr-band--reveal-top">
+      <div class="ins-whyrr__bg" style={`background-image: url('${introImage}');`} aria-hidden="true"></div>
+      <div class="ins-whyrr__overlay" aria-hidden="true"></div>
+      <div class="rr-container ins-container">
+        <div class="ins-why-grid">
+          <div class="ins-why-grid__left">
+            <p class="rr-eyebrow ins-whyrr__eyebrow mb-5 rr-reveal">Why Inspections</p>
             <h2
-              class="font-display font-black uppercase tracking-tight"
+              class="font-display font-black tracking-tight ins-whyrr__title rr-reveal"
+              data-reveal-delay="100"
               style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em;"
             >
-              {inspectionsPage.intro.title}
+              <span class="ins-whyrr__title-black">Annual, 3-Year</span><br />
+              <span class="ins-whyrr__title-black">&amp; 5-Year</span><br />
+              <span class="ins-whyrr__title-red">Compliance,</span><br />
+              <span class="ins-whyrr__title-red">Handled.</span>
             </h2>
           </div>
 
-          <div class="rr-why__right text-rr-white">
-            <p style="font-size: var(--av-text-lead, 18px); line-height: 1.7; color: rgba(255,255,255,0.85); margin-top: 0;">
-              {inspectionsPage.intro.body}
+          <div class="ins-why-grid__right">
+            <p class="ins-whyrr__body rr-reveal" data-reveal-delay="200" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 0;">
+              Red Rocks Fire Protection provides comprehensive inspection and testing services to help commercial and multifamily properties maintain compliant, reliable fire and life safety systems. Our team can manage recurring inspection requirements — from annual testing to longer-term 3-year and 5-year requirements — helping property managers and building owners stay ahead of upcoming compliance needs.
             </p>
-            <p style="font-size: var(--av-text-lead, 18px); line-height: 1.7; color: rgba(255,255,255,0.85); margin-top: 1.25rem;">
-              {inspectionsPage.intro.body2}
+            <p class="ins-whyrr__body rr-reveal" data-reveal-delay="300" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 1.25rem;">
+              Since 2010, our family-owned company has served customers throughout Colorado. For inspections, that means helping property owners and managers understand not only what needs to be inspected today, but what requirements are coming next.
             </p>
 
-            <ul class="rr-why__bullets">
-              {inspectionsPage.intro.bullets.map((b) => (
-                <li class="rr-why__bullet">
-                  <span class="rr-why__bullet-mark" aria-hidden="true">▸</span>
-                  <span>{b}</span>
-                </li>
-              ))}
+            <ul class="ins-whyrr__bullets rr-reveal" data-reveal-delay="400">
+              <li class="ins-whyrr__bullet">
+                <span class="ins-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon="solar:shield-check-bold-duotone" width="20" height="20"></iconify-icon>
+                </span>
+                <span>Comprehensive inspection and testing capabilities across multiple fire and life safety systems.</span>
+              </li>
+              <li class="ins-whyrr__bullet">
+                <span class="ins-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon="solar:calendar-mark-bold-duotone" width="20" height="20"></iconify-icon>
+                </span>
+                <span>Annual, quarterly, semi-annual, 3-year, and 5-year inspection and testing coordination based on the systems installed.</span>
+              </li>
+              <li class="ins-whyrr__bullet">
+                <span class="ins-whyrr__bullet-icon" aria-hidden="true">
+                  <iconify-icon icon="solar:document-text-bold-duotone" width="20" height="20"></iconify-icon>
+                </span>
+                <span>Detailed inspection documentation, deficiency reporting, repair recommendations, and compliance tracking.</span>
+              </li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════
-         3. INSPECTION PROCESS — black-bg split panel, modeled on
-            about.astro's "Our Core Values" section. Same component
-            (SplitPanel), same placeholder image, but new INSPECTION-
-            SPECIFIC copy from src/data/site.ts → `process`.
-         ══════════════════════════════════════════════════════════ -->
-    <SplitPanel
-      eyebrow={inspectionsPage.process.eyebrow}
-      title={inspectionsPage.process.title}
-      body={inspectionsPage.process.body}
-      ctaLabel={inspectionsPage.process.ctaLabel}
-      ctaHref={inspectionsPage.process.ctaHref}
-      image={inspectionsPage.process.image}
-      imageAlt={inspectionsPage.process.imageAlt}
-      background="black"
-      ctaVariant="arrow"
-      revealTop={false}
-    />
+    <!-- ═══════════════════════════════════════════════════════
+         §3. ANNUAL + 3-YEAR ACCORDION — dark bg-image accordion
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-acc">
+      <div class="ins-acc__bg" aria-hidden="true"></div>
+      <div class="ins-acc__overlay" aria-hidden="true"></div>
+      <div class="ins-acc__inner ins-container">
+        <div class="ins-acc__head">
+          <p class="av-dblh__subtitle ins-acc__eyebrow rr-reveal">
+            <span class="ins-acc__rule" aria-hidden="true"></span>
+            <span>How We Inspect</span>
+            <span class="ins-acc__rule" aria-hidden="true"></span>
+          </p>
+          <h3 class="ins-acc__title rr-reveal" data-reveal-delay="100">Our Inspection Programs.</h3>
+          <p class="ins-acc__intro rr-reveal" data-reveal-delay="200">
+            Inspection and testing frequencies can vary based on the installed system, adopted code edition, manufacturer requirements, and the Authority Having Jurisdiction (AHJ). Red Rocks Fire Protection reviews each property to determine applicable requirements.
+          </p>
+        </div>
 
-    <!-- ══════════════════════════════════════════════════════════
-         4. CLOSING — site-wide ClosingCTA (full-width-bleed). Same
-            component, copy, image, and buttons as the About page.
-         ══════════════════════════════════════════════════════════ -->
+        <div class="acc ins-acc__list">
+          <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal', threeYearPanel.open && 'is-active']} data-acc-panel>
+            <button type="button" class="acc__header" aria-expanded={threeYearPanel.open ? 'true' : 'false'}>
+              <span class="acc__panel-icon" aria-hidden="true">
+                <iconify-icon icon="mdi:calendar-clock-outline" width="22" height="22"></iconify-icon>
+              </span>
+              <span class="acc__title">{threeYearPanel.title}</span>
+              <span class="acc__caret" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+              </span>
+            </button>
+            <div class="acc__content" hidden={!threeYearPanel.open}>
+              <p>{threeYearPanel.body}</p>
+              <ul class="acc__bullets">
+                {threeYearPanel.bullets.map((b) => (
+                  <li class="acc__bullet">
+                    <span class="acc__bullet-mark" aria-hidden="true">▸</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="acc__footer">{threeYearPanel.footer}</p>
+            </div>
+          </div>
+
+          <!-- Annual cadence panel (companion to the 3-year one above) -->
+          <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal']} data-acc-panel>
+            <button type="button" class="acc__header" aria-expanded="false">
+              <span class="acc__panel-icon" aria-hidden="true">
+                <iconify-icon icon="mdi:clipboard-text-search-outline" width="22" height="22"></iconify-icon>
+              </span>
+              <span class="acc__title">Annual Fire &amp; Life Safety Inspections.</span>
+              <span class="acc__caret" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+              </span>
+            </button>
+            <div class="acc__content" hidden>
+              <p>We provide annual inspection and testing services for every major fire and life safety system in your building. Following inspections, Red Rocks Fire provides detailed documentation identifying deficiencies, recommended corrective actions, and upcoming testing or maintenance requirements.</p>
+              <ul class="acc__bullets">
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire sprinkler systems</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire alarm systems</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire extinguishers</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire pumps</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Backflow prevention assemblies</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>ERRCS / BDA systems</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Area of Refuge communication systems</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Elevator emergency communication systems</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Kitchen hood suppression systems</span></li>
+                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Other applicable fire and life safety equipment</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §4. 5-YEAR SPRINKLER TESTING — white SplitPanel, image right
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container ins-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">5-Year Testing</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              5-Year Fire Sprinkler Inspection &amp; Testing.
+            </h2>
+            <div class="mt-6 rr-reveal ins-split-body" data-reveal-delay="200">
+              <p>Five-year testing is an important part of maintaining fire sprinkler and standpipe systems. These inspections go beyond the standard annual inspection and help identify internal deterioration, obstructions, valve issues, and other conditions that may not be visible during routine testing.</p>
+              <p>Our 5-year services include internal inspection of sprinkler piping, check valves, alarm valves, and dry pipe valves; obstruction investigation where required; standpipe, FDC, and hydrostatic testing; pressure-reducing valve testing; gauge replacement or calibration; and detailed deficiency documentation with corrective-action recommendations.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img
+                src="/images/red-rocks-fire-protections-fire-sprinkler-multi-family-units.jpg"
+                alt="Red Rocks Fire Protection performing 5-year fire sprinkler internal inspection"
+                loading="lazy" decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §5. ONE COMPANY TO MANAGE — full-bleed bg image + red badge
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-purpose">
+      <div class="ins-purpose__wrap">
+        <div class="ins-purpose__stage">
+          <div
+            class="ins-purpose__stage-bg"
+            style="background-image: url('/images/red-rocks-fire-protection-one-calendar.jpg');"
+            aria-hidden="true"
+          ></div>
+          <div class="ins-purpose__stage-overlay" aria-hidden="true"></div>
+
+          <div class="ins-purpose__badge">
+            <strong>One Vendor.</strong>
+            <strong>Total Life</strong>
+            <strong>Safety.</strong>
+          </div>
+        </div>
+
+        <div class="ins-purpose__content-row">
+          <h2 class="ins-purpose__title rr-reveal">One Vendor for Complete<br />Fire &amp; Life Safety</h2>
+          <div class="ins-purpose__copy rr-reveal" data-reveal-delay="100">
+            <p>Managing multiple fire and life safety systems can become complicated, especially when annual, semi-annual, quarterly, 3-year, and 5-year requirements fall on different schedules.</p>
+            <p>Red Rocks Fire Protection helps simplify the process by providing a One Vendor Life Safety Solution — identifying what systems are installed at each property, determining upcoming inspection and testing requirements, and coordinating the work through a single fire protection provider.</p>
+            <p><strong>One provider. One point of contact. One comprehensive approach to your property’s fire and life safety compliance.</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §6. INSPECTION & COMPLIANCE TRACKING — gray icon-grid (10 cards)
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-tracking">
+      <div class="section-inner">
+        <div class="ins-tracking__head">
+          <div class="av-dblh__subtitle section-eyebrow rr-reveal">
+            <span class="divider-icon" set:html={diamondIcon} />
+            <span>Compliance Tracking</span>
+          </div>
+          <h2 class="section-title rr-reveal" data-reveal-delay="100" style="color: #0a0a0a;">
+            Inspection &amp; Compliance Tracking.
+          </h2>
+          <p class="ins-tracking__intro rr-reveal" data-reveal-delay="200">
+            Our goal is not simply to complete today’s inspection. We help our customers understand what is coming next.
+          </p>
+        </div>
+
+        <div class="ins-tracking__grid">
+          {trackingItems.map((item, i) => (
+            <article class="ins-tracking__card rr-reveal" data-reveal-delay={i * 60}>
+              <span class="ins-tracking__card-icon" aria-hidden="true">
+                <iconify-icon icon={item.icon} width="36" height="36"></iconify-icon>
+              </span>
+              <h3 class="ins-tracking__card-title">{item.title}</h3>
+              <p class="ins-tracking__card-body">{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §7. WHY CHOOSE RED ROCKS — dark SplitPanel, 10 cards in 2 cols
+         ═══════════════════════════════════════════════════════ -->
+    <div class="ins-whychoose__backdrop">
+      <section class="ins-whychoose rr-band rr-band--reveal-top">
+        <div class="section-inner">
+          <div class="ins-whychoose__head">
+            <p class="av-dblh__subtitle section-eyebrow ins-whychoose__eyebrow rr-reveal">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>Why Choose Us</span>
+            </p>
+            <h2 class="section-title section-title--light rr-reveal" data-reveal-delay="100">
+              Why Choose Red Rocks Fire Protection?
+            </h2>
+          </div>
+
+          <div class="ins-whychoose__grid">
+            {whyChooseItems.map((item, i) => (
+              <article class="ins-whychoose__card rr-reveal" data-reveal-delay={i * 60}>
+                <span class="ins-whychoose__card-icon" aria-hidden="true">
+                  <iconify-icon icon={item.icon} width="38" height="38"></iconify-icon>
+                </span>
+                <div class="ins-whychoose__card-copy">
+                  <h3 class="ins-whychoose__card-title">{item.title}</h3>
+                  <p class="ins-whychoose__card-body">{item.body}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §8. HOW WE WORK — white SplitPanel, image right
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container ins-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">How We Work</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              More Than an Inspection Company.
+            </h2>
+            <div class="mt-6 rr-reveal ins-split-body" data-reveal-delay="200">
+              <p>Many companies can arrive, perform a test, produce a report, and move on to the next property. Red Rocks Fire Protection Services takes a different approach. Our goal is to become a long-term life safety partner who understands your facility, your systems, your inspection history, and the recurring requirements that need to be managed over time.</p>
+              <p>Because inspection and testing frequencies can vary by system, adopted code edition, manufacturer requirements, and Authority Having Jurisdiction (AHJ), we review each property individually rather than applying a one-size-fits-all schedule. Whether we are coordinating annual inspections, identifying an upcoming 3-year requirement, planning 5-year sprinkler testing, tracking deficiencies, or helping manage multiple locations, our team focuses on giving clients a clearer picture of their overall compliance responsibilities.</p>
+            </div>
+            <div class="mt-8 rr-reveal" data-reveal-delay="240">
+              <a href="/services" class="av-wgl-btn av-wgl-btn--outline">
+                <span class="av-wgl-btn__text">See All Services</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img
+                src="/images/rrfps-about-company-overview.jpg"
+                alt="Red Rocks Fire Protection reviewing inspection history and recurring requirements for a property"
+                loading="lazy" decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §9. OUR EDGE — #DBDADA SplitPanel (advocacy)
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-edge rr-band rr-band--reveal-top">
+      <div class="rr-container ins-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 ins-edge__eyebrow rr-reveal">Our Edge</p>
+            <h2
+              class="font-display font-black uppercase tracking-tight rr-reveal ins-edge__title"
+              data-reveal-delay="100"
+              style="font-size: var(--rr-text-section); line-height: 0.95;"
+            >
+              Advocacy That Helps You Stay Ahead of Compliance.
+            </h2>
+            <div class="mt-6 rr-reveal ins-edge__body" data-reveal-delay="200">
+              <p>Advocacy is one of the core values that defines Red Rocks Fire Protection Services and one of the qualities that sets our inspection program apart.</p>
+              <p>Managing fire and life safety compliance can become complicated quickly. Different systems may require annual, semi-annual, quarterly, 3-year, or 5-year inspections and testing. Deficiencies may require follow-up repairs. Building changes, system age, adopted codes, and jurisdictional requirements can affect what is required and when.</p>
+              <p>Our team helps simplify that responsibility. We work to identify upcoming requirements, communicate deficiencies clearly, recommend corrective action, coordinate needed repairs, and help clients plan for longer-term testing and capital needs.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 ins-edge-img rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card bg-rr-black ins-edge-img__wrap">
+              <img
+                src="/images/red-rocks-fire-protection-advocacy-is-the-job.jpg"
+                alt="Red Rocks Fire Protection advocating for clients and helping them stay ahead of compliance"
+                loading="lazy" decoding="async"
+                class="w-full h-full object-cover ins-edge-img__img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §10. WHY CLIENTS STAY — dark bg + 5 value cards (brand promise)
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-why">
+      <div class="ins-why__bg" aria-hidden="true"></div>
+      <div class="ins-why__inner">
+        <div class="rr-reveal max-w-3xl mb-12 md:mb-16">
+          <p class="rr-eyebrow mb-5" style="color: rgba(255,255,255,0.7);">Why Clients Stay</p>
+          <h2
+            class="font-display font-black uppercase tracking-tight"
+            style="font-size: var(--rr-text-section); line-height: 0.95; color: #fff;"
+          >
+            Why Clients Continue to Choose RRFPS.
+          </h2>
+          <p class="mt-6" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.9);">
+            Everything we do is built upon the values that have guided our company since its founding. These principles are reflected in our Brand Promise: we communicate clearly, we honor our commitments, we arrive prepared, we respond when it matters most, we price fairly, we stand behind our work, and we remain committed until every issue has been fully resolved.
+          </p>
+        </div>
+
+        <div class="grid gap-4 md:gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          {whyClientsValues.map((v, i) => (
+            <article class="rr-reveal ins-flowcard rounded-rr-card p-6 flex flex-col" data-reveal-delay={i * 100}>
+              <span class="ins-flowcard__icon" aria-hidden="true">
+                <iconify-icon icon={whyClientsIcons[i]} width="40" height="40"></iconify-icon>
+              </span>
+              <h3 class="font-display font-bold tracking-tight" style="font-size: var(--rr-text-card); line-height: 1.05; color: #fff;">
+                {v.title}
+              </h3>
+              <p class="mt-3 leading-relaxed flex-1" style="font-size: var(--rr-text-lead); color: rgba(255,255,255,0.85);">
+                {v.body}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §11. EXPERIENCE — white SplitPanel
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-splitpanel bg-rr-white rr-band rr-band--reveal-top">
+      <div class="rr-container ins-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 text-rr-grey rr-reveal">Experience</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              Inspection &amp; Compliance Experience You Can Trust.
+            </h2>
+            <div class="mt-6 rr-reveal ins-split-body" data-reveal-delay="200">
+              <p>Fire and life safety inspections require more than knowing how to test one type of system. Properties can contain fire sprinkler systems, fire alarm systems, fire extinguishers, fire pumps, backflow prevention assemblies, ERRCS/BDA systems, Area of Refuge communication systems, elevator emergency communication systems, kitchen hood suppression systems, and other applicable life safety equipment — each with its own inspection, testing, documentation, and maintenance requirements.</p>
+              <p>Red Rocks Fire Protection Services brings that broad system expertise together under one roof. Our NICET-certified technicians and experienced team help clients coordinate recurring requirements, document deficiencies, identify corrective actions, and plan for future testing. That breadth is especially valuable for commercial and multifamily properties and for management companies responsible for multiple locations.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img
+                src="/images/rrfps-experience-you-can-trust.jpg"
+                alt="Red Rocks Fire Protection experienced inspection team supporting commercial and multifamily properties"
+                loading="lazy" decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §12. OUR PROMISE — #DBDADA SplitPanel
+         ═══════════════════════════════════════════════════════ -->
+    <section class="ins-splitpanel ins-promise rr-band rr-band--reveal-top">
+      <div class="rr-container ins-container">
+        <div class="grid gap-10 md:gap-12 lg:gap-16 items-center md:grid-cols-2">
+          <div class="order-2 md:order-1">
+            <p class="rr-eyebrow mb-5 ins-promise__eyebrow rr-reveal">Our Promise</p>
+            <h2 class="font-display font-black uppercase tracking-tight rr-reveal" data-reveal-delay="100" style="font-size: var(--rr-text-section); line-height: 0.95;">
+              Ready for Today’s Inspection — and What Comes Next.
+            </h2>
+            <div class="mt-6 rr-reveal ins-promise__body" data-reveal-delay="200">
+              <p>At Red Rocks Fire Protection Services, our goal is not simply to complete today’s inspection. We want to help you understand the condition of your systems, address deficiencies, stay ahead of future requirements, and make fire and life safety compliance easier to manage year after year.</p>
+              <p>Whether you need annual inspections, quarterly or semi-annual testing, 3-year requirements, 5-year sprinkler testing, backflow certification, deficiency tracking, repair recommendations, long-term capital planning, or coordinated inspections across multiple properties, our team is ready to provide the organization, technical expertise, communication, and long-term partnership you deserve.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
+            <div class="overflow-hidden rounded-rr-card aspect-[4/3] bg-rr-bg-panel">
+              <img
+                src="/images/rrfps-our-promise.jpg"
+                alt="Red Rocks Fire Protection ready to support your inspection and compliance needs"
+                loading="lazy" decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         §13. CLOSING CTA — site-wide ClosingCTA with phone + CTAs
+         ═══════════════════════════════════════════════════════ -->
     <ClosingCTA
       backgroundImage="/images/rrfps-inspections-cta-bg.jpg"
       paragraphs={[
-        "Choosing the right inspection partner is about more than checking boxes and passing the AHJ. It's about having a team you can trust to communicate clearly, advocate for you, stay ahead of compliance, and take responsibility for protecting your people and property.",
+        "Choosing the right inspection partner is about more than completing a checklist or receiving a report. It’s about having a team you can trust to understand your systems, communicate clearly, advocate for you, help manage compliance requirements, and take responsibility for helping protect your people and property.",
+        "At Red Rocks Fire Protection Services, we want to be more than another inspection vendor — we want to be your trusted life safety partner for years to come.",
       ]}
     />
 
@@ -192,244 +631,299 @@ const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
 </BaseLayout>
 
 <style>
-  /* ══════════════════════════════════════════════════════════
-   * Reused from industry.astro (page-title banner + ibox grid)
-   * so the visual language matches that page 1:1.
-   * ══════════════════════════════════════════════════════════ */
+  /* ============================================================
+   * Shared utilities (mirrored from kitchen-hood page; identical
+   * patterns so all service pages feel like one product family)
+   * ============================================================ */
 
-  /* ---- 0. Page-title banner ---- */
-  .ptbanner {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    min-height: 450px;
-    margin-bottom: 60px;
-    padding-top: 154px;
-    padding-bottom: 20px;
-    display: flex;
-    align-items: flex-end;
-  }
-  .ptbanner__inner {
+  .section-light { background: #ffffff; color: #0a0a0a; }
+  .section-inner {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1120px;
     margin-inline: auto;
-    padding-inline: 15px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
+    padding: 110px 80px;
   }
-  .ptbanner__title {
-    margin: 0;
-    color: #ffffff;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: clamp(38px, 5.5vw, 75px);
-    line-height: 104px;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
-  }
-  .ptbanner__breadcrumbs {
-    color: #ffffff;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 30px;
-    letter-spacing: -0.04em;
-    padding-bottom: 14px;
-  }
-  .ptbanner__breadcrumbs a {
-    color: #ffffff;
-    text-decoration: none;
-    transition: 0.4s;
-  }
-  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
-  .ptbanner__divider { margin: 0 10px; }
-  .ptbanner__current {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
-  /* ---- 1. Solutions + ibox grid ---- */
-  .sol {
-    display: flex;
-    max-width: 1600px;
-    margin: 0 auto 80px;
-  }
-  .sol__left { width: 50%; }
-  .sol__sticky {
-    position: sticky;
-    top: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding-right: 0;
-  }
-  .sol__sticky > * { width: 100%; max-width: 585px; }
-  .sol__sticky .av-dblh__subtitle {
-    margin-bottom: 23px;
-    display: flex;
-  }
-  .sol__title {
+  .section-eyebrow { margin-bottom: 23px; display: flex; }
+  .section-title {
     margin: 0;
     font-family: "Space Grotesk", sans-serif;
-    font-size: 56px;
+    font-size: clamp(38px, 5vw, 64px);
     font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
     text-transform: uppercase;
-    line-height: 1.178em;
-    padding-bottom: 5px;
     color: #0a0a0a;
   }
+
+  .rr-reveal[data-reveal-delay] { transition-delay: var(--reveal-delay, 0ms); }
+
+  /* ============================================================
+   * §0. ptbanner
+   * ============================================================ */
+  .ptbanner { position: relative; isolation: isolate; background-color: #0d0d0b; }
+  .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; background-position: center bottom; z-index: -2; }
+  .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 13, 11, 0.35) 0%, rgba(13, 13, 11, 0.45) 60%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
+  .ptbanner__inner { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 15px; min-height: 450px; margin-bottom: 60px; padding-top: 154px; padding-bottom: 20px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: 32px; }
+  .ptbanner__title { margin: 0; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 104px; letter-spacing: -0.05em; text-transform: uppercase; }
+  .ptbanner__breadcrumbs { color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 500; font-size: 16px; line-height: 30px; letter-spacing: -0.04em; padding-bottom: 14px; }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; transition: 0.4s; }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ============================================================
+   * §1. sol (2×2 ibox grid) — copy of industry.astro/.sol + .ibox
+   * ============================================================ */
+  .sol { display: flex; max-width: 1600px; margin: 0 auto 80px; }
+  .sol__left { width: 50%; }
+  .sol__sticky { position: sticky; top: 120px; display: flex; flex-direction: column; align-items: flex-end; padding-right: 0; }
+  .sol__sticky > * { width: 100%; max-width: 585px; }
+  .sol__sticky .av-dblh__subtitle { margin-bottom: 23px; display: flex; }
+  .sol__title { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 56px; font-weight: 700; text-transform: uppercase; line-height: 1.178em; padding-bottom: 5px; color: #0a0a0a; }
   .sol__title span { display: inline-block; }
   .sol__spacer { height: 34px; }
   .sol__cta .av-wgl-btn { display: inline-flex; }
   .sol__cta .av-wgl-btn__text { padding: 17px 35px; }
-
-  .sol__grid {
-    width: 50%;
-    margin-top: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    row-gap: 30px;
-  }
+  .sol__grid { width: 50%; margin-top: 8px; display: flex; flex-wrap: wrap; row-gap: 30px; }
   .sol__grid .ibox { width: 50%; }
 
-  .ibox {
-    position: relative;
-    display: block;
-    text-decoration: none;
-    transition: 0.4s;
-  }
-  .ibox__bg {
-    position: absolute;
-    inset: 0;
-    border: 1px solid #0a0a0a26;
-    transition: 0.4s;
-    pointer-events: none;
-  }
+  .ibox { position: relative; display: block; text-decoration: none; transition: 0.4s; }
+  .ibox__bg { position: absolute; inset: 0; border: 1px solid #0a0a0a26; transition: 0.4s; pointer-events: none; }
   .ibox:hover { background-color: #D51126; }
   .ibox:hover .ibox__bg { border-color: transparent; }
-  .ibox__icon {
-    display: inline-flex;
-    background-color: #d41226;
-    padding: 16px;
-    transition: 0.4s;
-    /* Color set on .ibox__icon itself so the Iconify-rendered SVG (which
-     * sits inside <iconify-icon>'s shadow DOM and uses currentColor)
-     * inherits white. The :global(svg) selector no longer reaches the
-     * SVG once it's encapsulated by the iconify-icon web component. */
-    color: #ffffff;
-  }
-  .ibox__icon :global(svg) {
-    width: 50px;
-    height: 50px;
-    fill: #ffffff;
-    transition: 0.4s;
-  }
+  .ibox__icon { display: inline-flex; background-color: #d41226; padding: 16px; transition: 0.4s; color: #ffffff; }
+  .ibox__icon :global(svg) { width: 50px; height: 50px; fill: #ffffff; transition: 0.4s; }
   .ibox:hover .ibox__icon { background-color: #ffffff; color: #0a0a0a; }
   .ibox:hover .ibox__icon :global(svg) { fill: #0a0a0a; }
-  .ibox__content {
-    display: flex;
-    flex-direction: column;
-    min-height: 306px;
-    padding: 51px 40px 30px 40px;
-  }
-  .ibox__title {
-    margin: 0;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(26px, 1.9vw, 30px);
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1.4em;
-    color: #0a0a0a;
-    transition: 0.4s;
-  }
-  .ibox__text {
-    padding-top: 16px;
-    color: #626262;
-    font-size: 16px;
-    line-height: 1.875;
-    transition: 0.4s;
-  }
-  .ibox:hover .ibox__title,
-  .ibox:hover .ibox__text { color: #ffffff; }
+  .ibox__content { display: flex; flex-direction: column; min-height: 306px; padding: 51px 40px 30px 40px; }
+  .ibox__title { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(26px, 1.9vw, 30px); font-weight: 700; text-transform: uppercase; line-height: 1.4em; color: #0a0a0a; transition: 0.4s; }
+  .ibox__text { padding-top: 16px; color: #626262; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); transition: 0.4s; }
+  .ibox:hover .ibox__title, .ibox:hover .ibox__text { color: #ffffff; }
 
-  /* ---- 2. Why-inspections band ----
-   * about.astro uses a full-bleed photo + dark overlay under its Benefits
-   * grid. We adapt that pattern: same bg+overlay, but inside it sit two
-   * text columns (eyebrow + headline left, copy + bullets right) instead
-   * of a 4-card grid — lighter, more editorial.
-   */
-  .rr-why {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding-block: 96px;
+  /* ============================================================
+   * §2. ins-whyrr — tan bg-image band (intro + 3 trust bullets)
+   * ============================================================ */
+  .ins-whyrr { position: relative; isolation: isolate; overflow: hidden; background-color: #E0D9D3; }
+  .ins-whyrr__bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: -2; }
+  .ins-whyrr__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(224, 217, 211, 0.30) 0%, rgba(224, 217, 211, 0.55) 25%, rgba(224, 217, 211, 0.85) 50%, #E0D9D3 75%, #E0D9D3 100%); z-index: -1; }
+  .ins-whyrr__eyebrow { color: var(--rr-red, #d41226); }
+  .ins-whyrr__title-black { color: #0a0a0a; }
+  .ins-whyrr__title-red { color: var(--rr-red, #d41226); }
+  .ins-whyrr__body { color: #0a0a0a; }
+  .ins-why-grid { display: grid; gap: 48px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 1024px) { .ins-why-grid { gap: 80px; grid-template-columns: 5fr 7fr; } }
+  .ins-why-grid__left h2 { max-width: 16ch; }
+  .ins-whyrr__bullets { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; gap: 14px; }
+  .ins-whyrr__bullet { display: grid; grid-template-columns: 38px 1fr; align-items: center; gap: 14px; color: #0a0a0a; font-size: var(--rr-text-lead); line-height: 1.55; }
+  .ins-whyrr__bullet-icon { width: 38px; height: 38px; display: grid; place-items: center; background: var(--rr-red, #d41226); color: #ffffff; flex-shrink: 0; }
+  .ins-whyrr__bullet-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
+
+  /* ============================================================
+   * §3. ins-acc — dark bg-image accordion (annual + 3-year panels)
+   * ============================================================ */
+  .ins-acc { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
+  .ins-acc__bg { position: absolute; inset: 0; background-image: url('/images/red-rocks-fire-alarm-accordion-bg.jpg'); background-size: cover; background-position: left center; z-index: -2; }
+  .ins-acc__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 13, 11, 0.68) 0%, rgba(13, 13, 11, 0.62) 50%, rgba(13, 13, 11, 0.68) 100%); z-index: -1; }
+  .ins-acc__head { max-width: 800px; margin: 0 auto 48px; text-align: center; color: #ffffff; }
+  .ins-acc__eyebrow { color: var(--rr-red, #d41226) !important; font-family: "Space Grotesk", sans-serif !important; font-weight: 700 !important; font-size: 16px !important; letter-spacing: 0.04em !important; text-transform: uppercase !important; justify-content: center !important; margin-bottom: 22px !important; }
+  .ins-acc__rule { display: inline-block; width: 36px; height: 2px; background: var(--rr-red, #d41226); vertical-align: middle; }
+  .ins-acc__eyebrow > span:not(.ins-acc__rule) { margin: 0 12px; }
+  .ins-acc__title { margin: 0 0 22px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(36px, 5vw, 56px); color: #ffffff; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.02em; }
+  .ins-acc__intro { margin: 0 auto; max-width: 700px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #ffffff; }
+  .ins-acc__list { max-width: 800px; margin-inline: auto; }
+
+  /* Accordion panel — shared across the page */
+  .acc__panel--card { overflow: hidden; margin-bottom: 10px; background: #ffffff; border-radius: 6px; transition: box-shadow 0.25s ease, transform 0.25s ease; }
+  .acc__panel--card:last-child { margin-bottom: 0; }
+  .acc__panel--card:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); transform: translateY(-1px); }
+  .acc__panel--card.is-active { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+  .acc__panel--card .acc__header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 18px; width: 100%; background: none; border: none; padding: 18px 24px; cursor: pointer; text-align: left; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: #0a0a0a; }
+  .acc__panel-icon { display: grid; place-items: center; color: var(--rr-red, #d41226); width: 28px; height: 28px; flex-shrink: 0; }
+  .acc__panel-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 0.6; }
+  .acc__panel--card .acc__title { color: #0a0a0a; font-size: 18px; font-weight: 700; line-height: 1.3; }
+  .acc__caret { display: grid; place-items: center; color: #0a0a0a; width: 24px; height: 24px; flex-shrink: 0; transform: rotate(90deg); transition: transform 0.3s ease; }
+  .acc__panel--card.is-active .acc__caret { transform: rotate(-90deg); }
+  .acc__caret svg { width: 14px; height: 12px; }
+
+  .acc__panel--card .acc__content { padding: 4px 24px 22px 70px; color: #303030; background: #ffffff; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); }
+  .acc__panel--card .acc__content p { margin: 0; font-size: var(--rr-text-lead) !important; line-height: var(--rr-text-lead-lh); }
+  .acc__panel--card .acc__bullets { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+  .acc__panel--card .acc__bullet { display: grid; grid-template-columns: 22px 1fr; align-items: baseline; gap: 4px; color: #303030; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); }
+  .acc__panel--card .acc__bullet-mark { color: var(--rr-red, #d41226); font-size: 16px; line-height: 1; }
+  .acc__panel--card .acc__footer { margin: 14px 0 0 !important; font-style: italic; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: rgba(10, 10, 10, 0.7); }
+
+  /* ============================================================
+   * §4/§8/§11/§12. ins-splitpanel — shared white/DADA split panel
+   * ============================================================ */
+  .ins-split-body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
+  .ins-split-body p:last-child { margin-bottom: 0; }
+
+  .ins-edge-img { display: flex; align-items: center; }
+  .ins-edge-img__wrap { width: 100%; height: 480px; }
+  .ins-edge-img__img { object-fit: cover; object-position: center; }
+  .ins-edge { background-color: #DBDADA; }
+  .ins-edge__eyebrow { color: var(--rr-grey, #626262); }
+  .ins-edge__title { color: #0a0a0a; }
+  .ins-edge__body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
+  .ins-edge__body p:last-child { margin-bottom: 0; }
+
+  .ins-promise { background-color: #DBDADA; }
+  .ins-promise__eyebrow { color: var(--rr-red, #d41226); }
+  .ins-promise__body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #0a0a0a; }
+  .ins-promise__body p:last-child { margin-bottom: 0; }
+
+  .ins-container { max-width: 1340px; margin-inline: auto; padding-inline: 80px; }
+
+  /* ============================================================
+   * §5. ins-purpose — full-bleed bg image + red badge
+   * ============================================================ */
+  .ins-purpose { background: #ffffff; color: #0a0a0a; }
+  .ins-purpose__wrap { padding-top: 96px; padding-bottom: 96px; max-width: none; padding-inline: 64px; }
+  .ins-purpose__stage {
+    position: relative; isolation: isolate; min-height: 400px;
+    overflow: hidden; width: 100vw; max-width: 100vw;
+    margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
+    border-radius: 0;
+    display: flex; align-items: center; padding-block: 40px;
+  }
+  .ins-purpose__stage-bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: -2; }
+  .ins-purpose__stage-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.28) 36%, rgba(0, 0, 0, 0.46) 100%); z-index: -1; }
+  .ins-purpose__badge {
+    align-self: center; display: flex; flex-direction: column; justify-content: center; gap: 4px;
+    margin-right: 42px; padding: 36px 28px 36px 64px;
+    background: linear-gradient(135deg, #d41226 0%, #c00e20 100%);
     color: #ffffff;
-    background-color: #0d0d0b;
   }
-  @media (min-width: 768px) {
-    .rr-why { padding-block: 128px; }
+  .ins-purpose__badge strong {
+    margin: 0; font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(30px, 3vw, 58px); font-weight: 700; line-height: 1.06; text-transform: uppercase;
   }
-  .rr-why__bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    z-index: -2;
+  .ins-purpose__content-row {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+    max-width: 1120px; margin: 64px auto 0; align-items: start;
   }
-  .rr-why__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.65) 100%);
-    z-index: -1;
+  .ins-purpose__title {
+    margin: 0; color: #d41226; font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(36px, 4vw, 54px); font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.03em; text-transform: uppercase;
   }
-  .rr-why__grid {
-    display: grid;
-    gap: 48px;
-    grid-template-columns: 1fr;
-    align-items: start;
+  .ins-purpose__copy p {
+    margin: 0; color: #111111; font-family: "Space Grotesk", sans-serif;
+    font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); letter-spacing: -0.03em;
   }
-  @media (min-width: 1024px) {
-    .rr-why__grid {
-      gap: 80px;
-      grid-template-columns: 5fr 7fr;
-    }
+  .ins-purpose__copy p + p { margin-top: 18px; }
+  .ins-purpose__copy strong { font-weight: 600; }
+
+  /* ============================================================
+   * §6. ins-tracking — white icon-grid (11 cards)
+   * ============================================================ */
+  .ins-tracking { background-color: #dbdada; }
+  .ins-tracking .section-inner { padding-top: 110px; padding-bottom: 110px; }
+  .ins-tracking__head { max-width: 850px; margin-bottom: 58px; }
+  .ins-tracking__intro {
+    margin: 24px 0 0; max-width: 720px; color: #000000;
+    font-size: 18px; line-height: 1.7;
   }
-  .rr-why__left h2 { color: #ffffff; max-width: 16ch; }
-  .rr-why__left .rr-eyebrow--light {
-    color: rgba(255,255,255,0.7) !important;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+  .ins-tracking__grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
   }
-  .rr-why__bullets {
-    list-style: none;
-    margin: 1.75rem 0 0;
-    padding: 0;
-    display: grid;
-    gap: 14px;
+  @media (min-width: 768px) and (max-width: 1100px) { .ins-tracking__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 767px) { .ins-tracking__grid { grid-template-columns: 1fr; } }
+  .ins-tracking__card {
+    position: relative; min-height: 220px;
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 26px 24px 24px;
+    border: 1px solid rgba(10, 10, 10, 0.14);
+    background: #ffffff;
   }
-  .rr-why__bullet {
-    display: grid;
-    grid-template-columns: 24px 1fr;
-    align-items: baseline;
-    gap: 4px;
-    color: rgba(255,255,255,0.92);
-    font-size: 17px;
-    line-height: 1.55;
+  .ins-tracking__card-icon {
+    width: 56px; height: 56px; display: grid; place-items: center;
+    border-radius: 50%; background: #d41226; color: #ffffff;
+    flex: 0 0 auto;
   }
-  .rr-why__bullet-mark {
-    color: #d41226;
-    font-size: 18px;
-    line-height: 1;
+  .ins-tracking__card-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 0.9; }
+  .ins-tracking__card-title {
+    margin: 0; font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(17px, 1.4vw, 20px); font-weight: 700; line-height: 1.18;
+    text-transform: uppercase; color: #0a0a0a;
+  }
+  .ins-tracking__card-body {
+    margin: 0; color: #232323;
+    font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh);
   }
 
-  /* ---- Responsive ---- */
+  /* ============================================================
+   * §7. ins-whychoose — dark SplitPanel-style, 10 cards in 2 cols
+   * ============================================================ */
+  .ins-whychoose__backdrop { background-color: #dbdada; }
+  .ins-whychoose { background-color: #0d0d0b; color: #ffffff; }
+  .ins-whychoose .section-title { color: #ffffff !important; }
+  .ins-whychoose .section-inner { padding-top: 110px; padding-bottom: 110px; }
+  .ins-whychoose__head { max-width: 850px; margin-bottom: 58px; }
+  /* Eyebrow stays brand red per client direction; lighter-weight to
+   * read against the dark background without competing with the white
+   * title below. */
+  .ins-whychoose__eyebrow { color: var(--rr-red, #d41226) !important; }
+  .ins-whychoose__grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  @media (max-width: 767px) { .ins-whychoose__grid { grid-template-columns: 1fr; } }
+  .ins-whychoose__card {
+    display: grid; grid-template-columns: 96px 1fr; align-items: flex-start; gap: 22px;
+    padding: 26px 26px; min-height: 160px;
+    background: #0d0d0b; border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  /* Icon circle flips to brand red on dark background (icon goes white
+   * to read against the red). */
+  .ins-whychoose__card-icon {
+    width: 96px; height: 96px; flex: 0 0 96px;
+    display: grid; place-items: center; border-radius: 50%;
+    background: #d41226; color: #ffffff;
+  }
+  .ins-whychoose__card-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 0.9; }
+  .ins-whychoose__card-copy { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .ins-whychoose__card-title {
+    margin: 0; font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(17px, 1.4vw, 20px); font-weight: 700; line-height: 1.18;
+    text-transform: uppercase; color: #ffffff;
+  }
+  .ins-whychoose__card-body {
+    margin: 0; color: rgba(255, 255, 255, 0.82);
+    font-size: var(--rr-text-body); line-height: var(--rr-text-body-lh);
+  }
+
+  /* ============================================================
+   * §10. ins-why — dark bg + 5 value cards (brand promise)
+   * ============================================================ */
+  .ins-why { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
+  @media (min-width: 768px) { .ins-why { padding-block: 150px; } }
+  .ins-why__bg { position: absolute; inset: 0; background-image: url('/images/red-rocks-fire-alarm-why-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
+  .ins-why__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; color: #ffffff; }
+  @media (min-width: 768px) { .ins-why__inner { padding-inline: 2.5rem; } }
+
+  @property --ins-flow-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  .ins-flowcard { position: relative; isolation: isolate; background: rgba(255, 255, 255, 0.10); border: 0; border-radius: 0; }
+  .ins-flowcard::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 2px;
+    background: conic-gradient(from var(--ins-flow-angle), rgba(255, 255, 255, 0.28) 0deg, #ff2438 70deg, #d41226 130deg, rgba(255, 255, 255, 0.28) 200deg, rgba(255, 255, 255, 0.28) 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: ins-flow-spin 4s linear infinite;
+  }
+  @keyframes ins-flow-spin { to { --ins-flow-angle: 360deg; } }
+  @media (prefers-reduced-motion: reduce) { .ins-flowcard::before { animation: none; } }
+  .ins-flowcard__icon { width: 74px; height: 74px; display: grid; place-items: center; color: #ffffff; background: #d41226; flex: 0 0 auto; margin-bottom: 22px; }
+  .ins-flowcard__icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
+
+  /* ============================================================
+   * Responsive
+   * ============================================================ */
   @media (max-width: 1200px) {
+    .ins-container { padding-inline: 60px; }
     .ptbanner__title { font-size: 64px; line-height: 72px; }
     .sol { margin-top: 0; padding: 0 30px; flex-wrap: wrap; }
     .sol__left { width: 100%; }
@@ -442,27 +936,104 @@ const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
     .ibox__content { min-height: 235px; padding: 31px 30px 20px 30px; }
     .ibox__icon :global(svg) { width: 40px; height: 40px; }
     .ibox__title { font-size: 26px; }
-    .rr-why { padding-block: 96px; }
+    .ins-purpose__wrap { padding-inline: 60px; }
+    .ins-purpose__stage { padding-right: 24px; }
+    .ins-purpose__badge { margin-right: 0; padding: 32px 22px 32px 28px; }
+    .ins-purpose__content-row { gap: 48px; }
+    .ins-tracking__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 
   @media (max-width: 767px) {
-    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .section-inner { padding: 70px 28px; }
+    .ins-container { padding-inline: 28px; }
+    .ptbanner__inner { min-height: 320px; padding-top: 120px; grid-template-columns: 1fr; row-gap: 12px; }
     .ptbanner__title { font-size: 40px; line-height: 48px; }
     .sol { padding: 0; row-gap: 30px; }
     .sol__sticky { position: relative; top: 0; padding: 0 15px; }
     .sol__title { font-size: 28px; }
     .sol__grid { padding: 0 15px; }
     .ibox__content { min-height: 180px; }
-    .rr-why { padding-block: 64px; }
-    .rr-why__bullets { gap: 12px; }
-    .rr-why__bullet { font-size: 16px; }
+    .ins-acc { padding-block: 70px; }
+    .ins-acc__title { font-size: 28px; margin-bottom: 40px; }
+    .ins-why { padding-block: 70px; }
+    .ins-purpose__wrap { padding-top: 72px; padding-bottom: 72px; padding-inline: 28px; }
+    .ins-purpose__stage { min-height: 0; padding: 24px 0; border-radius: 18px; }
+    .ins-purpose__stage-overlay { background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.52) 100%); }
+    .ins-purpose__badge { align-self: auto; width: min(82%, 320px); min-height: 0; margin: 24px 0 0 0; padding: 24px 22px; }
+    .ins-purpose__badge strong { font-size: 34px; }
+    .ins-purpose__content-row { grid-template-columns: 1fr; gap: 28px; margin-top: 42px; }
+    .ins-purpose__title { font-size: 34px; }
+    .ins-purpose__copy p { font-size: 14px; line-height: 1.5; }
+    .ins-tracking__grid { grid-template-columns: 1fr; }
+    .ins-whychoose__grid { grid-template-columns: 1fr; }
+    .ins-whychoose__card { grid-template-columns: 1fr; gap: 16px; padding: 22px 20px; min-height: 0; }
+    .ins-whychoose__card-icon { width: 80px; height: 80px; flex-basis: 80px; }
+    .ins-edge-img__wrap { height: 320px; }
   }
 </style>
 
 <script>
-  /* Ibox icons are now rendered by Iconify web components (see <iconify-icon>
-   * in the markup above). The iconify-icon runtime is loaded globally from
-   * src/layouts/BaseLayout.astro, so no per-page icon injection is needed.
-   * This page has no other client-side behavior — Section 3 uses the
-   * <SplitPanel> and <DualCTA> components which are pure Astro/SSR. */
+  /* ── Accordion ──────────────────────────────────────────────── */
+  function initInsAccordion() {
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-acc-panel]'));
+    if (!panels.length) return false;
+    panels.forEach(function (panel) {
+      var header = panel.querySelector('.acc__header');
+      var content = panel.querySelector('.acc__content');
+      if (!header || !content) return;
+      if (header.__insAccordionWired) return;
+      header.__insAccordionWired = true;
+      header.addEventListener('click', function () {
+        var wasOpen = panel.classList.contains('is-active');
+        panels.forEach(function (p) {
+          p.classList.remove('is-active');
+          var h = p.querySelector('.acc__header');
+          if (h) h.setAttribute('aria-expanded', 'false');
+          var c = p.querySelector('.acc__content');
+          if (c) c.hidden = true;
+        });
+        if (!wasOpen) {
+          panel.classList.add('is-active');
+          header.setAttribute('aria-expanded', 'true');
+          content.hidden = false;
+        }
+      });
+    });
+    return true;
+  }
+  function bindInsAccordion() { if (!initInsAccordion()) setTimeout(initInsAccordion, 100); }
+
+  /* ── Reveal stagger (matches the kitchen-hood reveal pattern) ── */
+  function initInsReveal() {
+    document.querySelectorAll('.rr-reveal[data-reveal-delay]').forEach(function (el) {
+      el.style.setProperty('--reveal-delay', el.getAttribute('data-reveal-delay') + 'ms');
+    });
+    var ctaBody = document.querySelector('.cta__body');
+    if (ctaBody && !ctaBody.classList.contains('rr-reveal')) ctaBody.classList.add('rr-reveal');
+    var pending = document.querySelectorAll('.rr-reveal:not(.is-visible)');
+    if (pending.length) {
+      var observer = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            entries[i].target.classList.add('is-visible');
+            observer.unobserve(entries[i].target);
+          }
+        }
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+      pending.forEach(function (el) { observer.observe(el); });
+    }
+    document.querySelectorAll('.rr-reveal').forEach(function (el) {
+      if (el.classList.contains('is-visible')) { el.style.removeProperty('--reveal-delay'); return; }
+      var cleanup = new MutationObserver(function () {
+        if (el.classList.contains('is-visible')) { el.style.removeProperty('--reveal-delay'); cleanup.disconnect(); }
+      });
+      cleanup.observe(el, { attributes: true, attributeFilter: ['class'] });
+    });
+  }
+  function bindInsReveal() { initInsReveal(); }
+
+  document.addEventListener('astro:page-load', function () { bindInsAccordion(); bindInsReveal(); });
+  document.addEventListener('astro:after-swap', function () { bindInsAccordion(); bindInsReveal(); });
+  document.addEventListener('DOMContentLoaded', function () { bindInsAccordion(); bindInsReveal(); });
+  if (document.readyState !== 'loading') { bindInsAccordion(); bindInsReveal(); }
 </script>
