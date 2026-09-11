@@ -3,7 +3,7 @@
  * Header — 1:1 replica of the Avelon demo header (Elementor template 473),
  * with one addition: SERVICES is now a hover/click dropdown trigger (no
  * own-page navigation). Its dropdown menu lists "Services Overview"
- * (-> /services) and "Inspections" (-> /inspections).
+ * (-> /services) and "Inspections" (-> /services/inspections).
  *
  *   Desktop:
  *     [ red logo box max(251px, 16.1%) ] [ right column:
@@ -95,7 +95,7 @@ const industriesNav: SubItem[] = industriesColumns.flatMap((c) => c.items);
  * Industries We Serve: bold uppercase column titles, red square icon +
  * left-aligned label per row, items contained in cream panel.
  *
- * /services, /inspections, and /fire-sprinkler-service-and-systems are
+ * /services, /services/inspections, and /fire-sprinkler-service-and-systems are
  * already built. The remaining 10 are placeholder pages (see
  * src/pages/services/<slug>.astro).
  */
@@ -104,7 +104,7 @@ const servicesColumns: MMColumn[] = [
     title: 'Explore Services',
     items: [
       { href: '/services',                                                label: 'Services Overview',     icon: 'mdi:file-document' },
-      { href: '/inspections',                                             label: 'Inspections',           icon: 'mdi:clipboard-check' },
+      { href: '/services/inspections',                                    label: 'Inspections',           icon: 'mdi:clipboard-check' },
       { href: '/services/monitoring-services',                            label: 'Monitoring Services',   icon: 'mdi:monitor' },
       { href: '/services/24-hour-service',                                label: '24 Hour Service',       icon: 'mdi:alarm-clock' },
     ],
@@ -247,7 +247,7 @@ const currentPath = typeof Astro !== 'undefined' ? Astro.url.pathname : '/';
  *  - Plain href items: current iff currentPath === href
  *  - Items with children: current iff currentPath matches any child href
  *    (so highlighting rolls up to the parent). This lets a top-level item
- *    styled as "active" stay active across /services, /inspections, etc.
+ *    styled as "active" stay active across /services, /services/inspections, etc.
  */
 function isCurrent(item: NavItem): boolean {
   if (item.children && item.children.length) {

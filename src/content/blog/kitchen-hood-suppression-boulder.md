@@ -73,7 +73,7 @@ Boulder Fire-Rescue enforces NFPA 96 and the International Fire Code as adopted 
 
 That last item — hood and duct cleaning — is a separate service from suppression, but the two live under the same standard and the same inspection, which is one more reason [restaurants and food-service tenants](/industries/restaurants) tend to be better served by one vendor coordinating the whole kitchen fire-protection picture than by stacking specialists. It's the same seam-closing logic behind our [one-vendor life safety model](/blog/one-vendor-life-safety-denver/).
 
-Red Rocks Fire Protection inspects, services, and re-nozzles UL-300 kitchen hood suppression systems across [Boulder](/service-areas/boulder-co/) and [Boulder County](/service-areas/counties/boulder-county-co/) on the required six-month cadence, and coordinates the [extinguisher](/services/portable-fire-extinguishers) and [inspection](/inspections) scope alongside it. It's all part of the [services](/services) we run as one team.
+Red Rocks Fire Protection inspects, services, and re-nozzles UL-300 kitchen hood suppression systems across [Boulder](/service-areas/boulder-co/) and [Boulder County](/service-areas/counties/boulder-county-co/) on the required six-month cadence, and coordinates the [extinguisher](/services/portable-fire-extinguishers) and [inspection](/services/inspections) scope alongside it. It's all part of the [services](/services) we run as one team.
 
 ---
 

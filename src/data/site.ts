@@ -239,7 +239,7 @@ export const about = {
         title: 'Inspections',
         body: 'Code-required annual testing of every life safety system, with comprehensive reports and correction summaries built for your jurisdiction.',
         icon: 'solar:clipboard-check-bold-duotone',
-        href: '/inspections',
+        href: '/services/inspections',
       },
       {
         title: 'Fire Sprinkler Systems',
@@ -665,7 +665,7 @@ export const industries = [
 // sector, building on long-standing relationships and proven success"),
 // supported by 3 of the 4 testimonials in §11 (two Greystar, one Bell
 // Partners). This page is the SEO deep-dive on that vertical —
-// differentiated from /inspections by audience (who it serves) rather
+// differentiated from /services/inspections by audience (who it serves) rather
 // than service (what it covers).
 //
 // Sub-nav: Industry pages for the remaining 13 verticals are queued but
@@ -809,7 +809,7 @@ export const multiFamilyPage = {
 } as const;
 
 // ──────────────────────────────────────────────────────────────────────
-// 12. INSPECTIONS PAGE — content for /inspections
+// 12. INSPECTIONS PAGE — content for /services/inspections
 // ──────────────────────────────────────────────────────────────────────
 
 export const inspectionsPage = {
@@ -1243,7 +1243,7 @@ export const navItems = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
-  { href: '/inspections', label: 'Inspections' },
+  { href: '/services/inspections', label: 'Inspections' },
   { href: '/contact', label: 'Contact Us' },
 ] as const;
 
