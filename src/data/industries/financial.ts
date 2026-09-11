@@ -26,7 +26,7 @@ export const financialPage: IndustryPageData = {
         'Financial institutions depend on trust, reliability and consistent operations. The teams responsible for bank branches, offices and related facilities must protect employees, customers and property while managing compliance, security and building systems across one or multiple locations.',
         'Red Rocks Fire Protection Services provides financial institutions with a coordinated approach to fire, life safety and security system support. Our One Vendor Life Safety Solution helps reduce the number of vendors your facility team must manage while providing one accountable partner for inspections, service, monitoring, system modifications and emergency response.',
       ],
-      image: '/images/rrfps-financial-institutions.jpg',
+      image: '/images/rrfps-financial-institutions-life-safety-support.jpg',
       imageAlt:
         'RRFPS technician supporting life safety systems for a Colorado financial institution.',
       background: 'white',
@@ -38,7 +38,7 @@ export const financialPage: IndustryPageData = {
       title: 'Comprehensive Fire and Life Safety Services.',
       intro:
         'RRFPS provides annual and required periodic inspections for fire alarm systems, fire sprinkler systems, backflow prevention assemblies and portable fire extinguishers. Detailed reporting, deficiency documentation and corrective-action recommendations help facility teams maintain organized compliance records and address issues efficiently.',
-      bgImage: '/images/rrfps-experience-you-can-trust.jpg',
+      bgImage: '/images/rrfps-financial-institutions-fire-protection-systems.jpg',
       panels: [
         {
           title: 'Alarm and Sprinkler Service',
@@ -63,7 +63,7 @@ export const financialPage: IndustryPageData = {
         'Office remodels, tenant improvements, building expansions and occupancy changes can affect existing alarm and sprinkler systems. RRFPS designs and installs code-compliant modifications and manages the process from permitting and installation through testing and final acceptance.',
         'As systems age, recurring trouble conditions, obsolete equipment or discontinued parts can also create reliability concerns. Our team can assess existing systems and recommend repairs, upgrades or replacement based on system condition and long-term performance.',
       ],
-      image: '/images/red-rocks-fire-protection-commercial-facilities.jpg',
+      image: '/images/rrfps-financial-institutions-branch-renovation-support.jpg',
       imageAlt:
         'RRFPS technician evaluating an aging fire alarm system for a bank branch upgrade.',
       background: 'light',
@@ -77,13 +77,19 @@ export const financialPage: IndustryPageData = {
           number: '01',
           title: 'See Expenses Coming.',
           body: 'Life safety expenses are easier to manage when facility teams can see them coming. RRFPS consulting services help clients evaluate systems, review deficiencies and plan for upcoming inspection, testing, maintenance and replacement requirements.',
-          image: '/images/red-rocks-fire-protection-compliance.jpg',
+          image: '/images/rrfps-financial-institutions-proactive-planning.jpg',
         },
         {
           number: '02',
           title: 'Advocacy for Evolving Codes.',
           body: 'Our advocacy approach also helps financial institutions navigate evolving fire codes, legislation and jurisdictional requirements. We stay informed, communicate clearly and help clients understand how requirements affect their facilities. For organizations with multiple locations, this coordinated approach can create greater consistency across the portfolio.',
-          image: '/images/rrfps-advocacy-that-protects-your-investment.jpg',
+          image: '/images/rrfps-financial-institutions-code-advocacy.jpg',
+        },
+        {
+          number: '03',
+          title: 'Clear Priorities Across Every Branch.',
+          body: 'A coordinated review of inspection findings, system conditions and upcoming work helps facility teams prioritize corrections, maintain organized compliance records and plan the next steps with confidence.',
+          image: '/images/rrfps-financial-institutions-system-compliance-review.jpg',
         },
       ],
     },
@@ -95,14 +101,14 @@ export const financialPage: IndustryPageData = {
         'A fire alarm outage, sprinkler leak, backflow failure or monitoring communication problem can create an immediate operational concern. RRFPS provides 24-hour emergency service, seven days a week, with a 90-minute response window within the Denver Metro area.',
         'Our technicians work to restore system functionality and help clients manage impairment requirements when necessary.',
       ],
-      image: '/images/why-choose-us-bg.jpg',
+      image: '/images/rrfps-financial-institutions-emergency-response.jpg',
       imageAlt:
         'RRFPS emergency technician restoring a fire alarm system at a Colorado bank branch.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-financial-institutions-fire-protection-cta.jpg',
     paragraphs: [
       'Red Rocks Fire Protection Services is a Colorado-based, family-owned company serving the Front Range since 2010. Trust is central to our brand and is earned through consistency, accountability and follow-through.',
       'Financial institutions expect their partners to communicate clearly, protect sensitive operations and do what they say they will do. Those expectations align directly with how RRFPS operates.',

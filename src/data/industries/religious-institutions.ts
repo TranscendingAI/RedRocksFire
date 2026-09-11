@@ -26,7 +26,7 @@ export const religiousInstitutionsPage: IndustryPageData = {
         'Churches and religious institutions are more than buildings. They are places where people gather, worship, learn, celebrate, volunteer and support one another. The people responsible for these facilities carry an important responsibility: maintaining a welcoming environment while also protecting congregants, staff, children, visitors and property.',
         'Red Rocks Fire Protection Services helps religious institutions manage fire and life safety with clarity, reliability and a coordinated approach. Our One Vendor Life Safety Solution brings multiple systems and services under one experienced team, helping facility leaders spend less time coordinating vendors and more time serving their communities.',
       ],
-      image: '/images/rrfps-religious-institutions.jpg',
+      image: '/images/rrfps-religious-institutions-life-safety-support.jpg',
       imageAlt: 'RRFPS technician inspecting life safety systems at a Colorado church facility.',
       background: 'white',
       cta: { label: 'Contact Us', href: '/contact' },
@@ -37,7 +37,7 @@ export const religiousInstitutionsPage: IndustryPageData = {
       title: 'Life Safety Support for the Entire Facility.',
       intro:
         'Fire protection systems require routine inspection, testing and maintenance to remain ready when needed. RRFPS provides comprehensive inspections for fire alarm systems, fire sprinkler systems, backflow prevention assemblies and portable fire extinguishers. Our technicians provide detailed reporting, document deficiencies and recommend corrective action so facility leaders can clearly understand what needs attention.',
-      bgImage: '/images/the-red-rocks-of-the-canyon.jpg',
+      bgImage: '/images/rrfps-religious-institutions-fire-protection-systems.jpg',
       panels: [
         {
           title: 'Service, Repair, Modification and Replacement',
@@ -63,19 +63,19 @@ export const religiousInstitutionsPage: IndustryPageData = {
           number: '01',
           title: 'RRFPS Serves as the Guide.',
           body: 'Facility leaders and volunteers may not work with fire codes every day, but they are still responsible for maintaining compliant systems. RRFPS serves as the guide.',
-          image: '/images/rrfps-promise-to-advocate-for-clients.jpg',
+          image: '/images/rrfps-religious-institutions-compliance-guidance.jpg',
         },
         {
           number: '02',
           title: 'Current With Evolving Requirements.',
           body: 'Our team stays current with evolving codes, legislation and jurisdictional requirements and helps clients understand what those requirements mean for their properties. We can assist with deficiency reviews, life safety evaluations, AHJ coordination, system assessments and planning for future repairs or replacements.',
-          image: '/images/rrfps-why-clients-continue-to-choose-rrfps.jpg',
+          image: '/images/rrfps-religious-institutions-code-support.jpg',
         },
         {
           number: '03',
           title: 'Planning for Careful Budgets.',
           body: 'This proactive approach is especially valuable when budgets must be planned carefully. Our consulting services can help identify upcoming testing, maintenance and replacement needs so leadership teams can prioritize projects and reduce unexpected life safety expenditures.',
-          image: '/images/rrfps-experience-you-can-trust.jpg',
+          image: '/images/rrfps-religious-institutions-life-safety-budget-planning.jpg',
         },
       ],
     },
@@ -86,13 +86,13 @@ export const religiousInstitutionsPage: IndustryPageData = {
       body: [
         'Life safety problems do not always occur during office hours. RRFPS provides 24-hour emergency service, seven days a week, for issues such as alarm troubles, sprinkler leaks, freeze damage, backflow failures and monitoring communication outages. Within the Denver Metro area, our Brand Promise includes a 90-minute emergency response window.',
       ],
-      image: '/images/rrfps-truck.png',
+      image: '/images/rrfps-religious-institutions-emergency-response.jpg',
       imageAlt: 'RRFPS emergency response vehicle ready for 24-hour life safety service calls.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-religious-institutions-fire-protection-cta.jpg',
     paragraphs: [
       'Red Rocks Fire Protection Services is a Colorado-based, family-owned company serving the Front Range since 2010. The company was built on values of integrity, hard work, accountability, family and taking care of people. Those principles remain central to how we serve every client.',
       'We believe your congregation and community should be the focus of your work, not the complexity of coordinating life safety vendors. With one point of contact, comprehensive capabilities, clear communication and a team committed to doing what it says, RRFPS helps make life safety easier to manage.',

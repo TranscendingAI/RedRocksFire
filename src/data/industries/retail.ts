@@ -26,7 +26,7 @@ export const retailPage: IndustryPageData = {
         'Retail properties are active environments where customers, employees, tenants, deliveries and daily operations come together. Whether you manage a single retail building or a shopping center with multiple tenant spaces, life safety responsibilities continue in the background every day.',
         'Red Rocks Fire Protection Services helps retail property owners and managers simplify those responsibilities through a coordinated One Vendor Life Safety Solution. From inspections and monitoring to tenant improvements and emergency repairs, our team provides one point of contact and complete accountability across a broad range of fire and life safety systems.',
       ],
-      image: '/images/rrfps-retail-shopping-center.jpg',
+      image: '/images/rrfps-retail-shopping-center-life-safety-support.jpg',
       imageAlt:
         'RRFPS technician inspecting life safety systems at a Colorado retail shopping center.',
       background: 'white',
@@ -38,7 +38,7 @@ export const retailPage: IndustryPageData = {
       title: 'Life Safety Services That Support Retail Operations.',
       intro:
         'RRFPS provides comprehensive inspections for fire alarm systems, fire sprinkler systems, backflow prevention assemblies and portable fire extinguishers. Our technicians provide detailed compliance reporting, identify deficiencies and recommend corrective action so property teams can address issues efficiently.',
-      bgImage: '/images/istock-601.jpg',
+      bgImage: '/images/rrfps-retail-shopping-center-fire-protection-systems.jpg',
       panels: [
         {
           title: 'Service, Repair and Replacement',
@@ -60,7 +60,7 @@ export const retailPage: IndustryPageData = {
         'RRFPS specializes in code-compliant fire sprinkler and fire alarm modifications for tenant finish projects and renovations. Our team can coordinate design, permitting, installation, programming, testing and final acceptance, working with property owners, managers, contractors and Authorities Having Jurisdiction.',
         'For restaurant tenants or food-service operations within retail properties, RRFPS also provides kitchen hood suppression system inspections, service and modifications. Changes to cooking equipment, appliances or hood configurations can be evaluated and incorporated into the suppression system as required.',
       ],
-      image: '/images/red-rocks-fire-protection-commercial-facilities.jpg',
+      image: '/images/rrfps-retail-tenant-improvement-coordination.jpg',
       imageAlt:
         'RRFPS technician coordinating tenant finish sprinkler modifications in a retail space.',
       background: 'light',
@@ -74,13 +74,19 @@ export const retailPage: IndustryPageData = {
           number: '01',
           title: 'Plan, Do Not React.',
           body: 'Managing life safety should not mean waiting for deficiencies or failures to dictate the next expense. RRFPS consulting services help owners and managers assess system condition, review inspection findings, plan corrective action and forecast future capital needs.',
-          image: '/images/red-rocks-fire-protection-compliance.jpg',
+          image: '/images/rrfps-retail-life-safety-capital-planning.jpg',
         },
         {
           number: '02',
           title: 'Advocacy for Multi-Location Teams.',
           body: 'Our team stays current with evolving fire codes, legislation and local jurisdiction requirements so we can advocate for clients and help them understand what is ahead. This is especially valuable for property teams managing multiple locations across different municipalities.',
-          image: '/images/rrfps-promise-to-advocate-for-clients.jpg',
+          image: '/images/rrfps-retail-multi-location-code-advocacy.jpg',
+        },
+        {
+          number: '03',
+          title: 'Clear Priorities Across Every Location.',
+          body: 'A coordinated view of inspection findings, system conditions and upcoming work helps property teams prioritize the right corrections, plan ahead and keep each location operating with greater confidence.',
+          image: '/images/rrfps-retail-shopping-center-system-walkthrough.jpg',
         },
       ],
     },
@@ -92,14 +98,14 @@ export const retailPage: IndustryPageData = {
         'A sprinkler leak, alarm outage or monitoring communication failure can affect tenants and customers quickly. RRFPS provides 24-hour emergency service, seven days a week, with a 90-minute response window within the Denver Metro area.',
         'Our technicians work to restore critical systems while helping property teams minimize disruption and maintain compliance. When an impairment requires temporary measures, we can also assist with fire watch guidance and AHJ coordination.',
       ],
-      image: '/images/why-choose-us-bg.jpg',
+      image: '/images/rrfps-retail-emergency-response.jpg',
       imageAlt:
         'RRFPS emergency technician restoring a sprinkler system at a Colorado retail property.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-retail-shopping-center-fire-protection-cta.jpg',
     paragraphs: [
       'One Partner for the Life Safety Behind Your Retail Property',
       'Since 2010, Red Rocks Fire Protection Services has served Colorado as a local, family-owned life safety company. We lead with safety, communicate clearly, show up when we say we will and take ownership of the work entrusted to us.',

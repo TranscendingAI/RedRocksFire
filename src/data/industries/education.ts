@@ -26,7 +26,7 @@ export const educationPage: IndustryPageData = {
         'Schools, colleges and universities are active environments filled with students, faculty, staff and visitors moving through classrooms, offices, residence areas, gathering spaces, athletic facilities and other buildings. The teams responsible for these properties must manage life safety across diverse facilities while keeping education and campus operations moving.',
         'Red Rocks Fire Protection Services provides educational institutions with comprehensive fire and life safety support through one coordinated partner. Our One Vendor Life Safety Solution helps facility teams simplify inspections, service, repairs, monitoring and compliance while maintaining clear accountability across the systems entrusted to their care.',
       ],
-      image: '/images/rrfps-serving-colorado-diverse-industries.jpg',
+      image: '/images/rrfps-education-campus-life-safety-walkthrough.jpg',
       imageAlt:
         'RRFPS technician providing life safety support for a Colorado educational campus.',
       background: 'white',
@@ -38,7 +38,7 @@ export const educationPage: IndustryPageData = {
       title: 'Comprehensive Protection Across Educational Facilities.',
       intro:
         'RRFPS provides annual and required periodic inspections for fire alarm systems, fire sprinkler systems, backflow prevention assemblies and portable fire extinguishers. Our inspection process includes detailed reporting, deficiency documentation and recommendations for corrective action, giving facility teams the information they need to prioritize work and maintain compliance records.',
-      bgImage: '/images/rrfps-about-warehouse-industrial.jpg',
+      bgImage: '/images/rrfps-education-campus-fire-protection-systems.jpg',
       panels: [
         {
           title: 'Repairs and System Modifications',
@@ -64,19 +64,19 @@ export const educationPage: IndustryPageData = {
           number: '01',
           title: 'Not a One-Time Project.',
           body: 'Campus life safety is not a one-time project. Systems require recurring inspections, testing, maintenance and eventual replacement. Without a coordinated plan, those requirements can create unexpected expenses and competing priorities.',
-          image: '/images/rrfps-about-company-overview.jpg',
+          image: '/images/rrfps-education-life-safety-maintenance-planning.jpg',
         },
         {
           number: '02',
           title: 'Long-Term Plans and Portfolio Evaluations.',
           body: 'RRFPS consulting services help facility teams evaluate system condition, review deficiencies, coordinate with Authorities Having Jurisdiction and develop long-term plans for repairs and capital improvements. Multi-site facility evaluations can help decision-makers understand needs across a larger property portfolio and prioritize work based on compliance, reliability and system condition.',
-          image: '/images/red-rocks-fire-protection-walk-the-property.jpg',
+          image: '/images/rrfps-education-capital-improvement-planning.jpg',
         },
         {
           number: '03',
           title: 'Advocacy for Changing Requirements.',
           body: 'Our advocacy approach is equally important. Fire codes and local requirements change, and jurisdictions may interpret or administer requirements differently. RRFPS stays current so we can help educational clients navigate compliance with greater clarity and fewer surprises.',
-          image: '/images/rrfps-promise-to-advocate-for-clients.jpg',
+          image: '/images/rrfps-education-campus-code-advocacy.jpg',
         },
       ],
     },
@@ -87,14 +87,14 @@ export const educationPage: IndustryPageData = {
       body: [
         'A sprinkler pipe break, alarm communication failure, fire pump trouble or other impairment can quickly affect operations. RRFPS provides 24-hour emergency service, seven days a week, with a 90-minute response window within the Denver Metro area. We work to restore system functionality quickly and can help clients navigate impairment, fire watch and AHJ coordination requirements when necessary.',
       ],
-      image: '/images/red-rocks-fire-protection-the-call-when-it-counts.jpg',
+      image: '/images/rrfps-education-campus-emergency-response.jpg',
       imageAlt:
         'RRFPS technician responding to a campus life safety emergency across the Colorado Front Range.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-education-campus-fire-protection-cta.jpg',
     paragraphs: [
       'Red Rocks Fire Protection Services is a Colorado-based, family-owned company serving the Front Range since 2010. Our work is guided by safety, advocacy, accountability, character and a commitment to go the extra mile.',
       'Your facility team is responsible for creating safe environments where education can happen every day. RRFPS serves as the guide behind that responsibility, bringing inspections, service, monitoring, consulting and emergency support together through one trusted relationship.',

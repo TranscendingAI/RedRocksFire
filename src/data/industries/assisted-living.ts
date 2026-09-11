@@ -26,7 +26,7 @@ export const assistedLivingPage: IndustryPageData = {
         'Healthcare and assisted living environments are built around caring for people. Facility leaders, administrators and property teams carry the additional responsibility of maintaining life safety systems that must remain dependable while daily care and operations continue around them.',
         'Red Rocks Fire Protection Services provides healthcare and assisted living facilities with a coordinated approach to fire protection, compliance and system reliability. Our One Vendor Life Safety Solution helps reduce the complexity of managing multiple systems and vendors while giving your team one accountable partner focused on protecting people and property.',
       ],
-      image: '/images/red-rocks-fire-protection-healthcare-assited-living.jpg',
+      image: '/images/rrfps-assisted-living-life-safety-support.jpg',
       imageAlt:
         'RRFPS technician inspecting a fire alarm system in a Colorado assisted living facility.',
       background: 'white',
@@ -38,7 +38,7 @@ export const assistedLivingPage: IndustryPageData = {
       title: 'Integrated Life Safety Services for Complex Facilities.',
       intro:
         'RRFPS provides comprehensive annual and required periodic inspections for fire alarm systems, fire sprinkler systems, backflow prevention assemblies and portable fire extinguishers. Our technicians document deficiencies, provide detailed reports and recommend corrective action so your team has a clear understanding of system condition and compliance needs.',
-      bgImage: '/images/rrfps-county-inspector-client.jpg',
+      bgImage: '/images/rrfps-assisted-living-integrated-life-safety-services.jpg',
       panels: [
         {
           title: 'Troubleshooting, Service and Repair',
@@ -64,19 +64,19 @@ export const assistedLivingPage: IndustryPageData = {
           number: '01',
           title: 'Practical Solutions.',
           body: 'Life safety requirements are important, but so is minimizing disruption to the people who live, work and receive care within your facility. RRFPS works to develop practical solutions that meet code requirements while respecting ongoing operations.',
-          image: '/images/rrfps-about-total-life-safety.jpg',
+          image: '/images/rrfps-assisted-living-practical-fire-alarm-solutions.jpg',
         },
         {
           number: '02',
           title: 'Consulting Services.',
           body: 'Our consulting services include code compliance support, life safety evaluations, inspection deficiency reviews, AHJ coordination, system assessments and capital planning. We help clients identify upcoming inspection, testing, maintenance and replacement needs so they can plan proactively rather than respond to unexpected costs or failures.',
-          image: '/images/red-rocks-fire-protection-compliance.jpg',
+          image: '/images/rrfps-assisted-living-consulting-services.jpg',
         },
         {
           number: '03',
           title: 'Advocacy at the Center.',
           body: 'Because fire codes, regulations and jurisdictional requirements evolve, RRFPS places advocacy at the center of the client relationship. We stay informed and share that knowledge proactively, helping facility teams understand requirements and prepare for what is ahead.',
-          image: '/images/rrfps-advocacy-that-protects-your-investment.jpg',
+          image: '/images/rrfps-assisted-living-community-advocacy.jpg',
         },
       ],
     },
@@ -87,13 +87,13 @@ export const assistedLivingPage: IndustryPageData = {
       body: [
         'When a critical life safety system becomes impaired, timely action matters. RRFPS provides 24-hour emergency service, seven days a week, for fire alarms, sprinklers, fire pumps, backflow preventers, hood suppression systems, ERRCS/BDA systems, Area of Refuge systems, security systems and monitoring failures. Our Brand Promise includes a 90-minute emergency response window within the Denver Metro area.',
       ],
-      image: '/images/why-choose-us-bg.jpg',
+      image: '/images/rrfps-assisted-living-emergency-life-safety-response.jpg',
       imageAlt: 'RRFPS technician restoring a critical life safety system during an emergency service call.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-assisted-living-community-fire-protection-cta.jpg',
     paragraphs: [
       'Red Rocks Fire Protection Services has served Colorado since 2010 as a local, family-owned life safety company. We believe clients should have a partner who communicates clearly, shows up reliably, takes ownership and remains committed until issues are resolved.',
       'For healthcare and assisted living teams, the people in your care are always the priority. Our role is to help make the life safety responsibility surrounding that care more manageable.',
