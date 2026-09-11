@@ -26,7 +26,7 @@ export const generalContractorsPage: IndustryPageData = {
         'General contractors are responsible for coordinating people, schedules, trades, inspections and project requirements while keeping work moving toward completion. Fire and life safety systems can affect multiple phases of a project, and missed requirements or late coordination can create costly delays.',
         'Red Rocks Fire Protection Services works with general contractors as a knowledgeable, solutions-oriented life safety partner. Our team supports renovations, tenant improvements, building expansions and other projects with fire sprinkler, fire alarm and related life safety expertise from early planning through testing and final acceptance.',
       ],
-      image: '/images/rrfps-general-contractors.jpg',
+      image: '/images/rrfps-general-contractors-life-safety-coordination.jpg',
       imageAlt:
         'RRFPS technician supporting life safety coordination on a Colorado construction project.',
       background: 'white',
@@ -38,7 +38,7 @@ export const generalContractorsPage: IndustryPageData = {
       title: 'Fire Sprinkler Modifications and System Work.',
       intro:
         'Building renovations and space reconfigurations frequently affect existing sprinkler systems. New walls, removed walls, ceiling height changes, occupancy changes and revised storage configurations can require sprinkler relocations, new branch lines or expanded coverage.',
-      bgImage: '/images/jobsite.jpg',
+      bgImage: '/images/rrfps-general-contractors-sprinkler-modifications.jpg',
       panels: [
         {
           title: 'Design, Installation and Acceptance',
@@ -56,7 +56,7 @@ export const generalContractorsPage: IndustryPageData = {
         'Our team manages design, permitting, installation, programming, testing and final acceptance and works with owners, management companies, contractors and local Authorities Having Jurisdiction to help ensure project requirements are addressed.',
         'RRFPS is also an Authorized Gamewell-FCI Dealer, providing factory-trained technicians, authorized programming capabilities, manufacturer technical support and access to genuine replacement parts for Gamewell systems.',
       ],
-      image: '/images/red-rocks-fire-alarm-safety.jpg',
+      image: '/images/rrfps-general-contractors-fire-alarm-upgrades.jpg',
       imageAlt:
         'RRFPS technician programming a fire alarm panel during a tenant improvement project.',
       background: 'light',
@@ -69,7 +69,7 @@ export const generalContractorsPage: IndustryPageData = {
         'Depending on project scope, RRFPS can also support portable fire extinguisher installation, backflow prevention assemblies, ERRCS/BDA systems, Area of Refuge communication systems, kitchen hood suppression modifications, security system installation and monitoring integration.',
         'Kitchen remodels and tenant improvements involving commercial cooking equipment may require changes to hood suppression nozzles, detection lines, gas valves, appliance shutdowns or fire alarm interfaces. RRFPS can coordinate those modifications and testing.',
       ],
-      image: '/images/rrfps-our-fire-sprinkler-services.jpg',
+      image: '/images/rrfps-general-contractors-additional-life-safety-coordination.jpg',
       imageAlt:
         'RRFPS technician coordinating sprinkler and suppression work on a construction project.',
       background: 'white',
@@ -83,13 +83,19 @@ export const generalContractorsPage: IndustryPageData = {
           number: '01',
           title: 'Identify Impacts Early.',
           body: 'One of the best opportunities to avoid project surprises is to identify life safety impacts early. RRFPS consulting services include design review support, scope development, existing system evaluations, fire protection impact assessments, permit and AHJ coordination, budget development and project planning assistance.',
-          image: '/images/red-rocks-fire-protection-walk-the-property.jpg',
+          image: '/images/rrfps-general-contractors-early-design-impact-review.jpg',
         },
         {
           number: '02',
           title: 'Advocacy for Practical Solutions.',
           body: 'Our team stays current with evolving fire codes and jurisdictional requirements and serves as an advocate for practical, compliant solutions. That knowledge can help contractors and owners understand requirements earlier and reduce avoidable rework or delays.',
-          image: '/images/rrfps-promise-to-advocate-for-clients.jpg',
+          image: '/images/rrfps-general-contractors-practical-code-solutions.jpg',
+        },
+        {
+          number: '03',
+          title: 'Field-Ready Coordination.',
+          body: 'Reviewing plans alongside existing conditions helps turn life safety requirements into practical field work. RRFPS coordinates with the project team to keep sprinkler and alarm details aligned before installation and inspection milestones arrive.',
+          image: '/images/rrfps-general-contractors-field-coordination-review.jpg',
         },
       ],
     },
@@ -102,14 +108,14 @@ export const generalContractorsPage: IndustryPageData = {
         'As one construction manager described the RRFPS team, they take ownership of their work, communicate clearly, follow through on commitments and approach challenges with a solutions-oriented mindset. Those qualities are critical in both construction and life safety environments.',
         'RRFPS also provides 24-hour emergency service when existing systems are unexpectedly impaired during a project, helping clients address alarm, sprinkler, backflow, monitoring and other critical system issues.',
       ],
-      image: '/images/rrfps-johns-truck-legacy.jpg',
+      image: '/images/rrfps-general-contractors-project-accountability.jpg',
       imageAlt:
         'RRFPS technician taking ownership of life safety work on a construction site.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-general-contractors-fire-protection-cta.jpg',
     paragraphs: [
       'Red Rocks Fire Protection Services is a Colorado-based, family-owned life safety company serving the Front Range since 2010. Our goal is to make fire and life safety coordination easier for the people responsible for delivering the project.',
       'You are managing the schedule, the trades and the outcome. Let RRFPS be the life safety partner that helps you anticipate requirements, solve problems and get the work completed correctly.',

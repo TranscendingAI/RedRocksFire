@@ -30,7 +30,7 @@ export const restaurantsPage: IndustryPageData = {
         'Restaurant and food-service operators work in fast-moving environments where employees, customers, cooking equipment and daily operations all depend on systems working as they should. Fire and life safety protection is part of that responsibility, especially where commercial cooking equipment and suppression systems are involved.',
         'Red Rocks Fire Protection Services helps restaurants and food-service operations manage those requirements through one coordinated life safety partner. Our team provides kitchen hood suppression support along with fire alarms, sprinklers, extinguishers, monitoring, inspections and emergency service, helping operators reduce vendor complexity and maintain confidence in the systems protecting their business.',
       ],
-      image: '/images/rrfps-restaurants-food-trucks.jpg',
+      image: '/images/rrfps-restaurants-hood-suppression-support.jpg',
       imageAlt:
         'RRFPS technician servicing a kitchen hood suppression system in a Colorado restaurant.',
       background: 'white',
@@ -42,7 +42,7 @@ export const restaurantsPage: IndustryPageData = {
       title: 'Kitchen Hood Suppression System Expertise.',
       intro:
         'Commercial kitchen fire suppression systems are designed to automatically detect and suppress cooking-related fires before they spread. RRFPS provides professional semi-annual kitchen hood suppression inspections and testing, including functional testing of system components, fusible link inspection and replacement, manual pull station testing, gas valve shutoff verification, appliance shutdown testing and fire alarm interface testing.',
-      bgImage: '/images/istock-479.jpg',
+      bgImage: '/images/rrfps-restaurants-hood-suppression-systems.jpg',
       panels: [
         {
           title: 'Service and Repair',
@@ -63,7 +63,7 @@ export const restaurantsPage: IndustryPageData = {
         "A restaurant's life safety program extends beyond the kitchen hood. RRFPS provides portable fire extinguisher inspections, maintenance, recharge and replacement, including Class K kitchen extinguishers. We also provide fire alarm inspections, service, modifications and monitoring; fire sprinkler service and repairs; and backflow testing, repair and replacement.",
         'For restaurant facilities requiring additional systems, RRFPS can also support security system installation and monitoring and other applicable life safety communications.',
       ],
-      image: '/images/red-rocks-fire-protection-commercial-inspections.jpg',
+      image: '/images/rrfps-restaurants-fire-extinguisher-service.jpg',
       imageAlt:
         'RRFPS technician inspecting a portable fire extinguisher in a commercial kitchen.',
       background: 'light',
@@ -76,7 +76,7 @@ export const restaurantsPage: IndustryPageData = {
         'RRFPS does more than identify deficiencies. Our team provides clear reporting, corrective-action recommendations and code compliance support so operators can understand what needs to happen next.',
         'We stay current with evolving fire codes and jurisdictional requirements and serve as an advocate for our clients. When equipment changes or a project raises questions, our consulting capabilities can help clarify system impacts, coordinate with Authorities Having Jurisdiction and develop practical solutions.',
       ],
-      image: '/images/red-rocks-fire-protection-compliance.jpg',
+      image: '/images/rrfps-restaurants-compliance-guidance.jpg',
       imageAlt:
         'RRFPS technician reviewing compliance documentation with a restaurant operator.',
       background: 'white',
@@ -88,14 +88,14 @@ export const restaurantsPage: IndustryPageData = {
       body: [
         'An impaired suppression system, fire alarm trouble or sprinkler issue can affect restaurant operations immediately. RRFPS provides 24-hour emergency service, seven days a week, with a 90-minute response window within the Denver Metro area. Our goal is to diagnose problems, restore protection and communicate clearly so operators can make informed decisions.',
       ],
-      image: '/images/red-rocks-fire-protection-the-call-when-it-counts.jpg',
+      image: '/images/rrfps-restaurants-emergency-response.jpg',
       imageAlt:
         'RRFPS technician responding to a restaurant kitchen suppression emergency.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-restaurants-fire-protection-cta.jpg',
     paragraphs: [
       'Red Rocks Fire Protection Services has served Colorado since 2010 as a local, family-owned life safety company. We believe our clients deserve reliable service, straightforward pricing, clear communication and a partner who takes ownership until the issue is resolved.',
       'Your team is focused on serving customers and running the operation. RRFPS helps protect the people, property and critical life safety systems behind it.',
