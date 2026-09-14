@@ -125,7 +125,7 @@ const letterTailBlocks = [
   ],
 ] as const;
 
-const truckTitle = 'The Story Behind John’s Truck.';
+const truckTitle = 'Johns Truck';
 
 /* Left (text) column of the §2 dark split panel — "For more than
  * ten years…" through "January 2023…". Sets up the dream, the
@@ -150,7 +150,7 @@ const truckStory = [
 ] as const;
 
 /* §3. LASTING LEGACY — closing pull-quote + supporting body. */
-const legacyQuote = 'More Than A Truck — A Lasting Legacy.';
+const legacyQuote = 'More Than A Truck —\nA Lasting Legacy';
 
 /* Body copy that sits beneath the §3 legacy pull-quote (rendered
  * inside the same parallax band). Three "values / One Family /
@@ -203,10 +203,6 @@ const legacyBody = [
     <section class="os-intro section-light">
       <div class="section-inner">
         <div class="section-head">
-          <div class="av-dblh__subtitle section-eyebrow">
-            <span class="divider-icon" set:html={diamondIcon} />
-            <span>The Story of Red Rocks Fire Protection</span>
-          </div>
           <h2 class="section-title">A Family Company. A Lasting Mission.</h2>
         </div>
 
@@ -242,19 +238,9 @@ const legacyBody = [
                    restoring → meaning), formatted exactly as it
                    was in the old white-bg §4b section.
          ══════════════════════════════════════════════════════════ */}
-    <section class="os-truck section-dark">
+    <section class="os-truck section-grey">
       <div class="section-inner">
         <div class="os-truck__split">
-          <div class="os-truck__copy">
-            <div class="av-dblh__subtitle section-eyebrow section-eyebrow--light">
-              <span class="divider-icon" set:html={diamondIcon} />
-              <span>The Story Behind John’s Truck</span>
-            </div>
-            <h2 class="section-title section-title--light os-truck__title">{truckTitle}</h2>
-            <div class="os-truck__body">
-              {truckParagraphs.map((paragraph) => <p>{paragraph}</p>)}
-            </div>
-          </div>
           <div class="os-truck__image">
             <img
               src={truckImage}
@@ -262,6 +248,16 @@ const legacyBody = [
               loading="lazy"
               decoding="async"
             />
+          </div>
+          <div class="os-truck__copy">
+            <div class="av-dblh__subtitle section-eyebrow">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>The Story Behind</span>
+            </div>
+            <h2 class="section-title os-truck__title">{truckTitle}</h2>
+            <div class="os-truck__body">
+              {truckParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
           </div>
         </div>
 
@@ -316,6 +312,7 @@ const legacyBody = [
    * that mirror those values exactly.
    * ══════════════════════════════════════════════════════════ */
   .section-light { background: #ffffff; color: #0a0a0a; }
+  .section-grey { background: #f1f1ef; color: #0a0a0a; }
   .section-dark { background: #0d0d0b; color: #ffffff; }
   .section-inner {
     width: 100%;
@@ -420,6 +417,7 @@ const legacyBody = [
      * storytelling page, less billboard-y. */
     line-height: 1;
   }
+  .os-intro .section-inner { padding-top: 55px; }
   .os-intro__body p {
     margin: 22px 0 0;
     color: #232323;
@@ -476,14 +474,14 @@ const legacyBody = [
   .os-truck__title { white-space: pre-line; }
   .os-truck__body p {
     margin: 22px 0 0;
-    color: rgba(255, 255, 255, 0.78);
+    color: #232323;
     font-size: var(--rr-text-body);
     line-height: var(--rr-text-body-lh);
   }
   .os-truck__image {
     overflow: hidden;
     border-radius: 18px;
-    background: #0d0d0b;
+    background: #d9d9d7;
   }
   .os-truck__image img {
     display: block;
@@ -514,7 +512,7 @@ const legacyBody = [
   }
   .os-truck__story p {
     margin: 30px 0 0;
-    color: rgba(255, 255, 255, 0.78);
+    color: #232323;
     font-size: var(--rr-text-body);
     line-height: var(--rr-text-body-lh);
   }
@@ -522,7 +520,7 @@ const legacyBody = [
     margin-top: 0;
     font-size: var(--rr-text-lead);
     line-height: var(--rr-text-lead-lh);
-    color: #ffffff;
+    color: #0a0a0a;
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -599,6 +597,7 @@ const legacyBody = [
     line-height: 1.12;
     letter-spacing: -0.035em;
     text-transform: none;
+    white-space: pre-line;
     max-width: 22ch;
     margin-inline: auto;
   }
