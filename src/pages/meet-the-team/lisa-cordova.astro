@@ -7,9 +7,7 @@
  *   §1. Bio — 1/3 photo + 2/3 copy
  *   §2. Closing CTA
  *
- * Photo placeholder uses the same <iconify-icon icon="mdi:account">
- * glyph the team grid renders for members without a real headshot.
- * Swap to a real portrait once assets are supplied.
+ * Portrait uses the matching team-member headshot.
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -17,6 +15,7 @@ import ClosingCTA from '../../components/ClosingCTA.astro';
 
 const heroBg = '/images/rrfps-about-cta-bg.jpg';
 const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+const lisaPhoto = '/images/team-members/lisa-cordova-red-rocks-fire-protection-services.png';
 
 const bioParagraphs = [
   'As Finance Manager for Red Rocks Fire Protection Services, Lisa Cordova oversees the financial processes and administrative functions that support the company\u2019s day-to-day operations. She works across the organization to help maintain accurate financial information, manage critical processes, and provide the financial organization RRFPS needs to serve its customers and continue growing.',
@@ -51,8 +50,8 @@ const bioParagraphs = [
     <section class="lc-bio" aria-label="Lisa Cordova bio">
       <div class="lc-bio__inner">
 
-        <div class="lc-bio__photo" aria-hidden="true">
-          <iconify-icon icon="mdi:account" width="160" height="160"></iconify-icon>
+        <div class="lc-bio__photo">
+          <img src={lisaPhoto} alt="Lisa Cordova, Financial Manager of Red Rocks Fire Protection Services" loading="eager" decoding="async" />
         </div>
 
         <div class="lc-bio__copy">
@@ -93,8 +92,8 @@ const bioParagraphs = [
 
   .lc-bio { background: #ffffff; padding: 96px 80px 120px; }
   .lc-bio__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 56px; row-gap: 48px; align-items: start; }
-  .lc-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; color: #ffffff; display: grid; place-items: center; }
-  .lc-bio__photo iconify-icon { color: currentColor; }
+  .lc-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; }
+  .lc-bio__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .lc-bio__copy { display: flex; flex-direction: column; min-width: 0; }
   .lc-bio__name { color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; text-transform: uppercase; }
   .lc-bio__role { margin-top: 18px; color: #d41226; font-family: "Space Grotesk", sans-serif; font-size: clamp(15px, 1.1vw, 18px); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; }

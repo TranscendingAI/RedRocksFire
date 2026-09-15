@@ -5,8 +5,8 @@
  * Section order:
  *   0. Page-title banner (hero + breadcrumbs)
  *   1. CEO quote box — 2 columns (Brian photo + big-red-quote block)
- *   2. Team grid — 2 columns × 4 rows. Each row: portrait placeholder
- *      (or real photo when supplied), role + name, red divider, social
+ *   2. Team grid — 2 columns × 4 rows. Each row: portrait,
+ *      role + name, red divider, social
  *      icons revealed on hover. Title: "Strong Foundations. Strong
  *      Team." with the small red diamond-icon eyebrow "our leadership
  *      & experts".
@@ -18,7 +18,7 @@
  *
  * Image assets:
  *   - Section 1 hero photo: /images/brian-kakac-ceo-rrrfps-onsite-property-inspection.png
- *   - Brian's team-card photo: /images/brian-kakac-ceo-red-rocks-fire-protection-services.png
+ *   - Team-card photos: /images/team-members/{team-member}.png
  *   - Section 3 logos: /images/credential-logos/{asse,cdfpc,csa,iapmo,nicet,pprbd}-logo.png
  *   - Section 4 CTA bg: /images/meet-our-team-rrfps-cta-banner-bg.jpg
  */
@@ -34,13 +34,13 @@ const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
 
 /** Section 2 — team grid. Same 8 names + roles from the reference image. */
 const team = [
-  { role: 'CEO',                      name: 'Brian Kakac',     href: '/meet-the-team/brian-kakac/', photo: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png' },
-  { role: 'Operations Manager',       name: 'Jeff Kakac',      href: '/meet-the-team/jeff-kakac/' },
-  { role: 'Sales',                    name: 'Nick Ayde',       href: '/meet-the-team/nick-ayde/' },
-  { role: 'Financial Manager',        name: 'Lisa Cordova',    href: '/meet-the-team/lisa-cordova/' },
-  { role: 'Inspections Coordinator',  name: 'Alicia Plescia',  href: '/meet-the-team/alicia-plescia/' },
-  { role: 'Lead – Sprinklers',        name: 'Dale Litreal',    href: '#' },
-  { role: 'Lead – Fire Alarms',       name: 'Lowell Hines',    href: '/meet-the-team/lowell-hines/' },
+  { role: 'CEO',                      name: 'Brian Kakac',     href: '/meet-the-team/brian-kakac/', photo: '/images/team-members/brian-kakac-ceo-redrocks-fire-protection-services.png' },
+  { role: 'Operations Manager',       name: 'Jeff Kakac',      href: '/meet-the-team/jeff-kakac/', photo: '/images/team-members/jeff-kakac-red-rocks-fire-protection-services.png' },
+  { role: 'Sales',                    name: 'Nick Ayde',       href: '/meet-the-team/nick-ayde/', photo: '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.png' },
+  { role: 'Financial Manager',        name: 'Lisa Cordova',    href: '/meet-the-team/lisa-cordova/', photo: '/images/team-members/lisa-cordova-red-rocks-fire-protection-services.png' },
+  { role: 'Inspections Coordinator',  name: 'Alicia Plescia',  href: '/meet-the-team/alicia-plescia/', photo: '/images/team-members/alicia-plescia-red-rocks-fire-protection-services.png' },
+  { role: 'Lead – Sprinklers',        name: 'Dale Litreal',    href: '#', photo: '/images/team-members/dale-litreal-red-rocks-fire-protection-services.png' },
+  { role: 'Lead – Fire Alarms',       name: 'Lowell Hines',    href: '/meet-the-team/lowell-hines/', photo: '/images/team-members/lowel-hines-red-rocks-fire-protection-services.png' },
 ] as const;
 
 /** Section 3 — credentials logos (6 total, 2 rows × 3 cols). */
@@ -111,11 +111,7 @@ const credentials = [
           {team.map((m) => (
             <a class="mt-card" href={m.href}>
               <div class="mt-card__photo" aria-hidden="true">
-                {'photo' in m && m.photo ? (
-                  <img src={m.photo} alt="" class="mt-card__photo-img" loading="lazy" decoding="async" />
-                ) : (
-                  <iconify-icon icon="mdi:account" width="100" height="100"></iconify-icon>
-                )}
+                <img src={m.photo} alt="" class="mt-card__photo-img" loading="lazy" decoding="async" />
               </div>
               <div class="mt-card__rule" aria-hidden="true"></div>
               <div class="mt-card__body">

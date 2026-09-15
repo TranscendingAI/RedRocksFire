@@ -7,9 +7,7 @@
  *   §1. Bio — 1/3 photo + 2/3 copy
  *   §2. Closing CTA
  *
- * Photo placeholder uses the same <iconify-icon icon="mdi:account">
- * glyph the team grid renders for members without a real headshot.
- * Swap to a real portrait once assets are supplied.
+ * Portrait uses the matching team-member headshot.
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -17,6 +15,7 @@ import ClosingCTA from '../../components/ClosingCTA.astro';
 
 const heroBg = '/images/rrfps-about-cta-bg.jpg';
 const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+const lowellPhoto = '/images/team-members/lowel-hines-red-rocks-fire-protection-services.png';
 
 const bioParagraphs = [
   'Lowell is the Fire Alarm Lead Technician at RRFPS and is responsible for leading and overseeing the Fire Alarm Division. He has four years of experience in the fire protection industry and has developed a strong technical background and passion for fire alarm systems.',
@@ -51,8 +50,8 @@ const bioParagraphs = [
     <section class="lh-bio" aria-label="Lowell Hines bio">
       <div class="lh-bio__inner">
 
-        <div class="lh-bio__photo" aria-hidden="true">
-          <iconify-icon icon="mdi:account" width="160" height="160"></iconify-icon>
+        <div class="lh-bio__photo">
+          <img src={lowellPhoto} alt="Lowell Hines, Fire Alarm Lead Technician of Red Rocks Fire Protection Services" loading="eager" decoding="async" />
         </div>
 
         <div class="lh-bio__copy">
@@ -93,8 +92,8 @@ const bioParagraphs = [
 
   .lh-bio { background: #ffffff; padding: 96px 80px 120px; }
   .lh-bio__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 56px; row-gap: 48px; align-items: start; }
-  .lh-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; color: #ffffff; display: grid; place-items: center; }
-  .lh-bio__photo iconify-icon { color: currentColor; }
+  .lh-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; }
+  .lh-bio__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .lh-bio__copy { display: flex; flex-direction: column; min-width: 0; }
   .lh-bio__name { color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; text-transform: uppercase; }
   .lh-bio__role { margin-top: 18px; color: #d41226; font-family: "Space Grotesk", sans-serif; font-size: clamp(15px, 1.1vw, 18px); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; }

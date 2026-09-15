@@ -7,9 +7,7 @@
  *   §1. Bio — 1/3 photo + 2/3 copy
  *   §2. Closing CTA
  *
- * Photo placeholder uses the same <iconify-icon icon="mdi:account">
- * glyph the team grid renders for members without a real headshot.
- * Swap to a real portrait once assets are supplied.
+ * Portrait uses the matching team-member headshot.
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -17,6 +15,7 @@ import ClosingCTA from '../../components/ClosingCTA.astro';
 
 const heroBg = '/images/rrfps-about-cta-bg.jpg';
 const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+const nickPhoto = '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.png';
 
 const bioParagraphs = [
   'Nick Ayde leads sales for Red Rocks Fire Protection Services, serving as the primary point of contact for new business opportunities and helping customers identify the fire and life safety solutions that best meet the needs of their properties. He works directly with property owners, property managers, developers, and other decision-makers to understand their facilities, address their concerns, and connect them with the comprehensive capabilities available through RRFPS.',
@@ -51,8 +50,8 @@ const bioParagraphs = [
     <section class="na-bio" aria-label="Nick Ayde bio">
       <div class="na-bio__inner">
 
-        <div class="na-bio__photo" aria-hidden="true">
-          <iconify-icon icon="mdi:account" width="160" height="160"></iconify-icon>
+        <div class="na-bio__photo">
+          <img src={nickPhoto} alt="Nick Ayde of Red Rocks Fire Protection Services" loading="eager" decoding="async" />
         </div>
 
         <div class="na-bio__copy">
@@ -93,8 +92,8 @@ const bioParagraphs = [
 
   .na-bio { background: #ffffff; padding: 96px 80px 120px; }
   .na-bio__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 56px; row-gap: 48px; align-items: start; }
-  .na-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; color: #ffffff; display: grid; place-items: center; }
-  .na-bio__photo iconify-icon { color: currentColor; }
+  .na-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; }
+  .na-bio__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .na-bio__copy { display: flex; flex-direction: column; min-width: 0; }
   .na-bio__name { color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; text-transform: uppercase; }
   .na-bio__role { margin-top: 18px; color: #d41226; font-family: "Space Grotesk", sans-serif; font-size: clamp(15px, 1.1vw, 18px); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; }
