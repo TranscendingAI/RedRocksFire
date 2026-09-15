@@ -515,39 +515,54 @@ const socials = [
   <div class="avh__drawer" data-menu-overlay aria-hidden="true">
     <nav aria-label="Mobile primary">
       <ul>
-        {navItems.map((item) => (
-          <li>
+        {navItems.map((item, index) => (
+          <li class:list={[item.children && 'avh__drawer-item--has-children']}>
             {item.children ? (
-              /* Mobile: parent is a header. If it has an href (INDUSTRIES WE
-               * SERVE) it links to its page; otherwise it's a plain label.
-               * Children are always listed indented below. */
+              /* Mobile uses progressive disclosure: only top-level items are
+               * visible initially. The explicit + / − control keeps a parent
+               * link navigable while giving its child pages a discoverable,
+               * touch-friendly accordion trigger. */
               <>
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    class:list={['avh__drawer-parent', 'avh__drawer-parent--link', isCurrent(item) && 'avh__drawer-link--current']}
-                    aria-current={currentPath === item.href ? 'page' : undefined}
+                <div class="avh__drawer-parent-row">
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      class:list={['avh__drawer-parent', 'avh__drawer-parent--link', isCurrent(item) && 'avh__drawer-link--current']}
+                      aria-current={currentPath === item.href ? 'page' : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <span class="avh__drawer-parent">{item.label}</span>
+                  )}
+                  <button
+                    type="button"
+                    class="avh__drawer-toggle"
+                    aria-label={`Show ${item.label} pages`}
+                    aria-controls={`mobile-submenu-${index}`}
+                    aria-expanded="false"
+                    data-mobile-dropdown-trigger
                   >
-                    {item.label}
-                  </a>
-                ) : (
-                  <span class="avh__drawer-parent">{item.label}</span>
-                )}
-                <ul class="avh__drawer-sub">
-                  {item.children.map((child) => (
-                    <li>
-                      <a
-                        href={child.href}
-                        class:list={[
-                          currentPath === child.href && 'avh__drawer-link--current',
-                        ]}
-                        aria-current={currentPath === child.href ? 'page' : undefined}
-                      >
-                        {child.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                    <span aria-hidden="true" class="avh__drawer-toggle-icon"></span>
+                  </button>
+                </div>
+                <div class="avh__drawer-sub-wrap" data-mobile-dropdown-panel>
+                  <ul class="avh__drawer-sub" id={`mobile-submenu-${index}`}>
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          class:list={[
+                            currentPath === child.href && 'avh__drawer-link--current',
+                          ]}
+                          aria-current={currentPath === child.href ? 'page' : undefined}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </>
             ) : (
               <a href={item.href} aria-current={isCurrent(item) ? 'page' : undefined}>{item.label}</a>
@@ -800,6 +815,8 @@ const socials = [
 
   /* ── Mobile ── */
   .avh__mobile {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: stretch;
     justify-content: space-between;
@@ -837,11 +854,29 @@ const socials = [
 
   /* ── Drawer ── */
   .avh__drawer {
-    display: none;
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    box-sizing: border-box;
+    height: 100dvh;
+    overflow-y: auto;
     background: #0d0d0b;
-    padding: 20px 15px 40px;
+    padding: max(86px, calc(env(safe-area-inset-top) + 70px)) 15px max(40px, env(safe-area-inset-bottom));
+    pointer-events: none;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 360ms;
   }
-  .avh__drawer.is-open { display: block; }
+  .avh__drawer.is-open {
+    pointer-events: auto;
+    visibility: visible;
+    transform: translateX(0);
+    transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+  }
+  @media (min-width: 1025px) {
+    .avh__drawer { display: none; }
+  }
   .avh__drawer > nav > ul {
     list-style: none;
     margin: 0;
@@ -862,14 +897,20 @@ const socials = [
   .avh__drawer a:hover { color: #d41226; }
 
   /* Parent label (Services) — non-navigating heading in mobile drawer */
+  .avh__drawer-parent-row {
+    display: flex;
+    align-items: center;
+    min-height: 58px;
+  }
   .avh__drawer-parent {
+    flex: 1 1 auto;
     display: block;
     padding: 12px 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
     font-size: 18px;
     color: #ffffff;
-    opacity: 0.55;
+    opacity: 1;
     letter-spacing: 0.04em;
   }
   /* Navigable parent (e.g. INDUSTRIES WE SERVE) reads as a real link. */
@@ -878,9 +919,59 @@ const socials = [
     text-decoration: none;
   }
   .avh__drawer-parent--link:hover { color: #d41226; }
+  .avh__drawer-toggle {
+    position: relative;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    margin-right: -2px;
+    border: 0;
+    padding: 0;
+    color: #ffffff;
+    background: transparent;
+    cursor: pointer;
+  }
+  .avh__drawer-toggle-icon,
+  .avh__drawer-toggle-icon::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    content: '';
+    transform: translate(-50%, -50%);
+    transition: transform 240ms ease-out;
+  }
+  .avh__drawer-toggle-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .avh__drawer-item--has-children.is-open .avh__drawer-toggle {
+    color: #d41226;
+  }
+  .avh__drawer-item--has-children.is-open .avh__drawer-toggle-icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  .avh__drawer-toggle:hover { color: #d41226; }
+  .avh__drawer-toggle:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: -2px;
+  }
+  .avh__drawer-sub-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 300ms ease-out, opacity 220ms ease-out;
+  }
+  .avh__drawer-item--has-children.is-open .avh__drawer-sub-wrap {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
   .avh__drawer-sub {
+    min-height: 0;
+    overflow: hidden;
     list-style: none;
-    margin: 0 0 8px 16px;
+    margin: 0 0 0 16px;
     padding: 0 0 8px 0;
     border-left: 1px solid #ffffff1f;
   }
@@ -892,6 +983,12 @@ const socials = [
   }
   .avh__drawer-link--current {
     color: #D31126 !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .avh__drawer,
+    .avh__drawer-sub-wrap,
+    .avh__drawer-toggle-icon,
+    .avh__drawer-toggle-icon::after { transition: none; }
   }
 
   /* ── About dropdown — rich tile-card variant ─────────────────────────
@@ -1315,16 +1412,42 @@ const socials = [
 
 <script>
   function initMobileMenu() {
-    const trigger = document.querySelector('[data-menu-trigger]');
-    const overlay = document.querySelector('[data-menu-overlay]');
+    const trigger = document.querySelector<HTMLElement>('[data-menu-trigger]');
+    const overlay = document.querySelector<HTMLElement>('[data-menu-overlay]');
     if (!trigger || !overlay) return;
+    if (trigger.dataset.menuInitialized === 'true') return;
+    trigger.dataset.menuInitialized = 'true';
 
     let open = false;
+    const closeSubmenus = () => {
+      overlay.querySelectorAll<HTMLElement>('.avh__drawer-item--has-children.is-open').forEach((item) => {
+        item.classList.remove('is-open');
+        const dropdownTrigger = item.querySelector<HTMLElement>('[data-mobile-dropdown-trigger]');
+        dropdownTrigger?.setAttribute('aria-expanded', 'false');
+        dropdownTrigger?.setAttribute('aria-label', `Show ${item.querySelector('.avh__drawer-parent')?.textContent?.trim() ?? 'submenu'} pages`);
+      });
+    };
     trigger.addEventListener('click', () => {
       open = !open;
       overlay.classList.toggle('is-open', open);
       overlay.setAttribute('aria-hidden', String(!open));
       trigger.setAttribute('aria-expanded', String(open));
+      if (!open) closeSubmenus();
+    });
+
+    overlay.querySelectorAll<HTMLElement>('.avh__drawer-item--has-children').forEach((item) => {
+      const dropdownTrigger = item.querySelector<HTMLElement>('[data-mobile-dropdown-trigger]');
+      if (!dropdownTrigger) return;
+
+      dropdownTrigger.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+        closeSubmenus();
+        if (!isOpen) {
+          item.classList.add('is-open');
+          dropdownTrigger.setAttribute('aria-expanded', 'true');
+          dropdownTrigger.setAttribute('aria-label', `Hide ${item.querySelector('.avh__drawer-parent')?.textContent?.trim() ?? 'submenu'} pages`);
+        }
+      });
     });
   }
 
