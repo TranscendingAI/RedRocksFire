@@ -417,6 +417,8 @@ const legacyBody = [
      * storytelling page, less billboard-y. */
     line-height: 1;
   }
+  /* §1 only: halve the shared top rhythm without affecting the
+   * bottom padding or the following story sections. */
   .os-intro .section-inner { padding-top: 55px; }
   .os-intro__body p {
     margin: 22px 0 0;
@@ -633,12 +635,14 @@ const legacyBody = [
    * ══════════════════════════════════════════════════════════ */
   @media (max-width: 1100px) {
     .section-inner { padding: 90px 60px; }
+    .os-intro .section-inner { padding-top: 45px; }
     .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
     .os-truck__split { gap: 48px; }
   }
 
   @media (max-width: 767px) {
     .section-inner { padding: 70px 28px; }
+    .os-intro .section-inner { padding-top: 35px; }
     .section-head { margin-bottom: 40px; }
     .section-title { font-size: 36px; }
     .ptbanner__inner {

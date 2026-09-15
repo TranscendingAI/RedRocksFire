@@ -374,6 +374,9 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
      * the site's section headings. */
   }
   .op-intro .section-inner {
+    /* §1 only: halve the shared desktop top rhythm while keeping
+     * the intentionally tighter bottom spacing below the intro. */
+    padding-top: 55px;
     /* Per client revision (latest): the gap between the intro
      * and the cards section above (the .op-cards padding-top: 0
      * + the intro's section-inner bottom padding) is reduced
@@ -677,6 +680,7 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
    * ══════════════════════════════════════════════════════════ */
   @media (max-width: 1100px) {
     .section-inner { padding: 90px 60px; }
+    .op-intro .section-inner { padding-top: 45px; }
     .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
     .op-cards__row { gap: 20px; }
   }
@@ -695,6 +699,7 @@ const closingValues = ['SAFER PEOPLE', 'STRONGER COMMUNITIES', 'BRIGHTER TOMORRO
 
   @media (max-width: 767px) {
     .section-inner { padding: 70px 28px; }
+    .op-intro .section-inner { padding-top: 35px; }
     .ptbanner__inner {
       min-height: 312px;
       padding: 108px 28px 28px;

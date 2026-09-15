@@ -536,6 +536,9 @@ const heroImage = '/images/rrfps-difference-hero-section.jpg';
     padding: 110px 80px;
   }
   .section-inner--wide { max-width: 1340px; }
+  /* §1 only: halve the shared top rhythm while retaining the
+   * default bottom padding for the intro content. */
+  .rd-intro .section-inner { padding-top: 55px; }
   .section-head { max-width: 850px; margin-bottom: 58px; }
   .section-head--center { margin-inline: auto; text-align: center; }
   .section-head--center .section-eyebrow { justify-content: center; }
@@ -1090,6 +1093,7 @@ const heroImage = '/images/rrfps-difference-hero-section.jpg';
    * ══════════════════════════════════════════════════════════ */
   @media (max-width: 1100px) {
     .section-inner { padding: 90px 60px; }
+    .rd-intro .section-inner { padding-top: 45px; }
     .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
     .rd-act__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .rd-benefits__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1107,6 +1111,7 @@ const heroImage = '/images/rrfps-difference-hero-section.jpg';
 
   @media (max-width: 767px) {
     .section-inner { padding: 70px 28px; }
+    .rd-intro .section-inner { padding-top: 35px; }
     .section-head { margin-bottom: 40px; }
     .section-title { font-size: 36px; }
     .ptbanner__inner { min-height: 312px; padding: 108px 28px 28px; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
