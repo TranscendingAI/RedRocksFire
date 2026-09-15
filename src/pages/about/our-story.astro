@@ -22,9 +22,9 @@
  * Sections, in order:
  *   §0. Page-title banner (about.astro §0 pattern)
  *   §1. The Letter — boxed-width white section. Long-form
- *      prose stacked top-to-bottom with two <h4> sub-headings
- *      mid-letter (advocacy + accountability) so the page
- *      reads as a single continuous letter rather than a
+ *      prose stacked top-to-bottom with an accountability
+ *      quote block followed by an advocacy statement, so the
+ *      page reads as a single continuous letter rather than a
  *      series of split panels + parallax bands.
  *   §2. The Story Behind John's Truck — dark-bg section.
  *      Row 1: 50/50 split (1/2 text + 1/2 image, image on
@@ -77,12 +77,12 @@ const legacyBg = '/images/rrfps-johns-truck-legacy.jpg';
  *   • introParagraphs — co-founding through to "…handled by a
  *     partner you trust." (9 paragraphs, the existing intro
  *     body).
- *   • letterTailHeadings + letterTailBlocks — the two <h4>
- *     sub-headings (advocacy + accountability) and the
- *     supporting paragraphs that used to live in §2 (parallax
- *     quote), §3a (advocacy intro), and §3b (advocacy image
- *     row). Stacked in the same order the client requested so
- *     the page reads as one letter.
+ *   • accountabilityQuote + advocacyParagraphs — the
+ *     accountability quote block and the supporting advocacy
+ *     copy that used to live in §2 (parallax quote), §3a
+ *     (advocacy intro), and §3b (advocacy image row). Stacked
+ *     in the same order the client requested so the page reads
+ *     as one letter.
  *
  * The truck section (§2) renders the existing truckParagraphs
  * (4 paragraphs) in the dark 1/2 copy column and truckStory (6
@@ -100,29 +100,19 @@ const introParagraphs = [
   'Brian built Red Rocks Fire Protection Services around a One Vendor Life Safety Solution, a model designed to simplify compliance, streamline communication, and provide one trusted partner responsible for all life safety systems within a building.',
 ] as const;
 
-/* Two <h4> sub-headings + the supporting body blocks that used to
- * live in §2, §3a, and §3b. Rendered in order, each heading
- * followed by its own paragraph(s). The first block (advocacy
- * lede) carries the one paragraph that used to be the
- * advocacyFirstParagraph plus the 4 paragraphs that used to live
- * in the advocacy body. The second block (accountability) carries
- * the single system-list paragraph. */
-const letterTailHeadings = [
-  'What truly sets Brian and the RRFPS team apart is its commitment to advocacy.',
-  'This wasn’t just about convenience; it was about accountability.',
-] as const;
+const accountabilityQuote = {
+  title: 'This wasn’t just about convenience; it was about accountability.',
+  body: 'With one team overseeing fire alarm systems, fire sprinkler systems, fire extinguishers, backflow prevention, kitchen hood suppression systems, bi-directional amplification (BDA) systems, area of refuge communication systems, and monitoring, clients no longer have to manage multiple relationships or worry about gaps in coverage. Instead, they gain a coordinated, proactive partner focused on keeping their properties safe and compliant.',
+} as const;
 
-const letterTailBlocks = [
-  [
-    'He dedicates significant time to staying ahead of changing fire codes, legislation, and jurisdictional requirements, ensuring clients are not only compliant, but informed and prepared. More importantly, this knowledge is shared proactively, helping clients avoid issues before they arise and giving them confidence in their life safety systems.',
-    'Today, the original vision that Brian and John built together continues to guide the company. Their shared commitment to people, service, accountability, and family remains at the heart of Red Rocks Fire Protection Services.',
-    'While John is deeply missed, his legacy lives on through the continued growth of the company, the culture of the team, and the relationships built with clients throughout Colorado. Brian and the entire RRFPS team carry that vision forward every day, and there is great pride in knowing the company continues to honor the foundation John helped create.',
-    'Red Rocks Fire Protection Services is known not just for what it does, but for how it serves—showing up reliably, communicating clearly, supporting its employees like family, and standing behind every system, every service, and every commitment made.',
-    'Because at the end of the day, this business was built on a simple belief: protecting lives and property should never be reactive; it should be proactive, accountable, and handled by a partner you trust.',
-  ],
-  [
-    'With one team overseeing fire alarm systems, fire sprinkler systems, fire extinguishers, backflow prevention, kitchen hood suppression systems, bi-directional amplification (BDA) systems, area of refuge communication systems, and monitoring, clients no longer have to manage multiple relationships or worry about gaps in coverage. Instead, they gain a coordinated, proactive partner focused on keeping their properties safe and compliant.',
-  ],
+const advocacyStatement = 'What truly sets Brian and the RRFPS team apart is its commitment to advocacy.';
+
+const advocacyParagraphs = [
+  'He dedicates significant time to staying ahead of changing fire codes, legislation, and jurisdictional requirements, ensuring clients are not only compliant, but informed and prepared. More importantly, this knowledge is shared proactively, helping clients avoid issues before they arise and giving them confidence in their life safety systems.',
+  'Today, the original vision that Brian and John built together continues to guide the company. Their shared commitment to people, service, accountability, and family remains at the heart of Red Rocks Fire Protection Services.',
+  'While John is deeply missed, his legacy lives on through the continued growth of the company, the culture of the team, and the relationships built with clients throughout Colorado. Brian and the entire RRFPS team carry that vision forward every day, and there is great pride in knowing the company continues to honor the foundation John helped create.',
+  'Red Rocks Fire Protection Services is known not just for what it does, but for how it serves—showing up reliably, communicating clearly, supporting its employees like family, and standing behind every system, every service, and every commitment made.',
+  'Because at the end of the day, this business was built on a simple belief: protecting lives and property should never be reactive; it should be proactive, accountable, and handled by a partner you trust.',
 ] as const;
 
 const truckTitle = 'Johns Truck';
@@ -207,20 +197,17 @@ const legacyBody = [
         </div>
 
         <div class="os-intro__body">
-          {introParagraphs.map((paragraph) => <p>{paragraph}</p>)}
-
-          {/* Mid-letter sub-headings + their supporting body. The
-              h4 sits between paragraphs so the body still flows
-              as a single letter; the rule for first-of-type
-              lead-in only fires on the FIRST <p> in the body
-              (the original lead-in), not on the paragraphs
-              after the h4. */}
-          {letterTailHeadings.map((heading, i) => (
-            <>
-              <h3 class="os-intro__h4">{heading}</h3>
-              {letterTailBlocks[i].map((paragraph) => <p>{paragraph}</p>)}
-            </>
+          {introParagraphs.map((paragraph, index) => (
+            <p class:list={{ 'os-intro__founding': index === 0 }}>{paragraph}</p>
           ))}
+
+          <div class="os-intro__quote">
+            <p class="os-intro__quote-title">{accountabilityQuote.title}</p>
+            <p class="os-intro__quote-body">{accountabilityQuote.body}</p>
+          </div>
+
+          <p class="os-intro__advocacy-statement">{advocacyStatement}</p>
+          {advocacyParagraphs.map((paragraph) => <p>{paragraph}</p>)}
         </div>
       </div>
     </section>
@@ -401,14 +388,9 @@ const legacyBody = [
   /* ══════════════════════════════════════════════════════════
    * §1. THE LETTER — long-form white reading column
    * The first paragraph keeps the lead-in style (larger
-   * text via .os-intro__body p:first-of-type). Mid-letter
-   * <h4> sub-headings sit between paragraphs as
-   * sub-section markers, not full section titles. They use
-   * the same Space Grotesk 700 family as the rest of the
-   * site but at a smaller size than .section-title, with
-   * normal case (sentence) so the page reads as a letter
-   * with internal sub-headings rather than a marketing
-   * page with section banners.
+   * text via .os-intro__body p:first-of-type). The mid-letter
+   * accountability quote creates a visual pause without
+   * breaking the reading flow into separate content sections.
    * ══════════════════════════════════════════════════════════ */
   .os-intro .section-title {
     /* Tighter line-height than the about.astro section-title
@@ -435,26 +417,30 @@ const legacyBody = [
     line-height: var(--rr-text-lead-lh);
     color: #0a0a0a;
   }
-  /* Mid-letter <h4> sub-headings. Smaller + sentence case
-   * (not the uppercase section-title treatment) so they read
-   * as internal letter sub-headings rather than new page
-   * sections. The previous paragraph's bottom margin
-   * (paragraph p has margin-top: 22px + body text — the
-   * gap from the previous <p> bottom to the h4 top is
-   * just 0 + nothing) is too tight visually, so the h4
-   * carries a generous top margin of 90px to create the
-   * breathing room expected between letter body copy
-   * and a sub-heading. 0 below so the supporting paragraph
-   * sits flush with the h4. */
-  .os-intro__h4 {
-    margin: 90px 0 0;
-    color: #0a0a0a;
+  .os-intro__body p.os-intro__founding {
+    color: #d41226;
+    font-weight: 700;
+  }
+  .os-intro__quote {
+    margin-top: 52px;
+    padding-top: 0;
+    padding-left: 20px;
+    border-left: 4px solid #d41226;
+  }
+  .os-intro__body p.os-intro__quote-title {
+    margin-top: 0;
+    color: #d41226;
     font-family: "Space Grotesk", sans-serif;
     font-size: clamp(20px, 1.7vw, 26px);
     font-weight: 700;
     line-height: 1.28;
     letter-spacing: -0.01em;
-    text-transform: none;
+  }
+  .os-intro__body p.os-intro__quote-body {
+    margin-top: 18px;
+  }
+  .os-intro__body p.os-intro__advocacy-statement {
+    margin-top: 56px;
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -654,7 +640,6 @@ const legacyBody = [
     }
     .ptbanner__title { font-size: 54px; }
     .ptbanner__breadcrumbs { white-space: normal; }
-    .os-intro__h4 { margin-top: 64px; }
     .os-truck__split { grid-template-columns: 1fr; gap: 36px; }
     .os-truck__image img { aspect-ratio: 4 / 3; }
     .os-truck__story { margin-top: 70px; }
