@@ -211,14 +211,14 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
 </BaseLayout>
 
 <style>
-  /* ClosingCTA body copy on the industry pages — uniformly 18px
-     (scoped via the .ip-cta wrapper so other ClosingCTA instances
-     across the site keep their existing sizing). */
+  /* ClosingCTA paragraph copy uses the site's standard body role.
+     Scope this to industry pages so other ClosingCTA instances retain
+     their existing typography. */
   .ip-cta :global(.cta__para),
   .ip-cta :global(.cta__subcopy),
   .ip-cta :global(.cta__phone) {
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
   /* ══════════════════════════════════════════════════════════
    * 0. Page-title banner — duplicated from the multi-family
@@ -295,12 +295,8 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
   }
   .ip-split__body {
     margin: 0 0 18px;
-    /* Lead role (18px / 1.7) to match the multi-family template's
-       SplitPanel hero + advocacy bodies — all other body copy on the
-       industry pages (accordion, slider, CTA) uses the standard
-       --rr-text-body 14px role, same as the template. */
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
   .ip-split__body:first-of-type { margin-top: 0; }
   .ip-split__cta {
@@ -388,12 +384,10 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
   @media (min-width: 1024px) {
     .ip-acc__layout { grid-template-columns: 5fr 7fr; gap: 80px; }
   }
-  /* Body text on the industry pages is uniformly 18px (--rr-text-lead)
-     per Zack (2026-09) — accordion, slider, and CTA paragraphs included. */
   .ip-acc__intro {
     margin: 0;
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
     color: rgba(255, 255, 255, 0.85);
   }
   .acc { max-width: 720px; }
@@ -439,8 +433,8 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
   .acc__content {
     padding: 6px 5px 14px 39px;
     color: rgba(255, 255, 255, 0.85);
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
   }
   .acc__content p { margin: 0; }
 
@@ -531,8 +525,8 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
   }
   .slider__desc {
     font-family: 'Inter', sans-serif;
-    font-size: var(--rr-text-lead);
-    line-height: var(--rr-text-lead-lh);
+    font-size: var(--rr-text-body);
+    line-height: var(--rr-text-body-lh);
     color: rgba(255, 255, 255, 0.85);
   }
 

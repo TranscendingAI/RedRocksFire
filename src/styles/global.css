@@ -45,9 +45,11 @@ h1, h2, h3, h4, h5, h6 {
  * All paragraph text defaults to the standard body size/leading.
  * Lead paragraphs opt up via the --rr-text-lead token (18px) applied
  * in components/pages. Keeps paragraph sizing consistent site-wide. */
-p {
-  font-size: var(--rr-text-body);
-  line-height: var(--rr-text-body-lh);
+/* Content paragraphs always use the standard body role. Eyebrows and
+ * double-heading subtitles are label treatments, not body prose. */
+p:not(.rr-eyebrow):not(.av-dblh__subtitle) {
+  font-size: var(--rr-text-body) !important;
+  line-height: var(--rr-text-body-lh) !important;
 }
 
 /* Visible keyboard focus — uses --rr-red per design.md §4.2 */

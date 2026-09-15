@@ -1066,13 +1066,11 @@ const promiseImage = '/images/rrfps-fa-promise.jpg';
     font-size: var(--rr-text-lead);
     line-height: var(--rr-text-lead-lh);
   }
-  /* !important: the global `p {}` rule (14px) plus this rule land at
-     equal page scope; !important guarantees the 18px lead token wins
-     for the accordion body copy. */
+  /* Preserve the standard body role in accordion copy. */
   .acc__panel--card .acc__content p {
     margin: 0;
-    font-size: var(--rr-text-lead) !important;
-    line-height: var(--rr-text-lead-lh);
+    font-size: var(--rr-text-body) !important;
+    line-height: var(--rr-text-body-lh);
   }
   .acc__panel--card .acc__bullets {
     list-style: none;
