@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClosingCTA from '../../components/ClosingCTA.astro';
+
+const heroBg = '/images/rrfps-about-cta-bg.jpg';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+const dalePhoto = '/images/team-members/dale-litreal-red-rocks-fire-protection-services.png';
+---
+
+<BaseLayout
+  title="Dale Litreal | Lead – Sprinklers, Red Rocks Fire Protection Services"
+  description="Meet Dale Litreal, Lead – Sprinklers at Red Rocks Fire Protection Services."
+>
+  <div class="av-page dl-page">
+    <header class="ptbanner">
+      <div class="ptbanner__bg" style={`background-image: url('${heroBg}');`} aria-hidden="true"></div>
+      <div class="ptbanner__overlay" aria-hidden="true"></div>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Dale Litreal.</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <a href="/meet-the-team">Meet Our Team</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Dale Litreal</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="dl-bio" aria-label="Dale Litreal bio">
+      <div class="dl-bio__inner">
+        <div class="dl-bio__photo">
+          <img src={dalePhoto} alt="Dale Litreal, Lead – Sprinklers at Red Rocks Fire Protection Services" loading="eager" decoding="async" />
+        </div>
+
+        <div class="dl-bio__copy">
+          <div class="dl-bio__name">Dale Litreal</div>
+          <div class="dl-bio__role">Lead – Sprinklers | Red Rocks Fire Protection Services</div>
+          <div class="dl-bio__rule" aria-hidden="true"></div>
+          <div class="dl-bio__body">
+            <p>Bio coming soon</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ClosingCTA
+      backgroundImage={ctaBg}
+      paragraphs={[
+        'Choosing the right life safety partner is about more than installing equipment and meeting code. It is about trusting the team you put in front of your residents, your tenants, and your inspectors — and knowing the people behind the truck have real accountability for the work they do.',
+      ]}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .ptbanner { position: relative; isolation: isolate; background: #0d0d0b; overflow: hidden; }
+  .ptbanner__bg { position: absolute; inset: 0; background-size: cover; background-position: center 32%; z-index: -2; }
+  .ptbanner__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 7, 7, 0.46) 0%, rgba(7, 7, 7, 0.58) 100%); z-index: -1; }
+  .ptbanner__inner { min-height: 448px; max-width: 1120px; margin-inline: auto; margin-bottom: 60px; padding: 136px 80px 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+  .ptbanner__title { margin: 0; max-width: 920px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: clamp(38px, 5.5vw, 75px); line-height: 0.9; letter-spacing: -0.055em; text-transform: uppercase; }
+  .ptbanner__breadcrumbs { padding-bottom: 10px; color: #ffffff; font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 600; white-space: nowrap; }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; }
+  .ptbanner__divider { margin-inline: 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  .dl-bio { background: #ffffff; padding: 96px 80px 120px; }
+  .dl-bio__inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 56px; row-gap: 48px; align-items: start; }
+  .dl-bio__photo { position: relative; width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; background: #d6d6d6; }
+  .dl-bio__photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .dl-bio__copy { display: flex; flex-direction: column; min-width: 0; }
+  .dl-bio__name { color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: clamp(36px, 4vw, 56px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; text-transform: uppercase; }
+  .dl-bio__role { margin-top: 18px; color: #d41226; font-family: "Space Grotesk", sans-serif; font-size: clamp(15px, 1.1vw, 18px); font-weight: 600; line-height: 1.4; letter-spacing: 0.02em; }
+  .dl-bio__rule { margin-top: 28px; width: 100%; height: 2px; background: #d41226; }
+  .dl-bio__body { margin-top: 36px; color: #0a0a0a; font-family: "Space Grotesk", sans-serif; font-size: 17px; font-weight: 400; line-height: 1.6; }
+
+  @media (max-width: 1100px) {
+    .ptbanner__inner { min-height: 376px; padding-inline: 60px; }
+    .dl-bio { padding: 80px 60px 96px; }
+    .dl-bio__inner { column-gap: 40px; }
+  }
+  @media (max-width: 900px) {
+    .dl-bio__inner { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
+    .dl-bio__photo { aspect-ratio: 4 / 3; max-width: 520px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner__inner { min-height: 312px; padding: 108px 28px 28px; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+    .ptbanner__title { font-size: 54px; }
+    .ptbanner__breadcrumbs { white-space: normal; }
+    .dl-bio { padding: 64px 28px 80px; }
+    .dl-bio__rule { margin-top: 24px; }
+    .dl-bio__body { margin-top: 28px; }
+  }
+</style>
