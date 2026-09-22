@@ -278,7 +278,6 @@ const legacyBody = [
       <div class="os-legacy__overlay" aria-hidden="true"></div>
 
       <div class="section-inner os-legacy__inner">
-        <div class="os-legacy__mark" aria-hidden="true">&ldquo;</div>
         <h2 class="os-legacy__quote">{legacyQuote}</h2>
         <span class="os-legacy__rule" aria-hidden="true"></span>
         {legacyBody.map((paragraph) => (
@@ -568,16 +567,8 @@ const legacyBody = [
   @media (min-width: 768px) {
     .os-legacy__inner { padding-block: 170px; }
   }
-  .os-legacy__mark {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 110px;
-    line-height: 0.7;
-    color: #d41226;
-    font-weight: 700;
-    user-select: none;
-  }
   .os-legacy__quote {
-    margin: -10px 0 0;
+    margin: 0;
     color: #ffffff;
     font-family: "Space Grotesk", sans-serif;
     font-size: clamp(40px, 5vw, 68px);
