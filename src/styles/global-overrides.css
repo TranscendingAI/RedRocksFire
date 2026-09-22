@@ -20,7 +20,7 @@
 
 :root {
   /* 1. Unified H2 size — was ~clamp(38px,5vw,64px); −30% → max ~45px */
-  --rr-h2-size: clamp(26px, 3.4vw, 45px);
+  --rr-h2-size: clamp(26px, 2.9vw, 45px);
 
   /* 2. Sub-header / eyebrow size — Avelon subtitle was 20px; −30% → 14px */
   --rr-subheader-size: 14px;

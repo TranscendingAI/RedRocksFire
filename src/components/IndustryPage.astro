@@ -229,7 +229,6 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
     background-repeat: no-repeat;
     background-position: center bottom;
     min-height: 450px;
-    margin-bottom: 60px;
     padding-top: 154px;
     padding-bottom: 20px;
     display: flex;
@@ -284,6 +283,19 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
    * ══════════════════════════════════════════════════════════ */
   .ip-split { padding-block: 90px; }
   @media (min-width: 768px) { .ip-split { padding-block: 130px; } }
+  /* §1 begins directly after the hero on every industry route. Match the
+   * tighter About-page intro rhythm without changing later split sections. */
+  .ptbanner + .ip-split {
+    padding-top: 55px;
+    padding-bottom: 28px;
+  }
+  .ptbanner + .ip-split .ip-split__imgwrap { aspect-ratio: 1 / 1; }
+  /* Subsequent light, white, and black split bands use half of the standard
+   * vertical rhythm; §1 above retains its dedicated intro spacing. */
+  .ptbanner + .ip-split ~ .ip-split { padding-block: 45px; }
+  @media (min-width: 768px) {
+    .ptbanner + .ip-split ~ .ip-split { padding-block: 65px; }
+  }
   .ip-split__title {
     margin: 0 0 24px;
     font-family: 'Space Grotesk', sans-serif;
@@ -542,6 +554,7 @@ const splitSectionBg = (bg: string | undefined): 'white' | 'light' | 'panel' | '
     .ptbanner { min-height: 320px; padding-top: 120px; }
     .ptbanner__title { font-size: 40px; line-height: 48px; }
     .ip-split { padding-block: 70px; }
+    .ptbanner + .ip-split ~ .ip-split { padding-block: 35px; }
     .ip-acc { padding-block: 70px; }
     .ip-acc__layout { gap: 32px; }
     .ip-acc__title { font-size: 28px; margin-bottom: 40px; }
