@@ -223,11 +223,15 @@ const sliderPanels = multiFamilyPage.slider.panels;
     background-repeat: no-repeat;
     background-position: center bottom;
     min-height: 450px;
-    margin-bottom: 60px;
     padding-top: 154px;
     padding-bottom: 20px;
     display: flex;
     align-items: flex-end;
+  }
+  /* Match the first-section rhythm used by the other industry pages. */
+  :global(.ptbanner + .rr-band) {
+    padding-top: 55px;
+    padding-bottom: 28px;
   }
   .ptbanner__inner {
     width: 100%;
