@@ -9,6 +9,8 @@
  * Edit copy here, every page picks it up. One file = one change = every page.
  */
 
+import { ROUTES } from '../lib/routes';
+
 // ──────────────────────────────────────────────────────────────────────
 // 1. COMPANY
 // ──────────────────────────────────────────────────────────────────────
@@ -221,7 +223,7 @@ export const about = {
     bannerBody:
       'We exist to protect lives and property — proactively, accountably, and through one trusted partner responsible for it all.',
     ctaLabel: 'Read Our Story',
-    ctaHref: '#ceo-message',
+    ctaHref: ROUTES.ourStory,
     statement:
       'We exist to protect lives and property by simplifying life safety compliance and serving as a proactive partner for property owners and managers.',
     body: 'At Red Rocks Fire Protection Services, we believe safety is not optional and delivering it is both a responsibility and a privilege. We take that responsibility seriously, approaching every system, every service, and every client relationship with a deep sense of duty and passion. Our purpose is to bring clarity, reliability, and confidence to every client we serve.',
@@ -251,61 +253,61 @@ export const about = {
         title: 'Fire Alarm Systems',
         body: 'Fire alarm service and systems backed by 24/7 monitoring, so a problem never goes unnoticed and help is always on the way.',
         icon: 'solar:alarm-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceFireAlarm,
       },
       {
         title: 'Monitoring Services',
         body: '24/7 UL-listed monitoring of fire alarm, sprinkler, and suppression systems — with same-day response on trouble signals across the Front Range.',
         icon: 'solar:monitor-smartphone-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceMonitoring,
       },
       {
         title: 'Backflow Prevention Assemblies',
         body: 'Protect your water supply and stay compliant with testing, repair, and certification of backflow prevention assemblies.',
         icon: 'solar:water-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceBackflow,
       },
       {
         title: 'Portable Fire Extinguishers',
         body: 'Sales, inspection, testing, and maintenance to ensure your extinguishers are ready when you need them.',
         icon: 'solar:fire-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceExtinguishers,
       },
       {
         title: 'Distributed Antenna Systems (DAS)',
         body: 'In-building wireless coverage solutions that ensure first responders stay connected when it matters most.',
         icon: 'solar:wi-fi-router-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceDas,
       },
       {
         title: 'Security System Installation & Monitoring',
         body: 'Custom security systems with 24/7 monitoring to help protect your people, property, and peace of mind.',
         icon: 'solar:shield-keyhole-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceSecurity,
       },
       {
         title: 'Kitchen Hood Suppression Systems',
         body: 'Design, installation, inspection, and maintenance of code-compliant suppression systems for commercial kitchens.',
         icon: 'solar:chef-hat-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceKitchenHood,
       },
       {
         title: 'Area of Refuge Communication Systems',
         body: 'Two-way communication systems that provide a critical lifeline during emergencies for those who need assistance.',
         icon: 'solar:chat-round-call-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceAreaOfRefuge,
       },
       {
         title: 'Consulting Services',
         body: 'Expert guidance to help you navigate codes, plan ahead, and make informed decisions about your life safety systems.',
         icon: 'solar:document-text-bold-duotone',
-        href: '/services',
+        href: ROUTES.serviceConsulting,
       },
       {
         title: '24 Hour Service',
         body: 'Emergencies don’t wait, and neither do we. Our team is available around the clock, every day of the year.',
         icon: 'solar:clock-circle-bold-duotone',
-        href: '/contact',
+        href: ROUTES.service24Hour,
       },
     ] as const,
   },
@@ -348,7 +350,7 @@ export const about = {
         label: 'Core',
         title: 'Our Values',
         sentence: 'Built on integrity. Driven by safety.',
-        href: '#fast-facts',
+        href: ROUTES.missionVisionValues,
         image: '/images/rrfps-our-values.jpg',
         imageAlt: 'The values that guide Red Rocks Fire Protection Services',
       },
@@ -356,7 +358,7 @@ export const about = {
         label: 'Team',
         title: 'Our Leadership',
         sentence: 'Experienced leaders. One family.',
-        href: '#ceo-message',
+        href: ROUTES.meetTheTeam,
         image: '/images/rrfps-our-leadership.jpg',
         imageAlt: 'Red Rocks Fire Protection Services leadership team',
       },
@@ -364,7 +366,7 @@ export const about = {
         label: 'Promise',
         title: 'Our Promise',
         sentence: 'One vendor. Total life safety protection.',
-        href: '#rrfps-difference',
+        href: ROUTES.ourPromise,
         image: '/images/rrfps-our-promise.jpg',
         imageAlt: 'Red Rocks Fire Protection Services promise to clients',
       },
@@ -410,9 +412,9 @@ export const about = {
     subCopyLine1: 'Want to learn more about what makes Red Rocks Fire Protection Services different?',
     subCopyLine2: 'Explore the pages below to discover our commitment to safety, our purpose, and the promises that guide every relationship we build.',
     buttons: [
-      { label: 'Meet the Team', icon: 'mdi:account-group', href: '/meet-the-team' },
-      { label: 'Our Services',  icon: 'mdi:cog-outline',    href: '/services' },
-      { label: 'The RRFPS Difference', icon: 'mdi:shield-star-outline', href: '/about#rrfps-difference' },
+      { label: 'Meet the Team', icon: 'mdi:account-group', href: ROUTES.meetTheTeam },
+      { label: 'Our Services',  icon: 'mdi:cog-outline',    href: ROUTES.services },
+      { label: 'The RRFPS Difference', icon: 'mdi:shield-star-outline', href: ROUTES.rrfpsDifference },
     ] as const,
   },
 } as const;

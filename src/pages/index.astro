@@ -25,6 +25,7 @@
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { ROUTES } from '../lib/routes';
 
 // Shared arrow SVG path (16×14) used by every wgl button + portfolio hover icon
 const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
@@ -38,18 +39,22 @@ const solutions = [
   {
     title: 'Inspections',
     body: 'Code-required annual testing of every life safety system, with comprehensive reports and correction summaries built for your jurisdiction.',
+    href: ROUTES.serviceInspections,
   },
   {
     title: 'Fire Sprinkler Systems',
     body: 'Design, installation, service, and repair of wet, dry, preaction, and standpipe systems, plus fire pumps and retrofits.',
+    href: ROUTES.serviceFireSprinkler,
   },
   {
     title: 'Fire Alarm Systems',
     body: 'Fire alarm service and systems backed by 24/7 monitoring, so a problem never goes unnoticed and help is always on the way.',
+    href: ROUTES.serviceFireAlarm,
   },
   {
     title: 'One Vendor Solution',
     body: 'One coordinated team responsible for every life safety system in your building — no gaps, no juggling vendors, no surprises.',
+    href: ROUTES.services,
   },
 ];
 
@@ -60,6 +65,7 @@ const services = [
     body: 'By code, fire systems must be tested annually. We thoroughly evaluate every component and deliver the reports jurisdictions require — keeping you compliant and ahead of issues.',
     image: '/images/red-rocks-fire-protection-compliance.jpg',
     imageFirst: false,
+    href: ROUTES.serviceInspections,
   },
   {
     number: '02',
@@ -68,6 +74,7 @@ const services = [
     image: '/images/rrfps-our-fire-sprinkler-services.jpg',
     imageFirst: true,
     light: true,
+    href: ROUTES.serviceFireSprinkler,
   },
   {
     number: '03',
@@ -75,6 +82,7 @@ const services = [
     body: 'We install and service fire alarm systems backed by around-the-clock monitoring of alarms, security systems, elevators, and areas of refuge.',
     image: '/images/red-rocks-fire-alarm-safety.jpg',
     imageFirst: false,
+    href: ROUTES.serviceFireAlarm,
   },
 ];
 
@@ -144,7 +152,7 @@ const testimonials = [
               <h4 class="hero__counter-title">years of combined experience</h4>
             </div>
             <div class="hero__counter-spacer" aria-hidden="true"></div>
-            <a href="/about" class="av-wgl-btn hero__cta">
+            <a href={ROUTES.contact} class="av-wgl-btn hero__cta">
               <span class="av-wgl-btn__text">get in touch</span>
               <span class="av-wgl-btn__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
@@ -220,7 +228,7 @@ const testimonials = [
 
           <div class="solutions__grid">
             {solutions.map((s, i) => (
-              <a href="/about" class="infobox" data-fade-up>
+              <a href={s.href} class="infobox" data-fade-up>
                 <span class="infobox__bg" aria-hidden="true"></span>
                 <span class="infobox__icon" data-icon-slot={i} aria-hidden="true"></span>
                 <span class="infobox__content">
@@ -258,7 +266,7 @@ const testimonials = [
                   </div>
                   <div class="svc__divider" aria-hidden="true"></div>
                   <p class="svc__body">{s.body}</p>
-                  <a href="/about" class="av-wgl-btn svc__more" aria-label={`More about ${s.title}`}>
+                  <a href={s.href} class="av-wgl-btn svc__more" aria-label={`More about ${s.title}`}>
                     <span class="av-wgl-btn__icon">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
                     </span>
@@ -295,7 +303,7 @@ const testimonials = [
 
         <p class="band__text">We exist to protect lives and property — proactively, accountably, and through one trusted partner responsible for it all.</p>
 
-        <a href="/about" class="av-wgl-btn band__cta">
+        <a href={ROUTES.ourStory} class="av-wgl-btn band__cta">
           <span class="av-wgl-btn__text">read our story</span>
           <span class="av-wgl-btn__icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M320-200v-560l440 280-440 280Z"></path></svg>

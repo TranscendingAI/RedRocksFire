@@ -1,0 +1,92 @@
+---
+/**
+ * NavLink — name-resolved internal link.
+ *
+ * Why: see src/lib/routes.ts. Use this for any internal link whose
+ * destination is one of the named routes in the route map. It validates
+ * the key in dev and centralizes future concerns (analytics, prefetch,
+ * trailing-slash policy, etc.) in one place.
+ *
+ * When NOT to use:
+ *   - Dynamic targets you can't enumerate (e.g. looping over `services`
+ *     with per-service hrefs from data — use ROUTES[…] in those cases).
+ *   - External links.
+ *   - Mailto/tel/anchor-only links.
+ *
+ * Usage:
+ *   <NavLink to="ourStory">Read Our Story</NavLink>
+ *   <NavLink to="contact" variant="primary" size="lg">Get in touch</NavLink>
+ *   <NavLink to="services" class="hero__cta">All Services</NavLink>
+ *
+ * The rendered DOM matches <Button.astro> so existing CSS targets
+ * (e.g. `.av-wgl-btn`, `.cta__btn`) keep working when the caller also
+ * passes a `class` prop.
+ */
+
+import { ROUTES, type RouteKey } from '../lib/routes';
+
+interface Props {
+  /** Key from src/lib/routes.ts. Validated at build time in dev. */
+  to: RouteKey;
+  /** Visual variant — same vocabulary as Button.astro. */
+  variant?: 'primary' | 'secondary' | 'arrow';
+  /** 'dark' when sitting on a dark band (uses --rr-red fill on hover). */
+  band?: 'light' | 'dark';
+  size?: 'md' | 'lg';
+  /** Extra classes appended last (for one-off positioning, hover targets, etc). */
+  class?: string;
+}
+
+const {
+  to,
+  variant = 'primary',
+  band = 'light',
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+
+if (!(to in ROUTES)) {
+  // Throwing here surfaces typos at the earliest possible moment — far
+  // cheaper than discovering them in a 45-minute client audit.
+  throw new Error(
+    `<NavLink to="${String(to)}"> is not a known route. ` +
+      `Add it to src/lib/routes.ts or use a different component.`,
+  );
+}
+
+const href = ROUTES[to];
+
+const colorClasses = (() => {
+  if (variant === 'primary') {
+    return band === 'dark'
+      ? 'bg-rr-red text-rr-white hover:bg-rr-red-hover'
+      : 'bg-rr-black text-rr-white hover:bg-rr-red';
+  }
+  if (variant === 'secondary') {
+    return band === 'dark'
+      ? 'bg-transparent text-rr-white border border-white/20 hover:bg-white/10'
+      : 'bg-transparent text-rr-black border border-black/15 hover:bg-black/5';
+  }
+  return band === 'dark'
+    ? 'text-rr-white hover:text-rr-red'
+    : 'text-rr-black hover:text-rr-red';
+})();
+
+const sizeClasses = size === 'lg' ? 'px-8 py-4 text-base' : 'px-7 py-3.5 text-sm';
+
+const baseClasses = [
+  'inline-flex items-center justify-center gap-2',
+  'font-semibold tracking-tight',
+  variant === 'arrow' ? 'rounded-none' : 'rounded-full',
+  'transition-colors duration-150',
+  'focus-visible:outline-2 focus-visible:outline-rr-red',
+  sizeClasses,
+  colorClasses,
+  className,
+];
+---
+
+<a href={href} class:list={baseClasses}>
+  <slot />
+  {variant === 'arrow' && <span aria-hidden="true">→</span>}
+</a>
