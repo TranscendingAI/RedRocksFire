@@ -7,9 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run audit:links",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "audit:links": "node scripts/audit-links.mjs"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.2.8",

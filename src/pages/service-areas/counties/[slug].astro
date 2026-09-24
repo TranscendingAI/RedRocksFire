@@ -245,7 +245,7 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
         <h2 class="county-industries__title">Property types we work with in {county.county}.</h2>
         <ul class="county-industries__chips">
           {county.industriesServed.map((i) => (
-            <li><a href="/industries-we-serve">{i}</a></li>
+            <li><a href="/industries/">{i}</a></li>
           ))}
         </ul>
       </div>
@@ -287,6 +287,11 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
       backgroundImage="/images/rrfps-county-cta-apartments.jpg"
       paragraphs={[
         `Whether you manage one building or a portfolio spread across ${county.county}, you get one local team for every life-safety system — inspections, sprinklers, alarms, monitoring, suppression, and backflow — with reports formatted to whichever Authority Having Jurisdiction covers the property, so corrections are approved without rework.`,
+      ]}
+      buttons={[
+        { label: 'Meet the Team',        icon: 'mdi:account-group',         href: '/meet-the-team' },
+        { label: 'Our Services',         icon: 'mdi:cog-outline',            href: '/services' },
+        { label: 'Industries We Serve',  icon: 'mdi:domain',                  href: '/industries/' },
       ]}
     />
 

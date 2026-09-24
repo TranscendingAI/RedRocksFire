@@ -30,7 +30,11 @@ export const ROUTES = {
   home: '/',
   contact: '/contact',
   testimonials: '/testimonials',
-  industries: '/industries-we-serve',
+  // The industries hub page lives at /industries/. The legacy
+  // /industries-we-serve/ URL is preserved as a redirect stub
+  // (src/pages/industries-we-serve.astro) for SEO + bookmarks.
+  industries: '/industries/',
+  industriesOld: '/industries-we-serve',
   serviceAreas: '/service-areas',
   blog: '/blog',
   fireReports: '/fire-reports',
@@ -99,4 +103,5 @@ export const DYNAMIC_PREFIXES = [
  */
 export const DEPRECATED_ROUTES = [
   ROUTES.missionVisionValuesOld, // redirect target only
+  ROUTES.industriesOld,           // redirect target only — use industries
 ] as const;
