@@ -34,13 +34,13 @@ const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
 
 /** Section 2 — team grid. Same 8 names + roles from the reference image. */
 const team = [
-  { role: 'CEO',                      name: 'Brian Kakac',     href: '/meet-the-team/brian-kakac/', photo: '/images/team-members/brian-kakac-ceo-redrocks-fire-protection-services.png' },
-  { role: 'Operations Manager',       name: 'Jeff Kakac',      href: '/meet-the-team/jeff-kakac/', photo: '/images/team-members/jeff-kakac-red-rocks-fire-protection-services.png' },
-  { role: 'Sales',                    name: 'Nick Ayde',       href: '/meet-the-team/nick-ayde/', photo: '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.png' },
-  { role: 'Financial Manager',        name: 'Lisa Cordova',    href: '/meet-the-team/lisa-cordova/', photo: '/images/team-members/lisa-cordova-red-rocks-fire-protection-services.png' },
-  { role: 'Inspections Coordinator',  name: 'Alicia Plescia',  href: '/meet-the-team/alicia-plescia/', photo: '/images/team-members/alicia-plescia-red-rocks-fire-protection-services.png' },
-  { role: 'Lead – Sprinklers',        name: 'Dale Litreal',    href: '/meet-the-team/dale-litreal/', photo: '/images/team-members/dale-litreal-red-rocks-fire-protection-services.png' },
-  { role: 'Lead – Fire Alarms',       name: 'Lowell Hines',    href: '/meet-the-team/lowell-hines/', photo: '/images/team-members/lowel-hines-red-rocks-fire-protection-services.png' },
+  { role: 'CEO',                      name: 'Brian Kakac',     href: '/meet-the-team/brian-kakac/', photo: '/images/team-members/brian-kakac-ceo-redrocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/brian-kakac-b9315665/' },
+  { role: 'Operations Manager',       name: 'Jeff Kakac',      href: '/meet-the-team/jeff-kakac/', photo: '/images/team-members/jeff-kakac-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/jeff-kakac-ab0b90144/' },
+  { role: 'Sales',                    name: 'Nick Ayde',       href: '/meet-the-team/nick-ayde/', photo: '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/nickaydefireprotection/' },
+  { role: 'Financial Manager',        name: 'Lisa Cordova',    href: '/meet-the-team/lisa-cordova/', photo: '/images/team-members/lisa-cordova-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/lisa-cordova-032b2995/' },
+  { role: 'Inspections Coordinator',  name: 'Alicia Plescia',  href: '/meet-the-team/alicia-plescia/', photo: '/images/team-members/alicia-plescia-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
+  { role: 'Lead – Sprinklers',        name: 'Dale Litreal',    href: '/meet-the-team/dale-litreal/', photo: '/images/team-members/dale-litreal-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
+  { role: 'Lead – Fire Alarms',       name: 'Lowell Hines',    href: '/meet-the-team/lowell-hines/', photo: '/images/team-members/lowel-hines-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
 ] as const;
 
 /** Section 3 — credentials logos (6 total, 2 rows × 3 cols). */
@@ -120,10 +120,10 @@ const credentials = [
                   <span class="mt-card__name">{m.name}</span>
                 </div>
                 <div class="mt-card__socials" aria-label={`${m.name} social media`}>
-                  <span class="mt-card__social" aria-label="Instagram">
+                  <span class="mt-card__social" aria-label="Instagram" onclick="event.preventDefault(); event.stopPropagation(); window.open('https://www.instagram.com/redrocksfireprotection/', '_blank', 'noopener,noreferrer');">
                     <iconify-icon icon="mdi:instagram" width="20" height="20"></iconify-icon>
                   </span>
-                  <span class="mt-card__social" aria-label="LinkedIn">
+                  <span class="mt-card__social" aria-label={`${m.name} on LinkedIn`} onclick={`event.preventDefault(); event.stopPropagation(); window.open('${m.linkedinUrl}', '_blank', 'noopener,noreferrer');`}>
                     <iconify-icon icon="mdi:linkedin" width="20" height="20"></iconify-icon>
                   </span>
                 </div>
