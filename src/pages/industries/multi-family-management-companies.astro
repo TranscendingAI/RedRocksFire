@@ -586,36 +586,3 @@ const sliderPanels = multiFamilyPage.slider.panels;
   }
 </style>
 
-<script>
-  /**
-   * Accordion toggle for the "Multi-Family Challenges" section.
-   * Mirrors industry.astro's behaviour: one panel open at a time,
-   * clicking the open one closes it. Keyboard- and click-friendly.
-   */
-  function initMultiFamilyAccordion() {
-    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-acc-panel]'));
-    if (!panels.length) return;
-    panels.forEach((panel) => {
-      const header = panel.querySelector<HTMLElement>('.acc__header');
-      const content = panel.querySelector<HTMLElement>('.acc__content');
-      if (!header || !content) return;
-      header.addEventListener('click', () => {
-        const wasOpen = panel.classList.contains('is-active');
-        panels.forEach((p) => {
-          p.classList.remove('is-active');
-          p.querySelector<HTMLElement>('.acc__header')?.setAttribute('aria-expanded', 'false');
-          const c = p.querySelector<HTMLElement>('.acc__content');
-          if (c) c.hidden = true;
-        });
-        if (!wasOpen) {
-          panel.classList.add('is-active');
-          header.setAttribute('aria-expanded', 'true');
-          content.hidden = false;
-        }
-      });
-    });
-  }
-
-  document.addEventListener('astro:page-load', initMultiFamilyAccordion);
-  if (document.readyState !== 'loading') initMultiFamilyAccordion();
-</script>

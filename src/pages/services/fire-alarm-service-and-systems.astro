@@ -1476,56 +1476,7 @@ const promiseImage = '/images/rrfps-fa-promise.jpg';
 </style>
 
 <script>
-  /**
-   * Accordion toggle for the §3 "Our Fire Alarm Services" section.
-   * Same defensive binding pattern as the fire-sprinkler page:
-   * one panel open at a time; clicking the open panel closes it.
-   *
-   * IMPORTANT: kept to plain JavaScript (no TypeScript casts) — the
-   * previous `(header as any)` TS syntax compiled fine in the
-   * production Rollup build but was silently dropped by the dev
-   * server's esbuild transform, leaving the accordion dead in dev.
-   * Re-registers on astro:page-load / after-swap / DOMContentLoaded
-   * so View Transitions navigations get wired too.
-   */
-  function initFireAlarmAccordion() {
-    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-acc-panel]'));
-    if (!panels.length) return false;
-    panels.forEach(function (panel) {
-      var header = panel.querySelector('.acc__header');
-      var content = panel.querySelector('.acc__content');
-      if (!header || !content) return;
-      if (header.__faAccordionWired) return;
-      header.__faAccordionWired = true;
-      header.addEventListener('click', function () {
-        var wasOpen = panel.classList.contains('is-active');
-        panels.forEach(function (p) {
-          p.classList.remove('is-active');
-          var h = p.querySelector('.acc__header');
-          if (h) h.setAttribute('aria-expanded', 'false');
-          var c = p.querySelector('.acc__content');
-          if (c) c.hidden = true;
-        });
-        if (!wasOpen) {
-          panel.classList.add('is-active');
-          header.setAttribute('aria-expanded', 'true');
-          content.hidden = false;
-        }
-      });
-    });
-    return true;
-  }
 
-  function bindFireAlarmAccordion() {
-    if (!initFireAlarmAccordion()) {
-      setTimeout(initFireAlarmAccordion, 100);
-    }
-  }
-
-  document.addEventListener('astro:page-load', bindFireAlarmAccordion);
-  document.addEventListener('astro:after-swap', bindFireAlarmAccordion);
-  document.addEventListener('DOMContentLoaded', bindFireAlarmAccordion);
-  if (document.readyState !== 'loading') bindFireAlarmAccordion();
 
   /**
    * Entrance-animation support for the fire-alarm page.

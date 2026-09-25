@@ -262,7 +262,7 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
         </div>
         <h2 class="county-faq__title">Fire protection in {county.county} — common questions.</h2>
 
-        <div class="acc county-faq__list">
+        <div class="acc county-faq__list" data-acc-mode="multiple">
           {county.faq.map((f, i) => (
             <div class:list={['acc__panel', i === 0 && 'is-active']} data-acc-panel>
               <button type="button" class="acc__header" aria-expanded={i === 0 ? 'true' : 'false'}>
@@ -790,32 +790,3 @@ const combinedSchema = JSON.stringify([breadcrumbSchema, localBusinessSchema, fa
   .county-faq__list .acc__content p { margin: 0; }
 </style>
 
-<script>
-  // Accordion controller — same pattern as the city page. Defensive
-  // registration to survive Astro View Transitions hoisting.
-  function initCountyAccordions() {
-    const panels = document.querySelectorAll<HTMLElement>('.county-page [data-acc-panel]');
-    if (!panels.length) return false;
-    panels.forEach((panel) => {
-      const header = panel.querySelector<HTMLButtonElement>('.acc__header');
-      if (!header || (panel as any).__wired) return;
-      (panel as any).__wired = true;
-      header.addEventListener('click', () => {
-        const isActive = panel.classList.toggle('is-active');
-        header.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-        const content = panel.querySelector<HTMLElement>('.acc__content');
-        if (content) content.hidden = !isActive;
-      });
-    });
-    return true;
-  }
-
-  function bindCountyAccordions() {
-    if (!initCountyAccordions()) setTimeout(initCountyAccordions, 100);
-  }
-
-  document.addEventListener('astro:page-load', bindCountyAccordions);
-  document.addEventListener('astro:after-swap', bindCountyAccordions);
-  document.addEventListener('DOMContentLoaded', bindCountyAccordions);
-  if (document.readyState !== 'loading') bindCountyAccordions();
-</script>

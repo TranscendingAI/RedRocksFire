@@ -708,33 +708,12 @@ const testimonials = [
   ];
 
   function initIndustryPage() {
-    // Inject infobox icons
+    // Inject infobox icons. Accordion open/close is handled by the shared
+    // binder in BaseLayout (src/scripts/accordion.ts).
     document.querySelectorAll<HTMLElement>('.ibox[data-icon-slot]').forEach((box) => {
       const slot = box.querySelector('.ibox__icon');
       const i = Number(box.dataset.iconSlot);
       if (slot && IBOX_ICONS[i] && !slot.firstElementChild) slot.innerHTML = IBOX_ICONS[i];
-    });
-
-    // Accordion toggle (one open at a time, like the demo)
-    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-acc-panel]'));
-    panels.forEach((panel) => {
-      const header = panel.querySelector('.acc__header');
-      const content = panel.querySelector<HTMLElement>('.acc__content');
-      if (!header || !content) return;
-      header.addEventListener('click', () => {
-        const isOpen = panel.classList.contains('is-active');
-        panels.forEach((p) => {
-          p.classList.remove('is-active');
-          p.querySelector('.acc__header')?.setAttribute('aria-expanded', 'false');
-          const c = p.querySelector<HTMLElement>('.acc__content');
-          if (c) c.hidden = true;
-        });
-        if (!isOpen) {
-          panel.classList.add('is-active');
-          header.setAttribute('aria-expanded', 'true');
-          content.hidden = false;
-        }
-      });
     });
   }
 
