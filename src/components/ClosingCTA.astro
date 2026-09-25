@@ -79,7 +79,7 @@ const flameIcon =
       {introParagraphs.map((paragraph) => <p class="cta__para">{paragraph}</p>)}
 
       <p class="cta__para">
-        {cta.closer} <strong>{cta.closerBold}</strong>
+        {cta.closer} <strong class="cta__closer-rest">{cta.closerBold}</strong>
       </p>
 
       <p class="cta__phone">
@@ -224,6 +224,14 @@ const flameIcon =
     line-height: var(--rr-text-body-lh);
   }
   .cta__para strong { color: #171717; font-weight: 700; }
+  /* Start the second sentence on its own line so "We" is the first
+     word of that line at every column width this section uses.
+     pretty keeps the sentence from dropping a single word ("come.")
+     onto its own line as the column narrows. */
+  .cta__closer-rest {
+    display: block;
+    text-wrap: pretty;
+  }
 
   .cta__phone {
     display: flex;
