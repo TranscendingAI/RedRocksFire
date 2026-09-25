@@ -973,35 +973,6 @@ const whyClientsValues = [
 </style>
 
 <script>
-  /* ── Accordion ──────────────────────────────────────────────── */
-  function initInsAccordion() {
-    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-acc-panel]'));
-    if (!panels.length) return false;
-    panels.forEach(function (panel) {
-      var header = panel.querySelector('.acc__header');
-      var content = panel.querySelector('.acc__content');
-      if (!header || !content) return;
-      if (header.__insAccordionWired) return;
-      header.__insAccordionWired = true;
-      header.addEventListener('click', function () {
-        var wasOpen = panel.classList.contains('is-active');
-        panels.forEach(function (p) {
-          p.classList.remove('is-active');
-          var h = p.querySelector('.acc__header');
-          if (h) h.setAttribute('aria-expanded', 'false');
-          var c = p.querySelector('.acc__content');
-          if (c) c.hidden = true;
-        });
-        if (!wasOpen) {
-          panel.classList.add('is-active');
-          header.setAttribute('aria-expanded', 'true');
-          content.hidden = false;
-        }
-      });
-    });
-    return true;
-  }
-  function bindInsAccordion() { if (!initInsAccordion()) setTimeout(initInsAccordion, 100); }
 
   /* ── Reveal stagger (matches the kitchen-hood reveal pattern) ── */
   function initInsReveal() {
@@ -1032,8 +1003,8 @@ const whyClientsValues = [
   }
   function bindInsReveal() { initInsReveal(); }
 
-  document.addEventListener('astro:page-load', function () { bindInsAccordion(); bindInsReveal(); });
-  document.addEventListener('astro:after-swap', function () { bindInsAccordion(); bindInsReveal(); });
-  document.addEventListener('DOMContentLoaded', function () { bindInsAccordion(); bindInsReveal(); });
-  if (document.readyState !== 'loading') { bindInsAccordion(); bindInsReveal(); }
+  document.addEventListener('astro:page-load', function () { bindInsReveal(); });
+  document.addEventListener('astro:after-swap', function () { bindInsReveal(); });
+  document.addEventListener('DOMContentLoaded', function () { bindInsReveal(); });
+  if (document.readyState !== 'loading') { bindInsReveal(); }
 </script>

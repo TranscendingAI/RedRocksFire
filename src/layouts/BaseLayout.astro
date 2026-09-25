@@ -120,5 +120,12 @@ const {
       // Runs on initial load AND after every ClientRouter navigation.
       document.addEventListener('astro:page-load', initRevealObserver);
     </script>
+
+    {/* Accordions — one shared binder so a page cannot attach a second
+     * click listener that immediately collapses the panel it just opened. */}
+    <script>
+      import { bindAccordions } from '../scripts/accordion';
+      bindAccordions();
+    </script>
   </body>
 </html>

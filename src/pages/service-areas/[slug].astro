@@ -170,7 +170,7 @@ const ahjIsAccordion = ahjPanelCount > 1;
             <p class="city-ahj__intro">{city.ahj.note}</p>
           </div>
 
-          <div class="acc city-ahj__right">
+          <div class="acc city-ahj__right" data-acc-mode="multiple">
             <div class:list={['acc__panel', 'is-active', !ahjIsAccordion && 'acc__panel--static']} data-acc-panel={ahjIsAccordion ? true : undefined}>
               {ahjIsAccordion ? (
                 <button type="button" class="acc__header" aria-expanded="true">
@@ -287,7 +287,7 @@ const ahjIsAccordion = ahjPanelCount > 1;
         <h2 class="city-def__title">{city.deficienciesTitle}</h2>
         <p class="city-def__lede">{city.deficienciesIntro}</p>
 
-        <div class="acc city-def__list">
+        <div class="acc city-def__list" data-acc-mode="multiple">
           {city.commonDeficiencies.map((d, i) => (
             <div class:list={['acc__panel', i === 0 && 'is-active']} data-acc-panel>
               <button type="button" class="acc__header" aria-expanded={i === 0 ? 'true' : 'false'}>
@@ -325,7 +325,7 @@ const ahjIsAccordion = ahjPanelCount > 1;
             <span>Frequently asked</span>
           </div>
           <h3 class="city-stock__faq-title">Frequently asked questions about fire protection in {city.city}.</h3>
-          <div class="acc">
+          <div class="acc" data-acc-mode="multiple">
             {city.faq.map((f, i) => (
               <div class:list={['acc__panel', i === 0 && 'is-active']} data-acc-panel>
                 <button type="button" class="acc__header" aria-expanded={i === 0 ? 'true' : 'false'}>
@@ -867,21 +867,3 @@ const ahjIsAccordion = ahjPanelCount > 1;
   .city-stock .acc__content { color: rgba(0, 0, 0, 0.75); padding-left: 39px; }
 </style>
 
-<script>
-  // Accordion controller — same pattern as the rest of the site.
-  // Toggles `.is-active` on the panel and `aria-expanded` on the header.
-  function initCityAccordions() {
-    const panels = document.querySelectorAll<HTMLElement>('.city-page [data-acc-panel]');
-    panels.forEach((panel) => {
-      const header = panel.querySelector<HTMLButtonElement>('.acc__header');
-      if (!header) return;
-      header.addEventListener('click', () => {
-        const isActive = panel.classList.toggle('is-active');
-        header.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-        const content = panel.querySelector<HTMLElement>('.acc__content');
-        if (content) content.hidden = !isActive;
-      });
-    });
-  }
-  document.addEventListener('astro:page-load', initCityAccordions);
-</script>

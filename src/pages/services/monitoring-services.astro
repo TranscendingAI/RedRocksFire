@@ -1140,50 +1140,7 @@ const promiseImage = '/images/rrfps-fire-alarm-monitoring-ready-when-you-are.jpg
 </style>
 
 <script>
-  /**
-   * Accordion toggle for §3 "Our Monitoring Services".
-   * Plain JS (no TS casts) so the dev server's esbuild transform
-   * doesn't drop the module — same defensive binding pattern as the
-   * fire-alarm page.
-   */
-  function initMonitoringAccordion() {
-    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-acc-panel]'));
-    if (!panels.length) return false;
-    panels.forEach(function (panel) {
-      var header = panel.querySelector('.acc__header');
-      var content = panel.querySelector('.acc__content');
-      if (!header || !content) return;
-      if (header.__mrAccordionWired) return;
-      header.__mrAccordionWired = true;
-      header.addEventListener('click', function () {
-        var wasOpen = panel.classList.contains('is-active');
-        panels.forEach(function (p) {
-          p.classList.remove('is-active');
-          var h = p.querySelector('.acc__header');
-          if (h) h.setAttribute('aria-expanded', 'false');
-          var c = p.querySelector('.acc__content');
-          if (c) c.hidden = true;
-        });
-        if (!wasOpen) {
-          panel.classList.add('is-active');
-          header.setAttribute('aria-expanded', 'true');
-          content.hidden = false;
-        }
-      });
-    });
-    return true;
-  }
 
-  function bindMonitoringAccordion() {
-    if (!initMonitoringAccordion()) {
-      setTimeout(initMonitoringAccordion, 100);
-    }
-  }
-
-  document.addEventListener('astro:page-load', bindMonitoringAccordion);
-  document.addEventListener('astro:after-swap', bindMonitoringAccordion);
-  document.addEventListener('DOMContentLoaded', bindMonitoringAccordion);
-  if (document.readyState !== 'loading') bindMonitoringAccordion();
 
   /**
    * Entrance-animation support for the monitoring page.

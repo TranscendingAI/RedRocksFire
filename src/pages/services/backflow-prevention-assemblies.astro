@@ -653,38 +653,6 @@ const promiseImage = '/images/rrfps-backflow-prevention-apartment-complex-inspec
 </style>
 
 <script>
-  function initBackflowAccordion() {
-    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-acc-panel]'));
-    if (!panels.length) return false;
-    panels.forEach(function (panel) {
-      var header = panel.querySelector('.acc__header');
-      var content = panel.querySelector('.acc__content');
-      if (!header || !content) return;
-      if (header.__bpAccordionWired) return;
-      header.__bpAccordionWired = true;
-      header.addEventListener('click', function () {
-        var wasOpen = panel.classList.contains('is-active');
-        panels.forEach(function (p) {
-          p.classList.remove('is-active');
-          var h = p.querySelector('.acc__header');
-          if (h) h.setAttribute('aria-expanded', 'false');
-          var c = p.querySelector('.acc__content');
-          if (c) c.hidden = true;
-        });
-        if (!wasOpen) {
-          panel.classList.add('is-active');
-          header.setAttribute('aria-expanded', 'true');
-          content.hidden = false;
-        }
-      });
-    });
-    return true;
-  }
-  function bindBackflowAccordion() { if (!initBackflowAccordion()) setTimeout(initBackflowAccordion, 100); }
-  document.addEventListener('astro:page-load', bindBackflowAccordion);
-  document.addEventListener('astro:after-swap', bindBackflowAccordion);
-  document.addEventListener('DOMContentLoaded', bindBackflowAccordion);
-  if (document.readyState !== 'loading') bindBackflowAccordion();
 
   function initBackflowRevealStagger() {
     document.querySelectorAll('.rr-reveal[data-reveal-delay]').forEach(function (el) {
