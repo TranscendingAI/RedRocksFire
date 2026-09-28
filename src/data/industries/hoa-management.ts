@@ -26,7 +26,7 @@ export const hoaManagementPage: IndustryPageData = {
         'HOA management teams balance the expectations of boards, homeowners, residents and vendors while overseeing shared buildings, amenities and community assets. When fire and life safety systems are part of that responsibility, compliance can quickly become another complex category requiring inspections, service coordination, documentation, budgeting and emergency response.',
         'Red Rocks Fire Protection Services helps HOA management companies simplify that responsibility. Through our One Vendor Life Safety Solution, your team can coordinate multiple life safety needs through one experienced partner rather than managing separate relationships for each system.',
       ],
-      image: '/images/rrfps-hoa-management-community-life-safety-support.jpg',
+      image: '/images/rrfps-helping-hoa-management-teams.png',
       imageAlt:
         'RRFPS technician supporting life safety systems for a Colorado HOA community.',
       background: 'white',
