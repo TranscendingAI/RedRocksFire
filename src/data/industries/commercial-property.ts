@@ -83,7 +83,7 @@ export const commercialPropertyPage: IndustryPageData = {
       body: [
         'A fire alarm trouble, sprinkler leak, backflow failure or monitoring communication outage can affect tenants and building operations immediately. RRFPS provides 24-hour emergency service, seven days a week, including a 90-minute response window within the Denver Metro area. Our technicians respond to a wide range of system impairments and work to restore functionality while helping management teams navigate temporary protection and compliance requirements when needed.',
       ],
-      image: '/images/rrfps-our-promise-promise-4-show-up-truck.jpg',
+      image: '/images/rrfps-responsive-when-operations-cannot-wait.png',
       imageAlt: 'RRFPS service truck showing up on-site for a commercial property life safety service call.',
       background: 'black',
     },
