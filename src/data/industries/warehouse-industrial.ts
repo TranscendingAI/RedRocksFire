@@ -88,7 +88,7 @@ export const warehouseIndustrialPage: IndustryPageData = {
         'Life safety failures do not follow production schedules. RRFPS provides 24-hour emergency service, seven days a week, for sprinkler breaks, freeze damage, dry system failures, fire pump troubles, alarm outages, backflow failures, monitoring problems and other critical impairments. Within the Denver Metro area, our Brand Promise includes a 90-minute emergency response window.',
         'When systems are impaired, we can also assist with impairment evaluations, repair recommendations, fire watch guidance, temporary protection planning and AHJ coordination.',
       ],
-      image: '/images/rrfps-warehouse-industrial-fire-pump-response.jpg',
+      image: '/images/rrfps-24hr-support-for-critical-system-failures.png',
       imageAlt:
         'RRFPS technician servicing an industrial fire pump during an emergency response call.',
       background: 'black',
