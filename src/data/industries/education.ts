@@ -87,7 +87,7 @@ export const educationPage: IndustryPageData = {
       body: [
         'A sprinkler pipe break, alarm communication failure, fire pump trouble or other impairment can quickly affect operations. RRFPS provides 24-hour emergency service, seven days a week, with a 90-minute response window within the Denver Metro area. We work to restore system functionality quickly and can help clients navigate impairment, fire watch and AHJ coordination requirements when necessary.',
       ],
-      image: '/images/rrfps-education-campus-emergency-response.jpg',
+      image: '/images/rrfps-support-when-the-campus-cannot-wait.png',
       imageAlt:
         'RRFPS technician responding to a campus life safety emergency across the Colorado Front Range.',
       background: 'black',
