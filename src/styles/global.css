@@ -163,3 +163,37 @@ p:not(.rr-eyebrow):not(.av-dblh__subtitle) {
     animation: none;
   }
 }
+/* Service-page accordion: animated reveal and card-centered reading position. */
+[data-service-accordion] .acc__panel--card .acc__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  padding: 0;
+  opacity: 0;
+  transition: grid-template-rows 320ms cubic-bezier(0.16, 1, 0.3, 1), opacity 180ms ease-out;
+}
+
+[data-service-accordion] .acc__panel--card.is-active .acc__content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+[data-service-accordion] .acc__panel--card .acc__content-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 4px 24px 22px 70px;
+}
+
+[data-service-accordion] .acc__panel--card .acc__content-inner p {
+  margin: 0;
+  font-size: var(--rr-text-body) !important;
+  line-height: var(--rr-text-body-lh);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-service-accordion] .acc__panel--card .acc__content,
+  [data-service-accordion] .acc__caret,
+  [data-service-accordion] .acc__panel--card {
+    transition-duration: 1ms;
+  }
+}

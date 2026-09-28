@@ -300,7 +300,7 @@ const promiseImage = '/images/rrfps-security-system-installation-and-monitoring-
           </p>
         </div>
 
-        <div class="acc ss-accordion__list">
+        <div class="acc ss-accordion__list" data-service-accordion>
           {accordionPanels.map((p, i) => (
             <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal', p.open && 'is-active']} data-acc-panel data-reveal-delay={i * 100}>
               <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>

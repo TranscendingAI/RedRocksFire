@@ -18,6 +18,8 @@ interface Props {
   reverse?: boolean;
   background?: 'light' | 'panel' | 'white' | 'black';
   ctaVariant?: 'arrow' | 'primary';
+  /** Optional page-scoped container modifier for an established layout rhythm. */
+  containerClass?: string;
   /**
    * When true (default), the section gets the rounded-top-corner band reveal
    * (design.md §4.3) via the `.rr-band--reveal-top` class. Pass `false` to opt
@@ -38,6 +40,7 @@ const {
   reverse = false,
   background = 'light',
   ctaVariant = 'arrow',
+  containerClass,
   revealTop = true,
 } = Astro.props;
 
@@ -70,7 +73,7 @@ const textColorOnDark = background === 'black' ? '#fff' : undefined;
 ---
 
 <section class:list={['rr-band', revealTop && 'rr-band--reveal-top', bgClass]}>
-  <div class="rr-container">
+  <div class:list={['rr-container', containerClass]}>
     <div
       class:list={[
         'grid gap-10 md:gap-12 lg:gap-16 items-center',

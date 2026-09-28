@@ -258,7 +258,7 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
           <p class="fs-accordion__intro">{fireSprinklerPage.accordion.intro}</p>
         </div>
 
-        <div class="acc fs-accordion__list">
+        <div class="acc fs-accordion__list" data-service-accordion>
           {fireSprinklerPage.accordion.panels.map((p, i) => (
             <div class:list={['acc__panel', 'acc__panel--card', p.open && 'is-active']} data-acc-panel>
               <button type="button" class="acc__header" aria-expanded={p.open ? 'true' : 'false'}>
@@ -1288,4 +1288,3 @@ const bannerImage = fireSprinklerPage.banner.backgroundImage;
     .fs-industries { padding-block: 70px; }
   }
 </style>
-

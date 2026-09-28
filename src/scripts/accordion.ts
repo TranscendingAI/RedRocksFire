@@ -16,12 +16,93 @@ function isMultiple(panel: HTMLElement): boolean {
   return panel.closest('[data-acc-mode="multiple"]') !== null;
 }
 
+const accordionHideTimers = new WeakMap<HTMLElement, number>();
+let activeScrollFrame: number | undefined;
+const serviceTransitionDuration = 320;
+
+function isServicePanel(panel: HTMLElement): boolean {
+  return panel.closest('[data-service-accordion]') !== null;
+}
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function ensureContentInner(content: HTMLElement): void {
+  if (content.querySelector(':scope > .acc__content-inner')) return;
+
+  const inner = document.createElement('div');
+  inner.className = 'acc__content-inner';
+  while (content.firstChild) inner.appendChild(content.firstChild);
+  content.appendChild(inner);
+}
+
+function centerPanel(panel: HTMLElement): void {
+  const rect = panel.getBoundingClientRect();
+  const destination = Math.max(0, window.scrollY + rect.top - ((window.innerHeight - rect.height) / 2));
+
+  if (activeScrollFrame) window.cancelAnimationFrame(activeScrollFrame);
+  if (prefersReducedMotion()) {
+    window.scrollTo({ top: destination, behavior: 'auto' });
+    return;
+  }
+
+  const startTop = window.scrollY;
+  const distance = destination - startTop;
+  const duration = 560;
+  const startTime = performance.now();
+  const easeInOutCubic = (progress: number) => (
+    progress < 0.5
+      ? 4 * progress * progress * progress
+      : 1 - ((-2 * progress + 2) ** 3) / 2
+  );
+
+  const animateScroll = (now: number) => {
+    const progress = Math.min((now - startTime) / duration, 1);
+    window.scrollTo({ top: startTop + (distance * easeInOutCubic(progress)), behavior: 'auto' });
+    if (progress < 1) activeScrollFrame = window.requestAnimationFrame(animateScroll);
+    else activeScrollFrame = undefined;
+  };
+
+  activeScrollFrame = window.requestAnimationFrame(animateScroll);
+}
+
 function setOpen(panel: HTMLElement, open: boolean): void {
-  panel.classList.toggle('is-active', open);
   const header = panel.querySelector('.acc__header');
-  if (header) header.setAttribute('aria-expanded', open ? 'true' : 'false');
   const content = panel.querySelector<HTMLElement>('.acc__content');
-  if (content) content.hidden = !open;
+  if (!content) return;
+
+  if (!isServicePanel(panel)) {
+    panel.classList.toggle('is-active', open);
+    if (header) header.setAttribute('aria-expanded', open ? 'true' : 'false');
+    content.hidden = !open;
+    return;
+  }
+
+  const hideTimer = accordionHideTimers.get(content);
+  if (hideTimer) window.clearTimeout(hideTimer);
+
+  if (!open) {
+    panel.classList.remove('is-active');
+    if (header) header.setAttribute('aria-expanded', 'false');
+    if (prefersReducedMotion()) {
+      content.hidden = true;
+      return;
+    }
+    accordionHideTimers.set(content, window.setTimeout(() => {
+      if (!panel.classList.contains('is-active')) content.hidden = true;
+    }, serviceTransitionDuration));
+    return;
+  }
+
+  content.hidden = false;
+  window.requestAnimationFrame(() => {
+    panel.classList.add('is-active');
+    if (header) header.setAttribute('aria-expanded', 'true');
+    window.setTimeout(() => {
+      if (panel.classList.contains('is-active')) centerPanel(panel);
+    }, prefersReducedMotion() ? 0 : serviceTransitionDuration + 20);
+  });
 }
 
 export function initAccordions(): void {
@@ -33,6 +114,8 @@ export function initAccordions(): void {
     const header = panel.querySelector<HTMLButtonElement>('button.acc__header');
     const content = panel.querySelector<HTMLElement>('.acc__content');
     if (!header || !content) return;
+
+    if (isServicePanel(panel)) ensureContentInner(content);
 
     panel.dataset.accBound = 'true';
     const multiple = isMultiple(panel);
