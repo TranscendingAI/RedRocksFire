@@ -4,7 +4,7 @@ seoTitle: Wet vs. Dry vs. Antifreeze Sprinkler Systems for Fort Collins Building
 seoDescription: Fort Collins winters make sprinkler type a real decision. Here's how wet, dry, and antifreeze systems differ, where each belongs, and what Poudre Fire Authority expects.
 excerpt: In a climate that freezes, the wrong sprinkler system doesn't just underperform — it bursts. Here's how wet, dry, and antifreeze systems differ and where each one belongs in a Fort Collins building.
 
-publishDate: 2026-08-06
+publishDate: 2026-08-14
 category: Service & Maintenance
 author: RRFPS Editorial Team
 tags:

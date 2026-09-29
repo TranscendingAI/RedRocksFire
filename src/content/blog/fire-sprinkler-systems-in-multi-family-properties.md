@@ -9,7 +9,7 @@ seoDescription: Annual NFPA fire sprinkler inspection for multi-family propertie
 excerpt: Multi-family properties have a specific NFPA path for sprinkler systems — and the wrong standard at install time becomes a permanent AHJ problem. Here's how 13, 13R, and 13D actually apply.
 
 # ── Editorial metadata ──────────────────────────────────────────
-publishDate: 2026-07-09
+publishDate: 2026-07-24
 category: Property Management
 author: RRFPS Editorial Team
 tags:

@@ -4,7 +4,7 @@ seoTitle: Fire Protection Responsibility in Parker Multi-Tenant Retail & Shoppin
 seoDescription: In a Parker shopping center, the fire system spans the landlord's shell and every tenant's space — and the gaps between them cause compliance failures. Here's how to sort out who owns what.
 excerpt: A multi-tenant shopping center has one fire protection system and a dozen parties who each assume someone else maintains it. Here's how responsibility actually divides in a Parker retail center — and where it falls through.
 
-publishDate: 2026-06-11
+publishDate: 2026-09-04
 category: Property Management
 author: RRFPS Editorial Team
 tags:

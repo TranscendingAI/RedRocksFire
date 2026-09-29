@@ -4,7 +4,7 @@ seoTitle: Fire Protection for Assisted Living & Healthcare Facilities in Lakewoo
 seoDescription: Assisted living and healthcare facilities face the strictest fire-safety expectations because occupants can't self-evacuate. Here's what NFPA 101 and West Metro Fire Rescue require in Lakewood.
 excerpt: In an assisted living facility, the people the fire code protects can't always get themselves out. That single fact raises the stakes on every system — and it's why healthcare life safety is its own discipline.
 
-publishDate: 2026-07-09
+publishDate: 2026-07-10
 category: Property Management
 author: RRFPS Editorial Team
 tags:

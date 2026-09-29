@@ -4,7 +4,7 @@ seoTitle: Fire Extinguisher Service for Littleton Retailers | 6-Year & 12-Year N
 seoDescription: Fire extinguishers need more than the annual tag. NFPA 10 requires 6-year maintenance and 12-year hydrostatic testing that Littleton retailers routinely overlook. Here's the full schedule.
 excerpt: The annual tag on your extinguisher is the easy part. NFPA 10 also requires 6-year internal maintenance and a 12-year hydrostatic test — the two deadlines Littleton retailers almost always miss.
 
-publishDate: 2026-07-02
+publishDate: 2026-07-03
 category: Service & Maintenance
 author: RRFPS Editorial Team
 tags:

@@ -4,7 +4,7 @@ seoTitle: The One-Vendor Life Safety Model for Denver Properties | Fire Protecti
 seoDescription: Most Denver buildings run five separate fire protection vendors and no one owns the whole picture. Here's what the one-vendor life safety model actually changes for property teams.
 excerpt: Most Denver buildings run a sprinkler company, an alarm company, an extinguisher company, a monitoring company, and a backflow tester — and no one owns the whole picture. Here's what changes when one vendor does.
 
-publishDate: 2026-08-20
+publishDate: 2026-08-28
 category: Property Management
 author: RRFPS Editorial Team
 tags:
