@@ -88,7 +88,7 @@ export const restaurantsPage: IndustryPageData = {
       body: [
         'An impaired suppression system, fire alarm trouble or sprinkler issue can affect restaurant operations immediately. RRFPS provides 24-hour emergency service, seven days a week, with a 90-minute response window within the Denver Metro area. Our goal is to diagnose problems, restore protection and communicate clearly so operators can make informed decisions.',
       ],
-      image: '/images/rrfps-restaurants-emergency-response.jpg',
+      image: '/images/rrfps-response-when-every-hour-matters.png',
       imageAlt:
         'RRFPS technician responding to a restaurant kitchen suppression emergency.',
       background: 'black',
