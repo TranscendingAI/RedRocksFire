@@ -15,7 +15,7 @@ export const automotivePage: IndustryPageData = {
   banner: {
     title: 'Automotive.',
     subtitle: 'INDUSTRIES WE SERVE',
-    backgroundImage: '/images/rrfps-car-dealerships.jpg',
+    backgroundImage: '/images/rrfps-automotive-dealerships-hero-bg.png',
   },
   sections: [
     {
