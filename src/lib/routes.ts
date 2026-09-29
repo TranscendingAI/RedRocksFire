@@ -60,7 +60,7 @@ export const ROUTES = {
   // Services — one entry per live service page (per client confirmation
   // 2026-09: all 11 service pages are live).
   serviceInspections: '/services/inspections',
-  serviceFireSprinkler: '/fire-sprinkler-service-and-systems',
+  serviceFireSprinkler: '/services/fire-sprinkler-service-and-systems',
   serviceFireAlarm: '/services/fire-alarm-service-and-systems',
   serviceMonitoring: '/services/monitoring-services',
   serviceBackflow: '/services/backflow-prevention-assemblies',

@@ -44,7 +44,7 @@ In principle, the lease divides responsibility. In practice, retail leases are f
 
 The common division looks like this:
 
-- **Landlord owns the shell and the common systems** — the riser, the main [sprinkler infrastructure](/fire-sprinkler-service-and-systems), the [fire alarm](/services/fire-alarm-service-and-systems) panel, the FDC, the [backflow](/services/backflow-prevention-assemblies), the fire pump, and the annual inspection and testing of those.
+- **Landlord owns the shell and the common systems** — the riser, the main [sprinkler infrastructure](/services/fire-sprinkler-service-and-systems), the [fire alarm](/services/fire-alarm-service-and-systems) panel, the FDC, the [backflow](/services/backflow-prevention-assemblies), the fire pump, and the annual inspection and testing of those.
 - **Tenants own what's inside their space** — keeping heads unobstructed, not blocking egress, maintaining any tenant-specific equipment (a restaurant's [kitchen hood suppression](/blog/kitchen-hood-suppression-boulder/), for example), and not modifying the system without coordination.
 
 The problems live in the seams:

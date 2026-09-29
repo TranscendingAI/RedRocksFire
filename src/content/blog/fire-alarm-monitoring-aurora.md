@@ -58,7 +58,7 @@ This is why the communication path, the secondary power, and the verified end-to
 
 A capable central station doesn't only watch the fire alarm. The same monitoring infrastructure typically covers:
 
-- **Sprinkler waterflow and valve tamper** — so a closed valve or a flowing [sprinkler system](/fire-sprinkler-service-and-systems) generates a signal, not just a wet floor discovered Monday morning
+- **Sprinkler waterflow and valve tamper** — so a closed valve or a flowing [sprinkler system](/services/fire-sprinkler-service-and-systems) generates a signal, not just a wet floor discovered Monday morning
 - **Security systems** — intrusion and access alarms
 - **Elevator recall and emergency phones**
 - **Area of refuge two-way communication** — the call stations that give someone who can't use the stairs a lifeline during an evacuation

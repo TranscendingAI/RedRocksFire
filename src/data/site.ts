@@ -247,7 +247,7 @@ export const about = {
         title: 'Fire Sprinkler Systems',
         body: 'Design, installation, service, and repair of wet, dry, preaction, and standpipe systems, plus fire pumps and retrofits.',
         icon: 'solar:waterdrops-bold-duotone',
-        href: '/fire-sprinkler-service-and-systems',
+        href: '/services/fire-sprinkler-service-and-systems',
       },
       {
         title: 'Fire Alarm Systems',
