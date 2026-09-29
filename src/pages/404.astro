@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+---
+
+<BaseLayout
+  title="Page Not Found | Red Rocks Fire Protection"
+  description="The page you requested could not be found. Return to Red Rocks Fire Protection's homepage or contact our team."
+>
+  <section class="nf" aria-labelledby="not-found-title">
+    <div class="nf__rail" aria-hidden="true"></div>
+    <div class="nf__inner rr-container">
+      <div class="nf__status" aria-hidden="true">404</div>
+
+      <div class="nf__content">
+        <h1 id="not-found-title">This page is out of service.</h1>
+        <p>
+          The link may be outdated, or the page may have moved. Return home to find the fire and life-safety support you need.
+        </p>
+
+        <div class="nf__actions">
+          <a href="/" class="av-wgl-btn nf__button">
+            <span class="av-wgl-btn__text">Return Home</span>
+            <span class="av-wgl-btn__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+            </span>
+          </a>
+          <a href="/contact" class="av-wgl-btn nf__button nf__button--outline">
+            <span class="av-wgl-btn__text">Contact Us</span>
+            <span class="av-wgl-btn__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+            </span>
+          </a>
+        </div>
+
+        <nav class="nf__links" aria-label="Helpful links">
+          <a href="/services">Explore Services</a>
+          <a href="/industries-we-serve">Industries We Serve</a>
+          <a href="/about">About RRFPS</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    min-height: min(700px, calc(100svh - 96px));
+    overflow: hidden;
+    background: #0d0d0b;
+    color: #ffffff;
+  }
+
+  .nf__rail {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: clamp(16px, 2.4vw, 42px);
+    background: var(--rr-red);
+  }
+
+  .nf__rail::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 1px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.38);
+  }
+
+  .nf__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    align-content: center;
+    padding-top: clamp(80px, 11vw, 150px);
+    padding-bottom: clamp(80px, 11vw, 150px);
+  }
+
+  .nf__status {
+    position: absolute;
+    top: 50%;
+    right: clamp(18px, 7vw, 112px);
+    z-index: -1;
+    margin: 0;
+    font-family: var(--av-font-display);
+    font-size: clamp(10rem, 30vw, 30rem);
+    font-weight: 700;
+    line-height: 0.72;
+    letter-spacing: -0.08em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.17);
+    text-stroke: 1px rgba(255, 255, 255, 0.17);
+    user-select: none;
+  }
+
+  .nf__content {
+    position: relative;
+    max-width: 650px;
+  }
+
+  .nf__content h1 {
+    max-width: 7ch;
+    margin: 0;
+    font-family: var(--av-font-display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .nf__content p {
+    max-width: 53ch;
+    margin: 30px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: var(--rr-text-lead) !important;
+    line-height: var(--rr-text-lead-lh) !important;
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 40px;
+  }
+
+  .nf__button {
+    --av-wgl-btn-bg: var(--rr-red);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: var(--rr-red);
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: #0d0d0b;
+    --av-wgl-btn-border-hover: #ffffff;
+    text-decoration: none;
+  }
+
+  .nf__button--outline {
+    --av-wgl-btn-bg: transparent;
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: rgba(255, 255, 255, 0.56);
+    --av-wgl-btn-bg-hover: #ffffff;
+    --av-wgl-btn-color-hover: #0d0d0b;
+    --av-wgl-btn-border-hover: #ffffff;
+  }
+
+  .nf__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin-top: 52px;
+  }
+
+  .nf__links a {
+    color: #ffffff;
+    font-family: var(--av-font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    text-underline-offset: 5px;
+    text-transform: uppercase;
+    transition: color var(--rr-dur-fast) ease, text-decoration-color var(--rr-dur-fast) ease;
+  }
+
+  .nf__links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-color: var(--rr-red);
+    text-decoration-thickness: 2px;
+  }
+
+  @media (max-width: 767px) {
+    .nf {
+      min-height: calc(100svh - 74px);
+    }
+
+    .nf__rail {
+      width: 10px;
+    }
+
+    .nf__inner {
+      padding-left: calc(var(--rr-gutter-mobile) + 14px);
+    }
+
+    .nf__status {
+      top: 34%;
+      right: -10px;
+      font-size: clamp(9rem, 48vw, 14rem);
+    }
+
+    .nf__content h1 {
+      font-size: clamp(2.7rem, 15vw, 4.25rem);
+    }
+
+    .nf__actions {
+      margin-top: 32px;
+    }
+
+    .nf__button {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .nf__button :global(.av-wgl-btn__text) {
+      flex: 1;
+    }
+
+    .nf__links {
+      margin-top: 40px;
+    }
+  }
+</style>
