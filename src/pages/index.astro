@@ -89,4 +89,10 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
   @media(max-width:900px){.industries2__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media(max-width:560px){.hero2__services{grid-template-columns:repeat(2,1fr)}.hero2__services a:nth-child(odd){border-left:0}.emergency{display:block}.emergency span{display:block;margin-top:.5rem}.service-grid,.industry-grid,.industries2__grid{grid-template-columns:1fr}.promise-testimonial ul{columns:1}.actions .button{width:100%}.hero2 h1{font-size:3.5rem}}
   :global(.avh--on-dark .avh__link),:global(.avh--on-dark .avh__menu-trigger){color:#111!important}
+  @media(min-width:1025px){
+    :global(.avh:not(.avh--on-dark) .avh__desktop){min-height:clamp(128px,8.5vw,170px)}
+    :global(.avh:not(.avh--on-dark) .avh__logo-box){align-self:stretch;width:clamp(250px,16vw,320px);padding:0 2rem;background:#d41226}
+    :global(.avh:not(.avh--on-dark) .avh__logo){height:clamp(64px,4.2vw,82px)}
+    :global(.avh:not(.avh--on-dark) .avh__nav ul){justify-content:flex-start;gap:clamp(1.25rem,2vw,2.5rem);height:clamp(128px,8.5vw,170px);padding-left:clamp(2rem,3vw,4rem)}
+  }
 </style>

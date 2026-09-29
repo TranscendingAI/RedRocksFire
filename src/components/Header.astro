@@ -579,20 +579,22 @@ const socials = [
     .avh__desktop {
       display: flex;
       align-items: center;
-      min-height: 104px;
+      min-height: clamp(128px, 8.5vw, 170px);
       border-bottom: 1px solid rgba(17, 17, 17, 0.18);
     }
   }
   .avh__logo-box {
-    width: clamp(185px, 19vw, 300px);
+    align-self: stretch;
+    width: clamp(250px, 16vw, 320px);
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
+    background: #d41226;
   }
   .avh__logo {
-    height: 76px;
+    height: clamp(64px, 4.2vw, 82px);
     width: auto;
     display: block;
   }
@@ -612,12 +614,12 @@ const socials = [
   .avh__nav ul {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: clamp(0.45rem, 1.2vw, 1.6rem);
-    height: 104px;
+    justify-content: flex-start;
+    gap: clamp(1.25rem, 2vw, 2.5rem);
+    height: clamp(128px, 8.5vw, 170px);
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 clamp(2rem, 3vw, 4rem);
   }
 
   /* Each top-level nav item is a positioned <li>; dropdowns hang off it. */
@@ -828,6 +830,7 @@ const socials = [
     justify-content: center;
     padding: 0 20px;
     border-radius: 0;
+    background: #d41226;
   }
   .avh__burger {
     width: 50px;
