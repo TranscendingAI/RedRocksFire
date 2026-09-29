@@ -98,7 +98,7 @@ export const retailPage: IndustryPageData = {
         'A sprinkler leak, alarm outage or monitoring communication failure can affect tenants and customers quickly. RRFPS provides 24-hour emergency service, seven days a week, with a 90-minute response window within the Denver Metro area.',
         'Our technicians work to restore critical systems while helping property teams minimize disruption and maintain compliance. When an impairment requires temporary measures, we can also assist with fire watch guidance and AHJ coordination.',
       ],
-      image: '/images/rrfps-retail-emergency-response.jpg',
+      image: '/images/rrfps-ready-when-issues-effect-the-property.png',
       imageAlt:
         'RRFPS emergency technician restoring a sprinkler system at a Colorado retail property.',
       background: 'black',

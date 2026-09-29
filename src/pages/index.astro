@@ -4,14 +4,6 @@ import { ROUTES } from '../lib/routes';
 import { about } from '../data/site';
 
 const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.307 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
-const heroServices = [
-  { icon: 'mdi:fire', title: 'Fire Alarms', body: 'Design, installation and service', href: ROUTES.serviceFireAlarm },
-  { icon: 'mdi:fire-hydrant', title: 'Fire Sprinklers', body: 'Fire protection you can count on', href: ROUTES.serviceFireSprinkler },
-  { icon: 'mdi:fire-extinguisher', title: 'Fire Extinguishers', body: 'Sales, services and inspection', href: ROUTES.serviceExtinguishers },
-  { icon: 'mdi:clipboard-text-outline', title: 'Inspections', body: 'Stay compliant. Stay protected.', href: ROUTES.serviceInspections },
-  { icon: 'mdi:monitor-dashboard', title: 'Monitoring', body: '24/7 life safety monitoring', href: ROUTES.serviceMonitoring },
-  { icon: 'mdi:wrench-outline', title: '24/7 Emergency Service', body: 'Always here when you need us most', href: ROUTES.service24Hour },
-];
 const services = [
   ['Inspections', 'mdi:clipboard-text-outline', ROUTES.serviceInspections],
   ['Fire Sprinkler Systems', 'mdi:fire-hydrant', ROUTES.serviceFireSprinkler],
@@ -45,12 +37,7 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
           <aside class="story"><strong>★</strong><small>The story behind</small><h2>John's truck</h2><p>A legacy that drives everything we do.</p><a href={ROUTES.ourStory}>Read the story&nbsp; →</a></aside>
         </div>
       </div>
-      <nav class="hero2__services" aria-label="Life safety services">
-        {heroServices.map((service) => <a href={service.href}><span class="service-icon" set:html={icon(service.icon)}></span><b>{service.title}</b><small>{service.body}</small></a>)}
-      </nav>
     </section>
-
-    <div class="emergency"><strong>♢ &nbsp; Your One Vendor Life Safety Solution.</strong><span>24/7 EMERGENCY SERVICE &nbsp;&nbsp; <a href="tel:+17207338050">(720) 733-8050</a></span></div>
 
     <section class="responsibility section-light" aria-label="Colorado multi-family community">
       <div class="responsibility__copy"><p class="eyebrow">Protecting people. Protecting property. Staying compliant.</p><h2>You Carry a Big Responsibility.<br /><span>You Shouldn’t Have to Manage It Alone.</span></h2><p>Whether you manage one property or an entire portfolio, life safety comes with enormous responsibility. You are protecting residents, employees, tenants, customers and visitors while navigating inspections, service needs, changing codes, multiple systems and multiple jurisdictions.</p><p class="bold">You don’t need another vendor to manage.<br />You need a life safety partner who helps you stay ahead of it all.</p><a class="button button--red" href={ROUTES.rrfpsDifference}>Discover the RRFPS difference <span>→</span></a></div>
@@ -83,6 +70,9 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
   .accountability__copy .button,
   .difference2__copy .button { margin-top: 0.85rem; }
   .trust-band > div:last-child .button { margin-top: 1.25rem; }
+  .story{width:min(100%,260px);transform:translate(clamp(1rem,3vw,3rem),clamp(-14.5rem,-12.5vw,-10.5rem))}
+  .hero2 .story h2{max-width:100%;margin:.2rem 0 .5rem;font-size:1.35rem!important;line-height:1;letter-spacing:-.055em;white-space:nowrap}
+  @media(max-width:900px){.story{width:min(100%,290px);transform:none}}
   .trust-band{background-image:linear-gradient(90deg,#071115ee,#071115d9),url('/images/rrfps-home-safety-advocacy-trust.png')}
   .difference2{background-image:linear-gradient(90deg,#091316ef,#091316d5),url('/images/rrfps-hoa-management-community-property-services.jpg')}
   .credentials__light{background-image:url('/images/rrfps-our-vision-statement.png')}
