@@ -1417,12 +1417,25 @@ const socials = [
         dropdownTrigger?.setAttribute('aria-label', `Show ${item.querySelector('.avh__drawer-parent')?.textContent?.trim() ?? 'submenu'} pages`);
       });
     };
+    const closeMenu = () => {
+      open = false;
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      trigger.setAttribute('aria-expanded', 'false');
+      closeSubmenus();
+    };
     trigger.addEventListener('click', () => {
       open = !open;
       overlay.classList.toggle('is-open', open);
       overlay.setAttribute('aria-hidden', String(!open));
       trigger.setAttribute('aria-expanded', String(open));
       if (!open) closeSubmenus();
+    });
+
+    // The header is persisted during page transitions, so explicitly close the
+    // drawer before following any mobile navigation link.
+    overlay.addEventListener('click', (event) => {
+      if ((event.target as Element).closest('a[href]')) closeMenu();
     });
 
     overlay.querySelectorAll<HTMLElement>('.avh__drawer-item--has-children').forEach((item) => {
