@@ -30,6 +30,15 @@ import { ROUTES } from '../lib/routes';
 // Shared arrow SVG path (16×14) used by every wgl button + portfolio hover icon
 const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
 
+const heroServices = [
+  { icon: 'mdi:fire', title: 'Fire Alarms', body: 'Design, installation and service', href: ROUTES.serviceFireAlarm },
+  { icon: 'mdi:fire-hydrant', title: 'Fire Sprinklers', body: 'Fire protection you can count on', href: ROUTES.serviceFireSprinkler },
+  { icon: 'mdi:fire-extinguisher', title: 'Fire Extinguishers', body: 'Sales, services and inspection', href: ROUTES.serviceExtinguishers },
+  { icon: 'mdi:clipboard-text-outline', title: 'Inspections', body: 'Stay compliant. Stay protected.', href: ROUTES.serviceInspections },
+  { icon: 'mdi:monitor-dashboard', title: 'Monitoring', body: '24/7 life safety monitoring', href: ROUTES.serviceMonitoring },
+  { icon: 'mdi:wrench-outline', title: '24/7 Emergency Service', body: 'Always here when you need us most', href: ROUTES.service24Hour },
+];
+
 // Diamond divider icon used in double-heading subtitles
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
@@ -128,42 +137,57 @@ const testimonials = [
     <!-- ════════════════════════════════════════════════════════
          1. HERO
          ════════════════════════════════════════════════════════ -->
-    <section class="hero">
-      <div class="hero__spacer-top" aria-hidden="true"></div>
-
-      <div class="hero__eyebrow-row">
-        <h3 class="hero__eyebrow" data-fade-up><span>Your One Vendor Life Safety Solution</span></h3>
-      </div>
-
-      <div class="hero__spacer-mid" aria-hidden="true"></div>
-
-      <div class="hero__main-row">
-        <h1 class="hero__title" data-fade-up>
-          <span>Raising the </span><span>Standard in Fire Safety</span>
-        </h1>
-
-        <div class="hero__counter-col">
-          <span class="av-delimiter av-delimiter--left" aria-hidden="true"></span>
-          <div class="hero__counter-box" data-fade-up>
-            <div class="hero__counter">
-              <div class="hero__counter-value">
-                <span data-counter data-counter-target="200">200</span><span class="hero__counter-suffix">+</span>
-              </div>
-              <h4 class="hero__counter-title">years of combined experience</h4>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__scene">
+        <div class="hero__content">
+          <div class="hero__copy">
+            <p class="hero__eyebrow" data-fade-up>Colorado's trusted fire protection partner</p>
+            <h1 id="hero-title" class="hero__title" data-fade-up>
+              <span>Complete fire</span>
+              <span>protection.</span>
+              <span class="hero__title-accent">Peace of mind.</span>
+            </h1>
+            <div class="hero__rule" aria-hidden="true">
+              <svg viewBox="0 0 82 14" fill="none"><path d="M0 9.5H24l7-6 9 8 10-9 8 7h24" stroke="currentColor" stroke-width="1.5"/></svg>
             </div>
-            <div class="hero__counter-spacer" aria-hidden="true"></div>
-            <a href={ROUTES.contact} class="av-wgl-btn hero__cta">
-              <span class="av-wgl-btn__text">get in touch</span>
-              <span class="av-wgl-btn__icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
-              </span>
-            </a>
+            <h2 class="hero__statement" data-fade-up>One Vendor. One Team. One Mission.</h2>
+            <p class="hero__body" data-fade-up>From design and installation to inspections, monitoring and 24/7 service, we deliver complete life safety solutions that protect people, property and your peace of mind.</p>
+            <div class="hero__actions" data-fade-up>
+              <a href={ROUTES.about} class="hero__button hero__button--primary">
+                <span>About RRFPS</span>
+                <svg viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </a>
+              <a href={ROUTES.services} class="hero__button hero__button--secondary">
+                <span>Explore our services</span>
+                <svg viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+              </a>
+            </div>
           </div>
-          <span class="av-delimiter av-delimiter--right" aria-hidden="true"></span>
+
+          <aside class="hero__story" data-fade-up aria-label="John's Truck story">
+            <span class="hero__story-star" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.8 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 2.8Z"/></svg>
+            </span>
+            <p class="hero__story-label">The story behind</p>
+            <h2>John's truck</h2>
+            <p class="hero__story-copy">A legacy that drives everything we do.</p>
+            <a href={ROUTES.ourStory} class="hero__story-link">
+              <span>Read the story</span>
+              <svg viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+            </a>
+          </aside>
         </div>
       </div>
 
-      <div class="hero__spacer-bottom" aria-hidden="true"></div>
+      <nav class="hero__services" aria-label="Life safety services">
+        {heroServices.map((service) => (
+          <a href={service.href} class="hero__service">
+            <span class="hero__service-icon" aria-hidden="true"><iconify-icon icon={service.icon}></iconify-icon></span>
+            <span class="hero__service-title">{service.title}</span>
+            <span class="hero__service-body">{service.body}</span>
+          </a>
+        ))}
+      </nav>
     </section>
 
     <!-- ════════════════════════════════════════════════════════
@@ -448,112 +472,227 @@ const testimonials = [
   .hero {
     position: relative;
     overflow: hidden;
-    background-image: url('/images/red-rocks-fire-protection-home-hero.jpg');
+    background: #e9edf0;
+  }
+  .hero__scene {
+    position: relative;
+    isolation: isolate;
+    min-height: clamp(650px, 47vw, 760px);
+    background-image: url('/images/rrfps-truck-hero.png');
     background-position: center center;
     background-size: cover;
   }
-  /* Subtle dark overlay to lift the white text off the image */
-  .hero::before {
+  .hero__scene::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 1;
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.91) 25%, rgba(255, 255, 255, 0.4) 45%, rgba(255, 255, 255, 0) 63%);
     pointer-events: none;
   }
-  .hero__eyebrow-row,
-  .hero__main-row { position: relative; z-index: 2; }
-  .hero__spacer-top { height: 200px; }
-  .hero__spacer-mid { height: 333px; }
-  .hero__spacer-bottom { height: 69px; }
-
-  .hero__eyebrow-row {
-    padding-left: 3.1%;
-    padding-right: 3.6%;
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 630px) minmax(320px, 1fr);
+    gap: 2rem;
+    max-width: 1600px;
+    min-height: inherit;
+    margin: 0 auto;
+    padding: clamp(7.5rem, 11.25vw, 12.5rem) clamp(2rem, 3.25vw, 4rem) clamp(2.75rem, 5vw, 5rem);
+  }
+  .hero__copy {
+    align-self: center;
+    max-width: 630px;
   }
   .hero__eyebrow {
-    max-width: 400px;
-    font-size: 40px;
+    margin: 0 0 0.85rem;
+    font-family: var(--av-font-display);
+    font-size: clamp(0.85rem, 1.15vw, 1.1rem) !important;
+    font-weight: 700;
+    line-height: 1.2 !important;
     text-transform: uppercase;
-    line-height: 1em;
-    margin: 0;
-  }
-  .hero__eyebrow span { color: #ffffff; }
-
-  .hero__main-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid #ffffff66;
-    border-bottom: 1px solid #ffffff66;
-    padding-left: 3.1%;
-    padding-right: 3.6%;
+    letter-spacing: -0.025em;
+    color: var(--rr-red);
   }
   .hero__title {
-    max-width: 1050px;
-    margin: 10px 0 0 0;
-    font-size: clamp(64px, 10.417vw, 200px);
-    text-transform: uppercase;
-    line-height: 0.8em;
-    letter-spacing: -0.05em;
-    color: #ffffff;
-  }
-  .hero__title span { display: block; color: #ffffff; }
-
-  .hero__counter-col {
-    position: relative;
-    width: 357px;
-    flex-shrink: 0;
-    align-self: stretch;
-    display: flex;
-  }
-  .hero__counter-box {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 359px;
-    margin: -1px 0;
-    padding: 16px 20px 20px 20px;
-    background-color: var(--av-primary);
-    position: relative;
-    z-index: 5;
-  }
-  .hero__counter-col .av-delimiter {
-    top: -500%;
-    bottom: auto;
-    height: 10000px;
-  }
-  .hero__counter-value {
-    font-family: "Space Grotesk", sans-serif;
+    margin: 0;
+    font-family: var(--av-font-display);
+    font-size: clamp(3.7rem, 5.2vw, 5.8rem);
     font-weight: 700;
-    font-size: 128px;
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-    color: #ffffff;
+    line-height: 0.88;
+    letter-spacing: -0.075em;
+    text-transform: uppercase;
+    color: #080808;
   }
-  .hero__counter-title {
-    max-width: 200px;
-    margin: -14px 0 0 0;
-    font-size: 24px;
-    line-height: 30px;
-    color: #ffffff;
+  .hero__title span { display: block; }
+  .hero__title-accent { color: var(--rr-red); }
+  .hero__rule {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: min(100%, 485px);
+    margin: 1.65rem 0 1.55rem;
+    color: var(--rr-red);
   }
-  .hero__counter-spacer { height: 50px; }
-
-  .hero__cta {
-    --av-wgl-btn-bg: var(--av-primary);
-    --av-wgl-btn-color: #ffffff;
-    --av-wgl-btn-border: #ffffff;
-    --av-wgl-btn-bg-hover: #ffffff;
-    --av-wgl-btn-color-hover: #0a0a0a;
-    --av-wgl-btn-border-hover: #0a0a0a;
-    width: 100%;
-  }
-  .hero__cta .av-wgl-btn__text {
+  .hero__rule::before,
+  .hero__rule::after {
+    content: '';
+    height: 1px;
     flex: 1;
-    justify-content: space-evenly;
+    background: currentColor;
   }
+  .hero__rule svg { width: 82px; height: 14px; flex: 0 0 auto; }
+  .hero__statement {
+    margin: 0;
+    font-family: var(--av-font-display);
+    font-size: clamp(1.2rem, 1.55vw, 1.55rem);
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.04em;
+    color: #0a0a0a;
+  }
+  .hero__body {
+    max-width: 430px;
+    margin: 0.55rem 0 1.45rem;
+    color: #202020;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .hero__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 50px;
+    padding: 0.75rem 1.15rem 0.75rem 1.35rem;
+    border: 1px solid #090909;
+    font-family: var(--av-font-display);
+    font-size: 0.93rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color var(--rr-dur-fast), color var(--rr-dur-fast), border-color var(--rr-dur-fast);
+  }
+  .hero__button svg,
+  .hero__story-link svg { width: 16px; height: 14px; }
+  .hero__button--primary { background: var(--rr-red); border-color: var(--rr-red); color: #fff; }
+  .hero__button--secondary { background: rgba(255, 255, 255, 0.88); color: #090909; }
+  .hero__button:hover { background: #090909; border-color: #090909; color: #fff; }
+
+  .hero__story {
+    position: relative;
+    align-self: center;
+    justify-self: end;
+    width: min(100%, 280px);
+    margin: 0 clamp(2rem, 8vw, 9.5rem) 1rem 0;
+    padding: 1.45rem 1.45rem 1.35rem;
+    border-radius: 0.65rem;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.13);
+    color: #0a0a0a;
+  }
+  .hero__story-star {
+    position: absolute;
+    top: -1.25rem;
+    left: -1.15rem;
+    display: grid;
+    width: 2.65rem;
+    height: 2.65rem;
+    place-items: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--rr-red);
+    color: #fff;
+  }
+  .hero__story-star svg { width: 1.22rem; height: 1.22rem; }
+  .hero__story-label,
+  .hero__story-copy { margin: 0; }
+  .hero__story-label {
+    font-family: var(--av-font-display);
+    font-size: 0.78rem !important;
+    font-weight: 700;
+    line-height: 1.2 !important;
+    text-transform: uppercase;
+  }
+  .hero__story h2 {
+    margin: 0.15rem 0 0.45rem;
+    font-family: var(--av-font-display);
+    font-size: 0.86rem !important;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    text-transform: uppercase;
+    color: var(--rr-red);
+  }
+  .hero__story-copy { font-size: 0.85rem !important; line-height: 1.45 !important; }
+  .hero__story-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 0.85rem;
+    font-family: var(--av-font-display);
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--rr-red);
+  }
+  .hero__story-link:hover { color: #0a0a0a; }
+
+  .hero__services {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 1.1rem clamp(1rem, 3vw, 3.6rem) 1.35rem;
+    background: #fff;
+  }
+  .hero__service {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    min-height: 132px;
+    padding: 0 1rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.16);
+    color: #0b0b0b;
+    text-align: center;
+    text-decoration: none;
+  }
+  .hero__service:first-child { border-left: 0; }
+  .hero__service-icon {
+    display: grid;
+    width: 3.9rem;
+    height: 3.9rem;
+    margin-bottom: 0.5rem;
+    place-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    color: var(--rr-red);
+  }
+  .hero__service-icon :global(iconify-icon) { font-size: 2rem; }
+  .hero__service-title {
+    font-family: var(--av-font-display);
+    font-size: clamp(0.72rem, 0.95vw, 0.9rem);
+    font-weight: 700;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+  .hero__service-body {
+    max-width: 130px;
+    margin-top: 0.3rem;
+    font-size: clamp(0.69rem, 0.82vw, 0.78rem);
+    line-height: 1.35;
+  }
+  .hero__service:hover .hero__service-icon { background: var(--rr-red); border-color: var(--rr-red); color: #fff; }
 
   /* ══════════════════════════════════════════════════════════
    * 2. STATEMENT
@@ -566,9 +705,16 @@ const testimonials = [
     padding-top: 150px;
     background: #ffffff;
   }
+  .statement__subtitle,
+  .statement__text,
+  .statement__cta {
+    align-self: center;
+    margin-inline: auto;
+  }
   .statement__text {
+    width: min(900px, calc(100% - 2.5rem));
     max-width: 900px;
-    margin: 0;
+    margin: 0 auto;
     font-size: 64px;
     text-transform: uppercase;
     line-height: 1.156em;
@@ -1065,16 +1211,12 @@ const testimonials = [
    * Responsive — breakpoints straight from post-448.css
    * ══════════════════════════════════════════════════════════ */
   @media (max-width: 1200px) {
-    .hero__spacer-top { height: 100px; }
-    .hero__spacer-mid { height: 70px; }
-    .hero__eyebrow { font-size: 38px; }
-    .hero__title { font-size: clamp(38px, 9vw, 110px); }
-    .hero__counter-col { width: 290px; }
-    .hero__counter-box { min-height: 290px; }
-    .hero__counter-value { font-size: 90px; }
-    .hero__counter-title { font-size: 20px; line-height: 24px; }
-    .hero__counter-spacer { height: 30px; }
-    .hero__spacer-bottom { height: 30px; }
+    .hero__scene { min-height: 660px; background-position: 58% center; }
+    .hero__content { grid-template-columns: minmax(0, 540px) minmax(245px, 1fr); }
+    .hero__title { font-size: clamp(3.5rem, 5.5vw, 5rem); }
+    .hero__story { margin-right: clamp(1rem, 4vw, 3rem); }
+    .hero__services { padding-inline: 1rem; }
+    .hero__service { padding-inline: 0.55rem; }
 
     .statement { padding-top: 90px; }
     .statement__text { max-width: 530px; font-size: 38px; }
@@ -1112,10 +1254,36 @@ const testimonials = [
   }
 
   @media (max-width: 767px) {
-    .hero__eyebrow { max-width: 302px; font-size: 28px; }
-    .hero__main-row { flex-wrap: wrap; }
-    .hero__counter-col { width: 100%; margin-top: 50px; }
-    .hero__cta .av-wgl-btn__text { font-size: 14px; padding: 17px 11px; }
+    .hero__scene {
+      min-height: 0;
+      background-position: 64% center;
+    }
+    .hero__scene::before { background: linear-gradient(90deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.9) 53%, rgba(255, 255, 255, 0.4) 100%); }
+    .hero__content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.75rem;
+      padding: 4rem 1.25rem 2rem;
+    }
+    .hero__copy { max-width: 430px; }
+    .hero__eyebrow { font-size: 0.82rem !important; }
+    .hero__title { font-size: clamp(3.15rem, 15vw, 4.75rem); }
+    .hero__rule { margin-block: 1.25rem; }
+    .hero__statement { font-size: 1.15rem; }
+    .hero__body { max-width: 355px; margin-bottom: 1.25rem; }
+    .hero__actions { gap: 0.55rem; }
+    .hero__button { flex: 1 1 100%; min-height: 48px; }
+    .hero__story {
+      align-self: flex-end;
+      width: min(100%, 240px);
+      margin: 7rem 0 0;
+    }
+    .hero__services { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0.25rem 0; }
+    .hero__service { min-height: 145px; padding: 1rem 0.6rem; border-top: 1px solid rgba(0, 0, 0, 0.16); }
+    .hero__service:nth-child(odd) { border-left: 0; }
+    .hero__service:nth-child(-n + 2) { border-top: 0; }
+    .hero__service-icon { width: 3.25rem; height: 3.25rem; }
+    .hero__service-icon :global(iconify-icon) { font-size: 1.65rem; }
 
     .statement { padding-top: 70px; }
     .statement__text { font-size: 28px; }
@@ -1200,21 +1368,6 @@ const testimonials = [
         scrollTrigger: { trigger: el, start: 'top 88%', once: true },
       });
     });
-
-    // Hero counter 0 → 15
-    const counterEl = document.querySelector('[data-counter]');
-    if (counterEl) {
-      const target = parseInt(counterEl.getAttribute('data-counter-target') || '15', 10);
-      const obj = { val: 0 };
-      counterEl.textContent = '0';
-      gsap.to(obj, {
-        val: target,
-        duration: 2,
-        ease: 'power2.out',
-        delay: 0.4,
-        onUpdate: () => { counterEl.textContent = String(Math.floor(obj.val)); },
-      });
-    }
 
     // Statement words: opacity 0.1 → 1, scrubbed
     const words = document.querySelectorAll('[data-word-appear] .statement__word');
