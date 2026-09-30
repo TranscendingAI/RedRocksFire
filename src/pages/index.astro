@@ -34,7 +34,6 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
             <p>From design and installation to inspections, monitoring and 24/7 service, we deliver complete life safety solutions that protect people, property and your peace of mind.</p>
             <div class="actions"><a class="button button--red" href={ROUTES.about}>About RRFPS <span>→</span></a><a class="button button--white" href={ROUTES.services}>Explore our services <span>→</span></a></div>
           </div>
-          <img class="hero2__truck-m" src="/images/rrfps-truck-hero-sky.png" alt="The restored Red Rocks Fire Protection truck at Red Rocks" loading="eager" decoding="async" />
           <aside class="story"><strong>★</strong><small>The story behind</small><h2>John's truck</h2><p>A legacy that drives everything we do.</p><a href={ROUTES.ourStory}>Read the story&nbsp; →</a></aside>
         </div>
       </div>
@@ -115,24 +114,19 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
 
   /* ── 2026-09-30 client revisions: hero ── */
   .rule svg{flex:0 0 auto;width:82px;height:14px}
-  .hero2__truck-m{display:none}
   @media(max-width:900px){
-    /* Mobile: copy sits on a clean sky gradient (no photo behind the text),
-       then the truck photo runs full width underneath so the door logo is
-       fully visible and never covered by text or buttons. */
-    .hero2__scene{background:linear-gradient(180deg,#ffffff 0%,#f4f8fc 55%,#e3eef8 100%)}
-    .hero2__scene:before{display:none}
-    .hero2__content{padding-bottom:3rem}
-    .hero2__truck-m{display:block;width:calc(100% + 2.4rem);max-width:none;margin:1.5rem -1.2rem 0;aspect-ratio:5/4;object-fit:cover;object-position:62% 72%}
     /* One Vendor. / One Team. / One Mission. — each on its own line */
     .hero2__statement span{display:block}
     .hero2__statement .hero2__br{display:none}
-    .story{width:min(100%,320px);margin-top:-1.5rem!important}
+    .story{width:min(100%,320px)}
     .story p{white-space:nowrap}
   }
   @media(max-width:560px){
-    .actions{flex-direction:row;flex-wrap:wrap;gap:.5rem}
-    .actions .button{width:auto;gap:.5rem;padding:.7rem .8rem;min-height:42px;font-size:.66rem}
+    /* Photo stays full-bleed; a frosted panel keeps the paragraph legible over the truck */
+    .hero2__copy>p:not(.eyebrow){max-width:300px;margin:.65rem 0 1.5rem -.9rem;padding:.75rem .9rem;border-radius:.5rem;background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+    /* Buttons stacked on the left so the truck door logo stays visible */
+    .actions{flex-direction:column;align-items:flex-start;gap:.6rem}
+    .actions .button{width:auto;gap:1.3rem;padding:.8rem 1.1rem;font-size:.72rem}
     .story p{font-size:.8rem}
   }
 </style>
