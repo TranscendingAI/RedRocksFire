@@ -27,6 +27,9 @@ html {
 }
 
 body {
+  /* Clip stray horizontal overflow (e.g. the off-canvas mobile drawer) so
+     iOS Safari can't pan the page sideways and push the header off-screen. */
+  overflow-x: clip;
   font-family: var(--rr-font-body);
   font-weight: 400;
   line-height: 1.55;
@@ -196,4 +199,9 @@ p:not(.rr-eyebrow):not(.av-dblh__subtitle) {
   [data-service-accordion] .acc__panel--card {
     transition-duration: 1ms;
   }
+}
+
+/* Room for the mobile header's 36px top bar (phone + socials). */
+@media (max-width: 1024px) {
+  body { padding-top: 36px; }
 }

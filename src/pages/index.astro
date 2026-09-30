@@ -29,11 +29,12 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
           <div class="hero2__copy">
             <p class="eyebrow">Colorado's trusted fire protection partner</p>
             <h1 id="hero2-title">Complete fire<br />protection.<br /><span>Peace of mind.</span></h1>
-            <div class="rule" aria-hidden="true"><i></i><b></b><i></i></div>
-            <h2>One Vendor. One Team.<br />One Mission.</h2>
+            <div class="rule" aria-hidden="true"><i></i><svg viewBox="0 0 82 14" fill="none"><path d="M0 9.5H24l7-6 9 8 10-9 8 7h24" stroke="currentColor" stroke-width="1.5"/></svg><i></i></div>
+            <h2 class="hero2__statement"><span>One Vendor.</span> <span>One Team.</span><br class="hero2__br" /> <span>One Mission.</span></h2>
             <p>From design and installation to inspections, monitoring and 24/7 service, we deliver complete life safety solutions that protect people, property and your peace of mind.</p>
             <div class="actions"><a class="button button--red" href={ROUTES.about}>About RRFPS <span>→</span></a><a class="button button--white" href={ROUTES.services}>Explore our services <span>→</span></a></div>
           </div>
+          <img class="hero2__truck-m" src="/images/rrfps-truck-hero-sky.png" alt="The restored Red Rocks Fire Protection truck at Red Rocks" loading="eager" decoding="async" />
           <aside class="story"><strong>★</strong><small>The story behind</small><h2>John's truck</h2><p>A legacy that drives everything we do.</p><a href={ROUTES.ourStory}>Read the story&nbsp; →</a></aside>
         </div>
       </div>
@@ -109,6 +110,29 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
     :global(.avh:not(.avh--on-dark) .avh__desktop){min-height:clamp(128px,8.5vw,170px)}
     :global(.avh:not(.avh--on-dark) .avh__logo-box){align-self:stretch;width:clamp(250px,16vw,320px);padding:0 2rem;background:#d41226}
     :global(.avh:not(.avh--on-dark) .avh__logo){height:clamp(64px,4.2vw,82px)}
-    :global(.avh:not(.avh--on-dark) .avh__nav ul){justify-content:flex-start;gap:clamp(1.25rem,2vw,2.5rem);height:clamp(128px,8.5vw,170px);padding-left:clamp(2rem,3vw,4rem)}
+    :global(.avh:not(.avh--on-dark) .avh__nav ul){justify-content:flex-start;gap:clamp(1.25rem,2vw,2.5rem);height:calc(clamp(128px,8.5vw,170px) - 45px);padding-left:clamp(2rem,3vw,4rem)}
+  }
+
+  /* ── 2026-09-30 client revisions: hero ── */
+  .rule svg{flex:0 0 auto;width:82px;height:14px}
+  .hero2__truck-m{display:none}
+  @media(max-width:900px){
+    /* Mobile: copy sits on a clean sky gradient (no photo behind the text),
+       then the truck photo runs full width underneath so the door logo is
+       fully visible and never covered by text or buttons. */
+    .hero2__scene{background:linear-gradient(180deg,#ffffff 0%,#f4f8fc 55%,#e3eef8 100%)}
+    .hero2__scene:before{display:none}
+    .hero2__content{padding-bottom:3rem}
+    .hero2__truck-m{display:block;width:calc(100% + 2.4rem);max-width:none;margin:1.5rem -1.2rem 0;aspect-ratio:5/4;object-fit:cover;object-position:62% 72%}
+    /* One Vendor. / One Team. / One Mission. — each on its own line */
+    .hero2__statement span{display:block}
+    .hero2__statement .hero2__br{display:none}
+    .story{width:min(100%,320px);margin-top:-1.5rem!important}
+    .story p{white-space:nowrap}
+  }
+  @media(max-width:560px){
+    .actions{flex-direction:row;flex-wrap:wrap;gap:.5rem}
+    .actions .button{width:auto;gap:.5rem;padding:.7rem .8rem;min-height:42px;font-size:.66rem}
+    .story p{font-size:.8rem}
   }
 </style>
