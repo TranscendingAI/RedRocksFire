@@ -4,7 +4,7 @@
  *
  * Sections, in order (style alternation so no two adjacent sections look alike):
  *   §0. ptbanner                                   — full-bleed dark hero
- *   §1. 2×2 ibox solutions grid                    — Annual / 3-Year / 5-Year / Special Hazard
+ *   §1. ibox solutions grid (2 cols)               — Quarterly / Semi-Annual / Annual / 3-Year / 5-Year / Special Hazard
  *   §2. ins-whyrr (tan bg-image band)              — intro + 3 trust bullets
  *   §3. ins-3yr (dark accordion)                   — 3-Year Inspection & Testing Services
  *   §4. ins-5yr (white SplitPanel)                 — 5-Year Fire Sprinkler Inspection & Testing
@@ -36,6 +36,18 @@ const introImage = '/images/red-rocks-fire-protection-why-inspections.jpg';
 /* §1 — 2×2 ibox grid: cadence-based categories from the new MD */
 const categories = [
   {
+    title: 'Quarterly Inspections.',
+    icon: 'mdi:calendar-month-outline',
+    body:
+      'Certain fire protection systems and components require inspection or testing more frequently than once per year. Our quarterly inspections help you maintain compliance and catch potential problems before they become larger system issues.',
+  },
+  {
+    title: 'Semi-Annual Inspections.',
+    icon: 'mdi:calendar-sync-outline',
+    body:
+      'Some fire and life safety systems require inspection, testing, or maintenance every six months. We coordinate these requirements with your property’s other recurring inspections to simplify scheduling and compliance.',
+  },
+  {
     title: 'Annual NFPA Inspections.',
     icon: 'mdi:clipboard-text-search-outline',
     body:
@@ -61,36 +73,111 @@ const categories = [
   },
 ] as const;
 
-/* §3 — 3-Year accordion panel (1 panel: the 3-year overview + services + AHJ note) */
-const threeYearPanel = {
-  title: '3-Year Inspection & Testing Services.',
-  body:
-    'Certain fire protection system components require testing or maintenance at intervals beyond the standard annual inspection. Depending on the system, equipment, adopted code edition, and local jurisdiction, 3-year requirements may apply. Red Rocks Fire can review your property’s existing systems and inspection history to identify applicable 3-year requirements and coordinate the required work.',
-  bullets: [
-    'Dry sprinkler system air/gas leakage testing.',
-    'Full-flow testing of pressure-reducing and pressure-regulating devices where applicable.',
-    'Additional system-specific testing required by the adopted NFPA standards.',
-    'Documentation and deficiency reporting.',
-    'Coordination of required repairs.',
-  ],
-  footer:
-    'Because requirements vary by system and jurisdiction, our team reviews each property individually rather than applying a one-size-fits-all testing schedule.',
-  open: true,
-};
+/* §3 — Inspection program accordion: Quarterly → Semi-Annual → Annual → 3-Year (copy from Brian's revised doc, 2026-09-30) */
+const programPanels = [
+  {
+    icon: 'mdi:calendar-month-outline',
+    title: 'Quarterly Fire & Life Safety Inspections.',
+    body:
+      'Certain fire protection systems and components require inspection or testing more frequently than once per year. Red Rocks Fire Protection provides quarterly inspection services to help building owners and property managers maintain compliance and identify potential problems before they become larger system issues.',
+    bullets: [
+      'Fire sprinkler control valve inspections',
+      'Waterflow alarm testing where applicable',
+      'Supervisory device inspections and testing',
+      'Fire pump inspections and testing',
+      'Dry and wet sprinkler system components',
+      'Pressure gauge and system condition checks',
+      'Fire department connection inspections',
+      'Other system-specific quarterly requirements',
+      'Documentation and deficiency reporting',
+    ],
+    footer: 'Requirements vary depending on system type, equipment, adopted NFPA standard, and local AHJ requirements.',
+    open: true,
+  },
+  {
+    icon: 'mdi:calendar-sync-outline',
+    title: 'Semi-Annual Fire & Life Safety Inspections.',
+    body:
+      'Some fire and life safety systems require inspection, testing, or maintenance every six months. Red Rocks Fire Protection can coordinate these requirements with your property’s other recurring inspections to simplify scheduling and compliance.',
+    bullets: [
+      'Kitchen hood fire suppression system inspections and testing',
+      'Fire alarm system components requiring semi-annual testing where applicable',
+      'Fire sprinkler system components with semi-annual requirements',
+      'Supervisory and initiating device testing where applicable',
+      'Specialized suppression system inspections',
+      'System interface and shutdown testing',
+      'Documentation and deficiency reporting',
+    ],
+  },
+  {
+    icon: 'mdi:clipboard-text-search-outline',
+    title: 'Annual Fire & Life Safety Inspections.',
+    body: 'We provide annual inspection and testing services for:',
+    bullets: [
+      'Fire sprinkler systems',
+      'Fire alarm systems',
+      'Fire extinguishers',
+      'Fire pumps',
+      'Backflow prevention assemblies',
+      'ERRCS/BDA systems',
+      'Area of Refuge communication systems',
+      'Elevator emergency communication systems',
+      'Kitchen hood suppression systems',
+      'Other applicable fire and life safety equipment',
+    ],
+    footer: 'Following inspections, Red Rocks Fire provides detailed documentation identifying deficiencies, recommended corrective actions, and upcoming testing or maintenance requirements.',
+  },
+  {
+    icon: 'mdi:calendar-clock-outline',
+    title: '3-Year Inspection & Testing Services.',
+    body:
+      'Certain fire protection system components require testing or maintenance at intervals beyond the standard annual inspection. Depending on the system, equipment, adopted code edition, and local jurisdiction, 3-year requirements may apply. Red Rocks Fire can review your property’s existing systems and inspection history to identify applicable 3-year requirements and coordinate the required work.',
+    bullets: [
+      'Dry sprinkler system air/gas leakage testing',
+      'Full-flow testing of pressure-reducing and pressure-regulating devices where applicable',
+      'Additional system-specific testing required by the adopted NFPA standards',
+      'Documentation and deficiency reporting',
+      'Coordination of required repairs',
+    ],
+    footer:
+      'Because requirements vary by system and jurisdiction, our team reviews each property individually rather than applying a one-size-fits-all testing schedule.',
+  },
+] as { icon: string; title: string; body: string; bullets: string[]; footer?: string; open?: boolean }[];
+
+/* §4 — 5-Year bullets */
+const fiveYearBullets = [
+  'Internal inspection of sprinkler system piping',
+  'Internal inspection of check valves',
+  'Internal inspection of alarm valves',
+  'Internal inspection of dry pipe valves',
+  'Obstruction investigation where required',
+  'Standpipe system testing',
+  'Fire department connection testing',
+  'Hydrostatic testing where required',
+  'Pressure-reducing valve testing',
+  'Gauge replacement or calibration as applicable',
+  'Detailed deficiency documentation',
+  'Recommendations for corrective action',
+];
 
 /* §6 — Inspection & Compliance Tracking (11 cards, Iconify icons) */
 const trackingItems = [
-  { icon: 'mdi:calendar-check-outline',            title: 'Annual inspection scheduling.',       body: 'Coordinate recurring annual inspections across all installed fire and life safety systems.' },
-  { icon: 'mdi:calendar-month-outline',            title: 'Quarterly & semi-annual requirements.', body: 'Track and complete quarterly and semi-annual requirements so nothing slips through the calendar.' },
-  { icon: 'mdi:calendar-clock-outline',            title: '3-year testing requirements.',         body: 'Identify upcoming 3-year inspections and schedule them before they become overdue.' },
-  { icon: 'mdi:calendar-refresh-outline',          title: '5-year testing requirements.',         body: 'Plan and coordinate 5-year sprinkler and standpipe testing well in advance of the due date.' },
-  { icon: 'mdi:spray-bottle',                      title: 'Sprinkler head testing requirements.', body: 'Monitor and manage sprinkler head testing requirements over the long-term service life.' },
-  { icon: 'mdi:fire-hydrant',                      title: 'Fire pump testing.',                   body: 'Schedule and document annual and periodic fire pump testing to NFPA 25.' },
-  { icon: 'mdi:pipe-valve',                        title: 'Backflow certification.',             body: 'Manage backflow preventer testing and certification with proper documentation.' },
-  { icon: 'mdi:alert-decagram-outline',            title: 'Deficiency tracking.',                 body: 'Track open deficiencies across properties and inspections to closure.' },
-  { icon: 'mdi:wrench-clock',                      title: 'Repair recommendations.',             body: 'Provide clear repair recommendations with priorities and timelines for every deficiency.' },
-  { icon: 'mdi:finance',                           title: 'Long-term capital planning.',          body: 'Help plan for replacement and capital needs based on system age and inspection history.' },
-  { icon: 'mdi:office-building-cog-outline',       title: 'Multi-property coordination.',         body: 'Coordinate inspections across multiple properties through one life safety provider.' },
+  { icon: 'mdi:calendar-month-outline',            title: 'Quarterly inspections and testing.',    body: 'Track and complete quarterly requirements so nothing slips through the calendar.' },
+  { icon: 'mdi:calendar-sync-outline',             title: 'Semi-annual inspections and testing.',  body: 'Coordinate six-month requirements alongside your other recurring inspections.' },
+  { icon: 'mdi:calendar-check-outline',            title: 'Annual inspections and testing.',       body: 'Coordinate recurring annual inspections across all installed fire and life safety systems.' },
+  { icon: 'mdi:calendar-clock-outline',            title: '3-year testing requirements.',          body: 'Identify upcoming 3-year inspections and schedule them before they become overdue.' },
+  { icon: 'mdi:calendar-refresh-outline',          title: '5-year inspection and testing requirements.', body: 'Plan and coordinate 5-year sprinkler and standpipe testing well in advance of the due date.' },
+  { icon: 'mdi:spray-bottle',                      title: 'Sprinkler head testing requirements.',  body: 'Monitor and manage sprinkler head testing requirements over the long-term service life.' },
+  { icon: 'mdi:fire-hydrant',                      title: 'Fire pump testing.',                    body: 'Schedule and document annual and periodic fire pump testing to NFPA 25.' },
+  { icon: 'mdi:pipe-valve',                        title: 'Backflow certification.',              body: 'Manage backflow preventer testing and certification with proper documentation.' },
+  { icon: 'mdi:stove',                             title: 'Kitchen hood suppression inspections.', body: 'Keep kitchen hood suppression systems inspected and tested on schedule.' },
+  { icon: 'mdi:fire-extinguisher',                 title: 'Fire extinguisher inspections.',        body: 'Track fire extinguisher inspections and maintenance across every location.' },
+  { icon: 'mdi:bell-ring-outline',                 title: 'Fire alarm testing.',                   body: 'Schedule and document fire alarm system testing for every required interval.' },
+  { icon: 'mdi:access-point',                      title: 'ERRCS/BDA testing.',                    body: 'Keep emergency responder radio coverage systems tested and documented.' },
+  { icon: 'mdi:phone-in-talk-outline',             title: 'Area of Refuge communication testing.', body: 'Test and document Area of Refuge communication systems as required.' },
+  { icon: 'mdi:alert-decagram-outline',            title: 'Deficiency tracking and repair coordination.', body: 'Track open deficiencies to closure and coordinate the repairs needed to resolve them.' },
+  { icon: 'mdi:finance',                           title: 'Long-term compliance and capital planning.', body: 'Help plan for upcoming compliance needs and capital replacements based on system age and inspection history.' },
+  { icon: 'mdi:office-building-cog-outline',       title: 'Multi-property and portfolio scheduling.', body: 'Coordinate inspection schedules across multiple properties through one life safety provider.' },
 ] as const;
 
 /* §7 — Why Choose Red Rocks? (10 cards, Iconify icons) */
@@ -127,7 +214,7 @@ const whyClientsValues = [
 
 <BaseLayout
   title="Fire Safety Inspections Denver | NFPA Reports | Red Rocks Fire Protection"
-  description="Annual, 3-year, and 5-year NFPA fire safety inspections across Colorado — sprinklers, alarms, extinguishers, backflow, suppression. Detailed written reports. Codes, legislations, and jurisdictional navigation handled."
+  description="Quarterly, semi-annual, annual, 3-year, and 5-year NFPA fire safety inspections across Colorado — sprinklers, alarms, extinguishers, backflow, suppression. Detailed written reports. Codes, legislations, and jurisdictional navigation handled."
 >
   <div class="av-page">
 
@@ -158,6 +245,7 @@ const whyClientsValues = [
             <span>What an Inspection Covers</span>
           </div>
           <h2 class="sol__title rr-reveal" data-reveal-delay="100">
+            <span>Quarterly, Semi-Annual,</span><br />
             <span>Annual, 3-Year &amp;</span><br />
             <span>5-Year Testing.</span>
           </h2>
@@ -204,6 +292,8 @@ const whyClientsValues = [
               data-reveal-delay="100"
               style="font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -0.04em;"
             >
+              <span class="ins-whyrr__title-black">Quarterly,</span><br />
+              <span class="ins-whyrr__title-black">Semi-Annual,</span><br />
               <span class="ins-whyrr__title-black">Annual, 3-Year</span><br />
               <span class="ins-whyrr__title-black">&amp; 5-Year</span><br />
               <span class="ins-whyrr__title-red">Compliance,</span><br />
@@ -213,7 +303,7 @@ const whyClientsValues = [
 
           <div class="ins-why-grid__right">
             <p class="ins-whyrr__body rr-reveal" data-reveal-delay="200" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 0;">
-              Red Rocks Fire Protection provides comprehensive inspection and testing services to help commercial and multifamily properties maintain compliant, reliable fire and life safety systems. Our team can manage recurring inspection requirements — from annual testing to longer-term 3-year and 5-year requirements — helping property managers and building owners stay ahead of upcoming compliance needs.
+              Red Rocks Fire Protection provides comprehensive inspection and testing services to help commercial and multifamily properties maintain compliant, reliable fire and life safety systems. Our team can manage recurring inspection requirements — from quarterly and semi-annual inspections to annual, 3-year, and 5-year testing — helping property managers and building owners stay ahead of upcoming compliance needs.
             </p>
             <p class="ins-whyrr__body rr-reveal" data-reveal-delay="300" style="font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); margin-top: 1.25rem;">
               Since 2010, our family-owned company has served customers throughout Colorado. For inspections, that means helping property owners and managers understand not only what needs to be inspected today, but what requirements are coming next.
@@ -230,7 +320,7 @@ const whyClientsValues = [
                 <span class="ins-whyrr__bullet-icon" aria-hidden="true">
                   <iconify-icon icon="solar:calendar-mark-bold-duotone" width="20" height="20"></iconify-icon>
                 </span>
-                <span>Annual, quarterly, semi-annual, 3-year, and 5-year inspection and testing coordination based on the systems installed.</span>
+                <span>Quarterly, semi-annual, annual, 3-year, and 5-year inspection and testing coordination based on the systems installed.</span>
               </li>
               <li class="ins-whyrr__bullet">
                 <span class="ins-whyrr__bullet-icon" aria-hidden="true">
@@ -264,57 +354,31 @@ const whyClientsValues = [
         </div>
 
         <div class="acc ins-acc__list" data-service-accordion>
-          <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal', threeYearPanel.open && 'is-active']} data-acc-panel>
-            <button type="button" class="acc__header" aria-expanded={threeYearPanel.open ? 'true' : 'false'}>
-              <span class="acc__panel-icon" aria-hidden="true">
-                <iconify-icon icon="mdi:calendar-clock-outline" width="22" height="22"></iconify-icon>
-              </span>
-              <span class="acc__title">{threeYearPanel.title}</span>
-              <span class="acc__caret" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
-              </span>
-            </button>
-            <div class="acc__content" hidden={!threeYearPanel.open}>
-              <p>{threeYearPanel.body}</p>
-              <ul class="acc__bullets">
-                {threeYearPanel.bullets.map((b) => (
-                  <li class="acc__bullet">
-                    <span class="acc__bullet-mark" aria-hidden="true">▸</span>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-              <p class="acc__footer">{threeYearPanel.footer}</p>
+          {programPanels.map((panel) => (
+            <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal', panel.open && 'is-active']} data-acc-panel>
+              <button type="button" class="acc__header" aria-expanded={panel.open ? 'true' : 'false'}>
+                <span class="acc__panel-icon" aria-hidden="true">
+                  <iconify-icon icon={panel.icon} width="22" height="22"></iconify-icon>
+                </span>
+                <span class="acc__title">{panel.title}</span>
+                <span class="acc__caret" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
+                </span>
+              </button>
+              <div class="acc__content" hidden={!panel.open}>
+                <p>{panel.body}</p>
+                <ul class="acc__bullets">
+                  {panel.bullets.map((b) => (
+                    <li class="acc__bullet">
+                      <span class="acc__bullet-mark" aria-hidden="true">▸</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                {panel.footer && <p class="acc__footer">{panel.footer}</p>}
+              </div>
             </div>
-          </div>
-
-          <!-- Annual cadence panel (companion to the 3-year one above) -->
-          <div class:list={['acc__panel', 'acc__panel--card', 'rr-reveal']} data-acc-panel>
-            <button type="button" class="acc__header" aria-expanded="false">
-              <span class="acc__panel-icon" aria-hidden="true">
-                <iconify-icon icon="mdi:clipboard-text-search-outline" width="22" height="22"></iconify-icon>
-              </span>
-              <span class="acc__title">Annual Fire &amp; Life Safety Inspections.</span>
-              <span class="acc__caret" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor"><path d={arrowPath}></path></svg>
-              </span>
-            </button>
-            <div class="acc__content" hidden>
-              <p>We provide annual inspection and testing services for every major fire and life safety system in your building. Following inspections, Red Rocks Fire provides detailed documentation identifying deficiencies, recommended corrective actions, and upcoming testing or maintenance requirements.</p>
-              <ul class="acc__bullets">
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire sprinkler systems</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire alarm systems</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire extinguishers</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Fire pumps</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Backflow prevention assemblies</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>ERRCS / BDA systems</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Area of Refuge communication systems</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Elevator emergency communication systems</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Kitchen hood suppression systems</span></li>
-                <li class="acc__bullet"><span class="acc__bullet-mark" aria-hidden="true">▸</span><span>Other applicable fire and life safety equipment</span></li>
-              </ul>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -332,7 +396,9 @@ const whyClientsValues = [
             </h2>
             <div class="mt-6 rr-reveal ins-split-body" data-reveal-delay="200">
               <p>Five-year testing is an important part of maintaining fire sprinkler and standpipe systems. These inspections go beyond the standard annual inspection and help identify internal deterioration, obstructions, valve issues, and other conditions that may not be visible during routine testing.</p>
-              <p>Our 5-year services include internal inspection of sprinkler piping, check valves, alarm valves, and dry pipe valves; obstruction investigation where required; standpipe, FDC, and hydrostatic testing; pressure-reducing valve testing; gauge replacement or calibration; and detailed deficiency documentation with corrective-action recommendations.</p>
+              <ul class="ins-5yr__list">
+                {fiveYearBullets.map((b) => <li>{b}</li>)}
+              </ul>
             </div>
           </div>
           <div class="order-1 md:order-2 rr-reveal" data-reveal-delay="300">
@@ -372,8 +438,8 @@ const whyClientsValues = [
         <div class="ins-purpose__content-row">
           <h2 class="ins-purpose__title rr-reveal">One Vendor for Complete<br />Fire &amp; Life Safety</h2>
           <div class="ins-purpose__copy rr-reveal" data-reveal-delay="100">
-            <p>Managing multiple fire and life safety systems can become complicated, especially when annual, semi-annual, quarterly, 3-year, and 5-year requirements fall on different schedules.</p>
-            <p>Red Rocks Fire Protection helps simplify the process by providing a One Vendor Life Safety Solution — identifying what systems are installed at each property, determining upcoming inspection and testing requirements, and coordinating the work through a single fire protection provider.</p>
+            <p>Managing multiple fire and life safety systems can become complicated when different systems have quarterly, semi-annual, annual, 3-year, 5-year, and other long-term inspection and testing requirements.</p>
+            <p>Red Rocks Fire Protection helps simplify the process with our One Vendor Life Safety Solution. We identify the systems installed at your property, establish applicable inspection and testing frequencies, coordinate recurring inspections, document deficiencies, and help manage required repairs. This is especially valuable for multifamily communities, commercial properties, and management companies with multiple locations.</p>
             <p><strong>One provider. One point of contact. One comprehensive approach to your property’s fire and life safety compliance.</strong></p>
           </div>
         </div>
@@ -707,7 +773,7 @@ const whyClientsValues = [
   .ins-whyrr__bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: -2; }
   .ins-whyrr__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(224, 217, 211, 0.30) 0%, rgba(224, 217, 211, 0.55) 25%, rgba(224, 217, 211, 0.85) 50%, #E0D9D3 75%, #E0D9D3 100%); z-index: -1; }
   .ins-whyrr__eyebrow { color: var(--rr-red, #d41226); }
-  .ins-whyrr__title-black { color: #0a0a0a; }
+  .ins-whyrr__title-black { color: #0a0a0a; white-space: nowrap; }
   .ins-whyrr__title-red { color: var(--rr-red, #d41226); }
   .ins-whyrr__body { color: #0a0a0a; }
   .ins-why-grid { display: grid; gap: 48px; grid-template-columns: 1fr; align-items: start; }
@@ -757,6 +823,10 @@ const whyClientsValues = [
    * ============================================================ */
   .ins-split-body p { margin: 0 0 16px; font-size: var(--rr-text-lead); line-height: var(--rr-text-lead-lh); color: #303030; }
   .ins-split-body p:last-child { margin-bottom: 0; }
+  .ins-5yr__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
+  .ins-5yr__list li { position: relative; padding-left: 18px; font-size: var(--rr-text-body); line-height: 1.45; color: #303030; }
+  .ins-5yr__list li::before { content: '▸'; position: absolute; left: 0; color: var(--rr-red, #d41226); }
+  @media (max-width: 560px) { .ins-5yr__list { grid-template-columns: 1fr; } }
 
   .ins-edge-img { display: flex; align-items: center; }
   .ins-edge-img__wrap { width: 100%; height: 480px; }
