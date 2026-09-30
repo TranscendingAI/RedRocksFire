@@ -18,6 +18,14 @@ const services = [
   ['Consulting Services', 'mdi:account-group-outline', ROUTES.serviceConsulting],
   ['24 Hour Service', 'mdi:alarm-light-outline', ROUTES.service24Hour],
 ];
+const credentialLogos = [
+  { src: '/images/credential-logos/ASSE-logo.png', alt: 'American Society of Sanitary Engineering' },
+  { src: '/images/credential-logos/CDFPC-logo.png', alt: 'Colorado Division of Fire Prevention & Control' },
+  { src: '/images/credential-logos/CSA-logo.png', alt: 'CSA — Canadian Standards Association' },
+  { src: '/images/credential-logos/pprbd-logo.png', alt: 'Pikes Peak Regional Building Department' },
+  { src: '/images/credential-logos/IAPMO-logo.png', alt: 'IAPMO R&T' },
+  { src: '/images/credential-logos/NICET-logo.png', alt: 'NICET' },
+];
 const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
 ---
 
@@ -51,19 +59,31 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
 
     <section class="accountability section-dark"><div class="accountability__copy"><p class="eyebrow">One vendor life safety solution</p><h2>One Partner.<br />Complete Accountability.</h2><p>Managing multiple life safety vendors creates more contacts, more schedules, more invoices — and more opportunities for something to fall through the cracks.</p><p>Red Rocks Fire Protection Services was built around a better approach.</p><a class="button button--red" href={ROUTES.services}>Explore our services <span>→</span></a></div><div class="accountability__pillars"><article><span set:html={icon('mdi:handshake-outline')}></span><h3>SIMPLIFY</h3><p>One trusted partner coordinating your life safety needs.</p></article><article><span set:html={icon('mdi:shield-check-outline')}></span><h3>PROTECT</h3><p>Comprehensive systems, inspections, service and monitoring designed around your life safety.</p></article><article><span set:html={icon('mdi:chart-line')}></span><h3>STAY AHEAD</h3><p>Proactive guidance to help you navigate codes, compliance and changing requirements.</p></article></div></section>
 
-    <section class="services2 section-light"><div class="section-head"><div><p class="eyebrow">One vendor life safety solutions</p><h2>Everything Working Together.<br /><span>One Team Responsible for It All.</span></h2></div><p>Your building’s life safety systems don’t operate in isolation. Neither should the companies responsible for them.</p></div><div class="service-grid">{services.map(([title, serviceIcon, href]) => <a href={href}><span set:html={icon(serviceIcon)}></span><b>{title}</b></a>)}</div><a class="button button--outline" href={ROUTES.services}>View all services <span>→</span></a></section>
+    <section class="services2 section-light"><div class="section-head"><div><p class="eyebrow">One vendor life safety solutions</p><h2>Everything Working Together.<br /><span>One Team Responsible for It All.</span></h2></div><p>Your building’s life safety systems don’t operate in isolation. Neither should the companies responsible for them.</p></div><div class="service-grid">{services.map(([title, serviceIcon, href]) => <a href={href}><span set:html={icon(serviceIcon)}></span><b>{title}</b></a>)}</div><a class="button button--outline" href={ROUTES.contact}>Contact Us <span>→</span></a></section>
 
-    <section class="difference2 section-dark"><div class="difference2__copy"><p class="eyebrow">Complete life protection company</p><h2>The RRFPS Difference</h2><p>No other fire protection company combines advocacy, comprehensive service and accountability into a single, unified experience.</p><a class="button button--red" href={ROUTES.rrfpsDifference}>Experience the RRFPS difference <span>→</span></a></div><div class="difference2__pillars"><article><span set:html={icon('mdi:bullhorn-outline')}></span><h3>ADVOCACY</h3><p>We work to stay ahead of evolving codes and requirements so our clients can be informed and prepared.</p></article><article><span set:html={icon('mdi:cog-outline')}></span><h3>COMPREHENSIVE SOLUTIONS</h3><p>One coordinated team. One point of contact. Complete life safety support.</p></article><article><span set:html={icon('mdi:shield-check-outline')}></span><h3>ACCOUNTABILITY</h3><p>We communicate clearly, follow through on commitments, and take ownership of the outcome.</p></article></div></section>
+    <section class="difference2 section-dark"><div class="difference2__copy"><p class="eyebrow">Complete life protection company</p><h2>The RRFPS Difference</h2><p>No other fire protection company combines advocacy, comprehensive service and trust into a single, unified experience.</p><a class="button button--red" href={ROUTES.rrfpsDifference}>Experience the RRFPS difference <span>→</span></a></div><div class="difference2__pillars"><article><span set:html={icon('mdi:bullhorn-outline')}></span><h3>ADVOCACY</h3><p>Advocacy is the foundation of how RRFPS serves its clients.</p></article><article><span set:html={icon('mdi:cog-outline')}></span><h3>COMPREHENSIVE SOLUTIONS</h3><p>One Vendor. One Coordinated Team. One Life Safety Solution.</p></article><article><span set:html={icon('mdi:shield-check-outline')}></span><h3>TRUST</h3><p>Trust is earned through consistency, accountability, and follow-through.</p></article></div></section>
 
-    <section class="industries2 section-light"><div class="section-head"><div><p class="eyebrow">Built around your industry</p><h2>Life Safety Isn’t One-Size-Fits-All.</h2></div><p>The requirements of an apartment community are different from a healthcare facility. A restaurant faces different risks than a data center. That’s why we don’t approach every customer the same way.</p></div><div class="industries__grid industries2__grid">{about.industries.items.map((item) => <a href={item.href} class="industry-card"><div class="industry-card__image-wrap"><img src={item.image ?? about.industries.cardImage} alt="" loading="lazy" decoding="async" class="industry-card__image" style={'imagePosition' in item ? `object-position: ${(item as { imagePosition: string }).imagePosition};` : undefined} /></div><div class="industry-card__body"><h3>{item.title}</h3><p class="industry-card__meta">{item.meta}</p><span class="industry-card__link">Learn more<svg viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg></span></div></a>)}</div><a class="button button--outline" href={ROUTES.industries}>View your industry <span>→</span></a></section>
+    <section class="industries2 section-light"><div class="section-head"><div><p class="eyebrow">Built around your industry</p><h2>Life Safety Isn’t One-Size-Fits-All.</h2></div><p>The requirements of an apartment community are different from a healthcare facility. A restaurant faces different risks than a data center. That’s why we don’t approach every customer the same way.</p></div><div class="industries__grid industries2__grid">{about.industries.items.map((item) => <a href={item.href} class="industry-card"><div class="industry-card__image-wrap"><img src={item.image ?? about.industries.cardImage} alt="" loading="lazy" decoding="async" class="industry-card__image" style={'imagePosition' in item ? `object-position: ${(item as { imagePosition: string }).imagePosition};` : undefined} /></div><div class="industry-card__body"><h3>{item.title}</h3><p class="industry-card__meta">{item.meta}</p><span class="industry-card__link">Learn more<svg viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg></span></div></a>)}</div><a class="button button--outline" href={ROUTES.contact}>Contact Us <span>→</span></a></section>
 
-    <section class="trust-band"><div class="trust-band__copy"><p class="eyebrow">Why Red Rocks Fire Protection</p><h2>Safety.<br />Advocacy.<br />Trust.</h2></div><div><p>Safety is why we exist. Advocacy is how we serve. Trust is what we earn.</p><p>We exist to protect lives and property by simplifying life safety compliance and serving as a proactive partner to the people responsible for keeping their properties safe.</p><a class="button button--red" href={ROUTES.about}>Why RRFPS <span>→</span></a><a class="button button--outline button--outline-light" href={ROUTES.ourPromise}>Our promise <span>→</span></a></div></section>
+    <section class="trust-band"><div class="trust-band__copy"><p class="eyebrow">Why Red Rocks Fire Protection</p><h2>Safety.<br />Advocacy.<br />Trust.</h2></div><div><p>Safety is why we exist. Advocacy is how we serve. Trust is what we earn.</p><p>We exist to protect lives and property by simplifying life safety compliance and serving as a proactive partner to the people responsible for keeping their properties safe.</p><a class="button button--red" href={ROUTES.missionVisionValues}>Mission/Vision/Values <span>→</span></a><a class="button button--outline button--outline-light" href={ROUTES.ceoMessage}>Message from our CEO <span>→</span></a></div></section>
+
+    <div class="clients-marquee av-loop" aria-hidden="true">
+      {[0, 1, 2].map(() => (
+        <div class="av-loop__track"><div class="clients-marquee__text">WHAT CLIENTS SAY ABOUT US&nbsp; WHAT CLIENTS SAY ABOUT US&nbsp; WHAT CLIENTS SAY ABOUT US&nbsp; WHAT CLIENTS SAY ABOUT US&nbsp;</div></div>
+      ))}
+    </div>
 
     <section class="promise-testimonial section-light"><article><p class="eyebrow">Partnership means something to us</p><h2>What You Can Expect From RRFPS</h2><ul><li>We Lead With Safety</li><li>We Respond When It Matters Most</li><li>We Advocate for Our Clients</li><li>We Communicate Clearly &amp; Price Fairly</li><li>We Do What We Say</li><li>We Take Ownership &amp; Make It Right</li><li>We Show Up When We Say We Will</li></ul><a class="button button--red" href={ROUTES.ourPromise}>Read our promise <span>→</span></a></article><article class="testimonial"><p class="eyebrow">Trust is earned</p><h2>Don’t Take Our Word for It.</h2><h3>Our clients experience the RRFPS Difference every day.</h3><blockquote>“RRFPS has been an exceptional partner. Their team is responsive, professional and truly understands the needs of our properties.”</blockquote><b>Brandon Cox</b><small>Director of Maintenance, Bell Partners, Inc.</small><a class="button button--outline" href={ROUTES.testimonials}>Read more client experiences <span>→</span></a></article></section>
 
-    <section class="credentials"><div class="credentials__dark"><p class="eyebrow">Qualified. Certified. Accountable.</p><h2>Expertise You Can Trust With Life Safety.</h2><div class="credential-list"><span>NICET<br /><small>Certified professionals</small></span><span>STATE<br /><small>Licensed</small></span><span>DENVER<br /><small>Certified</small></span><span>CO SPRINGS<br /><small>Licensed</small></span><span>CSIA<br /><small>Certified</small></span><span>DOT<br /><small>Certified</small></span></div><a class="button button--outline button--outline-light" href={ROUTES.about}>View credentials &amp; certifications <span>→</span></a></div><div class="credentials__light"><p class="eyebrow">Local knowledge matters</p><h2>Colorado Life Safety Expertise.</h2><p>As a Colorado-based, family-owned company serving communities across the Front Range, different municipalities, different fire departments. Different jurisdictional requirements.</p><p class="bold">One local partner who understands them.</p><small>Denver Metro • Colorado Springs • Fort Collins • Front Range Communities</small><a class="button button--red" href={ROUTES.serviceAreas}>Explore our service area <span>→</span></a></div></section>
+    <section class="credentials"><div class="credentials__dark"><p class="eyebrow">Qualified. Certified. Accountable.</p><h2>Expertise You Can Trust With Life Safety.</h2><div class="credential-list"><span>NICET<br /><small>Certified professionals</small></span><span>STATE<br /><small>Licensed</small></span><span>DENVER<br /><small>Certified</small></span><span>CO SPRINGS<br /><small>Licensed</small></span><span>CSA<br /><small>Certified</small></span><span>DOT<br /><small>Certified</small></span></div><a class="button button--outline button--outline-light" href={ROUTES.meetTheTeam}>Meet Our Leadership Team <span>→</span></a></div><div class="credentials__light"><p class="eyebrow">Local knowledge matters</p><h2>Colorado Life Safety Expertise.</h2><p>As a Colorado-based, family-owned company serving communities across the Front Range, different municipalities, different fire departments. Different jurisdictional requirements.</p><p class="bold">One local partner who understands them.</p><small>Denver Metro • Colorado Springs • Fort Collins • Front Range Communities</small><a class="button button--red" href={ROUTES.serviceAreas}>Explore our service area <span>→</span></a></div></section>
 
-    <section class="closing"><div><p class="eyebrow">Your responsibility is big. Your life safety partner should be ready for it.</p><h2>Let’s Protect What Matters Most.</h2><p>You don’t need more vendors. You need one responsive, experienced partner who understands the responsibility you carry — and is ready to stand beside you.</p></div><div><h3>One Vendor. One Team. One Mission.</h3><h4>Your One Vendor Life Safety Solution.</h4><a class="button button--red" href={ROUTES.contact}>Schedule an appointment <span>→</span></a><a class="button button--outline button--outline-light" href={ROUTES.contact}>Contact our team <span>→</span></a></div></section>
+    <section class="cred-logos" aria-label="Credentials and certifications">
+      <div class="cred-logos__grid">
+        {credentialLogos.map((logo) => <div class="cred-logos__item"><img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" /></div>)}
+      </div>
+    </section>
+
+    <section class="closing"><div><p class="eyebrow">Your responsibility is big. Your life safety partner should be ready for it.</p><h2>Let’s Protect What Matters Most.</h2><p>You don’t need more vendors. You need one responsive, experienced partner who understands the responsibility you carry — and is ready to stand beside you.</p></div><div><h3 class="closing__statement"><span>One Vendor.</span> <span>One Team.</span> <span>One Mission.</span></h3><h4>Your One Vendor Life Safety Solution.</h4><a class="button button--red" href={ROUTES.contact}>Schedule an appointment <span>→</span></a><a class="button button--outline button--outline-light" href={ROUTES.contact}>Contact our team <span>→</span></a></div></section>
   </div>
 </BaseLayout>
 
@@ -128,5 +148,32 @@ const icon = (name: string) => `<iconify-icon icon="${name}"></iconify-icon>`;
     .actions{flex-direction:column;align-items:flex-start;gap:.6rem}
     .actions .button{width:auto;gap:1.3rem;padding:.8rem 1.1rem;font-size:.72rem}
     .story p{font-size:.8rem}
+  }
+
+  /* ── 2026-09-30 client revisions: homepage ── */
+  /* (8) services grid left-aligned */
+  .service-grid a{justify-content:flex-start;padding:0 1.25rem;text-align:left}
+  /* (11) keep each promise item whole inside its column */
+  .promise-testimonial ul{display:grid;columns:auto;grid-template-columns:repeat(2,max-content);grid-template-rows:repeat(4,auto);grid-auto-flow:column;column-gap:2rem}
+  .promise-testimonial li{white-space:nowrap}
+  @media(max-width:1100px){.promise-testimonial li{white-space:normal}.promise-testimonial ul{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}}
+  /* (15) outlined scrolling marquee above the testimonial section */
+  .clients-marquee{--av-loop-gap:60px;--av-loop-duration:300s;background:#fff;overflow:hidden;padding-top:clamp(2rem,4vw,4rem)}
+  .clients-marquee__text{margin:0;font-family:var(--av-font-display);font-size:clamp(60px,9vw,170px);font-weight:700;line-height:1.2;white-space:nowrap;color:#fff;-webkit-text-stroke:1px #00000033}
+  .clients-marquee + .promise-testimonial{padding-top:clamp(1.5rem,3vw,3rem)}
+  /* (14) certification logos row */
+  .cred-logos{background:#fff;padding:56px max(1.25rem,5vw)}
+  .cred-logos__grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;align-items:center;justify-items:center;max-width:1280px;margin:0 auto}
+  .cred-logos__item{display:grid;place-items:center;width:100%;max-width:180px}
+  .cred-logos__item img{display:block;max-width:100%;max-height:100px;width:auto;height:auto;object-fit:contain}
+  .closing__statement span{white-space:nowrap}
+  /* John's truck card was riding up into the nav between tablet and laptop widths */
+  @media(min-width:901px) and (max-width:1300px){.story{transform:translate(clamp(1rem,3vw,3rem),-8vw)}}
+  @media(max-width:900px){.cred-logos__grid{grid-template-columns:repeat(3,1fr);row-gap:32px}}
+  @media(max-width:560px){
+    .cred-logos{padding:40px 1.25rem}
+    .cred-logos__grid{grid-template-columns:repeat(2,1fr);row-gap:28px}
+    /* (7) darker overlay behind the closing copy on phones */
+    .closing{background-image:linear-gradient(180deg,rgba(7,17,21,.62),rgba(7,17,21,.5)),url('/images/rrfps-our-mission-statement.png')}
   }
 </style>
