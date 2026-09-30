@@ -9,7 +9,8 @@
  *     [ red logo box max(251px, 16.1%) ] [ right column:
  *         row 1 — social icons (left) · "Mon - Sat: 7.00am - 19.00pm" (right)
  *         row 2 — nav (94px tall, Space Grotesk 700 16px white) · CART · SEARCH ]
- *   Mobile (<1025px): 70px bar — logo left, white round hamburger right.
+ *   Mobile (<1025px): 36px dark top bar (socials · phone), then a 70px bar —
+ *   logo left, white round hamburger right.
  *
  * Source of truth for nav data lives HERE so future nav edits are 1 place.
  */
@@ -285,6 +286,19 @@ const socials = [
     </div>
 
     <div class="avh__right">
+      <div class="avh__toprow">
+        <div class="avh__socials">
+          {socials.map((s) => (
+            <a href={s.href} aria-label={s.label} class="avh__social" target="_blank" rel="noopener">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox={s.viewBox} fill="currentColor" aria-hidden="true">
+                <path d={s.path}></path>
+              </svg>
+            </a>
+          ))}
+        </div>
+        <a href={contact.phoneHref} class="avh__phone">{contact.phone}</a>
+      </div>
+
       <div class="avh__navrow">
         <nav aria-label="Primary" class="avh__nav">
           <ul>
@@ -476,6 +490,23 @@ const socials = [
     </div>
   </div>
 
+  {/* ── Mobile top bar — socials + phone, above the logo/hamburger row ── */}
+  <div class="avh__mtop">
+    <div class="avh__socials">
+      {socials.map((s) => (
+        <a href={s.href} aria-label={s.label} class="avh__social" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox={s.viewBox} fill="currentColor" aria-hidden="true">
+            <path d={s.path}></path>
+          </svg>
+        </a>
+      ))}
+    </div>
+    <a href={contact.phoneHref} class="avh__mtop-phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+      {contact.phone}
+    </a>
+  </div>
+
   {/* ── Mobile header ── */}
   <div class="avh__mobile">
     <a href="/" aria-label="Red Rocks Fire Protection home" class="avh__logo-box--mobile">
@@ -604,6 +635,31 @@ const socials = [
     flex-direction: column;
     min-width: 0;
   }
+  /* Top row — socials (left) · phone (right). Restored from the original
+     header per client request; shows on every page. */
+  .avh__toprow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    padding: 0 clamp(1rem, 2.2vw, 2.5rem) 0 clamp(2rem, 3vw, 4rem);
+    border-bottom: 1px solid rgba(17, 17, 17, 0.18);
+    color: #111111;
+  }
+  .avh--on-dark .avh__toprow { color: #ffffff; border-bottom-color: rgba(255, 255, 255, 0.4); }
+  .avh__socials { display: flex; align-items: center; gap: 20px; }
+  .avh__social { color: inherit; display: inline-flex; transition: opacity 0.3s; }
+  .avh__social:hover { opacity: 0.6; }
+  .avh__social svg { width: 18px; height: 18px; }
+  .avh__phone {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    color: inherit;
+    text-decoration: none;
+  }
+  .avh__phone:hover { color: #d41226; }
   .avh__navrow {
     display: flex;
     align-items: center;
@@ -616,7 +672,7 @@ const socials = [
     align-items: center;
     justify-content: flex-start;
     gap: clamp(1.25rem, 2vw, 2.5rem);
-    height: clamp(128px, 8.5vw, 170px);
+    height: calc(clamp(128px, 8.5vw, 170px) - 45px);
     list-style: none;
     margin: 0;
     padding: 0 0 0 clamp(2rem, 3vw, 4rem);
@@ -808,6 +864,43 @@ const socials = [
   .avh__tool:hover { color: #ffffff99; }
   .avh__cart { margin-right: 43px; }
 
+  /* ── Mobile top bar ── */
+  /* The bar hangs above the absolutely-positioned header: the header drops by
+     36px on mobile and the page body is padded by the same amount (see
+     global.css), so every page's hero keeps its original spacing. */
+  @media (max-width: 1024px) {
+    .avh { top: 36px; }
+  }
+  .avh__mtop {
+    position: absolute;
+    top: -36px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 36px;
+    padding: 0 15px 0 20px;
+    background: #111111;
+    color: #ffffff;
+  }
+  .avh__mtop .avh__socials { gap: 16px; }
+  .avh__mtop .avh__social svg { width: 16px; height: 16px; }
+  .avh__mtop-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  @media (min-width: 1025px) {
+    .avh__mtop { display: none; }
+  }
+
   /* ── Mobile ── */
   .avh__mobile {
     position: relative;
@@ -839,6 +932,9 @@ const socials = [
     color: #181818;
     background: #ffffff;
     border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+    align-self: center;
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -855,7 +951,7 @@ const socials = [
     height: 100dvh;
     overflow-y: auto;
     background: #0d0d0b;
-    padding: max(86px, calc(env(safe-area-inset-top) + 70px)) 15px max(40px, env(safe-area-inset-bottom));
+    padding: max(122px, calc(env(safe-area-inset-top) + 106px)) 15px max(40px, env(safe-area-inset-bottom));
     pointer-events: none;
     visibility: hidden;
     transform: translateX(100%);
