@@ -34,6 +34,12 @@ const {
   author,
   schema,
 } = Astro.props;
+
+// Launch integrations — both are optional and render nothing when unset.
+// PUBLIC_* vars are inlined at build time, so set them in Vercel before the
+// production build (a redeploy is needed after changing them).
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim();
+const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION?.trim();
 ---
 
 <!doctype html>
@@ -44,6 +50,7 @@ const {
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
+    {gscVerification && <meta name="google-site-verification" content={gscVerification} />}
     {canonical && <link rel="canonical" href={canonical} />}
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:type" content={type} />
@@ -65,6 +72,22 @@ const {
       <meta property="article:author" content={author} />
     )}
     {schema && <script type="application/ld+json" set:html={schema} />}
+    {/* Google Analytics 4 (gtag.js). Lives in <head>, so ClientRouter keeps
+     * it across soft navigations instead of re-running it; GA4's enhanced
+     * measurement ("page changes based on browser history events", on by
+     * default) records those navigations as page_views. Lead events are
+     * sent from the contact form (src/pages/contact.astro). */}
+    {gaMeasurementId && (
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaMeasurementId)}`}></script>
+    )}
+    {gaMeasurementId && (
+      <script is:inline define:vars={{ gaMeasurementId }}>
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', gaMeasurementId);
+      </script>
+    )}
     <ClientRouter />
     <title>{title}</title>
   </head>
