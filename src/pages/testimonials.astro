@@ -12,7 +12,7 @@
  *       walk-the-property photo. Second column: paragraph
  *       explaining the page's purpose + links to /about and
  *       /industries.
- *   §2. Four full testimonial blocks — each block has a
+ *   §2. Nine full testimonial blocks — each block has a
  *       1/2 + 1/2 grid: left column is the quote highlight
  *       ("title") in big black uppercase, right column is the
  *       full testimonial paragraph followed by an avatar +
@@ -24,7 +24,9 @@
  *
  * Content source: /reference/RRFPS-testimonials-page-content.md
  * Avatar photos: existing /public/images/ assets (Brandon headshot,
- *   greystar logo, user.png placeholder).
+ *   greystar logo, user.png placeholder) plus /public/images/testimonials/
+ *   (bart-copeland.webp headshot, testimonial-user-placeholder.webp
+ *   generic avatar, orange "C" SVG avatar for Christine Kozubal).
  *
  * Class prefix: `.tm-` for any new section-scoped styles. §0 + §1
  * reuse the existing .ptbanner + .mt-quote* styles from
@@ -77,6 +79,46 @@ const testimonials = [
     name: 'Alex Martinez',
     role: 'Senior Construction Manager, Greystar',
     avatar: '/images/greystar_logo.webp',
+  },
+  {
+    title: 'TOP NOTCH COMPANY ALWAYS QUICK TO RESPOND',
+    body:
+      '“Top notch company. Services my Trulite location in Aurora and always quick to respond, even on the weekend! Jeff and his team helped us through an emergency fire watch situation, and I was impressed enough that we turned all our alarm and inspection needs over to them. Glad we made the switch!”',
+    name: 'Tadd Snodgrass',
+    role: '',
+    avatar: '/images/testimonials/testimonial-user-placeholder.webp',
+  },
+  {
+    title: 'AMAZING SERVICE FOR OVER 10 YEARS',
+    body:
+      '“Red Rocks Fire Protection is amazing! We have used their services for over 10 years and have always been extremely happy with them. They are reliable, professional, and provide excellent service. We highly recommend Red Rocks Fire Protection!”',
+    name: 'Christine Kozubal',
+    role: '',
+    avatar: '/images/testimonials/christine-kozubal-avatar.svg',
+  },
+  {
+    title: 'A GREAT TEAM YOU CAN COUNT ON',
+    body:
+      '“We have used Red Rocks Fire for many years. The whole team is great to work with. They keep us compliant with fire inspections and repairs if needed.”',
+    name: 'Bart Copeland',
+    role: '',
+    avatar: '/images/testimonials/bart-copeland.webp',
+  },
+  {
+    title: 'RESPONSIVE, PROFESSIONAL & KNOWLEDGEABLE',
+    body:
+      '“I have worked with Red Rocks Fire Protection for the entire time I have been in multifamily housing. They are always very responsive, professional and knowledgeable. I will only use them on my sites, and refer them to anyone who needs fire system services.”',
+    name: 'Brandon Johnson',
+    role: '',
+    avatar: '/images/testimonials/testimonial-user-placeholder.webp',
+  },
+  {
+    title: 'A TRUSTED PARTNER ON EVERY LEVEL',
+    body:
+      '“We know Red Rocks Fire Protection from two sides: we manage their IT, and many of the businesses we support rely on them for fire and life safety. From both vantage points the impression is the same. This is a well-run, family-owned company that takes its responsibility seriously and follows through on what it commits to. Their team is organized and easy to work with, and they treat their partners with respect. They have been serving Colorado since 2010, and that experience shows in how they operate. When our clients ask who to trust with fire protection, Red Rocks is the company we recommend.”',
+    name: 'Shane Connery',
+    role: '',
+    avatar: '/images/testimonials/testimonial-user-placeholder.webp',
   },
 ] as const;
 ---
@@ -134,7 +176,7 @@ const testimonials = [
     </section>
 
     {/* ══════════════════════════════════════════════════════════
-       §2. TESTIMONIALS — 4 blocks, 1/2 + 1/2 grid each.
+       §2. TESTIMONIALS — 9 blocks, 1/2 + 1/2 grid each.
        Left column: title (highlighted quote) in big black uppercase.
        Right column: full quote paragraph + avatar/name/role row.
        1px divider between blocks.
@@ -154,13 +196,13 @@ const testimonials = [
                 <img
                   class="tm-testimonial__avatar"
                   src={t.avatar}
-                  alt={`${t.name}, ${t.role}`}
+                  alt={t.role ? `${t.name}, ${t.role}` : t.name}
                   loading="lazy"
                   decoding="async"
                 />
                 <div class="tm-testimonial__author">
                   <div class="tm-testimonial__name">{t.name}</div>
-                  <div class="tm-testimonial__role">{t.role}</div>
+                  {t.role && <div class="tm-testimonial__role">{t.role}</div>}
                 </div>
               </div>
             </div>
