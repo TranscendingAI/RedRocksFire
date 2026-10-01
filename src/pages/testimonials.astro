@@ -24,9 +24,9 @@
  *
  * Content source: /reference/RRFPS-testimonials-page-content.md
  * Avatar photos: existing /public/images/ assets (Brandon headshot,
- *   greystar logo, user.png placeholder, orange "C" SVG avatar for
- *   Christine Kozubal, and testimonials/bart-copeland.png — currently a
- *   copy of user.png until Bart's real photo arrives).
+ *   greystar logo, user.png placeholder) plus /public/images/testimonials/
+ *   (bart-copeland.webp headshot, testimonial-user-placeholder.webp
+ *   generic avatar, orange "C" SVG avatar for Christine Kozubal).
  *
  * Class prefix: `.tm-` for any new section-scoped styles. §0 + §1
  * reuse the existing .ptbanner + .mt-quote* styles from
@@ -86,7 +86,7 @@ const testimonials = [
       '“Top notch company. Services my Trulite location in Aurora and always quick to respond, even on the weekend! Jeff and his team helped us through an emergency fire watch situation, and I was impressed enough that we turned all our alarm and inspection needs over to them. Glad we made the switch!”',
     name: 'Tadd Snodgrass',
     role: '',
-    avatar: '/images/user.png',
+    avatar: '/images/testimonials/testimonial-user-placeholder.webp',
   },
   {
     title: 'AMAZING SERVICE FOR OVER 10 YEARS',
@@ -102,10 +102,7 @@ const testimonials = [
       '“We have used Red Rocks Fire for many years. The whole team is great to work with. They keep us compliant with fire inspections and repairs if needed.”',
     name: 'Bart Copeland',
     role: '',
-    /* Placeholder until Bart's headshot is provided. To swap: overwrite
-     * public/images/testimonials/bart-copeland.png with the real photo
-     * (or point this path at the new file). */
-    avatar: '/images/testimonials/bart-copeland.png',
+    avatar: '/images/testimonials/bart-copeland.webp',
   },
   {
     title: 'RESPONSIVE, PROFESSIONAL & KNOWLEDGEABLE',
@@ -113,7 +110,7 @@ const testimonials = [
       '“I have worked with Red Rocks Fire Protection for the entire time I have been in multifamily housing. They are always very responsive, professional and knowledgeable. I will only use them on my sites, and refer them to anyone who needs fire system services.”',
     name: 'Brandon Johnson',
     role: '',
-    avatar: '/images/user.png',
+    avatar: '/images/testimonials/testimonial-user-placeholder.webp',
   },
   {
     title: 'A TRUSTED PARTNER ON EVERY LEVEL',
@@ -121,7 +118,7 @@ const testimonials = [
       '“We know Red Rocks Fire Protection from two sides: we manage their IT, and many of the businesses we support rely on them for fire and life safety. From both vantage points the impression is the same. This is a well-run, family-owned company that takes its responsibility seriously and follows through on what it commits to. Their team is organized and easy to work with, and they treat their partners with respect. They have been serving Colorado since 2010, and that experience shows in how they operate. When our clients ask who to trust with fire protection, Red Rocks is the company we recommend.”',
     name: 'Shane Connery',
     role: '',
-    avatar: '/images/user.png',
+    avatar: '/images/testimonials/testimonial-user-placeholder.webp',
   },
 ] as const;
 ---
