@@ -1,0 +1,276 @@
+---
+/**
+ * Thank You — /thank-you/
+ *
+ * Post-submit confirmation for the contact form. The enhanced form
+ * (src/pages/contact.astro) fires GA4 `generate_lead` and then navigates
+ * here; the no-JS fallback is 303-redirected here by /api/contact.
+ *
+ * noindex (via BaseLayout) and excluded from the sitemap (astro.config.mjs)
+ * so it never shows up in search results. Layout follows the contact page:
+ * ptbanner hero + a white two-column section.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { contact } from '../data/site';
+
+const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.465416 5.91579 0.711822 5.81372 0.96875 5.81372H12.1927L8.03288 1.65585C7.85097 1.47394 7.74878 1.22723 7.74878 0.969974C7.74878 0.712721 7.85097 0.466004 8.03288 0.284099C8.21478 0.102194 8.4615 0 8.71875 0C8.976 0 9.22272 0.102194 9.40463 0.284099L15.2171 6.0966C15.3073 6.18659 15.3789 6.29349 15.4278 6.41118C15.4766 6.52888 15.5017 6.65505 15.5017 6.78247C15.5017 6.9099 15.4766 7.03607 15.4278 7.15376C15.3789 7.27146 15.3073 7.37836 15.2171 7.46835L9.40463 13.2808C9.22272 13.4628 8.976 13.5649 8.71875 13.5649C8.4615 13.5649 8.21478 13.4628 8.03288 13.2808C7.85097 13.0989 7.74878 12.8522 7.74878 12.595C7.74878 12.3377 7.85097 12.091 8.03288 11.9091L12.1927 7.75122H0.96875C0.711822 7.75122 0.465416 7.64916 0.283741 7.46748C0.102065 7.28581 0 7.0394 0 6.78247Z';
+const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
+const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
+
+const steps = [
+  {
+    title: 'We review your message',
+    body: 'Your inquiry goes straight to our office team, who route it to the right person for your property and systems.',
+  },
+  {
+    title: 'We reach out',
+    body: `We’ll get back to you by phone or email as soon as we can during office hours (${contact.officeHours}).`,
+  },
+  {
+    title: 'We plan the next step',
+    body: 'Whether it’s an inspection, service call, or quote, we’ll confirm scope, scheduling, and any AHJ requirements with you.',
+  },
+];
+---
+
+<BaseLayout
+  title="Thank You | Red Rocks Fire Protection"
+  description="Thanks for contacting Red Rocks Fire Protection. Our team will be in touch shortly."
+  noindex
+>
+  <div class="av-page">
+    <div class="ptbanner" style={`background-image: url('${bannerImage}');`}>
+      <div class="ptbanner__inner">
+        <h1 class="ptbanner__title">Thank You</h1>
+        <div class="ptbanner__breadcrumbs">
+          <a href="/">Home</a>
+          <span class="ptbanner__divider">-</span>
+          <span class="ptbanner__current">Thank You</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="ty">
+      <div class="ty__inner rr-container">
+        <div class="ty__grid">
+          <div class="ty__main">
+            <div class="av-dblh__subtitle">
+              <span class="divider-icon" set:html={diamondIcon} />
+              <span>Message Received</span>
+            </div>
+            <h2 class="ty__heading">Thanks for reaching out.</h2>
+            <p class="ty__lead">
+              Your message has been sent to the Red Rocks Fire Protection team. We appreciate the
+              opportunity to help keep your property safe and compliant.
+            </p>
+
+            <h3 class="ty__subheading">What happens next</h3>
+            <ol class="ty__steps">
+              {steps.map((step, i) => (
+                <li class="ty__step">
+                  <span class="ty__step-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <p class="ty__step-title">{step.title}</p>
+                    <p class="ty__step-body">{step.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div class="ty__actions">
+              <a href="/" class="av-wgl-btn ty__btn">
+                <span class="av-wgl-btn__text">Back to Home</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </a>
+              <a href="/services" class="av-wgl-btn ty__btn ty__btn--outline">
+                <span class="av-wgl-btn__text">Explore Services</span>
+                <span class="av-wgl-btn__icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14" fill="currentColor" aria-hidden="true"><path d={arrowPath}></path></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <aside class="ty__aside">
+            <div class="ty__urgent">
+              <span class="ty__urgent-tag">24/7</span>
+              <p class="ty__urgent-title">Need help right now?</p>
+              <p class="ty__urgent-body">
+                For an impairment, alarm trouble, or other urgent issue, don’t wait for a reply.
+                Call us. We offer {contact.serviceAvailability}.
+              </p>
+              <a href={contact.phoneHref} class="ty__phone">{contact.phone}</a>
+              <p class="ty__urgent-email">
+                Or email <a href={contact.emailHref}>{contact.email}</a>
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Page-title banner — same values as contact.astro §0. */
+  .ptbanner {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 450px;
+    padding-top: 154px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .ptbanner__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 15px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .ptbanner__title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5.5vw, 75px);
+    line-height: 104px;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .ptbanner__breadcrumbs {
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    padding-bottom: 14px;
+  }
+  .ptbanner__breadcrumbs a { color: #ffffff; text-decoration: none; transition: 0.4s; }
+  .ptbanner__breadcrumbs a:hover { color: #ffffff99; }
+  .ptbanner__divider { margin: 0 10px; }
+  .ptbanner__current { text-decoration: underline; text-underline-offset: 4px; }
+
+  .ty { background: #ffffff; padding-block: 96px; }
+  @media (min-width: 768px) { .ty { padding-block: 128px; } }
+  .ty__grid { display: grid; gap: 48px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 1024px) { .ty__grid { grid-template-columns: 7fr 4fr; gap: 80px; } }
+
+  .ty__main .av-dblh__subtitle { display: flex; margin-bottom: 20px; }
+  .ty__heading {
+    margin: 0 0 20px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+  .ty__lead { margin: 0 0 40px; max-width: 56ch; font-size: 17px; line-height: 1.6; color: #626262; }
+  .ty__subheading {
+    margin: 0 0 20px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+  }
+  .ty__steps { list-style: none; margin: 0 0 44px; padding: 0; display: grid; gap: 22px; }
+  .ty__step { display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: start; }
+  .ty__step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: var(--av-primary);
+    color: #ffffff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .ty__step-title {
+    margin: 4px 0 4px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: #0a0a0a;
+  }
+  .ty__step-body { margin: 0; font-size: 15.5px; line-height: 1.55; color: #3a3a3a; }
+
+  .ty__actions { display: flex; flex-wrap: wrap; gap: 14px; }
+  .ty__btn {
+    --av-wgl-btn-bg: var(--av-primary);
+    --av-wgl-btn-color: #ffffff;
+    --av-wgl-btn-border: var(--av-primary);
+    --av-wgl-btn-bg-hover: #0a0a0a;
+    --av-wgl-btn-color-hover: #ffffff;
+    --av-wgl-btn-border-hover: #0a0a0a;
+    text-decoration: none;
+  }
+  .ty__btn--outline {
+    --av-wgl-btn-bg: transparent;
+    --av-wgl-btn-color: #0a0a0a;
+    --av-wgl-btn-border: #0a0a0a;
+    --av-wgl-btn-bg-hover: #0a0a0a;
+    --av-wgl-btn-color-hover: #ffffff;
+    --av-wgl-btn-border-hover: #0a0a0a;
+  }
+
+  .ty__urgent { background: #0d0d0b; color: #ffffff; padding: 36px 32px; }
+  .ty__urgent-tag {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 8px 12px;
+    background: var(--av-primary);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .ty__urgent-title {
+    margin: 0 0 10px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .ty__urgent-body { margin: 0 0 22px; font-size: 15.5px; line-height: 1.55; color: rgba(255, 255, 255, 0.82); }
+  .ty__phone {
+    display: inline-block;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3vw, 34px);
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 2px solid var(--av-primary);
+    transition: color 0.3s;
+  }
+  .ty__phone:hover { color: var(--av-primary); }
+  .ty__urgent-email { margin: 18px 0 0; font-size: 14px; color: rgba(255, 255, 255, 0.7); }
+  .ty__urgent-email a { color: #ffffff; }
+
+  @media (max-width: 1200px) {
+    .ptbanner__title { font-size: 64px; line-height: 72px; }
+  }
+  @media (max-width: 767px) {
+    .ptbanner { min-height: 320px; padding-top: 120px; }
+    .ptbanner__title { font-size: 40px; line-height: 48px; }
+    .ty { padding-block: 64px; }
+    .ty__btn { width: 100%; justify-content: space-between; }
+    .ty__urgent { padding: 28px 22px; }
+  }
+</style>

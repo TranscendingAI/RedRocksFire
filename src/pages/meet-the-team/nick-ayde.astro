@@ -13,9 +13,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ClosingCTA from '../../components/ClosingCTA.astro';
 
-const heroBg = '/images/rrfps-about-cta-bg.jpg';
-const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
-const nickPhoto = '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.png';
+const heroBg = '/images/rrfps-about-cta-bg.webp';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.webp';
+const nickPhoto = '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.webp';
 
 const bioParagraphs = [
   'Nick Ayde leads sales for Red Rocks Fire Protection Services, serving as the primary point of contact for new business opportunities and helping customers identify the fire and life safety solutions that best meet the needs of their properties. He works directly with property owners, property managers, developers, and other decision-makers to understand their facilities, address their concerns, and connect them with the comprehensive capabilities available through RRFPS.',
@@ -51,7 +51,7 @@ const bioParagraphs = [
       <div class="na-bio__inner">
 
         <div class="na-bio__photo">
-          <img src={nickPhoto} alt="Nick Ayde of Red Rocks Fire Protection Services" loading="eager" decoding="async" />
+          <img src={nickPhoto} alt="Nick Ayde of Red Rocks Fire Protection Services" loading="eager" fetchpriority="high" decoding="async" />
         </div>
 
         <div class="na-bio__copy">

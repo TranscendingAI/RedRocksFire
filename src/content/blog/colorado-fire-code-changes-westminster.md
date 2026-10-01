@@ -17,7 +17,7 @@ tags:
   - Westminster Fire Department
 readMinutes: 6
 
-featuredImage: /images/blog/colorado-fire-code-changes-westminster.png
+featuredImage: /images/blog/colorado-fire-code-changes-westminster.webp
 featuredImageAlt: A property manager and a fire protection consultant reviewing building plans and a fire code book together at a table in a Westminster, Colorado commercial office.
 featuredImageCaption: Reviewing plans against the current code in Westminster — staying ahead of adoption cycles instead of discovering a change at the next inspection.
 ---

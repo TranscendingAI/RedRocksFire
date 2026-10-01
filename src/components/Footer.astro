@@ -91,9 +91,10 @@ const socials = [
   <div class="avf__divider" aria-hidden="true"></div>
   <div class="avf__spacer-small" aria-hidden="true"></div>
 
-  <p class="avf__copyright">
-    © 2026 Red Rocks Fire Protection. All Rights Reserved
-  </p>
+  <div class="avf__copyright">
+    <p class="avf__copyright-text">© 2026 Red Rocks Fire Protection. All Rights Reserved</p>
+    <a href="/privacy-policy" class="avf__link avf__legal-link">Privacy Policy</a>
+  </div>
 
   <div class="avf__divider" aria-hidden="true"></div>
 
@@ -210,12 +211,21 @@ const socials = [
   .avf__link:hover { border-bottom-color: #ffffff; }
 
   .avf__copyright {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
     margin: 0 0 30px;
-    padding-left: 15px;
+    padding-inline: 15px;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
     color: #ffffff;
   }
+  .avf__copyright-text { margin: 0; }
+  /* Reuses .avf__link (font, colour, hover underline); drop its top margin
+   * so it sits on the copyright baseline, pushed to the far right. */
+  .avf__legal-link { margin-top: 0; margin-left: auto; }
   .avf__copyright-sep { margin: 0 8px; color: #ffffff66; }
   .avf__admin-link {
     color: #ffffff;
@@ -264,6 +274,9 @@ const socials = [
     .avf__contact { width: 100%; padding: 40px 20px 30px; }
     .avf__col { padding-top: 0; padding-left: 20px; }
     .avf__contact-spacer { height: 30px; }
+    /* Stack copyright + Privacy link, both left-aligned, on phones. */
+    .avf__copyright { flex-direction: column; align-items: flex-start; }
+    .avf__legal-link { margin-left: 0; }
     /* .avf__giant font-size is now handled by clamp() in the base rule. */
   }
 </style>

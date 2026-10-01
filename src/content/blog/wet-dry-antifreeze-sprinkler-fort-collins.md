@@ -17,7 +17,7 @@ tags:
   - Poudre Fire Authority
 readMinutes: 7
 
-featuredImage: /images/blog/wet-dry-antifreeze-sprinkler-fort-collins.png
+featuredImage: /images/blog/wet-dry-antifreeze-sprinkler-fort-collins.webp
 featuredImageAlt: Exposed fire sprinkler piping and a dry-pipe valve in a cold, unheated warehouse space in Fort Collins, Colorado during winter.
 featuredImageCaption: Exposed sprinkler piping in an unheated Fort Collins space — the freezing-climate scenario that decides whether a building needs a wet, dry, or antifreeze system.
 ---

@@ -127,7 +127,7 @@ export const cities: City[] = [
     // commissioned (e.g. jobsite shot at a Centennial HOA common area,
     // or a Streets at SouthGlenn / Centennial Civic Center skyline).
     // For now reuse the inspection hero so the page reads correctly.
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Centennial is one of the largest cities on the south Denver metro by population, and it is also home to Red Rocks Fire Protection — our office at 7076 S. Alton Way sits inside the city we serve every day. From the master-planned neighborhoods off Arapahoe Road to the office parks along the I-25 / E-470 corridor, every property in Centennial falls under the South Metro Fire Rescue Authority for fire-code enforcement, and every inspection we run in Centennial is written to a report South Metro will accept on the first pass.',
@@ -333,7 +333,7 @@ export const cities: City[] = [
     bannerTitle: 'Fire Protection Denver, CO',
     bannerSubtitle: 'DENVER FIRE PROTECTION',
     // TODO: replace with a Denver-specific skyline or Red Rocks jobsite photo.
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Denver properties range from century-old masonry buildings and converted warehouses to high-rise offices, dense apartment communities, commercial kitchens, healthcare facilities, and distribution space. That variety creates very different life-safety needs from one block to the next. Red Rocks Fire Protection helps Denver owners and property managers keep sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated under one vendor — with documentation prepared for the Denver Fire Department’s requirements.',
@@ -543,7 +543,7 @@ export const cities: City[] = [
     county: 'Jefferson County',
     bannerTitle: 'Fire Protection Arvada, CO',
     bannerSubtitle: 'ARVADA FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Arvada runs from the brick storefronts of Olde Town out to the new rooftops of Candelas and Leyden Rock, and Red Rocks Fire Protection covers all of it from our shop up the road in Centennial. Whether you manage a restaurant off the G-Line plaza, a warehouse in the light-industrial belt below I-76, or an HOA clubhouse along Ralston Creek, your property answers to the Arvada Fire Protection District for code enforcement — and every report we hand you is written the way that district wants to read it.',
@@ -743,7 +743,7 @@ export const cities: City[] = [
     county: 'Arapahoe County',
     bannerTitle: 'Fire Protection Aurora, CO',
     bannerSubtitle: 'AURORA FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Aurora is the third-largest city in Colorado and it sprawls across three counties — Arapahoe, Adams, and Douglas — from the Anschutz Medical Campus on the west side out to the E-470 warehouse belt near DIA. Whatever you own here, from a hospital tower at Fitzsimons to a strip center on Havana Street, Aurora Fire Rescue enforces the fire code, and every inspection we run in the city is written to a report Aurora Fire Rescue will accept on the first pass. Our office sits 25 minutes south in Centennial, well inside the 90-minute emergency window we hold across the Denver metro.',
@@ -943,7 +943,7 @@ export const cities: City[] = [
     county: 'Gilpin County',
     bannerTitle: 'Fire Protection Black Hawk, CO',
     bannerSubtitle: 'BLACK HAWK FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Black Hawk packs more high-rise life-safety load into a square mile than almost anywhere in Colorado — casino hotel towers stacked into a mining canyon at roughly 8,000 feet, sitting a short climb above the historic 1800s masonry district on Gregory Street. The Ameristar, Monarch, and Saratoga towers each run full life-safety stacks: standpipes, fire pumps, voice-evacuation, and kitchen-hood suppression feeding round-the-clock gaming floors and restaurants. Red Rocks Fire Protection runs Black Hawk on a scheduled canyon route up Highway 119 from our Centennial shop, so a property with a thousand-occupant gaming floor gets NFPA 25 and NFPA 72 testing on a planned visit written to a report the Black Hawk Fire Department will accept the first time.',
@@ -1147,7 +1147,7 @@ export const cities: City[] = [
     county: 'Boulder County',
     bannerTitle: 'Fire Protection Boulder, CO',
     bannerSubtitle: 'BOULDER FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Boulder sits against the Flatirons where the foothills wildland meets a dense downtown, and that mix shapes every inspection we run here. A Pearl Street restaurant tenant, a CU Boulder research lab, and a Chautauqua-adjacent home each carry a different code scope, and Boulder Fire-Rescue enforces some of the strictest local amendments on the Front Range. We drive up US-36 from our Centennial office to write reports Boulder Fire-Rescue accepts on the first pass, so your corrections close without a second visit.',
@@ -1348,7 +1348,7 @@ export const cities: City[] = [
     county: 'Adams County',
     bannerTitle: 'Fire Protection Brighton, CO',
     bannerSubtitle: 'BRIGHTON FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Brighton is the Adams County seat, and the ground here has changed fast: the same corridors that once served sugar-beet and vegetable farms now carry million-square-foot distribution buildings off I-76 and E-470. Whether you run a cold-storage warehouse near Bromley Lane, a retail box at Prairie Center, or an older Main Street building downtown, your property answers to the Brighton Fire Rescue District for fire-code enforcement. Red Rocks Fire Protection works Brighton on a regular route and writes every inspection report to a format the district will accept the first time through.',
@@ -1548,7 +1548,7 @@ export const cities: City[] = [
     county: 'City and County of Broomfield',
     bannerTitle: 'Fire Protection Broomfield, CO',
     bannerSubtitle: 'BROOMFIELD FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Broomfield is the metro’s only consolidated city-and-county, which means one AHJ — North Metro Fire Rescue District — covers everything from the Class-A office towers at Interlocken to the rowhomes in Anthem. Red Rocks Fire Protection runs the full life-safety scope along the US-36 tech corridor: sprinklers, alarms, extinguishers, backflow, suppression, and monitoring. Every report we write for a Broomfield property is formatted to what North Metro’s inspectors expect, so corrections clear on the first review.',
@@ -1752,7 +1752,7 @@ export const cities: City[] = [
     county: 'Douglas County',
     bannerTitle: 'Fire Protection Castle Pines, CO',
     bannerSubtitle: 'CASTLE PINES FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Castle Pines incorporated in 2008 and is still one of the newest cities in Douglas County, built almost entirely as master-planned golf and residential communities straddling I-25 between Castle Pines Parkway and Happy Canyon Road. Most of the built environment here is 13D-sprinklered custom homes, HOA common areas, and a handful of retail nodes at the Castle Pines Parkway interchange — all of it under South Metro Fire Rescue Authority for fire-code enforcement. Red Rocks Fire Protection works out of Centennial, a short run up I-25, and every report we write for a Castle Pines property is formatted to pass South Metro on the first review.',
@@ -1953,7 +1953,7 @@ export const cities: City[] = [
     county: 'Douglas County',
     bannerTitle: 'Fire Protection Castle Rock, CO',
     bannerSubtitle: 'CASTLE ROCK FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Castle Rock sits at the top of Douglas County where I-25 crosses Plum Creek, and its building stock has grown faster than almost anywhere on the Front Range — big-box retail at the Outlets, master-planned rooftops in The Meadows and Founders Village, and a hospital campus that all carry active life-safety systems. Red Rocks Fire Protection covers the whole town from our Centennial shop, a straight run up I-25, and every inspection we write for a Castle Rock property is formatted for Castle Rock Fire and Rescue so your corrections clear on the first review.',
@@ -2153,7 +2153,7 @@ export const cities: City[] = [
   county: 'Gilpin County',
   bannerTitle: 'Fire Protection Central City, CO',
   bannerSubtitle: 'CENTRAL CITY FIRE PROTECTION',
-  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
   heroIntro:
     'Central City sits at roughly 8,500 feet in Gilpin County, and almost everything worth protecting here is made of 150-year-old brick and timber. The gaming floors on Main and Lawrence, the Central City Opera House, and the stone storefronts that made this the richest square mile on Earth all carry fire-protection systems that have to work in a National Historic Landmark district without tearing out the fabric that makes it one. We run scheduled inspection routes up the Central City Parkway from the metro, so your NFPA 25, NFPA 72, and dry-system testing gets done on a planned visit — not squeezed between calls.',
@@ -2355,7 +2355,7 @@ export const cities: City[] = [
     county: 'Arapahoe County',
     bannerTitle: 'Fire Protection Cherry Hills Village, CO',
     bannerSubtitle: 'CHERRY HILLS VILLAGE FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Cherry Hills Village runs on large-lot estates rather than strip centers, and a fire protection contractor here has to work the way the homes are built — custom, private, and set back behind gates off Quincy Avenue and Belleview. Red Rocks Fire Protection works out of Centennial, a short drive south, and we handle the systems these properties actually carry: NFPA 13D residential sprinklers in new custom builds, monitored alarm and smoke detection on additions, and backflow on private wells and estate irrigation. Every property in the Village falls under South Metro Fire Rescue Authority, and we write each report to pass South Metro on the first review.',
@@ -2556,7 +2556,7 @@ export const cities: City[] = [
     county: 'Adams County',
     bannerTitle: 'Fire Protection Commerce City, CO',
     bannerSubtitle: 'COMMERCE CITY FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Commerce City runs on freight and fuel: the Suncor refinery on the west side, the warehouse rows along the Sand Creek corridor, and the distribution buildings going up daily off E-470 and I-70 near DIA. Those are high-hazard occupancies with ESFR sprinkler design, fire pumps, and hazmat storage that South Adams County Fire Department inspects hard. Red Rocks Fire Protection works this jurisdiction from our Centennial shop, and we write every inspection to a report South Adams County will accept on the first pass.',
@@ -2756,7 +2756,7 @@ export const cities: City[] = [
   county: 'Jefferson County',
   bannerTitle: 'Fire Protection Conifer, CO',
   bannerSubtitle: 'CONIFER FIRE PROTECTION',
-  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
   heroIntro:
     'Conifer sits at about 8,300 feet along the US-285 corridor, an unincorporated Jefferson County mountain community where most properties draw their fire-flow from a well and a cistern rather than a hydrant grid. Elk Creek Fire Protection District is the authority that inspects and permits fire-protection systems here, from the commercial pads at Conifer Marketplace down to the large-acreage homes on wooded lots toward Aspen Park and Pine Junction. We build our route up 285 on a scheduled cadence so mountain properties get the same NFPA-driven inspection and reporting that a metro building would, without waiting on a call center that has never driven the grade.',
@@ -2961,7 +2961,7 @@ export const cities: City[] = [
   county: 'Arapahoe & Denver Counties (Greenwood Village)',
   bannerTitle: 'Fire Protection Denver Tech Center, CO',
   bannerSubtitle: 'DTC FIRE PROTECTION',
-  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
   heroIntro:
     'The Denver Tech Center is a stack of Class-A high-rise office towers along the I-25 spine between Belleview and County Line, and every one of them carries a full life-safety package: standpipes riser to roof, electric or diesel fire pumps in the basement, voice evacuation tied to a firefighter’s command panel, and clean-agent bottles guarding the data floors. Red Rocks Fire Protection runs its office ten minutes south in Centennial, so we inspect and test those systems on the cadence NFPA 25 and NFPA 72 demand and hand you a report the fire marshal signs off without a second visit. Most of the DTC sits inside Greenwood Village and answers to South Metro Fire Rescue Authority, but the district straddles the Denver line near Belleview Station, so we confirm jurisdiction building by building before we file.',
@@ -3162,7 +3162,7 @@ export const cities: City[] = [
     county: 'Jefferson County',
     bannerTitle: 'Fire Protection Edgewater, CO',
     bannerSubtitle: 'EDGEWATER FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Edgewater packs a full city into roughly one square mile on the west shore of Sloan’s Lake, and its commercial footprint punches well above its size — a food hall, a growing 20th and 25th Avenue mixed-use corridor, and small-lot housing pressed tight against Denver’s border. West Metro Fire Rescue is the Authority Having Jurisdiction here, and every kitchen hood, sprinkler riser, and alarm panel we inspect in Edgewater is documented to a report West Metro will accept without a second trip. Red Rocks Fire Protection runs out of Centennial, and Edgewater sits inside the Denver metro window we cover every day.',
@@ -3362,7 +3362,7 @@ export const cities: City[] = [
     county: 'Elbert County',
     bannerTitle: 'Fire Protection Elizabeth, CO',
     bannerSubtitle: 'ELIZABETH FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Elizabeth sits out past the eastern edge of the metro in Elbert County, where the subdivisions give way to grassland, ranch acreage, and a Main Street commercial core along CO-86. Getting a certified fire-protection technician this far out usually means a call center booking a stranger who has never seen your building. We run Elizabeth on a scheduled route instead — the same NICET-certified techs who service the metro plan their Elbert County stops together, so a barn dry-pipe system near Running Creek and a Main Street storefront get inspected on the same trip, documented for the Elizabeth Fire Protection District on the first pass.',
@@ -3566,7 +3566,7 @@ export const cities: City[] = [
     county: 'Arapahoe County',
     bannerTitle: 'Fire Protection Englewood, CO',
     bannerSubtitle: 'ENGLEWOOD FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Englewood packs a lot of high-consequence property into a small footprint: the Swedish Medical Center and Craig Hospital campus at Girard and Hampden, the CityCenter Englewood redevelopment on the old Cinderella City site next to the light-rail station, and decades of industrial buildings along the Santa Fe corridor. Fire service here is delivered by South Metro Fire Rescue, which took over Englewood fire services in 2015, and every inspection report we write is built to pass their review on the first submittal. Our office at 7076 S. Alton Way in Centennial is about fifteen minutes down Broadway, so a technician who knows your building is close.',
@@ -3770,7 +3770,7 @@ export const cities: City[] = [
     county: 'Boulder & Weld Counties',
     bannerTitle: 'Fire Protection Erie, CO',
     bannerSubtitle: 'ERIE FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Erie has been one of Colorado’s fastest-growing towns for a decade, and its building stock reflects it: Colliers Hill and Vista Ridge went from open Weld County prairie to thousands of rooftops in a few build seasons, and the commercial pads at Nine Mile Corner and along Erie Parkway are still filling in. Every one of those properties — from an Old Town storefront off Briggs Street to a new warehouse near Erie Municipal Airport — falls under Mountain View Fire Rescue for code enforcement. Red Rocks Fire Protection inspects, tests, and maintains the sprinklers, alarms, extinguishers, and suppression on those buildings, and we write every report the way Mountain View’s inspectors expect to read it.',
@@ -3974,7 +3974,7 @@ export const cities: City[] = [
       county: 'Jefferson County',
       bannerTitle: 'Fire Protection Evergreen, CO',
       bannerSubtitle: 'EVERGREEN FIRE PROTECTION',
-      bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+      bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
       heroIntro:
         'Evergreen sits above 7,000 feet in the ponderosa and lodgepole of Jefferson County, an unincorporated mountain community where the wildland-urban interface starts at your back deck. Between the shops around Evergreen Lake, the custom homes in Hiwan, and the second homes and short-term rentals scattered up the canyons off Highway 74, every commercial and multi-family property answers to Evergreen Fire/Rescue for fire-code enforcement. Because we run scheduled mountain routes rather than metro drive-ups, we plan Evergreen visits ahead and write every report to what Evergreen Fire/Rescue expects on the first pass.',
@@ -4178,7 +4178,7 @@ export const cities: City[] = [
     county: 'Adams County',
     bannerTitle: 'Fire Protection Federal Heights, CO',
     bannerSubtitle: 'FEDERAL HEIGHTS FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Federal Heights packs a lot of building into less than two square miles, and most of it is multi-family — apartment blocks and condo courts stacked along Federal Boulevard and the 84th Avenue corridor. Red Rocks Fire Protection runs from Centennial, well inside the 90-minute metro window Federal Heights Fire Department expects, and we write every sprinkler, alarm, and standpipe report to the deficiency-list format Federal Heights Fire Department accepts on the first pass. If you manage a garden-style complex off Federal or a retail pad near Water World, we already know the code path your inspector will walk.',
@@ -4382,7 +4382,7 @@ export const cities: City[] = [
     county: 'Larimer County',
     bannerTitle: 'Fire Protection Fort Collins, CO',
     bannerSubtitle: 'FORT COLLINS FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Fort Collins sits about 65 miles north of our Centennial shop up I-25, and we run it as a scheduled route — building inspections along College Avenue, the CSU campus, and the Old Town brewery cluster into planned technician visits rather than one-off scrambles. Every commercial, campus, and multi-family property in the city falls under the Poudre Fire Authority for code enforcement, and we write each report to the deficiency-list format PFA’s Community Safety and Service Bureau expects on the first submittal.',
@@ -4586,7 +4586,7 @@ export const cities: City[] = [
   county: 'Douglas County',
   bannerTitle: 'Fire Protection Franktown, CO',
   bannerSubtitle: 'FRANKTOWN FIRE PROTECTION',
-  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
   heroIntro:
     'Franktown is the crossroads where CO-83 (Parker Road) meets CO-86, a rural pocket of Douglas County built on large-acreage homesites, working agricultural ground, and a short row of roadside commercial buildings. Red Rocks Fire Protection reaches Franktown on a scheduled service route out of our Centennial shop, so the propane-heated shops off Russellville Road, the well-fed sprinkler systems on the acreages near Castlewood Canyon, and the handful of commercial buildings at the highway junction all get inspected on a planned visit rather than a stopgap emergency run. Every report we leave is written so the Franktown fire authority accepts it without a callback.',
@@ -4790,7 +4790,7 @@ export const cities: City[] = [
     county: 'Jefferson County',
     bannerTitle: 'Fire Protection Golden, CO',
     bannerSubtitle: 'GOLDEN FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Golden sits at the mouth of Clear Creek Canyon where the plains hand off to the foothills, and that geography drives everything about fire protection here. A Molson Coors brewhouse with ammonia refrigeration and grain-dust hazards, School of Mines labs and dorms, and a downtown of unsprinklered 19th-century masonry along Washington Avenue all sit within a few blocks of wildland that runs up North and South Table Mountain and into the canyon. Every commercial and multi-family property in Golden answers to the Golden Fire Department for code enforcement, and Red Rocks Fire Protection writes every inspection report to pass on the first Golden Fire review.',
@@ -4994,7 +4994,7 @@ export const cities: City[] = [
   county: 'Weld County',
   bannerTitle: 'Fire Protection Greeley, CO',
   bannerSubtitle: 'GREELEY FIRE PROTECTION',
-  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
   heroIntro:
     'Greeley runs on beef, oil, gas, and grain, and every one of those industries stacks fire-protection scope that a strip-mall inspector never touches — anhydrous ammonia refrigeration at the JBS USA plant, high-pile grain and feed storage, wellsite equipment, and a downtown of century-old brick storefronts along 8th and 9th. Red Rocks Fire Protection works Greeley on scheduled routes out of our Centennial office, so we batch the drive north up US-85 and I-25, keep your NFPA 25 and NFPA 72 cadences on the calendar, and hand the Greeley Fire Department a report it will accept the first time.',
@@ -5198,7 +5198,7 @@ export const cities: City[] = [
     county: 'Arapahoe County',
     bannerTitle: 'Fire Protection Greenwood Village, CO',
     bannerSubtitle: 'GREENWOOD VILLAGE FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Greenwood Village runs on two very different building types: the Class-A high-rise towers of the Denver Tech Center along I-25 at Belleview and Orchard, and the large-lot estates east of University toward the Highline Canal. Both fall under the South Metro Fire Rescue Authority, and both need inspection reports written the way South Metro wants to read them. From standpipe risers and fire pumps in a 12-story DTC office to a monitored NFPA 13D system on an acreage home, Red Rocks Fire Protection works out of Centennial a few minutes down the interstate and clears the deficiency list on the first pass.',
@@ -5403,7 +5403,7 @@ export const cities: City[] = [
     county: 'Douglas County',
     bannerTitle: 'Fire Protection Highlands Ranch, CO',
     bannerSubtitle: 'HIGHLANDS RANCH FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Highlands Ranch is a single master-planned community of roughly 100,000 people governed by the Highlands Ranch Community Association, and almost every commercial and common-area building in it falls under South Metro Fire Rescue Authority for fire-code enforcement. From the retail and office space around Town Center and Highlands Ranch Parkway to the four HRCA recreation centers and the miles of HOA-maintained backflow and irrigation lines, Red Rocks Fire Protection runs inspections here written to a report South Metro accepts on the first pass. Our office at 7076 S. Alton Way in Centennial sits a short C-470 drive north, so a Highlands Ranch call is a same-metro call.',
@@ -5607,7 +5607,7 @@ export const cities: City[] = [
     county: 'Boulder County',
     bannerTitle: 'Fire Protection Lafayette, CO',
     bannerSubtitle: 'LAFAYETTE FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Lafayette grew out of a coal-mining town on Public Road and now runs a full mix of properties, from the brick storefronts of Old Town to the newer subdivisions filling in east of US-287. Fire-code enforcement here runs through Lafayette Fire, and after the Marshall Fire tore through the grasslands south of the city in December 2021, Boulder County owners look harder at wildland exposure and working suppression systems than they did a few years ago. We test, inspect, and repair the sprinklers, alarms, extinguishers, backflow, and hood systems in Lafayette to a report your fire authority accepts on the first pass.',
@@ -5811,7 +5811,7 @@ export const cities: City[] = [
     county: 'Jefferson County',
     bannerTitle: 'Fire Protection Lakewood, CO',
     bannerSubtitle: 'LAKEWOOD FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Lakewood is the largest city in Jefferson County and one of the biggest in the state, stretching from the Denver Federal Center out to Green Mountain along the W 6th Avenue and Colfax corridors. West Metro Fire Rescue enforces fire code across every one of those properties, from the Belmar mixed-use blocks downtown to the office towers on Union Boulevard. Red Rocks Fire Protection runs each Lakewood inspection to a report West Metro will accept on the first pass, and our crews reach the city well inside our 90-minute Denver-metro response window.',
@@ -6011,7 +6011,7 @@ export const cities: City[] = [
     county: 'Douglas County',
     bannerTitle: 'Fire Protection Larkspur, CO',
     bannerSubtitle: 'LARKSPUR FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Larkspur sits on I-25 between Castle Rock and Monument, where ponderosa foothills, ranch land, and a few concentrated seasonal draws make up most of the built environment. The Colorado Renaissance Festival puts thousands of people under tents and inside temporary food stalls every summer weekend, Perry Park lays custom homes across steep forested lots, and the properties in between run to propane-heated ranch buildings and dry-system shops that freeze in winter. Every fire-protection inspection here answers to the Larkspur Fire Protection District, and we schedule Larkspur work on planned service routes so a small rural town gets the same NFPA-documented reports a metro campus would.',
@@ -6215,7 +6215,7 @@ export const cities: City[] = [
     county: 'Arapahoe County',
     bannerTitle: 'Fire Protection Services in Littleton, CO',
     bannerSubtitle: 'LITTLETON FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Littleton straddles three counties — Arapahoe, Jefferson, and Douglas — and its building stock runs from 1890s brick storefronts on historic Main Street to new mid-rise apartments along the light-rail stations at Littleton–Downtown and Littleton–Mineral. Red Rocks Fire Protection works out of our Centennial office at 7076 S. Alton Way, a short run up Broadway or Santa Fe, so a technician who already knows South Metro Fire Rescue’s inspection routine can be on your property the same day you call.',
@@ -6419,7 +6419,7 @@ export const cities: City[] = [
     county: 'Douglas County',
     bannerTitle: 'Fire Protection Lone Tree, CO',
     bannerSubtitle: 'LONE TREE FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Lone Tree packs a lot of high-consequence property into a small footprint: the Park Meadows mall, the Sky Ridge Medical Center campus, the Charles Schwab regional office, and the RidgeGate build-out east of I-25. Red Rocks Fire Protection works out of Centennial, ten minutes up the C-470 / I-25 interchange, and every property in Lone Tree falls under the South Metro Fire Rescue Authority for code enforcement. We write every inspection report to the format South Metro accepts on the first pass, so corrections clear without a second round trip.',
@@ -6619,7 +6619,7 @@ export const cities: City[] = [
     county: 'Boulder County',
     bannerTitle: 'Fire Protection Longmont, CO',
     bannerSubtitle: 'LONGMONT FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Longmont runs on a wider mix of buildings than most north-metro cities: a walkable brick downtown along Main Street, food and beverage plants like Butterball and Left Hand Brewing, tech and precision manufacturing off the US-287 and CO-119 corridors, and newer master-planned housing out toward Ute Creek and Prospect New Town. Every commercial, industrial, and multi-family property in the city answers to Longmont Fire Services for fire-code enforcement, and every inspection we run is written to a report LFD will accept on the first pass.',
@@ -6823,7 +6823,7 @@ export const cities: City[] = [
     county: 'Boulder County',
     bannerTitle: 'Fire Protection Louisville, CO',
     bannerSubtitle: 'LOUISVILLE FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Louisville sits at the north edge of the Denver metro where old coal-mining downtown meets the tech and flex space of the Colorado Tech Center. If you own or manage property here — a restaurant on Main Street, a light-industrial building off CTC Boulevard, or a retail box on McCaslin — your fire systems answer to the Louisville Fire Protection District. Red Rocks Fire Protection runs every inspection to a report the District will accept on the first pass, and we know this town carries wildland-interface exposure that most metro suburbs do not.',
@@ -7027,7 +7027,7 @@ export const cities: City[] = [
   county: 'Jefferson County',
   bannerTitle: 'Fire Protection Morrison, CO',
   bannerSubtitle: 'MORRISON FIRE PROTECTION',
-  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
   heroIntro:
     'Morrison is a few blocks of stone storefronts along Bear Creek at the mouth of the foothills, but the fire-protection load here is anything but small-town: Red Rocks Park & Amphitheatre pushes tens of thousands of people into a seasonal assembly occupancy, the Bear Creek Avenue restaurants run wet-chemical hoods year round, and the WUI grade climbs fast into Willow Springs and the US-285 canyon. We build Morrison work into scheduled foothills routes so a technician who already knows the amphitheatre concessions and the downtown kitchens is out here on a planned visit, not a cold dispatch up C-470.',
@@ -7225,7 +7225,7 @@ export const cities: City[] = [
     county: 'Adams County',
     bannerTitle: 'Fire Protection Northglenn, CO',
     bannerSubtitle: 'NORTHGLENN FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Northglenn built out as a planned community in the 1960s, and a lot of that first-generation building stock is still standing along 104th Avenue and the Grant/Washington corridors. Whether you manage an apartment community off Grant Street, a strip center at the Marketplace at Northglenn, or an older commercial box near the I-25 / 104th interchange, your property answers to North Metro Fire Rescue District for code enforcement. Red Rocks Fire Protection runs every Northglenn inspection to a report North Metro will accept the first time through.',
@@ -7429,7 +7429,7 @@ export const cities: City[] = [
     county: 'Douglas County',
     bannerTitle: 'Fire Protection Parker, CO',
     bannerSubtitle: 'PARKER FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Parker grew from a stagecoach stop on Mainstreet into one of the fastest-building towns in Douglas County, and Red Rocks Fire Protection keeps up with it — from the brick storefronts of historic downtown to the HOA clubhouses and pool houses going up across Stroh Ranch and The Pinery. Since South Metro Fire Rescue Authority absorbed the old Parker Fire Protection District, every commercial, multi-family, and institutional property in town answers to South Metro for fire-code enforcement, and we write every Parker inspection report to the format South Metro approves on the first pass.',
@@ -7633,7 +7633,7 @@ export const cities: City[] = [
     county: 'Arapahoe County',
     bannerTitle: 'Fire Protection Sheridan, CO',
     bannerSubtitle: 'SHERIDAN FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Sheridan is a compact Arapahoe County city wedged between South Santa Fe Drive, South Federal Boulevard, and Bear Creek, and its property mix runs from the big-box retail at River Point at Sheridan to older industrial off Santa Fe and a housing stock that predates most of the metro. Red Rocks Fire Protection works Sheridan out of our Centennial office 15 minutes south, and every sprinkler, alarm, and hood-suppression report we write here is built to clear the Sheridan fire authority on the first review.',
@@ -7837,7 +7837,7 @@ export const cities: City[] = [
   county: 'Boulder County',
   bannerTitle: 'Fire Protection Superior, CO',
   bannerSubtitle: 'SUPERIOR FIRE PROTECTION',
-  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+  bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
   heroIntro:
     'Superior lost more homes to the December 2021 Marshall Fire than any other town in Colorado, with the Sagamore and Rock Creek neighborhoods burning by the hundreds in a single afternoon. Red Rocks Fire Protection works the rebuild and the buildings that survived — the retail and multi-family going up at Downtown Superior off US-36 and McCaslin, the master-planned homes across Rock Creek, and the commercial tenants around the Costco. Superior sits inside the Denver metro, so we hold a roughly 90-minute emergency-response window here, and every inspection we run is written to a report the fire district serving Superior will accept without a second visit.',
@@ -8037,7 +8037,7 @@ export const cities: City[] = [
     county: 'Adams County',
     bannerTitle: 'Fire Protection Thornton, CO',
     bannerSubtitle: 'THORNTON FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Thornton runs north from the old core near 88th and Washington to the new subdivisions and big-box centers still filling in past 144th, and the split shows up in every fire-protection scope we write here. Older strip retail and 1980s garden apartments carry legacy sprinkler and alarm layouts, while the north-growth corridor above 120th is stacked with new multi-family, self-storage, and warehouse builds. Thornton Fire Department is the Authority Having Jurisdiction across the city, and we format every Thornton report so North Metro clears it without a second visit.',
@@ -8237,7 +8237,7 @@ export const cities: City[] = [
     county: 'Adams County / Jefferson County',
     bannerTitle: 'Fire Protection Westminster, CO',
     bannerSubtitle: 'WESTMINSTER FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Westminster runs the length of the US-36 corridor between Denver and Boulder, and it straddles two counties — the older neighborhoods south of 92nd Avenue sit in Jefferson County, the newer growth around The Orchard Town Center and Adams County’s north end fills in above 104th. Whatever side of the line your building sits on, fire-code enforcement runs through the Westminster Fire Department, and every inspection Red Rocks Fire Protection performs here is written to a report the city’s fire marshal will accept without a second visit.',
@@ -8437,7 +8437,7 @@ export const cities: City[] = [
     county: 'Jefferson County',
     bannerTitle: 'Fire Protection Wheat Ridge, CO',
     bannerSubtitle: 'WHEAT RIDGE FIRE PROTECTION',
-    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
       'Wheat Ridge runs on 1950s and ’60s building stock — brick bungalows, small strip retail along Wadsworth, and light-commercial storefronts on 38th Avenue that were never sprinklered when they went up. Red Rocks Fire Protection works these older buildings for what they actually are: legacy systems, retrofit triggers at remodel, and code gaps that surface the moment a tenant changes use. Every property in Wheat Ridge answers to West Metro Fire Rescue for fire-code enforcement, and we write every inspection report to the deficiency-list format West Metro accepts on the first pass.',

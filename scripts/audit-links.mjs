@@ -45,7 +45,7 @@ const ROUTES = new Set([
   // Industries hub: real page is /industries/. Legacy
   // /industries-we-serve/ exists as a redirect stub only.
   '/industries/', '/industries-we-serve',
-  '/service-areas', '/blog', '/fire-reports',
+  '/service-areas', '/blog', '/fire-reports', '/privacy-policy', '/thank-you',
   // About hub + sub-pages
   '/about', '/about/', '/about/our-story', '/about/our-promise',
   '/about/ceo-message', '/about/mission-vision-values',

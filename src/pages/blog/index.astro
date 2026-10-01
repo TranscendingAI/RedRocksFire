@@ -41,7 +41,7 @@ const posts = (await getCollection('blog')).sort(
 const author = {
   name: leadership.ceo.name,
   role: 'CEO',
-  avatar: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png',
+  avatar: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.webp',
   // X and Facebook are intentionally empty so the sidebar only shows
   // Instagram + LinkedIn.
   socials: {
@@ -63,7 +63,7 @@ const author = {
        inspections.astro, update both. -->
   <div
     class="ptbanner"
-    style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.jpg');"
+    style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.webp');"
   >
     <div class="ptbanner__inner">
       <h1 class="ptbanner__title">Blog</h1>
@@ -93,7 +93,7 @@ const author = {
        flipBackground={false} because the apartment photo was pre-flipped
        at the file level — we don't want the CSS scaleX(-1) to mirror it back. -->
   <ClosingCTA
-    backgroundImage="/images/rrfps-county-cta-apartments.jpg"
+    backgroundImage="/images/rrfps-county-cta-apartments.webp"
     flipBackground={false}
   />
 

@@ -13,9 +13,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ClosingCTA from '../../components/ClosingCTA.astro';
 
-const heroBg = '/images/rrfps-about-cta-bg.jpg';
-const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
-const aliciaPhoto = '/images/team-members/alicia-plescia-red-rocks-fire-protection-services.png';
+const heroBg = '/images/rrfps-about-cta-bg.webp';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.webp';
+const aliciaPhoto = '/images/team-members/alicia-plescia-red-rocks-fire-protection-services.webp';
 
 const bioParagraphs = [
   'As Test & Inspect Division Manager for Red Rocks Fire Protection Services, Alicia Plescia oversees the day-to-day coordination and operations of the division, helping ensure inspections and service work are scheduled, communicated, and followed through from start to finish. She works closely with customers, technicians, and the RRFPS team to keep work organized and moving efficiently.',
@@ -51,7 +51,7 @@ const bioParagraphs = [
       <div class="ap-bio__inner">
 
         <div class="ap-bio__photo">
-          <img src={aliciaPhoto} alt="Alicia Plescia, Inspections Coordinator of Red Rocks Fire Protection Services" loading="eager" decoding="async" />
+          <img src={aliciaPhoto} alt="Alicia Plescia, Inspections Coordinator of Red Rocks Fire Protection Services" loading="eager" fetchpriority="high" decoding="async" />
         </div>
 
         <div class="ap-bio__copy">

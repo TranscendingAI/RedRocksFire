@@ -17,9 +17,10 @@
  * the site's only on-demand route, which validates server-side and sends
  * the lead through Resend. The script below enhances the form to submit
  * via fetch and show inline success/error states; without JS the browser
- * does a normal form post and the endpoint 303s back here with
- * ?status=sent|error. A successful send fires a GA4 `generate_lead` event
- * when gtag is loaded (see BaseLayout).
+ * does a normal form post and the endpoint 303s to /thank-you/ (or back
+ * here with ?status=error). A successful JS send fires a GA4
+ * `generate_lead` event (when gtag is loaded, see BaseLayout) and then
+ * navigates to /thank-you/.
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -31,7 +32,7 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
+const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
 ---
 
 <BaseLayout
@@ -520,7 +521,9 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
    */
   type Gtag = (...args: unknown[]) => void;
 
-  const SUCCESS_MSG = 'Thanks — your message has been sent. We’ll be in touch shortly.';
+  const THANK_YOU_URL = '/thank-you/';
+  /** Max wait for GA to confirm the lead event before navigating anyway. */
+  const GA_TIMEOUT_MS = 1000;
 
   function initContactForm() {
     const form = document.querySelector<HTMLFormElement>('form[data-contact-form]');
@@ -555,17 +558,34 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
       if (submitLabel) submitLabel.textContent = busy ? 'sending…' : idleLabel;
     };
 
-    const trackLead = () => {
+    /**
+     * Fire GA4 `generate_lead`, then go to the thank-you page. Navigation
+     * waits for gtag's event_callback so the hit isn't cancelled by the page
+     * unload, with a timeout fallback in case GA is blocked or slow.
+     */
+    const trackLeadThenRedirect = () => {
+      let done = false;
+      const go = () => {
+        if (done) return;
+        done = true;
+        window.location.assign(THANK_YOU_URL);
+      };
       const gtag = (window as unknown as { gtag?: Gtag }).gtag;
-      if (typeof gtag === 'function') {
-        gtag('event', 'generate_lead', { form_id: 'contact-form', form_name: 'contact' });
-      }
+      if (typeof gtag !== 'function') return go();
+      window.setTimeout(go, GA_TIMEOUT_MS);
+      gtag('event', 'generate_lead', {
+        form_id: 'contact-form',
+        form_name: 'contact',
+        transport_type: 'beacon',
+        event_callback: go,
+        event_timeout: GA_TIMEOUT_MS,
+      });
     };
 
-    // No-JS fallback round-trip: the endpoint redirects back with ?status=.
-    const status = new URLSearchParams(window.location.search).get('status');
-    if (status === 'sent') showStatus(SUCCESS_MSG, 'ok');
-    else if (status === 'error') showStatus(ERROR_MSG, 'error');
+    // No-JS fallback round-trip: the endpoint redirects back with ?status=error.
+    if (new URLSearchParams(window.location.search).get('status') === 'error') {
+      showStatus(ERROR_MSG, 'error');
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -580,6 +600,7 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
       }
 
       setBusy(true);
+      let succeeded = false;
       try {
         const res = await fetch(form.action, {
           method: 'POST',
@@ -593,9 +614,9 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
         };
 
         if (res.ok && data.ok) {
-          form.reset();
-          showStatus(SUCCESS_MSG, 'ok');
-          trackLead();
+          // Keep the button in its busy state while we hand off to /thank-you/.
+          succeeded = true;
+          trackLeadThenRedirect();
         } else if (res.status === 422 && data.fields) {
           showStatus(Object.values(data.fields).join(' '), 'error');
         } else {
@@ -604,7 +625,7 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
       } catch {
         showStatus(ERROR_MSG, 'error');
       } finally {
-        setBusy(false);
+        if (!succeeded) setBusy(false);
       }
     });
   }

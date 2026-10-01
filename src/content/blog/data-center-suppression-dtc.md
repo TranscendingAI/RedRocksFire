@@ -17,7 +17,7 @@ tags:
   - uptime
 readMinutes: 7
 
-featuredImage: /images/blog/data-center-suppression-dtc.png
+featuredImage: /images/blog/data-center-suppression-dtc.webp
 featuredImageAlt: A modern data center server room with rows of glowing server racks and overhead clean-agent fire suppression nozzles and red suppression cylinders in the Denver Tech Center.
 featuredImageCaption: A Denver Tech Center server room protected by clean-agent suppression — nozzles that flood the room with gas instead of water when fire is confirmed.
 ---

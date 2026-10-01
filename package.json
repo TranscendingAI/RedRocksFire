@@ -10,7 +10,8 @@
     "build": "astro build && npm run audit:links",
     "preview": "astro preview",
     "astro": "astro",
-    "audit:links": "node scripts/audit-links.mjs"
+    "audit:links": "node scripts/audit-links.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

@@ -17,7 +17,7 @@ tags:
   - water utility
 readMinutes: 6
 
-featuredImage: /images/blog/backflow-prevention-highlands-ranch.png
+featuredImage: /images/blog/backflow-prevention-highlands-ranch.webp
 featuredImageAlt: A brass backflow prevention assembly with test cocks and shutoff valves installed in a mechanical vault serving a Highlands Ranch, Colorado community.
 featuredImageCaption: A backflow prevention assembly on a Highlands Ranch community water line — the device that keeps irrigation and fire-line water from flowing back into the drinking supply.
 ---

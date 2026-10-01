@@ -42,7 +42,7 @@ const { category, posts } = Astro.props;
 const author = {
   name: leadership.ceo.name,
   role: 'CEO',
-  avatar: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png',
+  avatar: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.webp',
   // Empty hrefs render the icon but stay non-clickable until real handles
   // are confirmed (per data/site.ts → contact.socials note). X and Facebook
   // are intentionally empty so the sidebar only shows Instagram + LinkedIn.
@@ -63,7 +63,7 @@ const author = {
        Identical .ptbanner styles live in this page's <style> block below. -->
   <div
     class="ptbanner"
-    style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.jpg');"
+    style="background-image: url('/images/red-rocks-fire-protection-inspection-hero.webp');"
   >
     <div class="ptbanner__inner">
       <h1 class="ptbanner__title">{category.label}</h1>
@@ -94,7 +94,7 @@ const author = {
 
   <!-- CLOSING CTA — same as /blog/. -->
   <ClosingCTA
-    backgroundImage="/images/rrfps-county-cta-apartments.jpg"
+    backgroundImage="/images/rrfps-county-cta-apartments.webp"
     flipBackground={false}
   />
 </BaseLayout>

@@ -8,7 +8,8 @@
  * Accepts either JSON (the enhanced form in src/pages/contact.astro posts
  * FormData via fetch with `Accept: application/json`) or a plain
  * urlencoded/multipart form post (no-JS fallback). JSON callers get a JSON
- * body back; plain form posts get a 303 back to /contact/?status=….
+ * body back; plain form posts get a 303 to /thank-you/ on success or back to
+ * /contact/?status=error on failure.
  *
  * Env (Vercel → Project → Settings → Environment Variables):
  *   RESEND_API_KEY      Resend API key (re_…)
@@ -151,7 +152,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
           status,
           headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
         })
-      : redirect(`/contact/?status=${body.ok ? 'sent' : 'error'}#contact-form`, 303);
+      : redirect(body.ok ? '/thank-you/' : '/contact/?status=error#contact-form', 303);
 
   const payload = await readPayload(request);
   if (!payload) {

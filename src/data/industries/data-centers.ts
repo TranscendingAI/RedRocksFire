@@ -15,7 +15,7 @@ export const dataCentersPage: IndustryPageData = {
   banner: {
     title: 'Data Centers.',
     subtitle: 'INDUSTRIES WE SERVE',
-    backgroundImage: '/images/rrfps-data-centers.jpg',
+    backgroundImage: '/images/rrfps-data-centers.webp',
   },
   sections: [
     {
@@ -26,7 +26,7 @@ export const dataCentersPage: IndustryPageData = {
         'Data centers depend on reliability. Facility teams are responsible for complex infrastructure, continuous operations and the protection of people and property in environments where system performance matters every day. Fire and life safety must be managed with the same emphasis on preparedness, communication and accountability.',
         'Red Rocks Fire Protection Services provides data center facility teams with coordinated fire and life safety support through one experienced partner. Our One Vendor Life Safety Solution brings inspections, service, system repairs, monitoring, consulting and emergency response together to help simplify compliance and maintain system reliability.',
       ],
-      image: '/images/rrfps-data-centers-critical-life-safety-support.jpg',
+      image: '/images/rrfps-data-centers-critical-life-safety-support.webp',
       imageAlt:
         'RRFPS technician supporting life safety systems for a Colorado data center.',
       background: 'white',
@@ -38,7 +38,7 @@ export const dataCentersPage: IndustryPageData = {
       title: 'Fire Protection for Specialized Facilities.',
       intro:
         'RRFPS services a range of fire sprinkler systems, including wet pipe, dry pipe, preaction and deluge systems. Our technicians provide leak repairs, control valve service, waterflow and tamper switch service, dry valve repair, air compressor maintenance, fire pump service, backflow repairs, corrosion mitigation solutions and emergency sprinkler response.',
-      bgImage: '/images/rrfps-data-centers-specialized-fire-protection.jpg',
+      bgImage: '/images/rrfps-data-centers-specialized-fire-protection.webp',
       panels: [
         {
           title: 'Sprinkler Modifications and Replacement',
@@ -64,19 +64,19 @@ export const dataCentersPage: IndustryPageData = {
           number: '01',
           title: 'ERRCS/BDA Support.',
           body: 'Reliable emergency responder radio communication inside a building can be a critical life safety requirement. RRFPS provides ERRCS/BDA annual testing, signal verification, battery backup testing, amplifier testing, monitoring verification, troubleshooting, repairs and system upgrades.',
-          image: '/images/rrfps-data-centers-errcs-bda-support.jpg',
+          image: '/images/rrfps-data-centers-errcs-bda-support.webp',
         },
         {
           number: '02',
           title: 'Certified Testing and Extinguisher Support.',
           body: 'We also provide certified backflow testing and repair, portable fire extinguisher inspection and maintenance, Area of Refuge communication system support and security system installation and monitoring where applicable to the facility.',
-          image: '/images/rrfps-data-centers-extinguisher-inspection-support.jpg',
+          image: '/images/rrfps-data-centers-extinguisher-inspection-support.webp',
         },
         {
           number: '03',
           title: 'Life Safety System Verification.',
           body: 'Data-center teams depend on reliable verification of the systems protecting critical infrastructure. RRFPS helps confirm that fire protection equipment, monitoring connections and emergency communication components are operating as intended.',
-          image: '/images/rrfps-data-centers-life-safety-system-verification.jpg',
+          image: '/images/rrfps-data-centers-life-safety-system-verification.webp',
         },
       ],
     },
@@ -89,7 +89,7 @@ export const dataCentersPage: IndustryPageData = {
         'We can help identify aging infrastructure, recurring trouble conditions, required testing intervals and potential replacement needs and incorporate those findings into long-term capital planning. Our team also assists with fire code reviews, AHJ coordination, compliance planning and corrective-action recommendations.',
         'RRFPS leads with advocacy. We stay current with evolving fire codes, legislation and jurisdictional requirements and help clients understand what those changes mean for their facilities.',
       ],
-      image: '/images/rrfps-data-centers-capital-planning-assessment.jpg',
+      image: '/images/rrfps-data-centers-capital-planning-assessment.webp',
       imageAlt:
         'RRFPS technician assessing data center fire protection systems for capital planning.',
       background: 'light',
@@ -102,14 +102,14 @@ export const dataCentersPage: IndustryPageData = {
         'Critical life safety failures require a responsive partner. RRFPS provides 24-hour emergency service, seven days a week, for fire alarm troubles, sprinkler failures, fire pump issues, backflow failures, ERRCS/BDA problems and monitoring communication outages. Our Brand Promise includes a 90-minute response window within the Denver Metro area.',
         'When a system is impaired, we can also assist with impairment evaluations, temporary protection planning, fire watch guidance and AHJ coordination.',
       ],
-      image: '/images/rrfps-data-centers-emergency-fire-pump-response.jpg',
+      image: '/images/rrfps-data-centers-emergency-fire-pump-response.webp',
       imageAlt:
         'RRFPS emergency technician restoring a critical fire pump at a Colorado data center.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-services-cta-bg.png',
+    backgroundImage: '/images/rrfps-services-cta-bg.webp',
     paragraphs: [
       'Red Rocks Fire Protection Services has served Colorado since 2010 as a local, family-owned company built around safety, accountability and dependable service.',
       'Your facility team is responsible for critical operations. RRFPS serves as the life safety partner behind that responsibility—providing comprehensive capabilities, clear communication and proactive guidance through one accountable relationship.',

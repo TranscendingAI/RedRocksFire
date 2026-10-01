@@ -15,7 +15,7 @@ export const warehouseIndustrialPage: IndustryPageData = {
   banner: {
     title: 'Warehouse & Industrial.',
     subtitle: 'INDUSTRIES WE SERVE',
-    backgroundImage: '/images/rrfps-about-warehouse-industrial.jpg',
+    backgroundImage: '/images/rrfps-about-warehouse-industrial.webp',
   },
   sections: [
     {
@@ -26,7 +26,7 @@ export const warehouseIndustrialPage: IndustryPageData = {
         'Warehouse, storage and industrial facilities are built around operations. Inventory, equipment, employees, production schedules and customer commitments depend on buildings that function reliably. The teams responsible for these properties also carry the responsibility of maintaining fire and life safety systems across environments that may change as storage configurations, equipment, occupancies or facility layouts evolve.',
         'Red Rocks Fire Protection Services helps warehouse and industrial clients manage that responsibility through a One Vendor Life Safety Solution. Our team brings inspections, system service, monitoring, repairs, modifications, consulting and emergency response together under one coordinated relationship.',
       ],
-      image: '/images/rrfps-warehouse-industrial-life-safety-support.jpg',
+      image: '/images/rrfps-warehouse-industrial-life-safety-support.webp',
       imageAlt:
         'RRFPS technician servicing fire sprinkler systems in a Colorado warehouse facility.',
       background: 'white',
@@ -38,7 +38,7 @@ export const warehouseIndustrialPage: IndustryPageData = {
       title: 'Fire Protection That Adapts With Your Facility.',
       intro:
         'Fire sprinkler systems are a major component of many warehouse and industrial life safety programs. RRFPS provides service for wet pipe, dry pipe, preaction and deluge systems, along with fire pumps, control valves, backflow preventers and related components. Our technicians repair leaks, replace sprinkler heads, service dry valves and air compressors, address corrosion concerns and respond to emergency system failures.',
-      bgImage: '/images/rrfps-warehouse-industrial-sprinkler-systems.jpg',
+      bgImage: '/images/rrfps-warehouse-industrial-sprinkler-systems.webp',
       panels: [
         {
           title: 'Modifications for Changing Environments',
@@ -64,19 +64,19 @@ export const warehouseIndustrialPage: IndustryPageData = {
           number: '01',
           title: 'Reporting You Can Act On.',
           body: 'Routine inspections are only useful when facility teams can act on the information they receive. RRFPS provides detailed reporting, deficiency documentation and repair recommendations designed to help clients understand system condition and compliance needs.',
-          image: '/images/rrfps-warehouse-industrial-inspection-report-guidance.jpg',
+          image: '/images/rrfps-warehouse-industrial-inspection-report-guidance.webp',
         },
         {
           number: '02',
           title: 'Consulting Services.',
           body: 'Our consulting services take that support further. We can evaluate existing fire alarm, sprinkler, backflow, extinguisher, BDA/ERRCS and communication systems; assist with fire code reviews and AHJ coordination; and help develop capital plans for upcoming testing, maintenance and replacement requirements.',
-          image: '/images/rrfps-warehouse-industrial-life-safety-consulting.jpg',
+          image: '/images/rrfps-warehouse-industrial-life-safety-consulting.webp',
         },
         {
           number: '03',
           title: 'Identify Issues Earlier.',
           body: 'This proactive approach is especially valuable in operational environments where an unexpected system failure or unplanned project can create significant disruption. Our goal is to help clients identify issues earlier and make informed decisions before those issues become emergencies.',
-          image: '/images/rrfps-warehouse-industrial-proactive-planning.jpg',
+          image: '/images/rrfps-warehouse-industrial-proactive-planning.webp',
         },
       ],
     },
@@ -88,14 +88,14 @@ export const warehouseIndustrialPage: IndustryPageData = {
         'Life safety failures do not follow production schedules. RRFPS provides 24-hour emergency service, seven days a week, for sprinkler breaks, freeze damage, dry system failures, fire pump troubles, alarm outages, backflow failures, monitoring problems and other critical impairments. Within the Denver Metro area, our Brand Promise includes a 90-minute emergency response window.',
         'When systems are impaired, we can also assist with impairment evaluations, repair recommendations, fire watch guidance, temporary protection planning and AHJ coordination.',
       ],
-      image: '/images/rrfps-24hr-support-for-critical-system-failures.png',
+      image: '/images/rrfps-24hr-support-for-critical-system-failures.webp',
       imageAlt:
         'RRFPS technician servicing an industrial fire pump during an emergency response call.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-warehouse-industrial-fire-protection-cta.jpg',
+    backgroundImage: '/images/rrfps-warehouse-industrial-fire-protection-cta.webp',
     paragraphs: [
       'One Vendor. Greater Accountability.',
       'Since 2010, Red Rocks Fire Protection Services has served Colorado as a local, family-owned life safety company built on safety, integrity, accountability and dependable service.',

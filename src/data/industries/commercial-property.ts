@@ -15,7 +15,7 @@ export const commercialPropertyPage: IndustryPageData = {
   banner: {
     title: 'Commercial Property.',
     subtitle: 'INDUSTRIES WE SERVE',
-    backgroundImage: '/images/red-rocks-fire-protection-commercial-facilities.jpg',
+    backgroundImage: '/images/red-rocks-fire-protection-commercial-facilities.webp',
   },
   sections: [
     {
@@ -26,7 +26,7 @@ export const commercialPropertyPage: IndustryPageData = {
         'Commercial property owners and management companies balance many priorities at once: tenant needs, building operations, capital planning, vendor coordination and the ongoing responsibility to keep each property safe and compliant. Fire and life safety systems touch nearly every part of that responsibility, and when multiple vendors are involved, even routine requirements can become unnecessarily complicated.',
         'Red Rocks Fire Protection Services provides commercial property teams with a One Vendor Life Safety Solution designed to simplify that complexity. Our role is to help you protect people and property while giving your management team clearer communication, coordinated service and one accountable partner for a broad range of life safety needs.',
       ],
-      image: '/images/rrfps-commercial-property-lobby-pull-station.jpg',
+      image: '/images/rrfps-commercial-property-lobby-pull-station.webp',
       imageAlt:
         'RRFPS technician inspecting fire sprinkler and alarm systems in a commercial office property.',
       background: 'white',
@@ -38,7 +38,7 @@ export const commercialPropertyPage: IndustryPageData = {
       title: 'Comprehensive Support for Commercial Facilities.',
       intro:
         'Every commercial property has its own systems, occupancy requirements and operational demands. RRFPS provides comprehensive inspection, service, repair, modification and replacement support for fire alarm and fire sprinkler systems. We also inspect and service portable fire extinguishers and backflow prevention assemblies and provide professional fire alarm monitoring.',
-      bgImage: '/images/rrfps-commercial-property-dusk-service-van.jpg',
+      bgImage: '/images/rrfps-commercial-property-dusk-service-van.webp',
       panels: [
         {
           title: 'Additional Capabilities',
@@ -60,19 +60,19 @@ export const commercialPropertyPage: IndustryPageData = {
           number: '01',
           title: 'A Proactive Partnership.',
           body: 'Commercial property managers should not have to wait for an inspection failure or system breakdown to understand what comes next. RRFPS approaches life safety as a proactive partnership.',
-          image: '/images/rrfps-commercial-property-lobby-inspector-client.jpg',
+          image: '/images/rrfps-commercial-property-lobby-inspector-client.webp',
         },
         {
           number: '02',
           title: 'Consulting Services.',
           body: 'Our consulting services help owners and managers evaluate existing systems, review deficiencies, coordinate with Authorities Having Jurisdiction and plan corrective action. We can also help identify upcoming inspection, testing, maintenance and replacement requirements so they can be incorporated into capital plans rather than arriving as unexpected expenses.',
-          image: '/images/rrfps-commercial-property-conference-room-meeting.jpg',
+          image: '/images/rrfps-commercial-property-conference-room-meeting.webp',
         },
         {
           number: '03',
           title: 'The RRFPS Difference.',
           body: 'That advocacy is an important part of the RRFPS difference. Fire codes and jurisdictional requirements evolve, and requirements can vary between communities across the Colorado Front Range. Our team stays current so we can provide practical guidance, help clients prepare and reduce avoidable surprises.',
-          image: '/images/rrfps-commercial-property-corridor-sprinkler-service.jpg',
+          image: '/images/rrfps-commercial-property-corridor-sprinkler-service.webp',
         },
       ],
     },
@@ -83,13 +83,13 @@ export const commercialPropertyPage: IndustryPageData = {
       body: [
         'A fire alarm trouble, sprinkler leak, backflow failure or monitoring communication outage can affect tenants and building operations immediately. RRFPS provides 24-hour emergency service, seven days a week, including a 90-minute response window within the Denver Metro area. Our technicians respond to a wide range of system impairments and work to restore functionality while helping management teams navigate temporary protection and compliance requirements when needed.',
       ],
-      image: '/images/rrfps-truck-commercial.png',
+      image: '/images/rrfps-truck-commercial.webp',
       imageAlt: 'RRFPS service truck showing up on-site for a commercial property life safety service call.',
       background: 'black',
     },
   ],
   cta: {
-    backgroundImage: '/images/rrfps-commercial-property-street-view-exterior.jpg',
+    backgroundImage: '/images/rrfps-commercial-property-street-view-exterior.webp',
     paragraphs: [
       'One Relationship. Complete Accountability.',
       'Since 2010, Red Rocks Fire Protection Services has built its business around a simple belief: clients deserve more than a collection of service vendors. They deserve a life safety partner who understands the responsibility they carry.',

@@ -17,10 +17,10 @@
  *      and a meet-the-team CTA background image.
  *
  * Image assets:
- *   - Section 1 hero photo: /images/brian-kakac-ceo-rrrfps-onsite-property-inspection.png
+ *   - Section 1 hero photo: /images/brian-kakac-ceo-rrrfps-onsite-property-inspection.webp
  *   - Team-card photos: /images/team-members/{team-member}.png
  *   - Section 3 logos: /images/credential-logos/{asse,cdfpc,csa,iapmo,nicet,pprbd}-logo.png
- *   - Section 4 CTA bg: /images/meet-our-team-rrfps-cta-banner-bg.jpg
+ *   - Section 4 CTA bg: /images/meet-our-team-rrfps-cta-banner-bg.webp
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -28,28 +28,28 @@ import ClosingCTA from '../components/ClosingCTA.astro';
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-const heroBg = '/images/red-rocks-fire-protection-multi-family-hero.jpg';
-const brianPhoto = '/images/brian-kakac-ceo-rrrfps-onsite-property-inspection.png';
-const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
+const heroBg = '/images/red-rocks-fire-protection-multi-family-hero.webp';
+const brianPhoto = '/images/brian-kakac-ceo-rrrfps-onsite-property-inspection.webp';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.webp';
 
 /** Section 2 — team grid. Same 8 names + roles from the reference image. */
 const team = [
-  { role: 'CEO',                      name: 'Brian Kakac',     href: '/meet-the-team/brian-kakac/', photo: '/images/team-members/brian-kakac-ceo-redrocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/brian-kakac-b9315665/' },
-  { role: 'Operations Manager',       name: 'Jeff Kakac',      href: '/meet-the-team/jeff-kakac/', photo: '/images/team-members/jeff-kakac-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/jeff-kakac-ab0b90144/' },
-  { role: 'Sales',                    name: 'Nick Ayde',       href: '/meet-the-team/nick-ayde/', photo: '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/nickaydefireprotection/' },
-  { role: 'Financial Manager',        name: 'Lisa Cordova',    href: '/meet-the-team/lisa-cordova/', photo: '/images/team-members/lisa-cordova-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/in/lisa-cordova-032b2995/' },
-  { role: 'Inspections Coordinator',  name: 'Alicia Plescia',  href: '/meet-the-team/alicia-plescia/', photo: '/images/team-members/alicia-plescia-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
-  { role: 'Lead – Sprinklers',        name: 'Dale Litreal',    href: '/meet-the-team/dale-litreal/', photo: '/images/team-members/dale-litreal-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
-  { role: 'Lead – Fire Alarms',       name: 'Lowell Hines',    href: '/meet-the-team/lowell-hines/', photo: '/images/team-members/lowel-hines-red-rocks-fire-protection-services.png', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
+  { role: 'CEO',                      name: 'Brian Kakac',     href: '/meet-the-team/brian-kakac/', photo: '/images/team-members/brian-kakac-ceo-redrocks-fire-protection-services.webp', linkedinUrl: 'https://www.linkedin.com/in/brian-kakac-b9315665/' },
+  { role: 'Operations Manager',       name: 'Jeff Kakac',      href: '/meet-the-team/jeff-kakac/', photo: '/images/team-members/jeff-kakac-red-rocks-fire-protection-services.webp', linkedinUrl: 'https://www.linkedin.com/in/jeff-kakac-ab0b90144/' },
+  { role: 'Sales',                    name: 'Nick Ayde',       href: '/meet-the-team/nick-ayde/', photo: '/images/team-members/nick-ayde-red-rocks-fIre-protection-services.webp', linkedinUrl: 'https://www.linkedin.com/in/nickaydefireprotection/' },
+  { role: 'Financial Manager',        name: 'Lisa Cordova',    href: '/meet-the-team/lisa-cordova/', photo: '/images/team-members/lisa-cordova-red-rocks-fire-protection-services.webp', linkedinUrl: 'https://www.linkedin.com/in/lisa-cordova-032b2995/' },
+  { role: 'Inspections Coordinator',  name: 'Alicia Plescia',  href: '/meet-the-team/alicia-plescia/', photo: '/images/team-members/alicia-plescia-red-rocks-fire-protection-services.webp', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
+  { role: 'Lead – Sprinklers',        name: 'Dale Litreal',    href: '/meet-the-team/dale-litreal/', photo: '/images/team-members/dale-litreal-red-rocks-fire-protection-services.webp', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
+  { role: 'Lead – Fire Alarms',       name: 'Lowell Hines',    href: '/meet-the-team/lowell-hines/', photo: '/images/team-members/lowel-hines-red-rocks-fire-protection-services.webp', linkedinUrl: 'https://www.linkedin.com/company/red-rocks-fire-protection-inc/' },
 ] as const;
 
 /** Section 3 — credentials logos (6 total, 2 rows × 3 cols). */
 const credentials = [
   { src: '/images/credential-logos/ASSE-logo.png',   alt: 'American Society of Sanitary Engineering' },
-  { src: '/images/credential-logos/CDFPC-logo.png', alt: 'Colorado Division of Fire Prevention & Control' },
-  { src: '/images/credential-logos/CSA-logo.png',   alt: 'CSA — Canadian Standards Association' },
-  { src: '/images/credential-logos/pprbd-logo.png', alt: 'Pikes Peak Regional Building Department' },
-  { src: '/images/credential-logos/IAPMO-logo.png', alt: 'IAPMO R&T' },
+  { src: '/images/credential-logos/CDFPC-logo.webp', alt: 'Colorado Division of Fire Prevention & Control' },
+  { src: '/images/credential-logos/CSA-logo.webp',   alt: 'CSA — Canadian Standards Association' },
+  { src: '/images/credential-logos/pprbd-logo.webp', alt: 'Pikes Peak Regional Building Department' },
+  { src: '/images/credential-logos/IAPMO-logo.webp', alt: 'IAPMO R&T' },
   { src: '/images/credential-logos/NICET-logo.png', alt: 'NICET' },
 ] as const;
 ---
@@ -82,7 +82,7 @@ const credentials = [
     <section class="mt-quote">
       <div class="mt-quote__box">
         <div class="mt-quote__image">
-          <img src={brianPhoto} alt="Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services, on a Colorado property inspection" loading="eager" decoding="async" />
+          <img src={brianPhoto} alt="Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services, on a Colorado property inspection" loading="eager" fetchpriority="high" decoding="async" />
         </div>
         <div class="mt-quote__copy">
           <span class="mt-quote__mark mt-quote__mark--open" aria-hidden="true">&ldquo;</span>
