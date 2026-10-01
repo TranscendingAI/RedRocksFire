@@ -308,9 +308,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Centennial, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Centennial, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Centennial, Colorado. Locally based, serving South Metro Fire Rescue jurisdictions. NICET-certified technicians, 90-minute emergency response.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Centennial, CO, with reports built for South Metro Fire Rescue Authority.',
       keywords:
         'fire protection Centennial CO, fire inspections Centennial, sprinkler inspection Centennial, fire alarm testing Centennial, backflow testing Centennial, kitchen hood suppression Centennial, fire protection company Centennial Colorado, South Metro Fire Rescue inspections',
       canonical: '/service-areas/centennial-co/',
@@ -523,9 +523,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Denver, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection & Inspections in Denver, CO | Red Rocks Fire',
       description:
-        'Fire sprinkler, alarm, extinguisher, monitoring, suppression, backflow, and inspection services for Denver properties. Denver Fire Code–ready documentation and 24/7 emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Denver, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Denver CO, fire sprinkler inspection Denver, fire alarm testing Denver, fire extinguisher service Denver, kitchen hood suppression Denver, backflow testing Denver, Denver Fire Department inspections, Denver Fire Code',
       canonical: '/service-areas/denver-co/',
@@ -724,9 +724,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Arvada, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection & Inspections in Arvada, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Arvada, Colorado. Serving Arvada Fire Protection District properties across Jefferson and Adams counties. NICET-certified technicians, 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Arvada, CO, with reports built for Arvada Fire Protection District. Family-owned since 2010.',
       keywords:
         'fire protection Arvada CO, fire inspections Arvada, sprinkler inspection Arvada, fire alarm testing Arvada, backflow testing Arvada, kitchen hood suppression Olde Town Arvada, fire protection company Arvada Colorado, Arvada Fire Protection District inspections',
       canonical: '/service-areas/arvada-co/',
@@ -924,9 +924,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Aurora, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection & Inspections in Aurora, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Aurora, Colorado. Serving Aurora Fire Rescue jurisdictions across Arapahoe, Adams, and Douglas counties, from Anschutz to the E-470 warehouse belt. NICET-certified technicians, 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Aurora, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Aurora CO, fire inspections Aurora, sprinkler inspection Aurora, fire alarm testing Aurora, backflow testing Aurora, kitchen hood suppression Aurora, ESFR warehouse sprinkler Aurora, hospital life safety Anschutz, fire protection company Aurora Colorado, Aurora Fire Rescue inspections',
       canonical: '/service-areas/aurora-co/',
@@ -1128,9 +1128,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Black Hawk, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Black Hawk, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and standpipe testing, fire-pump and voice-evac testing, monitoring, backflow, and hood suppression for Black Hawk, Colorado casino hotel towers and the historic mining district. NICET-certified technicians on a scheduled canyon route.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Black Hawk, CO, with reports built for Black Hawk Fire Department. Family-owned since 2010.',
       keywords:
         'fire protection Black Hawk CO, casino fire inspection Black Hawk, standpipe testing Black Hawk, fire pump testing Black Hawk, sprinkler inspection Black Hawk, kitchen hood suppression Black Hawk, voice evacuation testing casino, Black Hawk Fire Department inspections, Gilpin County fire protection',
       canonical: '/service-areas/black-hawk-co/',
@@ -1329,9 +1329,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Boulder, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection & Inspections in Boulder, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and clean-agent service in Boulder, Colorado. NICET-certified technicians who know Boulder Fire-Rescue’s local code amendments, from Pearl Street to CU Boulder to the foothills.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Boulder, CO, with reports built for Boulder Fire-Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Boulder CO, fire inspections Boulder, sprinkler inspection Boulder, fire alarm testing Boulder, backflow testing Boulder, kitchen hood suppression Boulder, clean agent suppression Boulder, Boulder Fire-Rescue inspections, fire protection company Boulder Colorado',
       canonical: '/service-areas/boulder-co/',
@@ -1529,9 +1529,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Brighton, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Brighton, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, ESFR and fire-pump testing, 24/7 monitoring, backflow, and suppression in Brighton, Colorado. Serving Brighton Fire Rescue District and the I-76 / E-470 warehouse corridors. NICET-certified technicians, 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Brighton, CO, with reports built for Brighton Fire Rescue District. Family-owned since 2010.',
       keywords:
         'fire protection Brighton CO, fire inspections Brighton, sprinkler inspection Brighton, ESFR warehouse sprinkler Brighton, fire alarm testing Brighton, backflow testing Brighton, kitchen hood suppression Brighton, fire protection company Brighton Colorado, Brighton Fire Rescue District inspections',
       canonical: '/service-areas/brighton-co/',
@@ -1733,9 +1733,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Broomfield, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Broomfield, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Broomfield, Colorado. Serving the North Metro Fire Rescue District along the US-36 tech corridor, from Interlocken to Anthem. NICET-certified technicians, 90-minute emergency response.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Broomfield, CO, with reports built for North Metro Fire Rescue District.',
       keywords:
         'fire protection Broomfield CO, fire inspections Broomfield, sprinkler inspection Broomfield, fire alarm testing Broomfield, backflow testing Broomfield, kitchen hood suppression Broomfield, clean agent suppression Interlocken, fire protection company Broomfield Colorado, North Metro Fire Rescue inspections',
       canonical: '/service-areas/broomfield-co/',
@@ -1934,9 +1934,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Castle Pines, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Castle Pines, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, residential 13D sprinkler and alarm testing, 24/7 monitoring, HOA backflow, and hood suppression in Castle Pines, Colorado. Locally based in Centennial, serving South Metro Fire Rescue jurisdictions. NICET-certified technicians, 90-minute metro response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Castle Pines, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Castle Pines CO, fire inspections Castle Pines, residential sprinkler inspection Castle Pines, 13D sprinkler testing Castle Pines, HOA backflow testing Castle Pines, fire alarm testing Castle Pines, kitchen hood suppression Castle Pines, South Metro Fire Rescue inspections',
       canonical: '/service-areas/castle-pines-co/',
@@ -2134,9 +2134,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Castle Rock, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Castle Rock, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Castle Rock, Colorado. Serving Castle Rock Fire and Rescue jurisdiction from Centennial. NICET-certified technicians, roughly 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Castle Rock, CO, with reports built for Castle Rock Fire and Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Castle Rock CO, fire inspections Castle Rock, sprinkler inspection Castle Rock, fire alarm testing Castle Rock, backflow testing Castle Rock, kitchen hood suppression Castle Rock, fire protection company Castle Rock Colorado, Castle Rock Fire and Rescue inspections',
       canonical: '/service-areas/castle-rock-co/',
@@ -2336,9 +2336,9 @@ export const cities: City[] = [
   ],
 
   meta: {
-    title: 'Fire Protection Services in Central City, CO | Red Rocks Fire Protection',
+    title: 'Fire Protection Services in Central City, CO | Red Rocks Fire',
     description:
-      'NFPA fire inspections, dry-system sprinkler and standpipe testing, alarm and monitoring, backflow, and kitchen-hood suppression for Central City’s historic casinos, the Opera House, and Landmark district. Scheduled routes up the Central City Parkway; NICET-certified technicians.',
+      'Fire sprinkler, alarm, backflow and extinguisher inspections in Central City, CO, with reports built for Central City Fire Department. Family-owned since 2010.',
     keywords:
       'fire protection Central City CO, fire inspections Central City, dry sprinkler testing Central City, fire alarm testing Central City, casino fire protection Central City, historic building fire retrofit Central City, kitchen hood suppression Central City, Central City Fire Department inspections, Gilpin County fire protection',
     canonical: '/service-areas/central-city-co/',
@@ -2537,9 +2537,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Cherry Hills Village, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Cherry Hills Village, CO | Red Rocks Fire',
       description:
-        'NFPA 13D residential sprinkler service, monitored fire alarm testing, private-well backflow, and estate fire protection in Cherry Hills Village, Colorado. Serving South Metro Fire Rescue jurisdictions with NICET-certified technicians and a 90-minute metro emergency response.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Cherry Hills Village, CO, with reports built for South Metro Fire Rescue.',
       keywords:
         'fire protection Cherry Hills Village CO, residential sprinkler inspection Cherry Hills Village, NFPA 13D Cherry Hills Village, fire alarm monitoring Cherry Hills Village, backflow testing Cherry Hills Village, estate fire protection Colorado, South Metro Fire Rescue inspections, Kent Denver fire inspection',
       canonical: '/service-areas/cherry-hills-village-co/',
@@ -2737,9 +2737,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Commerce City, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Commerce City, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, ESFR sprinkler and fire pump testing, alarm testing, 24/7 monitoring, backflow, and special-hazard suppression in Commerce City, Colorado. Built for warehouse, refinery-adjacent, and high-pile storage occupancies under South Adams County Fire Department. NICET-certified technicians, 90-minute metro response.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Commerce City, CO, with reports built for South Adams County Fire Department.',
       keywords:
         'fire protection Commerce City CO, ESFR sprinkler inspection Commerce City, warehouse fire inspection Commerce City, high-pile storage permit Commerce City, fire pump testing Commerce City, fire alarm testing Commerce City, backflow testing Commerce City, special hazard suppression Commerce City, South Adams County Fire Department inspections',
       canonical: '/service-areas/commerce-city-co/',
@@ -2942,9 +2942,9 @@ export const cities: City[] = [
   ],
 
   meta: {
-    title: 'Fire Protection Services in Conifer, CO | Red Rocks Fire Protection',
+    title: 'Fire Protection & Inspections in Conifer, CO | Red Rocks Fire',
     description:
-      'NFPA fire inspections, sprinkler and alarm testing, dry-system freeze protection, 24/7 monitoring, backflow, and suppression in Conifer, Colorado. Scheduled mountain route up US-285, serving Elk Creek Fire Protection District. NICET-certified technicians.',
+      'Fire sprinkler, alarm, backflow and extinguisher inspections in Conifer, CO, with reports built for Elk Creek Fire Protection District. Family-owned since 2010.',
     keywords:
       'fire protection Conifer CO, fire inspections Conifer, sprinkler inspection Conifer, fire alarm testing Conifer, dry system freeze protection Conifer, cistern fire flow Conifer, kitchen hood suppression Aspen Park, Elk Creek Fire Protection District inspections, wildland interface fire protection Conifer Colorado',
     canonical: '/service-areas/conifer-co/',
@@ -3143,9 +3143,9 @@ export const cities: City[] = [
   ],
 
   meta: {
-    title: 'Fire Protection Services in Denver Tech Center, CO | Red Rocks Fire Protection',
+    title: 'Fire Protection in Denver Tech Center, CO | Red Rocks Fire',
     description:
-      'High-rise fire protection for the Denver Tech Center: standpipe and fire-pump testing, NFPA 72 voice / mass-notification, clean-agent suppression for data centers, sprinklers, backflow, and 24/7 monitoring. Serving South Metro Fire Rescue and the Greenwood Village portion of the DTC. NICET-certified technicians, 90-minute metro response.',
+      'Fire sprinkler, alarm, backflow and extinguisher inspections in Denver Tech Center, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
     keywords:
       'fire protection Denver Tech Center, DTC fire inspection, standpipe testing DTC, fire pump testing Denver Tech Center, clean agent suppression data center DTC, voice evacuation testing high-rise Denver, Greenwood Village fire protection, South Metro Fire Rescue high-rise inspection, Belleview Station fire protection',
     canonical: '/service-areas/denver-tech-center-co/',
@@ -3343,9 +3343,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Edgewater, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Edgewater, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, kitchen hood suppression, 24/7 monitoring, backflow, and consulting in Edgewater, Colorado. Serving West Metro Fire Rescue jurisdiction, including the Edgewater Public Market and 20th/25th Avenue corridors. NICET-certified technicians, roughly 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Edgewater, CO, with reports built for West Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Edgewater CO, fire inspections Edgewater, kitchen hood suppression Edgewater, Edgewater Public Market fire suppression, sprinkler inspection Edgewater, fire alarm testing Edgewater, backflow testing Edgewater, West Metro Fire Rescue inspections, fire protection company Edgewater Colorado',
       canonical: '/service-areas/edgewater-co/',
@@ -3547,9 +3547,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Elizabeth, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Elizabeth, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and dry-pipe testing, cellular alarm monitoring, backflow, extinguisher, and kitchen-hood service for Elizabeth and Elbert County, Colorado. Scheduled rural routes serving the Elizabeth Fire Protection District with NICET-certified technicians.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Elizabeth, CO, with reports built for Elizabeth Fire Protection District.',
       keywords:
         'fire protection Elizabeth CO, fire inspections Elizabeth Colorado, dry-pipe sprinkler testing Elbert County, rural fire alarm monitoring Elizabeth, backflow testing Elizabeth CO, kitchen hood suppression Elizabeth, agricultural fire protection Elbert County, Elizabeth Fire Protection District inspections',
       canonical: '/service-areas/elizabeth-co/',
@@ -3751,9 +3751,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Englewood, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Englewood, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Englewood, Colorado. Serving the Swedish/Craig hospital campus, CityCenter Englewood, South Broadway, and the Santa Fe industrial corridor under South Metro Fire Rescue. NICET-certified technicians, 90-minute metro response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Englewood, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Englewood CO, fire inspections Englewood, sprinkler inspection Englewood, fire alarm testing Englewood, backflow testing Englewood, kitchen hood suppression Englewood, hospital fire protection Englewood, South Metro Fire Rescue inspections, fire protection company Englewood Colorado',
       canonical: '/service-areas/englewood-co/',
@@ -3955,9 +3955,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Erie, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection & Inspections in Erie, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Erie, Colorado, across Boulder and Weld counties. Serving Mountain View Fire Rescue jurisdictions with NICET-certified technicians.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Erie, CO, with reports built for Mountain View Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Erie CO, fire inspections Erie, sprinkler inspection Erie Colorado, fire alarm testing Erie, backflow testing Erie, kitchen hood suppression Erie, residential sprinkler Colliers Hill, Mountain View Fire Rescue inspections, fire protection Weld County',
       canonical: '/service-areas/erie-co/',
@@ -4159,9 +4159,9 @@ export const cities: City[] = [
       ],
 
       meta: {
-        title: 'Fire Protection Services in Evergreen, CO | Red Rocks Fire Protection',
+        title: 'Fire Protection Services in Evergreen, CO | Red Rocks Fire',
         description:
-          'NFPA fire inspections, dry-pipe sprinkler and alarm testing, 24/7 monitoring, backflow, and hood suppression for Evergreen, Colorado. Mountain-route service across Hiwan, Bergen Park, and downtown, formatted for Evergreen Fire/Rescue. NICET-certified technicians.',
+          'Fire sprinkler, alarm, backflow and extinguisher inspections in Evergreen, CO, with reports built for Evergreen Fire/Rescue. Family-owned since 2010.',
         keywords:
           'fire protection Evergreen CO, fire inspections Evergreen, dry pipe sprinkler Evergreen, fire alarm testing Evergreen, backflow testing Evergreen, kitchen hood suppression Evergreen, Evergreen Fire Rescue inspections, mountain fire protection Jefferson County',
         canonical: '/service-areas/evergreen-co/',
@@ -4363,9 +4363,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Federal Heights, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Federal Heights, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and kitchen-hood service for Federal Heights, CO multi-family and retail property. NICET-certified technicians, Federal Heights Fire Department jurisdiction, 90-minute metro response.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Federal Heights, CO, with reports built for Federal Heights Fire Department.',
       keywords:
         'fire protection Federal Heights CO, fire inspections Federal Heights, sprinkler inspection Federal Heights, fire alarm testing Federal Heights, apartment fire inspection Federal Heights, backflow testing Federal Heights, kitchen hood suppression Federal Heights, Federal Heights Fire Department inspections',
       canonical: '/service-areas/federal-heights-co/',
@@ -4567,9 +4567,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Fort Collins, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Fort Collins, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Fort Collins, Colorado. Scheduled-route service for CSU, Old Town breweries, and the Harmony tech corridor under Poudre Fire Authority. NICET-certified technicians.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Fort Collins, CO, with reports built for Poudre Fire Authority. Family-owned since 2010.',
       keywords:
         'fire protection Fort Collins CO, fire inspections Fort Collins, sprinkler inspection Fort Collins, fire alarm testing Fort Collins, brewery fire suppression Fort Collins, kitchen hood suppression Fort Collins, CSU fire protection, Poudre Fire Authority inspections, backflow testing Fort Collins',
       canonical: '/service-areas/fort-collins-co/',
@@ -4771,9 +4771,9 @@ export const cities: City[] = [
   ],
 
   meta: {
-    title: 'Fire Protection Services in Franktown, CO | Red Rocks Fire Protection',
+    title: 'Fire Protection Services in Franktown, CO | Red Rocks Fire',
     description:
-      'NFPA fire inspections, sprinkler and alarm testing, dry-system and freeze protection, backflow, and 24/7 monitoring for Franktown, Colorado — rural Douglas County acreages, ag buildings, and the CO-83 / CO-86 junction. NICET-certified technicians on a scheduled service route.',
+      'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Franktown, CO, with reports built for Franktown Fire Protection District.',
     keywords:
       'fire protection Franktown CO, fire inspections Franktown, sprinkler inspection Franktown, dry system testing Franktown, backflow testing Franktown, rural fire protection Douglas County, propane hazard inspection Franktown, wildland interface fire protection Castlewood Canyon',
     canonical: '/service-areas/franktown-co/',
@@ -4975,9 +4975,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Golden, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection & Inspections in Golden, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Golden, Colorado. Serving the Golden Fire Department jurisdiction from downtown Washington Avenue to the School of Mines and Table Mountain. NICET-certified technicians, 90-minute Denver-metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Golden, CO, with reports built for Golden Fire Department. Family-owned since 2010.',
       keywords:
         'fire protection Golden CO, fire inspections Golden, sprinkler inspection Golden, fire alarm testing Golden, backflow testing Golden, kitchen hood suppression Golden, special hazard suppression Golden, fire protection company Golden Colorado, Golden Fire Department inspections',
       canonical: '/service-areas/golden-co/',
@@ -5179,9 +5179,9 @@ export const cities: City[] = [
   ],
 
   meta: {
-    title: 'Fire Protection Services in Greeley, CO | Red Rocks Fire Protection',
+    title: 'Fire Protection & Inspections in Greeley, CO | Red Rocks Fire',
     description:
-      'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression for Greeley and Weld County — food processing, oil and gas, UNC campus, and downtown. NICET-certified technicians on scheduled routes, reports the Greeley Fire Department accepts.',
+      'Fire sprinkler, alarm, backflow and extinguisher inspections in Greeley, CO, with reports built for Greeley Fire Department. Family-owned since 2010.',
     keywords:
       'fire protection Greeley CO, fire inspections Greeley, sprinkler inspection Greeley, fire alarm testing Greeley, backflow testing Greeley, kitchen hood suppression Greeley, ammonia refrigeration fire protection, Weld County oil and gas fire protection, Greeley Fire Department inspections',
     canonical: '/service-areas/greeley-co/',
@@ -5384,9 +5384,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Greenwood Village, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Greenwood Village, CO | Red Rocks Fire',
       description:
-        'High-rise standpipe, fire-pump, and clean-agent fire protection in Greenwood Village and the Denver Tech Center, plus sprinkler and alarm testing, 24/7 monitoring, and backflow. Serving South Metro Fire Rescue jurisdictions with NICET-certified technicians and 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Greenwood Village, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Greenwood Village CO, DTC fire protection, high-rise standpipe testing Denver Tech Center, fire pump testing Greenwood Village, clean agent suppression DTC, fire alarm testing Greenwood Village, backflow testing Greenwood Village, South Metro Fire Rescue inspections',
       canonical: '/service-areas/greenwood-village-co/',
@@ -5588,9 +5588,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Highlands Ranch, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Highlands Ranch, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Highlands Ranch, Colorado. Serving South Metro Fire Rescue jurisdictions and HRCA common areas. NICET-certified technicians, roughly 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Highlands Ranch, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Highlands Ranch CO, fire inspections Highlands Ranch, sprinkler inspection Highlands Ranch, fire alarm testing Highlands Ranch, backflow testing Highlands Ranch, kitchen hood suppression Highlands Ranch, HOA common area fire protection, South Metro Fire Rescue inspections',
       canonical: '/service-areas/highlands-ranch-co/',
@@ -5792,9 +5792,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Lafayette, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Lafayette, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Lafayette, Colorado. Serving Old Town, Public Road, Indian Peaks, and the US-287 corridor under Lafayette Fire Department. NICET-certified technicians, 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Lafayette, CO, with reports built for Lafayette Fire Department. Family-owned since 2010.',
       keywords:
         'fire protection Lafayette CO, fire inspections Lafayette, sprinkler inspection Lafayette Colorado, fire alarm testing Lafayette, backflow testing Lafayette, kitchen hood suppression Lafayette, fire protection company Boulder County, Lafayette Fire Department inspections, Old Town Lafayette fire code',
       canonical: '/service-areas/lafayette-co/',
@@ -5992,9 +5992,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Lakewood, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Lakewood, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and standpipe testing, 24/7 monitoring, backflow, and kitchen-hood suppression in Lakewood, Colorado. Serving West Metro Fire Rescue jurisdictions from Belmar to Green Mountain. NICET-certified technicians, 90-minute Denver-metro response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Lakewood, CO, with reports built for West Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Lakewood CO, fire inspections Lakewood, sprinkler inspection Lakewood, fire alarm testing Lakewood, backflow testing Lakewood, kitchen hood suppression Lakewood, standpipe testing Belmar, fire protection company Lakewood Colorado, West Metro Fire Rescue inspections',
       canonical: '/service-areas/lakewood-co/',
@@ -6196,9 +6196,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Larkspur, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Larkspur, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, dry-system freeze protection, hood suppression, extinguisher service, and 24/7 monitoring in Larkspur, Colorado. Serving the Larkspur Fire Protection District — Perry Park, ranch properties, and seasonal event venues — on scheduled service routes with NICET-certified technicians.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Larkspur, CO, with reports built for Larkspur Fire Protection District. Family-owned since 2010.',
       keywords:
         'fire protection Larkspur CO, fire inspections Larkspur, sprinkler inspection Larkspur, dry system testing Larkspur, kitchen hood suppression Larkspur, fire extinguisher service Larkspur, Perry Park fire protection, Colorado Renaissance Festival fire safety, Larkspur Fire Protection District inspections',
       canonical: '/service-areas/larkspur-co/',
@@ -6400,9 +6400,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Littleton, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Littleton, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and kitchen-hood service in Littleton, Colorado. Serving historic Main Street, Broadway, Aspen Grove, and the light-rail corridor across Arapahoe, Jefferson, and Douglas counties. NICET-certified technicians, 90-minute metro response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Littleton, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Littleton CO, fire inspections Littleton, sprinkler inspection Littleton, fire alarm testing Littleton, backflow testing Littleton, kitchen hood suppression Littleton, Main Street Littleton fire code, South Metro Fire Rescue inspections',
       canonical: '/service-areas/littleton-co/',
@@ -6600,9 +6600,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Lone Tree, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Lone Tree, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression in Lone Tree, Colorado — Park Meadows, Sky Ridge, RidgeGate, and Charles Schwab campus. South Metro Fire Rescue jurisdiction, NICET-certified technicians, 90-minute metro response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Lone Tree, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Lone Tree CO, fire inspections Lone Tree, sprinkler inspection Lone Tree, fire alarm testing Lone Tree, backflow testing Lone Tree, kitchen hood suppression Lone Tree, Park Meadows fire protection, Sky Ridge fire protection, RidgeGate fire protection, South Metro Fire Rescue inspections',
       canonical: '/service-areas/lone-tree-co/',
@@ -6804,9 +6804,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Longmont, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Longmont, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression in Longmont, Colorado. Serving Longmont Fire Services jurisdiction — downtown Main Street, US-287 and CO-119 corridors, food-processing, distribution, and brewing. NICET-certified technicians.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Longmont, CO, with reports built for Longmont Fire Services. Family-owned since 2010.',
       keywords:
         'fire protection Longmont CO, fire inspections Longmont, sprinkler inspection Longmont, fire alarm testing Longmont, backflow testing Longmont, kitchen hood suppression Longmont, warehouse ESFR inspection Longmont, food processing fire protection Longmont, Longmont Fire Services inspections',
       canonical: '/service-areas/longmont-co/',
@@ -7008,9 +7008,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Louisville, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Louisville, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and kitchen-hood service in Louisville, Colorado. Serving the Louisville Fire Protection District, from Main Street to the Colorado Tech Center, with wildland-interface awareness. NICET-certified technicians.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Louisville, CO, with reports built for Louisville Fire Protection District.',
       keywords:
         'fire protection Louisville CO, fire inspections Louisville, sprinkler inspection Louisville, fire alarm testing Louisville, backflow testing Louisville, kitchen hood suppression Louisville, Colorado Tech Center fire protection, Louisville Fire Protection District, Marshall Fire rebuild fire protection',
       canonical: '/service-areas/louisville-co/',
@@ -7206,9 +7206,9 @@ export const cities: City[] = [
   ],
 
   meta: {
-    title: 'Fire Protection Services in Morrison, CO | Red Rocks Fire Protection',
+    title: 'Fire Protection Services in Morrison, CO | Red Rocks Fire',
     description:
-      'NFPA fire inspections, sprinkler and alarm testing, kitchen-hood suppression, extinguisher service, backflow, and monitoring in Morrison, Colorado — from historic Bear Creek Avenue to Red Rocks and the foothills WUI. NICET-certified technicians on scheduled foothills routes.',
+      'Fire sprinkler, alarm, backflow and extinguisher inspections in Morrison, CO, with reports built for West Metro Fire Rescue. Family-owned since 2010.',
     keywords:
       'fire protection Morrison CO, fire inspections Morrison, sprinkler inspection Morrison, kitchen hood suppression Morrison, fire extinguisher service Morrison, Red Rocks Amphitheatre fire protection, Inter-Canyon Fire Protection District, foothills fire inspection Jefferson County',
     canonical: '/service-areas/morrison-co/',
@@ -7410,9 +7410,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Northglenn, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Northglenn, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Northglenn, Colorado. Serving North Metro Fire Rescue jurisdictions with NICET-certified technicians and 90-minute metro emergency response.',
+        'Fire inspections, sprinkler and alarm testing, backflow and 24/7 monitoring in Northglenn, CO, with reports built for North Metro Fire Rescue District.',
       keywords:
         'fire protection Northglenn CO, fire inspections Northglenn, sprinkler inspection Northglenn, fire alarm testing Northglenn, backflow testing Northglenn, kitchen hood suppression Northglenn, fire protection company Northglenn Colorado, North Metro Fire Rescue inspections',
       canonical: '/service-areas/northglenn-co/',
@@ -7614,9 +7614,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Parker, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection & Inspections in Parker, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Parker, Colorado. Serving South Metro Fire Rescue jurisdictions across The Pinery, Stonegate, Stroh Ranch, and the Parker Road corridor. NICET-certified technicians, 90-minute metro response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Parker, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Parker CO, fire inspections Parker, sprinkler inspection Parker, fire alarm testing Parker, backflow testing Parker, kitchen hood suppression Parker, HOA fire inspection Parker, fire protection company Parker Colorado, South Metro Fire Rescue inspections',
       canonical: '/service-areas/parker-co/',
@@ -7818,9 +7818,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Sheridan, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Sheridan, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Sheridan, Colorado. Serving River Point, the South Santa Fe Drive industrial corridor, and South Federal Boulevard. NICET-certified technicians, 90-minute metro response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Sheridan, CO, with reports built for South Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Sheridan CO, fire inspections Sheridan, sprinkler inspection Sheridan, fire alarm testing Sheridan, backflow testing Sheridan, kitchen hood suppression Sheridan, River Point fire protection, South Santa Fe Drive fire inspection, fire protection company Sheridan Colorado',
       canonical: '/service-areas/sheridan-co/',
@@ -8018,9 +8018,9 @@ export const cities: City[] = [
   ],
 
   meta: {
-    title: 'Fire Protection Services in Superior, CO | Red Rocks Fire Protection',
+    title: 'Fire Protection Services in Superior, CO | Red Rocks Fire',
     description:
-      'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression in Superior, Colorado. Marshall Fire rebuild support in Sagamore and Rock Creek, plus Downtown Superior and McCaslin retail. NICET-certified technicians, ~90-minute metro response.',
+      'Fire sprinkler, alarm, backflow and extinguisher inspections in Superior, CO, with reports built for Mountain View Fire Rescue. Family-owned since 2010.',
     keywords:
       'fire protection Superior CO, fire inspections Superior, sprinkler inspection Superior, fire alarm testing Superior, backflow testing Superior, kitchen hood suppression Superior, Marshall Fire rebuild fire sprinkler Superior, residential sprinkler Rock Creek Superior, fire protection company Superior Colorado',
     canonical: '/service-areas/superior-co/',
@@ -8218,9 +8218,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Thornton, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Thornton, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Thornton, Colorado. Serving Thornton Fire Department jurisdictions with NICET-certified technicians and ~90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Thornton, CO, with reports built for Thornton Fire Department. Family-owned since 2010.',
       keywords:
         'fire protection Thornton CO, fire inspections Thornton, sprinkler inspection Thornton, fire alarm testing Thornton, backflow testing Thornton, kitchen hood suppression Thornton, fire protection company Thornton Colorado, Thornton Fire Department inspections',
       canonical: '/service-areas/thornton-co/',
@@ -8418,9 +8418,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Westminster, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Westminster, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and consulting in Westminster, Colorado — across both the Adams and Jefferson County sides. NICET-certified technicians, 90-minute Denver-metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Westminster, CO, with reports built for Westminster Fire Department. Family-owned since 2010.',
       keywords:
         'fire protection Westminster CO, fire inspections Westminster, sprinkler inspection Westminster, fire alarm testing Westminster, backflow testing Westminster, kitchen hood suppression Westminster, fire protection company Westminster Colorado, Westminster Fire Department inspections',
       canonical: '/service-areas/westminster-co/',
@@ -8618,9 +8618,9 @@ export const cities: City[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Wheat Ridge, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Wheat Ridge, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, suppression, and code consulting in Wheat Ridge, Colorado. Serving West Metro Fire Rescue jurisdictions with NICET-certified technicians and a 90-minute metro emergency response.',
+        'Fire sprinkler, alarm, backflow and extinguisher inspections in Wheat Ridge, CO, with reports built for West Metro Fire Rescue. Family-owned since 2010.',
       keywords:
         'fire protection Wheat Ridge CO, fire inspections Wheat Ridge, sprinkler inspection Wheat Ridge, fire alarm testing Wheat Ridge, backflow testing Wheat Ridge, kitchen hood suppression Wheat Ridge, fire protection company Wheat Ridge Colorado, West Metro Fire Rescue inspections',
       canonical: '/service-areas/wheat-ridge-co/',

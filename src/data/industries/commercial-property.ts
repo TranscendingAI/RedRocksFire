@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const commercialPropertyPage: IndustryPageData = {
   seo: {
     title:
-      'Fire Protection for Commercial Property Management Companies | Red Rocks Fire Protection | Colorado',
+      'Commercial Property Fire Protection in Colorado | RRFPS',
     description:
-      'One Vendor Life Safety Solution for commercial property teams across the Colorado Front Range — inspections, sprinklers, alarms, extinguishers, backflow, monitoring, tenant improvement modifications and 24-hour emergency service.',
+      'One vendor for commercial property fire protection across Colorado: inspections, sprinklers, alarms, backflow, monitoring, tenant improvements and 24/7 service.',
   },
   banner: {
     title: 'Commercial Property.',

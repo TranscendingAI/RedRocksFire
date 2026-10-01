@@ -1,7 +1,7 @@
 ---
 title: Getting Ahead of Colorado Fire Code Changes.
-seoTitle: A Westminster Property Manager's Playbook for Colorado Fire Code Changes | RRFPS
-seoDescription: Fire codes change, and Colorado jurisdictions adopt new editions on their own timelines. Here's how Westminster property managers stay ahead of code changes instead of getting caught by them.
+seoTitle: "Westminster, CO Fire Code Changes | Property Manager Guide"
+seoDescription: "Colorado jurisdictions adopt new fire code editions on their own timelines. How Westminster property managers can stay ahead of code changes."
 excerpt: Fire codes aren't static, and every Colorado jurisdiction adopts new editions on its own schedule. Here's how a Westminster property manager stays ahead of code changes instead of finding out at the next inspection.
 
 publishDate: 2026-09-25

@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const assistedLivingPage: IndustryPageData = {
   seo: {
     title:
-      'Fire Protection for Assisted Living & Healthcare Facilities | Red Rocks Fire Protection | Colorado',
+      'Assisted Living Fire Protection in Colorado | Red Rocks Fire',
     description:
-      'One Vendor Life Safety Solution for healthcare and assisted living facilities across the Colorado Front Range — inspections, alarms, sprinklers, Area of Refuge, ERRCS/BDA, kitchen hood suppression and 24-hour emergency service.',
+      'Fire and life safety for assisted living and healthcare facilities across Colorado: inspections, alarms, sprinklers, Area of Refuge, ERRCS/BDA and 24/7 service.',
   },
   banner: {
     title: 'Assisted Living & Healthcare.',

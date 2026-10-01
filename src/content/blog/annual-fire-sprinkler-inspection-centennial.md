@@ -1,7 +1,7 @@
 ---
 title: What Actually Happens During an Annual Sprinkler Inspection.
-seoTitle: What Happens During an Annual Fire Sprinkler Inspection in Centennial | NFPA 25 | RRFPS
-seoDescription: A walkthrough of an annual NFPA 25 fire sprinkler inspection in Centennial, CO — the main drain test, valve checks, head inspection, and what South Metro Fire Rescue wants in the report.
+seoTitle: "Annual Fire Sprinkler Inspection in Centennial, CO | NFPA 25"
+seoDescription: "What happens during an annual NFPA 25 fire sprinkler inspection in Centennial, CO: main drain test, valve checks, head inspection and what South Metro Fire wants."
 excerpt: An annual sprinkler inspection is not a technician glancing at the riser and signing a tag. Here's what actually gets tested during an NFPA 25 inspection in Centennial, step by step.
 
 publishDate: 2026-08-21

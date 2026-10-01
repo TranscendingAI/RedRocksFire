@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const retailPage: IndustryPageData = {
   seo: {
     title:
-      'Fire Protection for Retail & Shopping Centers | Red Rocks Fire Protection | Colorado',
+      'Retail Fire Protection in Colorado | Red Rocks Fire Protection',
     description:
-      'One Vendor Life Safety Solution for retail properties and shopping centers across the Colorado Front Range — inspections, alarms, sprinklers, tenant finish modifications, kitchen hood suppression and 24-hour emergency service.',
+      'Fire protection for Colorado retail stores and shopping centers: inspections, alarms, sprinklers, tenant finish work, kitchen hood suppression and 24/7 service.',
   },
   banner: {
     title: 'Retail & Shopping Centers.',

@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const hoaManagementPage: IndustryPageData = {
   seo: {
     title:
-      'Fire Protection for HOA Management Companies | Red Rocks Fire Protection | Colorado',
+      'HOA Fire Protection in Colorado | Red Rocks Fire Protection',
     description:
-      'One Vendor Life Safety Solution for HOA management companies across the Colorado Front Range — inspections, alarms, sprinklers, security systems, common-area modifications and 24-hour emergency service.',
+      'Fire and life safety for Colorado HOA management companies: inspections, alarms, sprinklers, security systems, common-area modifications and 24/7 service.',
   },
   banner: {
     title: 'HOA Management.',

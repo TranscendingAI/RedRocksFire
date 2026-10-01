@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const generalContractorsPage: IndustryPageData = {
   seo: {
     title:
-      'Fire Sprinkler & Fire Alarm Support for General Contractors | Red Rocks Fire Protection | Colorado',
+      'Fire Protection for General Contractors in Colorado | RRFPS',
     description:
-      'Life safety partner for general contractors across the Colorado Front Range — fire sprinkler modifications, fire alarm upgrades, Gamewell-FCI expertise, design review, permitting, AHJ coordination and 24-hour emergency service.',
+      'Fire sprinkler and alarm support for Colorado general contractors: modifications, upgrades, Gamewell-FCI expertise, design review and AHJ coordination.',
   },
   banner: {
     title: 'General Contractors.',
