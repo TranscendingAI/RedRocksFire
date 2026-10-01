@@ -13,12 +13,13 @@
  * Copy/data source of truth: src/data/site.ts → `contact`, `contactPage`,
  * `company`.
  *
- * Form delivery: this is a static build with no server. The form is
- * progressively enhanced — on submit it composes a pre-filled email to
- * info@rrfps.com via the visitor's mail client (works with zero backend).
- * To route submissions to a service instead (Formspree, Netlify Forms,
- * etc.), set a real `action`/endpoint on the <form> and remove the
- * data-mailto-form hook.
+ * Form delivery: the form POSTs to /api/contact (src/pages/api/contact.ts),
+ * the site's only on-demand route, which validates server-side and sends
+ * the lead through Resend. The script below enhances the form to submit
+ * via fetch and show inline success/error states; without JS the browser
+ * does a normal form post and the endpoint 303s back here with
+ * ?status=sent|error. A successful send fires a GA4 `generate_lead` event
+ * when gtag is loaded (see BaseLayout).
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -137,7 +138,17 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
 
           <!-- ---- RIGHT: lead form ---- -->
           <div class="cf__formwrap">
-            <form class="cf__form" data-mailto-form novalidate>
+            <form
+              id="contact-form"
+              class="cf__form"
+              action="/api/contact"
+              method="post"
+              data-contact-form
+              data-astro-reload
+              data-phone={contact.phone}
+              data-email={contact.email}
+              novalidate
+            >
               <p class="cf__form-title">Send us a message</p>
 
               <div class="cf__field">
@@ -503,15 +514,25 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
   /**
    * Progressive enhancement for the contact form.
    *
-   * This is a static site with no server, so on submit we compose a
-   * pre-filled email to info@rrfps.com via the visitor's mail client.
-   * If a real endpoint is wired onto the <form> later, remove the
-   * `data-mailto-form` attribute and this handler steps aside.
+   * Submits to /api/contact with fetch (JSON response) and renders the
+   * result inline. Honeypot + validation are enforced again server-side;
+   * the client checks are only for fast feedback.
    */
+  type Gtag = (...args: unknown[]) => void;
+
+  const SUCCESS_MSG = 'Thanks — your message has been sent. We’ll be in touch shortly.';
+
   function initContactForm() {
-    const form = document.querySelector<HTMLFormElement>('form[data-mailto-form]');
+    const form = document.querySelector<HTMLFormElement>('form[data-contact-form]');
     if (!form || form.dataset.bound === 'true') return;
     form.dataset.bound = 'true';
+
+    const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const submitLabel = submitBtn?.querySelector<HTMLElement>('.av-wgl-btn__text');
+    const idleLabel = submitLabel?.textContent ?? 'send message';
+    const ERROR_MSG =
+      `Sorry, we couldn’t send your message. Please try again, call ${form.dataset.phone}, ` +
+      `or email ${form.dataset.email}.`;
 
     const showStatus = (message: string, kind: 'ok' | 'error') => {
       let el = form.querySelector<HTMLElement>('.cf__status');
@@ -519,13 +540,34 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
         el = document.createElement('p');
         el.className = 'cf__status';
         el.setAttribute('role', 'status');
+        el.setAttribute('aria-live', 'polite');
         form.appendChild(el);
       }
       el.dataset.kind = kind;
       el.textContent = message;
     };
 
-    form.addEventListener('submit', (e) => {
+    const setBusy = (busy: boolean) => {
+      if (submitBtn) {
+        submitBtn.disabled = busy;
+        submitBtn.setAttribute('aria-busy', String(busy));
+      }
+      if (submitLabel) submitLabel.textContent = busy ? 'sending…' : idleLabel;
+    };
+
+    const trackLead = () => {
+      const gtag = (window as unknown as { gtag?: Gtag }).gtag;
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', { form_id: 'contact-form', form_name: 'contact' });
+      }
+    };
+
+    // No-JS fallback round-trip: the endpoint redirects back with ?status=.
+    const status = new URLSearchParams(window.location.search).get('status');
+    if (status === 'sent') showStatus(SUCCESS_MSG, 'ok');
+    else if (status === 'error') showStatus(ERROR_MSG, 'error');
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       // Honeypot: silently drop bot submissions.
@@ -537,32 +579,33 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.jpg';
         return;
       }
 
-      const data = new FormData(form);
-      const name = String(data.get('name') || '').trim();
-      const email = String(data.get('email') || '').trim();
-      const phone = String(data.get('phone') || '').trim();
-      const companyName = String(data.get('company') || '').trim();
-      const message = String(data.get('message') || '').trim();
+      setBusy(true);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        const data = (await res.json().catch(() => ({}))) as {
+          ok?: boolean;
+          error?: string;
+          fields?: Record<string, string>;
+        };
 
-      const bodyLines = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        phone ? `Phone: ${phone}` : '',
-        companyName ? `Company / Property: ${companyName}` : '',
-        '',
-        message,
-      ].filter(Boolean);
-
-      const subject = `Website inquiry from ${name}`;
-      const mailto =
-        `mailto:info@rrfps.com?subject=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-
-      window.location.href = mailto;
-      showStatus(
-        'Opening your email app to send this message. If nothing happens, email us directly at info@rrfps.com.',
-        'ok'
-      );
+        if (res.ok && data.ok) {
+          form.reset();
+          showStatus(SUCCESS_MSG, 'ok');
+          trackLead();
+        } else if (res.status === 422 && data.fields) {
+          showStatus(Object.values(data.fields).join(' '), 'error');
+        } else {
+          showStatus(ERROR_MSG, 'error');
+        }
+      } catch {
+        showStatus(ERROR_MSG, 'error');
+      } finally {
+        setBusy(false);
+      }
     });
   }
 
