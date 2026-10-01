@@ -68,7 +68,7 @@ NFPA 13D does not apply to multi-family properties. It applies to single-family 
 If you're not sure which standard governed the original install, there are two ways to find out:
 
 1. **The original plans and the AHJ stamp on them.** Every multi-family sprinkler plan in Colorado is reviewed and stamped by the AHJ before install. That stamp cites the standard the system was designed under. The original stamped set should be in your project file.
-2. **Ask a NICET III-certified contractor.** A qualified inspection company will look at the riser, the supply, the design calc, and tell you within an hour. RRFPS can do this as part of a routine inspection.
+2. **Ask a NICET III-certified contractor.** A qualified inspection company will look at the riser, the supply, the design calc, and tell you which standard applies. RRFPS can do this as part of a routine inspection.
 
 If the wrong standard was cited on the original install, that's not necessarily a demolition sentence — it can sometimes be brought into compliance with retrofits — but you want to know about it before a fire marshal tells you.
 
@@ -109,7 +109,7 @@ If you've read our fire alarm, fire extinguisher, or general inspection coverage
 
 The full [sprinkler service and systems](/services/fire-sprinkler-service-and-systems) catalog covers everything from retrofit and modification work to fire-pump testing for properties that cross the line from residential into commercial scope.
 
-We size our inspection scope to the standard that actually applies to your property. Properties that started residential and converted to mixed-use often have a system built under one standard and an occupancy that triggers a different standard — that's the situation where a one-hour walk-through from a qualified inspector is worth more than a year of guesswork.
+We size our inspection scope to the standard that actually applies to your property. Properties that started residential and converted to mixed-use often have a system built under one standard and an occupancy that triggers a different standard — that's the situation where a quick walk-through from a qualified inspector is worth more than a year of guesswork.
 
 ## What a passing report looks like
 
