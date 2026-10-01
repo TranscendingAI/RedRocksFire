@@ -101,7 +101,7 @@ export const home = {
   seo: {
     title: 'Denver Fire Protection Company | Red Rocks Fire Protection',
     description:
-      'Family-owned fire protection serving Colorado since 2010. Fire inspections, sprinklers, alarms and 24/7 monitoring across the Denver metro. Call (720) 733-8050.',
+      'Family-owned Colorado fire protection since 2010. Inspections, sprinklers, alarms and 24/7 service with a 90-minute response window in the Denver Metro area.',
   },
   hero: {
     eyebrow: 'Fire Safety Inspections & Compliance',
@@ -139,7 +139,7 @@ export const home = {
     },
     {
       title: 'Rapid Response and Superior Service.',
-      body: '24-hour emergency service with a 90-minute response window within the metro area — fast communication, dependable action.',
+      body: '24-hour emergency service with a 90-minute response window within the Denver Metro area — fast communication, dependable action.',
     },
     {
       title: 'One Vendor, Total Confidence.',
