@@ -35,10 +35,21 @@ const {
   schema,
 } = Astro.props;
 
-// Launch integrations — both are optional and render nothing when unset.
-// PUBLIC_* vars are inlined at build time, so set them in Vercel before the
-// production build (a redeploy is needed after changing them).
-const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim();
+// Launch integrations. PUBLIC_* vars are inlined at build time, so changing
+// one in Vercel needs a redeploy.
+//   - GA4 + Clarity: public IDs with committed defaults; the env vars only
+//     override them. Rendered in production builds only (never `astro dev`),
+//     so local work doesn't pollute analytics.
+//   - Search Console: optional; the meta tag is omitted when unset.
+const DEFAULT_GA_MEASUREMENT_ID = 'G-KNQDF95RGK';
+const DEFAULT_CLARITY_PROJECT_ID = 'yqnio023pg';
+const isProd = import.meta.env.PROD;
+const gaMeasurementId = isProd
+  ? import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim() || DEFAULT_GA_MEASUREMENT_ID
+  : undefined;
+const clarityProjectId = isProd
+  ? import.meta.env.PUBLIC_CLARITY_PROJECT_ID?.trim() || DEFAULT_CLARITY_PROJECT_ID
+  : undefined;
 const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION?.trim();
 ---
 
@@ -86,6 +97,14 @@ const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION?.trim();
         window.gtag = function gtag() { window.dataLayer.push(arguments); };
         window.gtag('js', new Date());
         window.gtag('config', gaMeasurementId);
+      </script>
+    )}
+    {/* Microsoft Clarity — official loader, kept inline (not bundled) with
+     * the project ID passed in via define:vars. In <head> so it persists
+     * across ClientRouter navigations; Clarity tracks history changes. */}
+    {clarityProjectId && (
+      <script is:inline define:vars={{ clarityProjectId }}>
+        (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", clarityProjectId);
       </script>
     )}
     <ClientRouter />
