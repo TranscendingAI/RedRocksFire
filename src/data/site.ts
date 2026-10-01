@@ -557,7 +557,7 @@ export const contactPage = {
   },
   hero: {
     title: 'Contact Red Rocks Fire Protection.',
-    body: 'Let’s build a safer property together. Reach the team that protects property owners and managers across the Colorado Front Range — for routine inspections, code questions, or 24/7 emergency response.',
+    body: 'Reach the team that protects property owners and managers across the Colorado Front Range — for routine inspections, code questions, or 24/7 emergency response.',
   },
   /** Brand Strategy §15 Promise framework — short-form guidance. */
   whatToExpect: [
