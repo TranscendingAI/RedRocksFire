@@ -17,7 +17,7 @@ tags:
   - AHJ
 readMinutes: 7
 
-featuredImage: /images/blog/one-vendor-life-safety-denver.png
+featuredImage: /images/blog/one-vendor-life-safety-denver.webp
 featuredImageAlt: A Red Rocks Fire Protection technician standing in the mechanical room of a Denver high-rise beside a sprinkler riser, fire alarm panel, and backflow assembly.
 featuredImageCaption: One accountable technician standing over the sprinkler riser, alarm panel, and backflow assembly of a Denver commercial building — the systems most properties split across five separate vendors.
 heroPosition: center top

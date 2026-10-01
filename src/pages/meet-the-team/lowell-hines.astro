@@ -13,9 +13,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ClosingCTA from '../../components/ClosingCTA.astro';
 
-const heroBg = '/images/rrfps-about-cta-bg.jpg';
-const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
-const lowellPhoto = '/images/team-members/lowel-hines-red-rocks-fire-protection-services.png';
+const heroBg = '/images/rrfps-about-cta-bg.webp';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.webp';
+const lowellPhoto = '/images/team-members/lowel-hines-red-rocks-fire-protection-services.webp';
 
 const bioParagraphs = [
   'Lowell is the Fire Alarm Lead Technician at RRFPS and is responsible for leading and overseeing the Fire Alarm Division. He has four years of experience in the fire protection industry and has developed a strong technical background and passion for fire alarm systems.',
@@ -51,7 +51,7 @@ const bioParagraphs = [
       <div class="lh-bio__inner">
 
         <div class="lh-bio__photo">
-          <img src={lowellPhoto} alt="Lowell Hines, Fire Alarm Lead Technician of Red Rocks Fire Protection Services" loading="eager" decoding="async" />
+          <img src={lowellPhoto} alt="Lowell Hines, Fire Alarm Lead Technician of Red Rocks Fire Protection Services" loading="eager" fetchpriority="high" decoding="async" />
         </div>
 
         <div class="lh-bio__copy">

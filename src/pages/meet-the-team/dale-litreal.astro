@@ -2,9 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ClosingCTA from '../../components/ClosingCTA.astro';
 
-const heroBg = '/images/rrfps-about-cta-bg.jpg';
-const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
-const dalePhoto = '/images/team-members/dale-litreal-red-rocks-fire-protection-services.png';
+const heroBg = '/images/rrfps-about-cta-bg.webp';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.webp';
+const dalePhoto = '/images/team-members/dale-litreal-red-rocks-fire-protection-services.webp';
 ---
 
 <BaseLayout
@@ -30,7 +30,7 @@ const dalePhoto = '/images/team-members/dale-litreal-red-rocks-fire-protection-s
     <section class="dl-bio" aria-label="Dale Litreal bio">
       <div class="dl-bio__inner">
         <div class="dl-bio__photo">
-          <img src={dalePhoto} alt="Dale Litreal, Lead – Sprinklers at Red Rocks Fire Protection Services" loading="eager" decoding="async" />
+          <img src={dalePhoto} alt="Dale Litreal, Lead – Sprinklers at Red Rocks Fire Protection Services" loading="eager" fetchpriority="high" decoding="async" />
         </div>
 
         <div class="dl-bio__copy">

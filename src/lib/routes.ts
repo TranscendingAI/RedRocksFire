@@ -38,6 +38,8 @@ export const ROUTES = {
   serviceAreas: '/service-areas',
   blog: '/blog',
   fireReports: '/fire-reports',
+  privacyPolicy: '/privacy-policy',
+  thankYou: '/thank-you',
 
   // About hub + sub-pages
   about: '/about',

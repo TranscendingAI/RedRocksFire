@@ -24,15 +24,15 @@
  *
  * Image assets — all placeholders, to be swapped for page-specific
  * Nano Banana imagery after the batch build:
- *   • Hero           — /images/rrfps-distributed-antenna-systems-page-hero.png
+ *   • Hero           — /images/rrfps-distributed-antenna-systems-page-hero.webp
  *   • §2 tan band bg — /images/rrfps-backflow-prevention-why-red-rocks-bg.jpg
- *   • §3 accordion bg — /images/rrfps-distributed-antenna-systems-services-accordion-bg.jpg
- *   • §4 more than    — /images/rrfps-distributed-antenna-systems-more-than-a-service-contractor.jpg
- *   • §5 advocacy     — /images/rrfps-distributed-antenna-systems-advocacy.jpg
- *   • §6 values bg    — /images/rrfps-distributed-antenna-systems-why-clients-stay-bg.jpg
- *   • §7 experience   — /images/rrfps-distributed-antenna-systems-experience.jpg
- *   • §8 promise      — /images/rrfps-distributed-antenna-systems-ready-when-you-are.jpg
- *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.png
+ *   • §3 accordion bg — /images/rrfps-distributed-antenna-systems-services-accordion-bg.webp
+ *   • §4 more than    — /images/rrfps-distributed-antenna-systems-more-than-a-service-contractor.webp
+ *   • §5 advocacy     — /images/rrfps-distributed-antenna-systems-advocacy.webp
+ *   • §6 values bg    — /images/rrfps-distributed-antenna-systems-why-clients-stay-bg.webp
+ *   • §7 experience   — /images/rrfps-distributed-antenna-systems-experience.webp
+ *   • §8 promise      — /images/rrfps-distributed-antenna-systems-ready-when-you-are.webp
+ *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.webp
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -43,7 +43,7 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-const bannerImage = '/images/rrfps-distributed-antenna-systems-page-hero.png';
+const bannerImage = '/images/rrfps-distributed-antenna-systems-page-hero.webp';
 
 const categories = [
   {
@@ -148,10 +148,10 @@ const whyClientsValues = [
   { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
 ] as const;
 
-const moreThanImage = '/images/rrfps-distributed-antenna-systems-more-than-a-service-contractor.jpg';
-const advocacyImage = '/images/rrfps-distributed-antenna-systems-advocacy.jpg';
-const experienceImage = '/images/rrfps-distributed-antenna-systems-experience.jpg';
-const promiseImage = '/images/rrfps-distributed-antenna-systems-ready-when-you-are.jpg';
+const moreThanImage = '/images/rrfps-distributed-antenna-systems-more-than-a-service-contractor.webp';
+const advocacyImage = '/images/rrfps-distributed-antenna-systems-advocacy.webp';
+const experienceImage = '/images/rrfps-distributed-antenna-systems-experience.webp';
+const promiseImage = '/images/rrfps-distributed-antenna-systems-ready-when-you-are.webp';
 ---
 
 <BaseLayout
@@ -476,7 +476,7 @@ const promiseImage = '/images/rrfps-distributed-antenna-systems-ready-when-you-a
 
     <!-- §10. CLOSING CTA — site-wide ClosingCTA with DAS copy -->
     <ClosingCTA
-      backgroundImage="/images/rrfps-services-cta-bg.png"
+      backgroundImage="/images/rrfps-services-cta-bg.webp"
       paragraphs={[
         "Choosing the right ERRCS / BDA partner is about more than an annual test. It's about having a team that understands signal coverage, donor antennas, amplifiers, battery backup, and the monitoring connections that keep emergency responder communications reliable. Whether you need annual testing, troubleshooting, battery or amplifier replacement, donor antenna repairs, system upgrades, or complete ERRCS/BDA replacement, Red Rocks Fire Protection Services brings the same responsive service and accountability to every property we serve.",
       ]}
@@ -539,7 +539,7 @@ const promiseImage = '/images/rrfps-distributed-antenna-systems-ready-when-you-a
   .da-whyrr__bullet-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
 
   .da-accordion { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
-  .da-accordion__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-distributed-antenna-systems-services-accordion-bg.jpg'); background-size: cover; background-position: left center; z-index: -2; }
+  .da-accordion__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-distributed-antenna-systems-services-accordion-bg.webp'); background-size: cover; background-position: left center; z-index: -2; }
   .da-accordion__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 13, 11, 0.55) 0%, rgba(13, 13, 11, 0.45) 50%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
   .da-accordion__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; }
   @media (min-width: 768px) { .da-accordion__inner { padding-inline: 2.5rem; } }
@@ -581,7 +581,7 @@ const promiseImage = '/images/rrfps-distributed-antenna-systems-ready-when-you-a
 
   .da-why { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
   @media (min-width: 768px) { .da-why { padding-block: 150px; } }
-  .da-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-distributed-antenna-systems-why-clients-stay-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
+  .da-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-distributed-antenna-systems-why-clients-stay-bg.webp'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
   .da-why::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: -1; }
   .da-why__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; color: #ffffff; }
   @media (min-width: 768px) { .da-why__inner { padding-inline: 2.5rem; } }

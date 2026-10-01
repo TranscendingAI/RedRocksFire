@@ -24,7 +24,7 @@ tags:
 readMinutes: 7
 
 # ── Featured image — used by both blog post pages (16:9) ────────
-featuredImage: /images/red-rocks-fire-protections-fire-sprinkler-multi-family-units.jpg
+featuredImage: /images/red-rocks-fire-protections-fire-sprinkler-multi-family-units.webp
 featuredImageAlt: A wet-pipe fire sprinkler riser and branch lines exposed in a ceiling cavity of a Colorado multi-family building during a routine RRFPS annual inspection.
 featuredImageCaption: Annual NFPA 25 sprinkler testing in a Denver-area multifamily property. RRFPS tests every dry, wet, antifreeze, and preaction system to the adopted edition of the standard.
 ---

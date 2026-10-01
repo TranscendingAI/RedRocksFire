@@ -171,7 +171,7 @@ export const about = {
   banner: {
     title: 'About Us.',
     subtitle: 'About Red Rocks Fire Protection Services',
-    backgroundImage: '/images/rrfps-about-hero-bg.jpg',
+    backgroundImage: '/images/rrfps-about-hero-bg.webp',
   },
   fastFacts: [
     {
@@ -213,7 +213,7 @@ export const about = {
       'We specialize in protecting lives and property through a full-service, single-source approach, serving multi-family communities, commercial facilities, retail centers, healthcare environments, and more.',
       'With a team of highly certified professionals and a proven track record of service since 2010, Red Rocks Fire Protection Services delivers reliable, compliant, and expertly managed life safety systems, built on trust, accountability, and long-term partnership.',
     ] as const,
-    image: '/images/rrfps-about-overview-brian-inspector.jpg',
+    image: '/images/rrfps-about-overview-brian-inspector.webp',
     imageAlt: 'Red Rocks Fire Protection technician reviewing a fire sprinkler riser with a client',
   },
   whyWeExist: {
@@ -227,7 +227,7 @@ export const about = {
     statement:
       'We exist to protect lives and property by simplifying life safety compliance and serving as a proactive partner for property owners and managers.',
     body: 'At Red Rocks Fire Protection Services, we believe safety is not optional and delivering it is both a responsibility and a privilege. We take that responsibility seriously, approaching every system, every service, and every client relationship with a deep sense of duty and passion. Our purpose is to bring clarity, reliability, and confidence to every client we serve.',
-    image: '/images/red-rocks-fire-protection-safety-advocacy-trust.jpg',
+    image: '/images/red-rocks-fire-protection-safety-advocacy-trust.webp',
   },
   capabilities: {
     eyebrow: 'Our Capabilities',
@@ -314,23 +314,23 @@ export const about = {
   industries: {
     eyebrow: 'Industries We Serve',
     title: 'Protecting Communities and Businesses Across Colorado',
-    cardImage: '/images/rrfps-serving-colorado-diverse-industries.jpg',
+    cardImage: '/images/rrfps-serving-colorado-diverse-industries.webp',
     items: [
-      { title: 'Multi-Family Management Companies', meta: 'inspections / monitoring', image: '/images/red-rocks-fire-protectionmulti-family-communities.jpg', href: '/industries/multi-family-management-companies' },
-      { title: 'Commercial Property & Management Companies', meta: 'sprinklers / alarms', image: '/images/red-rocks-fire-protection-commercial-facilities.jpg', href: '/industries/commercial-property' },
-      { title: 'Religious Institutions / Churches', meta: 'compliance / monitoring', image: '/images/rrfps-mega-church.jpg', href: '/industries/religious-institutions' },
-      { title: 'Assisted Living Facilities & Healthcare', meta: 'compliance / monitoring', image: '/images/rrfps-assisted-living-facilities.jpg', href: '/industries/assisted-living' },
-      { title: 'Education / Universities', meta: 'sprinklers / alarms', image: '/images/rrfps-educational-universities.jpg', href: '/industries/education' },
-      { title: 'Warehouse / Storage / Industrial', meta: 'fire protection / inspections', image: '/images/rrfps-about-warehouse-industrial.jpg', href: '/industries/warehouse-industrial' },
-      { title: 'HOA Management Companies', meta: 'inspections / monitoring', image: '/images/rrfps-hoa-management-companies.jpg', href: '/industries/hoa-management' },
-      { title: 'Hotels & Hospitality', meta: 'fire protection / life safety', image: '/images/rrfps-hotel-hospitality.jpg', href: '/industries/hotels-hospitality' },
-      { title: 'Retail & Shopping Centers', meta: 'compliance / monitoring', image: '/images/rrfps-retail-shopping-center.jpg', href: '/industries/retail' },
-      { title: 'Restaurants & Food Trucks', meta: 'fire suppression / inspections', image: '/images/rrfps-restaurants-food-trucks.jpg', href: '/industries/restaurants' },
-      { title: 'Financial Institutions / Banks', meta: 'compliance / monitoring', image: '/images/rrfps-financial-institutions.jpg', href: '/industries/financial' },
-      { title: 'Automotive Dealerships & Service Centers', meta: 'fire protection / inspections', image: '/images/rrfps-car-dealerships.jpg', href: '/industries/automotive' },
-      { title: 'Data Centers', meta: 'fire suppression / monitoring', image: '/images/rrfps-data-centers.jpg', href: '/industries/data-centers' },
-      { title: 'General Contractors', meta: 'plan review / inspections', image: '/images/rrfps-general-contractors.jpg', href: '/industries/general-contractors' },
-      { title: 'Meet Our Leadership Team', meta: 'our people / our culture', image: '/images/rrfps-about-our-leadership.jpg', imagePosition: 'center 22%', href: '/meet-the-team' },
+      { title: 'Multi-Family Management Companies', meta: 'inspections / monitoring', image: '/images/red-rocks-fire-protectionmulti-family-communities.webp', href: '/industries/multi-family-management-companies' },
+      { title: 'Commercial Property & Management Companies', meta: 'sprinklers / alarms', image: '/images/red-rocks-fire-protection-commercial-facilities.webp', href: '/industries/commercial-property' },
+      { title: 'Religious Institutions / Churches', meta: 'compliance / monitoring', image: '/images/rrfps-mega-church.webp', href: '/industries/religious-institutions' },
+      { title: 'Assisted Living Facilities & Healthcare', meta: 'compliance / monitoring', image: '/images/rrfps-assisted-living-facilities.webp', href: '/industries/assisted-living' },
+      { title: 'Education / Universities', meta: 'sprinklers / alarms', image: '/images/rrfps-educational-universities.webp', href: '/industries/education' },
+      { title: 'Warehouse / Storage / Industrial', meta: 'fire protection / inspections', image: '/images/rrfps-about-warehouse-industrial.webp', href: '/industries/warehouse-industrial' },
+      { title: 'HOA Management Companies', meta: 'inspections / monitoring', image: '/images/rrfps-hoa-management-companies.webp', href: '/industries/hoa-management' },
+      { title: 'Hotels & Hospitality', meta: 'fire protection / life safety', image: '/images/rrfps-hotel-hospitality.webp', href: '/industries/hotels-hospitality' },
+      { title: 'Retail & Shopping Centers', meta: 'compliance / monitoring', image: '/images/rrfps-retail-shopping-center.webp', href: '/industries/retail' },
+      { title: 'Restaurants & Food Trucks', meta: 'fire suppression / inspections', image: '/images/rrfps-restaurants-food-trucks.webp', href: '/industries/restaurants' },
+      { title: 'Financial Institutions / Banks', meta: 'compliance / monitoring', image: '/images/rrfps-financial-institutions.webp', href: '/industries/financial' },
+      { title: 'Automotive Dealerships & Service Centers', meta: 'fire protection / inspections', image: '/images/rrfps-car-dealerships.webp', href: '/industries/automotive' },
+      { title: 'Data Centers', meta: 'fire suppression / monitoring', image: '/images/rrfps-data-centers.webp', href: '/industries/data-centers' },
+      { title: 'General Contractors', meta: 'plan review / inspections', image: '/images/rrfps-general-contractors.webp', href: '/industries/general-contractors' },
+      { title: 'Meet Our Leadership Team', meta: 'our people / our culture', image: '/images/rrfps-about-our-leadership.webp', imagePosition: 'center 22%', href: '/meet-the-team' },
     ] as const,
   },
   ceoMessage: {
@@ -339,7 +339,7 @@ export const about = {
     greeting: 'Greetings from the CEO & Owner of Red Rocks Fire Protection Services.',
     intro: 'Hi, I’m Brian Kakac, CEO & Owner of Red Rocks Fire Protection Services.',
     body: 'Since 2010, we’ve proudly served property owners and managers across Colorado, helping protect what matters most: your employees, your residents, your tenants, your properties, your buildings, and your peace of mind. We live here, we work here, and we’re deeply committed to protecting the communities we serve like they’re our own. I would love the opportunity to earn your business.',
-    image: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.png',
+    image: '/images/brian-kakac-ceo-red-rocks-fire-protection-services.webp',
     imageAlt: 'Brian Kakac, CEO and Owner of Red Rocks Fire Protection Services',
   },
   learnMore: {
@@ -351,7 +351,7 @@ export const about = {
         title: 'Our Values',
         sentence: 'Built on integrity. Driven by safety.',
         href: ROUTES.missionVisionValues,
-        image: '/images/rrfps-our-values.jpg',
+        image: '/images/rrfps-our-values.webp',
         imageAlt: 'The values that guide Red Rocks Fire Protection Services',
       },
       {
@@ -359,7 +359,7 @@ export const about = {
         title: 'Our Leadership',
         sentence: 'Experienced leaders. One family.',
         href: ROUTES.meetTheTeam,
-        image: '/images/rrfps-our-leadership.jpg',
+        image: '/images/rrfps-our-leadership.webp',
         imageAlt: 'Red Rocks Fire Protection Services leadership team',
       },
       {
@@ -367,7 +367,7 @@ export const about = {
         title: 'Our Promise',
         sentence: 'One vendor. Total life safety protection.',
         href: ROUTES.ourPromise,
-        image: '/images/rrfps-our-promise.jpg',
+        image: '/images/rrfps-our-promise.webp',
         imageAlt: 'Red Rocks Fire Protection Services promise to clients',
       },
     ] as const,
@@ -378,7 +378,7 @@ export const about = {
     lead: 'No other fire protection company combines advocacy, comprehensive service capabilities, and accountability into a single, unified experience.',
     points: ['We lead with safety.', 'We simplify compliance.', 'We protect what matters most.'] as const,
     body: 'We actively stay current with evolving codes, regulations, and jurisdictional requirements, reinforcing our role as a proactive partner and trusted advisor in life safety compliance.',
-    backgroundImage: '/images/the-red-rocks-of-the-canyon.jpg',
+    backgroundImage: '/images/the-red-rocks-of-the-canyon.webp',
   },
   reachOut: [
     {
@@ -395,7 +395,7 @@ export const about = {
     },
   ] as const,
   closingCta: {
-    backgroundImage: '/images/rrfps-about-cta-bg.jpg',
+    backgroundImage: '/images/rrfps-about-cta-bg.webp',
     titleLine1: "Let's Protect",
     titleLine2: 'What Matters Most',
     script: 'Together.',
@@ -685,7 +685,7 @@ export const multiFamilyPage = {
   banner: {
     title: 'Multi-Family.',
     subtitle: 'INDUSTRIES WE SERVE',
-    backgroundImage: '/images/red-rocks-fire-protection-multi-family-hero.jpg',
+    backgroundImage: '/images/red-rocks-fire-protection-multi-family-hero.webp',
   },
   /** Hero block — SplitPanel-style (about.astro §2 pattern), talking to the
    *  property manager directly and naming the structural reasons multi-family
@@ -699,9 +699,9 @@ export const multiFamilyPage = {
     ctaLabel: 'See Our Services',
     ctaHref: '/services',
     /** Real multi-family community photo now available —
-     *  /public/images/red-rocks-fire-protections-fire-sprinkler-multi-family-units.jpg
+     *  /public/images/red-rocks-fire-protections-fire-sprinkler-multi-family-units.webp
      *  replaces the placeholder used while the asset was pending. */
-    image: '/images/red-rocks-fire-protections-fire-sprinkler-multi-family-units.jpg',
+    image: '/images/red-rocks-fire-protections-fire-sprinkler-multi-family-units.webp',
     imageAlt: 'A wet-pipe fire sprinkler riser and branch lines exposed in a Colorado multi-family building during a routine RRFPS annual inspection.',
   },
   /** Accordion (industry.astro §2 pattern) — frames the 5 most common
@@ -758,19 +758,19 @@ export const multiFamilyPage = {
         number: '01',
         title: 'Walking the Property With You.',
         body: 'Not against you. We pair a NICET III designer or a CSA-certified inspector on every walk-through, run the equipment together, and flag the things your future self will wish you knew today — before they become a finding on someone else\'s report.',
-        image: '/images/red-rocks-fire-protection-walk-the-property.jpg',
+        image: '/images/red-rocks-fire-protection-walk-the-property.webp',
       },
       {
         number: '02',
         title: 'One Calendar, Not Twelve.',
         body: 'One inspection calendar, one report format, one inbox when something needs you. We consolidate the fire alarm, sprinkler, extinguisher, monitoring, and backflow cadences across every property on your roster — scheduled against leasing hours and resident notice windows so service doesn\'t fight turnover.',
-        image: '/images/red-rocks-fire-protection-one-calendar.jpg',
+        image: '/images/red-rocks-fire-protection-one-calendar.webp',
       },
       {
         number: '03',
         title: 'The Call When It Counts.',
         body: 'When the fire marshal walks through at 9am on a Tuesday, when the sprinkler freezes at 11pm on a Saturday, when the deficiency list is forty items long and the lender wants to see it by Friday — one number. The same technician who knows your portfolio. No call center, no ticket queue.',
-        image: '/images/red-rocks-fire-protection-the-call-when-it-counts.jpg',
+        image: '/images/red-rocks-fire-protection-the-call-when-it-counts.webp',
       },
     ],
   },
@@ -781,7 +781,7 @@ export const multiFamilyPage = {
     title: 'Advocacy Is the Job.',
     body:
       "The word we hear from multi-family clients most often is *advocacy* — not inspection, not service, not compliance. RRFPS stays ahead of NFPA revisions and AHJ interpretations so the regional manager doesn't have to. We share what we know proactively: a code change in your jurisdiction, a deficiency pattern we're seeing across your portfolio, a capital-planning heads-up on a system reaching end-of-life. The point isn't that we know about life-safety codes — anyone can read them. The point is that we tell you about them before they become your problem.",
-    image: '/images/red-rocks-fire-protection-advocacy-is-the-job.jpg',
+    image: '/images/red-rocks-fire-protection-advocacy-is-the-job.webp',
     imageAlt: 'Red Rocks Fire Protection technician reviewing a fire-protection report with a multi-family property manager',
   },
   /** Testimonial block — uses the 4 named testimonials already in site.ts
@@ -829,7 +829,7 @@ export const inspectionsPage = {
      * New inspection-specific hero image (1344x768), replaces the old
      * `pt-philosophy.webp` placeholder that was reused from industry.astro.
      */
-    backgroundImage: '/images/red-rocks-fire-protection-inspection-hero.jpg',
+    backgroundImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
   },
   /** 2×2 ibox grid (industry.astro §1) — 4 inspection categories.
    *  Each entry now carries an `icon` field (Iconify name, mdi:* set)
@@ -891,7 +891,7 @@ export const inspectionsPage = {
     ctaHref: '/service-areas',
     /** Reuse the same placeholder image as about.astro's "Our Core Values"
      *  SplitPanel for now. Swap to an inspection-jobsite photo later. */
-    image: '/images/red-rocks-fire-protections-our-inspection-process.jpg',
+    image: '/images/red-rocks-fire-protections-our-inspection-process.webp',
     imageAlt: 'A Red Rocks Fire Protection technician performing an inspection on site',
   },
   /** Dual CTA at the bottom (about.astro pattern). */
@@ -945,7 +945,7 @@ export const fireSprinklerPage = {
     /** RRFPS-2: swapped from rrfps-fire-sprinkler-systems-hero.jpg to
      *  rrfps-our-fire-sprinkler-services.jpg at user request. Same
      *  image is also used as §3's accordion background. */
-    backgroundImage: '/images/rrfps-our-fire-sprinkler-services.jpg',
+    backgroundImage: '/images/rrfps-our-fire-sprinkler-services.webp',
   },
   /** 2×2 ibox grid (industry.astro §1 pattern, replicated from inspections.astro §1).
    *  Four .txt-derived tiles — Service, Modifications, Replacement, 24/7.
@@ -1109,7 +1109,7 @@ export const fireSprinklerPage = {
       'While many companies simply repair fire sprinkler systems, Red Rocks Fire Protection Services takes a different approach. We believe our responsibility extends well beyond completing a service call. We strive to become a long-term life safety partner who helps clients navigate the complexities of fire protection, compliance requirements, and evolving fire codes with confidence.',
     ctaLabel: 'See All Services',
     ctaHref: '/services',
-    image: '/images/rrfps-more-than-a-fire-sprinkler-contractor.jpg',
+    image: '/images/rrfps-more-than-a-fire-sprinkler-contractor.webp',
     imageAlt: 'Red Rocks Fire Protection technician on a sprinkler service call',
   },
   /** §5 — Advocacy That Protects Your Investment (black-bg SplitPanel,
@@ -1122,7 +1122,7 @@ export const fireSprinklerPage = {
       'Advocacy is one of the core values that defines Red Rocks Fire Protection Services and one of the qualities that sets us apart. Fire codes, NFPA standards, local jurisdiction requirements, and compliance regulations continue to evolve. Staying informed requires ongoing education and industry involvement. Our team continually monitors these changes so we can provide proactive guidance that helps our clients remain compliant while avoiding unnecessary surprises. We believe our customers deserve more than a contractor who simply completes inspections or repairs. They deserve a trusted advisor who communicates clearly, explains recommendations honestly, and helps them make informed decisions that protect both their property and the people who depend on it.',
     ctaLabel: 'Schedule Site Visit to Receive Complimentary Quote',
     ctaHref: '/contact',
-    image: '/images/rrfps-advocacy-that-protects-your-investment.jpg',
+    image: '/images/rrfps-advocacy-that-protects-your-investment.webp',
     imageAlt: 'Red Rocks Fire Protection advocacy in action',
   },
   /** §7 — Why Clients Continue to Choose RRFPS (black-bg SplitPanel,
@@ -1168,7 +1168,7 @@ export const fireSprinklerPage = {
       'When it comes to life safety systems, experience and qualifications matter. Red Rocks Fire Protection Services employs highly trained professionals who maintain numerous state licenses and respected industry certifications. Our team continually invests in training, technical expertise, and staying current with evolving codes and regulations to ensure every project meets the highest standards for quality, safety, and compliance. Combined with our responsive customer service, dependable scheduling, and commitment to accountability, our experience allows clients to move forward with confidence knowing their life safety systems are in capable hands.',
     ctaLabel: 'About RRFPS',
     ctaHref: '/about',
-    image: '/images/rrfps-experience-you-can-trust.jpg',
+    image: '/images/rrfps-experience-you-can-trust.webp',
     imageAlt: 'Red Rocks Fire Protection team on a service call',
   },
   /** §9 — Serving Colorado's Diverse Industries (bg-image 4-card grid,
@@ -1207,7 +1207,7 @@ export const fireSprinklerPage = {
     title: 'Protecting What Matters Most.',
     body:
       'At Red Rocks Fire Protection Services, we believe protecting lives and property should never be reactive. It should be proactive, dependable, and entrusted to a partner who genuinely cares about your success. Whether you need routine fire sprinkler maintenance, emergency repairs, tenant improvement modifications, system upgrades, or complete fire sprinkler replacement, our experienced team is ready to deliver the responsive service, expert guidance, and long-term partnership you deserve.',
-    image: '/images/rrfps-protect-what-matters-most.jpg',
+    image: '/images/rrfps-protect-what-matters-most.webp',
     imageAlt: 'A Red Rocks Fire Protection technician performing a sprinkler service',
   },
   /** §11 — Ready to Partner with RRFPS? (white-bg closing band +

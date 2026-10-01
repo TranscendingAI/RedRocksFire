@@ -21,6 +21,14 @@ interface Props {
   author?: string;
   /** Pre-built JSON-LD payload (stringified). Inserted verbatim. */
   schema?: string;
+  /**
+   * Above-the-fold hero/LCP image to preload with high priority. Use for
+   * heroes painted via CSS background-image, which the browser otherwise
+   * only discovers after the stylesheet has loaded.
+   */
+  preloadImage?: string;
+  /** Emit <meta name="robots" content="noindex, follow"> (e.g. /thank-you). */
+  noindex?: boolean;
 }
 
 const {
@@ -33,6 +41,8 @@ const {
   modifiedDate,
   author,
   schema,
+  preloadImage,
+  noindex = false,
 } = Astro.props;
 
 // Launch integrations. PUBLIC_* vars are inlined at build time, so changing
@@ -61,6 +71,16 @@ const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION?.trim();
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {preloadImage && (
+      <link
+        rel="preload"
+        as="image"
+        href={preloadImage}
+        fetchpriority="high"
+        type={preloadImage.endsWith('.webp') ? 'image/webp' : undefined}
+      />
+    )}
     {gscVerification && <meta name="google-site-verification" content={gscVerification} />}
     {canonical && <link rel="canonical" href={canonical} />}
     {canonical && <meta property="og:url" content={canonical} />}

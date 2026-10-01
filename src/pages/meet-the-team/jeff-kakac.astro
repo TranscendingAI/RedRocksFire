@@ -13,9 +13,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ClosingCTA from '../../components/ClosingCTA.astro';
 
-const heroBg = '/images/rrfps-about-cta-bg.jpg';
-const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.jpg';
-const jeffPhoto = '/images/team-members/jeff-kakac-red-rocks-fire-protection-services.png';
+const heroBg = '/images/rrfps-about-cta-bg.webp';
+const ctaBg = '/images/meet-our-team-rrfps-cta-banner-bg.webp';
+const jeffPhoto = '/images/team-members/jeff-kakac-red-rocks-fire-protection-services.webp';
 
 const bioParagraphs = [
   'Jeff Kakac serves as Operations Manager and brings more than 23 years of experience in the fire protection industry. Throughout his career, he has developed extensive expertise in fire alarm systems, fire sprinkler systems, dry and pre-action systems, nitrogen generation systems, and backflow prevention assemblies. Having worked through virtually every aspect of the industry, Jeff provides both technical knowledge and operational leadership to support customers and field teams alike.',
@@ -50,7 +50,7 @@ const bioParagraphs = [
       <div class="jk-bio__inner">
 
         <div class="jk-bio__photo">
-          <img src={jeffPhoto} alt="Jeff Kakac, Operations Manager of Red Rocks Fire Protection Services" loading="eager" decoding="async" />
+          <img src={jeffPhoto} alt="Jeff Kakac, Operations Manager of Red Rocks Fire Protection Services" loading="eager" fetchpriority="high" decoding="async" />
         </div>
 
         <div class="jk-bio__copy">

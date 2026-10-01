@@ -133,9 +133,9 @@ export const counties: County[] = [
     bannerTitle: 'Fire Protection Adams County, CO',
     bannerSubtitle: 'ADAMS COUNTY FIRE PROTECTION',
     // Hero banner background — commercial fire sprinkler system.
-    bannerImage: '/images/rrfps-county-hero-sprinkler.jpg',
+    bannerImage: '/images/rrfps-county-hero-sprinkler.webp',
     // §1 SplitPanel photo — fire inspector meeting a client in a lobby.
-    heroImage: '/images/rrfps-county-inspector-client.jpg',
+    heroImage: '/images/rrfps-county-inspector-client.webp',
 
     heroIntro:
       'Adams County stretches from the dense residential and commercial neighborhoods of the north Denver metro out to the logistics and industrial corridors along I-76, I-25, and E-470. That range means very different life-safety needs from one property to the next — and several different fire authorities enforcing the code across the county. Red Rocks Fire Protection helps Adams County owners and property managers keep sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated under one vendor, with reports formatted to whichever AHJ has jurisdiction over the property.',
@@ -289,8 +289,8 @@ export const counties: County[] = [
     state: 'CO',
     bannerTitle: 'Fire Protection Arapahoe County, CO',
     bannerSubtitle: 'ARAPAHOE COUNTY FIRE PROTECTION',
-    bannerImage: '/images/rrfps-county-hero-sprinkler.jpg',
-    heroImage: '/images/rrfps-county-inspector-client.jpg',
+    bannerImage: '/images/rrfps-county-hero-sprinkler.webp',
+    heroImage: '/images/rrfps-county-inspector-client.webp',
 
     heroIntro:
       'Arapahoe County is where Red Rocks Fire Protection is based — our office sits in Centennial, in the middle of the county we work every day. The county runs from Aurora on the east through the Denver Tech Center and out to Littleton, and it holds some of the densest office, retail, and multi-family stock on the south metro. Three different fire departments enforce the code across that span. We keep sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs on one schedule, with every report written to the authority that actually inspects the building.',
@@ -430,8 +430,8 @@ export const counties: County[] = [
     state: 'CO',
     bannerTitle: 'Fire Protection Boulder County, CO',
     bannerSubtitle: 'BOULDER COUNTY FIRE PROTECTION',
-    bannerImage: '/images/rrfps-county-hero-sprinkler.jpg',
-    heroImage: '/images/rrfps-county-inspector-client.jpg',
+    bannerImage: '/images/rrfps-county-hero-sprinkler.webp',
+    heroImage: '/images/rrfps-county-inspector-client.webp',
 
     heroIntro:
       'Boulder County pairs a university city and a fast-growing tech corridor with foothills that put much of the county in the wildland-urban interface. That mix — lab and cleanroom space in Boulder and Louisville, distribution and manufacturing in Longmont, and homes that back up to open space and grassland — drives fire-protection needs you will not find on the flat metro floor. Red Rocks Fire Protection keeps sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated across it, with reports written to the local authority.',
@@ -574,8 +574,8 @@ export const counties: County[] = [
     state: 'CO',
     bannerTitle: 'Fire Protection Broomfield County, CO',
     bannerSubtitle: 'BROOMFIELD COUNTY FIRE PROTECTION',
-    bannerImage: '/images/rrfps-county-hero-sprinkler.jpg',
-    heroImage: '/images/rrfps-county-inspector-client.jpg',
+    bannerImage: '/images/rrfps-county-hero-sprinkler.webp',
+    heroImage: '/images/rrfps-county-inspector-client.webp',
 
     heroIntro:
       'Broomfield is a consolidated city and county, which makes it the simplest jurisdiction on the north metro to work in: one government, one fire department, one permitting process for the whole area. It is also one of the fastest-growing, anchored by the Interlocken and Arista business districts along the US 36 tech corridor between Denver and Boulder. Red Rocks Fire Protection keeps sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated for Broomfield owners and managers, all under one AHJ.',
@@ -705,8 +705,8 @@ export const counties: County[] = [
     state: 'CO',
     bannerTitle: 'Fire Protection Denver County, CO',
     bannerSubtitle: 'DENVER COUNTY FIRE PROTECTION',
-    bannerImage: '/images/rrfps-county-hero-sprinkler.jpg',
-    heroImage: '/images/rrfps-county-inspector-client.jpg',
+    bannerImage: '/images/rrfps-county-hero-sprinkler.webp',
+    heroImage: '/images/rrfps-county-inspector-client.webp',
 
     heroIntro:
       'The City and County of Denver is one consolidated government with one fire authority, so every property in the county answers to the Denver Fire Department. That single-AHJ simplicity meets some of the most varied building stock in the state — century-old masonry in LoDo, downtown high-rises, converted RiNo warehouses, dense apartment corridors, and the logistics belt out toward the airport. Red Rocks Fire Protection keeps sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated across a Denver portfolio on one schedule.',
@@ -836,8 +836,8 @@ export const counties: County[] = [
     state: 'CO',
     bannerTitle: 'Fire Protection Douglas County, CO',
     bannerSubtitle: 'DOUGLAS COUNTY FIRE PROTECTION',
-    bannerImage: '/images/rrfps-county-hero-sprinkler.jpg',
-    heroImage: '/images/rrfps-county-inspector-client.jpg',
+    bannerImage: '/images/rrfps-county-hero-sprinkler.webp',
+    heroImage: '/images/rrfps-county-inspector-client.webp',
 
     heroIntro:
       'Douglas County has been one of the fastest-growing counties in the country for two decades, and it shows in the building stock: master-planned communities in Highlands Ranch and Castle Pines, the retail and office spine along I-25 through Lone Tree and Castle Rock, and new mixed-use going up faster than most departments can keep pace with. Red Rocks Fire Protection keeps sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated across it, with reports written to the local authority.',
@@ -977,8 +977,8 @@ export const counties: County[] = [
     state: 'CO',
     bannerTitle: 'Fire Protection El Paso County, CO',
     bannerSubtitle: 'EL PASO COUNTY FIRE PROTECTION',
-    bannerImage: '/images/rrfps-county-hero-sprinkler.jpg',
-    heroImage: '/images/rrfps-county-inspector-client.jpg',
+    bannerImage: '/images/rrfps-county-hero-sprinkler.webp',
+    heroImage: '/images/rrfps-county-inspector-client.webp',
 
     heroIntro:
       'El Paso County anchors the southern end of our service area, centered on Colorado Springs — the second-largest city in the state and a market shaped by its military footprint. Fort Carson, Peterson Space Force Base, the Air Force Academy, and Schriever SFB drive demand for contractor and support facilities, defense manufacturing, and the housing and retail that surround a large service population. Red Rocks Fire Protection keeps sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated for El Paso County owners and managers.',

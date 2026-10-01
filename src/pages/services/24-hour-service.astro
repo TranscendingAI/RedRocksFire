@@ -25,15 +25,15 @@
  *
  * Image assets — all placeholders, to be swapped for page-specific
  * Nano Banana imagery after the batch build:
- *   • Hero           — /images/rrfps-24-hour-service-page-hero.png
+ *   • Hero           — /images/rrfps-24-hour-service-page-hero.webp
  *   • §2 tan band bg — /images/rrfps-backflow-prevention-why-red-rocks-bg.jpg
- *   • §3 accordion bg — /images/rrfps-24-hour-service-services-accordion-bg.jpg
- *   • §4 more than    — /images/rrfps-24-hour-service-more-than-a-service-contractor.jpg
- *   • §5 advocacy     — /images/rrfps-24-hour-service-advocacy.jpg
- *   • §6 values bg    — /images/rrfps-24-hour-service-why-clients-stay-bg.jpg
- *   • §7 experience   — /images/rrfps-24-hour-service-experience.jpg
- *   • §8 promise      — /images/rrfps-24-hour-service-ready-when-you-are.jpg
- *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.png
+ *   • §3 accordion bg — /images/rrfps-24-hour-service-services-accordion-bg.webp
+ *   • §4 more than    — /images/rrfps-24-hour-service-more-than-a-service-contractor.webp
+ *   • §5 advocacy     — /images/rrfps-24-hour-service-advocacy.webp
+ *   • §6 values bg    — /images/rrfps-24-hour-service-why-clients-stay-bg.webp
+ *   • §7 experience   — /images/rrfps-24-hour-service-experience.webp
+ *   • §8 promise      — /images/rrfps-24-hour-service-ready-when-you-are.webp
+ *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.webp
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -44,7 +44,7 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-const bannerImage = '/images/rrfps-24-hour-service-page-hero.png';
+const bannerImage = '/images/rrfps-24-hour-service-page-hero.webp';
 
 const categories = [
   {
@@ -153,10 +153,10 @@ const whyClientsValues = [
   { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
 ] as const;
 
-const moreThanImage = '/images/rrfps-24-hour-service-more-than-a-service-contractor.jpg';
-const advocacyImage = '/images/rrfps-24-hour-service-advocacy.jpg';
-const experienceImage = '/images/rrfps-24-hour-service-experience.jpg';
-const promiseImage = '/images/rrfps-24-hour-service-ready-when-you-are.jpg';
+const moreThanImage = '/images/rrfps-24-hour-service-more-than-a-service-contractor.webp';
+const advocacyImage = '/images/rrfps-24-hour-service-advocacy.webp';
+const experienceImage = '/images/rrfps-24-hour-service-experience.webp';
+const promiseImage = '/images/rrfps-24-hour-service-ready-when-you-are.webp';
 ---
 
 <BaseLayout
@@ -481,7 +481,7 @@ const promiseImage = '/images/rrfps-24-hour-service-ready-when-you-are.jpg';
 
     <!-- §10. CLOSING CTA — site-wide ClosingCTA with 24-hour copy -->
     <ClosingCTA
-      backgroundImage="/images/rrfps-services-cta-bg.png"
+      backgroundImage="/images/rrfps-services-cta-bg.webp"
       paragraphs={[
         "Choosing the right life safety partner is about more than completing a service, correcting a deficiency, or meeting code. It's about having a team you can trust to communicate clearly, advocate for you, understand your property, stay ahead of compliance requirements, and take responsibility for protecting your people and property. Whether you need 24-hour emergency response, diagnostics, emergency repair, impairment support, fire watch guidance, or long-term system service, Red Rocks Fire Protection Services brings the same responsive service and accountability to every property and every call we take.",
       ]}
@@ -544,7 +544,7 @@ const promiseImage = '/images/rrfps-24-hour-service-ready-when-you-are.jpg';
   .es-whyrr__bullet-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
 
   .es-accordion { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
-  .es-accordion__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-24-hour-service-services-accordion-bg.jpg'); background-size: cover; background-position: left center; z-index: -2; }
+  .es-accordion__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-24-hour-service-services-accordion-bg.webp'); background-size: cover; background-position: left center; z-index: -2; }
   .es-accordion__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 13, 11, 0.55) 0%, rgba(13, 13, 11, 0.45) 50%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
   .es-accordion__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; }
   @media (min-width: 768px) { .es-accordion__inner { padding-inline: 2.5rem; } }
@@ -586,7 +586,7 @@ const promiseImage = '/images/rrfps-24-hour-service-ready-when-you-are.jpg';
 
   .es-why { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
   @media (min-width: 768px) { .es-why { padding-block: 150px; } }
-  .es-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-24-hour-service-why-clients-stay-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
+  .es-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-24-hour-service-why-clients-stay-bg.webp'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
   .es-why::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: -1; }
   .es-why__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; color: #ffffff; }
   @media (min-width: 768px) { .es-why__inner { padding-inline: 2.5rem; } }

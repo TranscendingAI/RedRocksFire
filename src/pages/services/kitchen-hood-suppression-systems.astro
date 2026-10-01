@@ -24,15 +24,15 @@
  *
  * Image assets — all placeholders, to be swapped for page-specific
  * Nano Banana imagery after the batch build:
- *   • Hero           — /images/rrfps-kitchen-hood-suppression-systems-page-hero.png
+ *   • Hero           — /images/rrfps-kitchen-hood-suppression-systems-page-hero.webp
  *   • §2 tan band bg — /images/rrfps-backflow-prevention-why-red-rocks-bg.jpg
- *   • §3 accordion bg — /images/rrfps-kitchen-hood-suppression-systems-services-accordion-bg.jpg
- *   • §4 more than    — /images/rrfps-kitchen-hood-suppression-systems-more-than-a-service-contractor.jpg
- *   • §5 advocacy     — /images/rrfps-kitchen-hood-suppression-systems-advocacy.jpg
- *   • §6 values bg    — /images/rrfps-kitchen-hood-suppression-systems-why-clients-stay-bg.jpg
- *   • §7 experience   — /images/rrfps-kitchen-hood-suppression-systems-experience.jpg
- *   • §8 promise      — /images/rrfps-kitchen-hood-suppression-systems-ready-when-you-are.jpg
- *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.png
+ *   • §3 accordion bg — /images/rrfps-kitchen-hood-suppression-systems-services-accordion-bg.webp
+ *   • §4 more than    — /images/rrfps-kitchen-hood-suppression-systems-more-than-a-service-contractor.webp
+ *   • §5 advocacy     — /images/rrfps-kitchen-hood-suppression-systems-advocacy.webp
+ *   • §6 values bg    — /images/rrfps-kitchen-hood-suppression-systems-why-clients-stay-bg.webp
+ *   • §7 experience   — /images/rrfps-kitchen-hood-suppression-systems-experience.webp
+ *   • §8 promise      — /images/rrfps-kitchen-hood-suppression-systems-ready-when-you-are.webp
+ *   • ClosingCTA bg   — /images/rrfps-services-cta-bg.webp
  */
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -43,7 +43,7 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 
 const diamondIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20"><path d="M0.660472 19.6191L0.47542 6.53585L13.7437 19.8041L0.660472 19.6191Z"></path><path d="M14.3396 0.939992L14.5246 14.0232L1.25635 0.754941L14.3396 0.939992Z"></path></svg>';
 
-const bannerImage = '/images/rrfps-kitchen-hood-suppression-systems-page-hero.png';
+const bannerImage = '/images/rrfps-kitchen-hood-suppression-systems-page-hero.webp';
 
 const categories = [
   {
@@ -151,10 +151,10 @@ const whyClientsValues = [
   { title: 'And we operate as one family.', body: 'We support one another while building lasting partnerships with every client we serve.' },
 ] as const;
 
-const moreThanImage = '/images/rrfps-kitchen-hood-suppression-systems-more-than-a-service-contractor.jpg';
-const advocacyImage = '/images/rrfps-kitchen-hood-suppression-systems-advocacy.jpg';
-const experienceImage = '/images/rrfps-kitchen-hood-suppression-systems-experience.jpg';
-const promiseImage = '/images/rrfps-kitchen-hood-suppression-systems-ready-when-you-are.jpg';
+const moreThanImage = '/images/rrfps-kitchen-hood-suppression-systems-more-than-a-service-contractor.webp';
+const advocacyImage = '/images/rrfps-kitchen-hood-suppression-systems-advocacy.webp';
+const experienceImage = '/images/rrfps-kitchen-hood-suppression-systems-experience.webp';
+const promiseImage = '/images/rrfps-kitchen-hood-suppression-systems-ready-when-you-are.webp';
 ---
 
 <BaseLayout
@@ -479,7 +479,7 @@ const promiseImage = '/images/rrfps-kitchen-hood-suppression-systems-ready-when-
 
     <!-- §10. CLOSING CTA — site-wide ClosingCTA with kitchen-hood copy -->
     <ClosingCTA
-      backgroundImage="/images/rrfps-services-cta-bg.png"
+      backgroundImage="/images/rrfps-services-cta-bg.webp"
       paragraphs={[
         "Choosing the right kitchen hood suppression partner is about more than a periodic inspection tag. It's about having a team that understands how your kitchen operates, how cooking equipment changes affect suppression coverage, and what it takes to keep the system ready, compliant, and aligned with code. Whether you need semiannual inspection and testing, service and repair, modifications for new equipment, or a new kitchen suppression system installation, Red Rocks Fire Protection Services brings the same responsive service and accountability to every property we serve.",
       ]}
@@ -542,7 +542,7 @@ const promiseImage = '/images/rrfps-kitchen-hood-suppression-systems-ready-when-
   .kh-whyrr__bullet-icon iconify-icon { color: currentColor; stroke: currentColor; stroke-width: 1; }
 
   .kh-accordion { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
-  .kh-accordion__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-kitchen-hood-suppression-systems-services-accordion-bg.jpg'); background-size: cover; background-position: left center; z-index: -2; }
+  .kh-accordion__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-kitchen-hood-suppression-systems-services-accordion-bg.webp'); background-size: cover; background-position: left center; z-index: -2; }
   .kh-accordion__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 13, 11, 0.55) 0%, rgba(13, 13, 11, 0.45) 50%, rgba(13, 13, 11, 0.55) 100%); z-index: -1; }
   .kh-accordion__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; }
   @media (min-width: 768px) { .kh-accordion__inner { padding-inline: 2.5rem; } }
@@ -584,7 +584,7 @@ const promiseImage = '/images/rrfps-kitchen-hood-suppression-systems-ready-when-
 
   .kh-why { position: relative; isolation: isolate; overflow: hidden; padding-block: 110px; background-color: #0d0d0b; }
   @media (min-width: 768px) { .kh-why { padding-block: 150px; } }
-  .kh-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-kitchen-hood-suppression-systems-why-clients-stay-bg.jpg'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
+  .kh-why__bg { position: absolute; inset: 0; background-image: url('/images/rrfps-kitchen-hood-suppression-systems-why-clients-stay-bg.webp'); background-size: cover; background-position: center; filter: brightness(0.35); z-index: -2; }
   .kh-why::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: -1; }
   .kh-why__inner { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.25rem; color: #ffffff; }
   @media (min-width: 768px) { .kh-why__inner { padding-inline: 2.5rem; } }
