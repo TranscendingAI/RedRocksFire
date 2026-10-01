@@ -268,9 +268,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Adams County, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection Services in Adams County, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression across Adams County, Colorado — Thornton, Westminster, Brighton, Commerce City, and more. One vendor across every AHJ. NICET-certified technicians.',
+        'Fire inspections, sprinkler, alarm and backflow testing across Adams County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Adams County CO, fire inspections Adams County, sprinkler inspection Thornton, fire alarm testing Commerce City, backflow testing Brighton, fire protection company Adams County Colorado, North Metro Fire Rescue inspections, South Adams County Fire inspections',
       canonical: '/service-areas/counties/adams-county-co/',
@@ -411,9 +411,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Arapahoe County, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Arapahoe County, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression across Arapahoe County, Colorado — Centennial, Aurora, Littleton, the DTC, and more. Locally based, one vendor across every fire department.',
+        'Fire inspections, sprinkler, alarm and backflow testing across Arapahoe County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Arapahoe County CO, fire inspections Arapahoe County, sprinkler inspection Centennial, fire alarm testing Aurora, backflow testing Littleton, South Metro Fire Rescue inspections, Aurora Fire Rescue inspections',
       canonical: '/service-areas/counties/arapahoe-county-co/',
@@ -555,9 +555,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Boulder County, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Boulder County, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression across Boulder County, Colorado — Boulder, Longmont, Louisville, and more. Wildland-interface experience, one vendor across every fire authority.',
+        'Fire inspections, sprinkler, alarm and backflow testing across Boulder County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Boulder County CO, fire inspections Boulder, sprinkler inspection Longmont, fire alarm testing Louisville, backflow testing Boulder County, wildfire interface fire protection, Boulder Fire-Rescue inspections',
       canonical: '/service-areas/counties/boulder-county-co/',
@@ -684,9 +684,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Broomfield, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Broomfield County, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression across Broomfield, Colorado — Interlocken, Arista, and the US 36 tech corridor. One consolidated AHJ, one vendor for every system.',
+        'Fire inspections, sprinkler, alarm and backflow testing across Broomfield County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Broomfield CO, fire inspections Broomfield, sprinkler inspection Interlocken, fire alarm testing Arista, backflow testing Broomfield, Broomfield fire protection company, North Metro Fire Rescue inspections',
       canonical: '/service-areas/counties/broomfield-county-co/',
@@ -817,9 +817,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Denver County, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Denver County, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler, standpipe and pump testing, 24/7 monitoring, backflow, and suppression across the City and County of Denver. One AHJ, Denver-licensed technicians, one vendor for a full portfolio.',
+        'Fire inspections, sprinkler, alarm and backflow testing across Denver County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Denver County CO, fire inspections Denver, sprinkler inspection Denver, fire alarm testing Denver, backflow testing Denver, Denver Fire Department inspections, Denver Fire Code compliance',
       canonical: '/service-areas/counties/denver-county-co/',
@@ -957,9 +957,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Douglas County, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in Douglas County, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression across Douglas County, Colorado — Highlands Ranch, Parker, Castle Rock, Lone Tree, and more. One vendor across South Metro and Castle Rock fire.',
+        'Fire inspections, sprinkler, alarm and backflow testing across Douglas County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection Douglas County CO, fire inspections Highlands Ranch, sprinkler inspection Parker, fire alarm testing Castle Rock, backflow testing Lone Tree, HOA fire protection Douglas County, South Metro Fire Rescue inspections',
       canonical: '/service-areas/counties/douglas-county-co/',
@@ -1096,9 +1096,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in El Paso County, CO | Red Rocks Fire Protection',
+      title: 'Fire Protection in El Paso County, CO | Red Rocks Fire',
       description:
-        'NFPA fire inspections, sprinkler and alarm testing, 24/7 monitoring, backflow, and suppression across El Paso County, Colorado — Colorado Springs, Monument, Fountain, and more. Scheduled-route coverage, one vendor for every system.',
+        'Fire inspections, sprinkler, alarm and backflow testing across El Paso County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
       keywords:
         'fire protection El Paso County CO, fire inspections Colorado Springs, sprinkler inspection Colorado Springs, fire alarm testing Monument, backflow testing Fountain, Colorado Springs Fire Department inspections, defense facility fire protection',
       canonical: '/service-areas/counties/el-paso-county-co/',

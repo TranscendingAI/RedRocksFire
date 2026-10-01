@@ -1,7 +1,7 @@
 ---
 title: Data Center Fire Suppression Without the Water Damage.
-seoTitle: Data Center Fire Suppression in the Denver Tech Center | Clean Agent & Preaction | RRFPS
-seoDescription: A wet sprinkler over a live server room is its own disaster. Here's how clean-agent and preaction systems protect Denver Tech Center data centers from fire without destroying the hardware.
+seoTitle: "Denver Tech Center Data Center Fire Suppression | RRFPS"
+seoDescription: "A wet sprinkler over a live server room is its own disaster. How clean-agent and preaction systems protect Denver Tech Center data centers and hardware."
 excerpt: In a data center, the fire is one threat and the sprinkler water is another. Here's how clean-agent and preaction systems suppress a fire without soaking the servers you're trying to protect.
 
 publishDate: 2026-09-18

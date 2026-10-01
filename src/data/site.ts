@@ -99,9 +99,9 @@ export const leadership = {
 
 export const home = {
   seo: {
-    title: 'Red Rocks Fire Protection Services | One Vendor Life Safety Solutions | Colorado',
+    title: 'Denver Fire Protection Company | Red Rocks Fire Protection',
     description:
-      'Colorado-based, family-owned fire protection since 2010. Inspections, sprinklers, alarms, monitoring, and life-safety compliance — one trusted partner across the Front Range.',
+      'Family-owned fire protection serving Colorado since 2010. Fire inspections, sprinklers, alarms and 24/7 monitoring across the Denver metro. Call (720) 733-8050.',
   },
   hero: {
     eyebrow: 'Fire Safety Inspections & Compliance',
@@ -164,9 +164,9 @@ export const home = {
 
 export const about = {
   seo: {
-    title: 'About Red Rocks Fire Protection Services | Colorado Life Safety Partner',
+    title: 'About Our Colorado Fire Protection Company | Red Rocks Fire',
     description:
-      'Meet Red Rocks Fire Protection Services, a Colorado-based, family-owned life safety company delivering comprehensive fire protection and compliance solutions since 2010.',
+      'Red Rocks Fire Protection Services is a family-owned Colorado fire and life safety company serving the Denver metro and Front Range since 2010.',
   },
   banner: {
     title: 'About Us.',
@@ -425,9 +425,9 @@ export const about = {
 
 export const services = {
   seo: {
-    title: 'Fire Protection Services Denver | Inspections, Sprinklers, Monitoring | RRFPS',
+    title: 'Fire Protection Services in Denver, CO | Red Rocks Fire',
     description:
-      'Inspections, fire sprinkler service, fire alarm service, monitoring, backflow prevention, portable extinguishers, kitchen hood suppression, DAS/BDA, area of refuge, and consulting — one vendor across the Colorado Front Range.',
+      'Fire inspections, sprinkler and alarm service, monitoring, backflow, extinguishers, kitchen hood suppression and consulting from one vendor across Colorado.',
   },
   hero: {
     eyebrow: 'Our Services',
@@ -551,9 +551,9 @@ export const services = {
 
 export const contactPage = {
   seo: {
-    title: 'Contact Red Rocks Fire Protection | (720) 733-8050 | Centennial, CO',
+    title: 'Contact Red Rocks Fire Protection | Centennial, CO Office',
     description:
-      'Reach Red Rocks Fire Protection for inspections, service, monitoring, and 24/7 emergency response across the Colorado Front Range. Office in Centennial, CO.',
+      'Contact Red Rocks Fire Protection for fire inspections, service, monitoring and 24/7 emergency response across the Denver metro. Call (720) 733-8050 today.',
   },
   hero: {
     title: 'Contact Red Rocks Fire Protection.',
@@ -677,9 +677,9 @@ export const industries = [
 export const multiFamilyPage = {
   seo: {
     title:
-      'Fire Protection for Multi-Family Management Companies | Red Rocks Fire Protection | Colorado',
+      'Multi-Family Fire Protection in Colorado | Red Rocks Fire',
     description:
-      'Life-safety partner for apartment buildings, townhomes, and student housing across the Denver Front Range. One vendor for inspections, sprinklers, alarms, monitoring, backflow, suppression, and BDA — managed across multiple communities by a single accountable team.',
+      'One vendor for apartment, townhome and student housing fire safety across the Denver metro: inspections, sprinklers, alarms, monitoring, backflow and BDA testing.',
     h1: 'Multi-Family Management Companies.',
   },
   banner: {
@@ -816,9 +816,9 @@ export const multiFamilyPage = {
 
 export const inspectionsPage = {
   seo: {
-    title: 'Fire Safety Inspections Denver | NFPA Reports | Red Rocks Fire Protection',
+    title: 'Fire Safety Inspections in Denver, CO | Red Rocks Fire',
     description:
-      'Annual NFPA fire safety inspections across Colorado — sprinklers, alarms, extinguishers, backflow, suppression. Detailed written reports. Codes, legislations, and jurisdictional navigation handled.',
+      'NFPA fire safety inspections across Colorado for sprinklers, alarms, extinguishers, backflow and suppression, with detailed written reports and AHJ navigation.',
   },
   banner: {
     /** Used in the ptbanner (industry.astro §0 — full-bleed background image + 96px title + breadcrumb). */
@@ -934,9 +934,9 @@ export const inspectionsPage = {
 export const fireSprinklerPage = {
   seo: {
     title:
-      'Fire Sprinkler Service & Systems | Red Rocks Fire Protection | Colorado',
+      'Fire Sprinkler Service & Systems in Denver, CO | RRFPS',
     description:
-      'Comprehensive fire sprinkler service, modifications, and replacement for commercial, multifamily, industrial, retail, and healthcare facilities across Colorado. NFPA-aligned, code-compliant, 24/7 emergency response.',
+      'Fire sprinkler service, modifications and replacement for commercial, multifamily, industrial and healthcare buildings across Colorado, plus 24/7 service.',
   },
   banner: {
     /** ptbanner (industry.astro §0 pattern, replicated from inspections.astro §0). */

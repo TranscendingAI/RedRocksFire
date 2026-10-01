@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const hotelsHospitalityPage: IndustryPageData = {
   seo: {
     title:
-      'Fire Protection for Hotels & Hospitality | Red Rocks Fire Protection | Colorado',
+      'Hotel Fire Protection in Colorado | Red Rocks Fire Protection',
     description:
-      'One Vendor Life Safety Solution for hotels across the Colorado Front Range — inspections, alarms, sprinklers, kitchen hood suppression, Area of Refuge, monitoring, renovation coordination and 24-hour emergency service.',
+      'Hotel and hospitality fire protection across Colorado: inspections, alarms, sprinklers, kitchen hood suppression, Area of Refuge, monitoring and 24/7 service.',
   },
   banner: {
     title: 'Hotels & Hospitality.',

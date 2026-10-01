@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const automotivePage: IndustryPageData = {
   seo: {
     title:
-      'Fire Protection for Automotive Dealerships & Service Centers | Red Rocks Fire Protection | Colorado',
+      'Auto Dealership Fire Protection in Colorado | Red Rocks Fire',
     description:
-      'One Vendor Life Safety Solution for automotive dealerships and service centers across the Colorado Front Range — inspections, alarms, sprinklers, extinguishers, security systems, renovation coordination and 24-hour emergency service.',
+      'Fire protection for Colorado auto dealerships and service centers: inspections, alarms, sprinklers, extinguishers, security systems and 24/7 emergency service.',
   },
   banner: {
     title: 'Automotive.',

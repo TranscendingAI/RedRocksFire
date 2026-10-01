@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const financialPage: IndustryPageData = {
   seo: {
     title:
-      'Fire Protection for Banks & Financial Institutions | Red Rocks Fire Protection | Colorado',
+      'Bank & Financial Fire Protection in Colorado | Red Rocks Fire',
     description:
-      'One Vendor Life Safety Solution for banks and financial institutions across the Colorado Front Range — inspections, alarms, sprinklers, security systems, monitoring, branch renovation support and 24-hour emergency service.',
+      'Fire protection for Colorado banks and financial institutions: inspections, alarms, sprinklers, security systems, monitoring, branch renovations and 24/7 service.',
   },
   banner: {
     title: 'Financial Institutions.',
