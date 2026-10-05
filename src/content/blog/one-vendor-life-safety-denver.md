@@ -1,7 +1,7 @@
 ---
 title: Why Denver Property Teams Stop Juggling Fire Protection Contractors.
-seoTitle: "One-Vendor Life Safety for Denver Properties | RRFPS Blog"
-seoDescription: "Many Denver buildings juggle five fire protection vendors and no one owns the whole picture. What a one-vendor life safety model changes for property teams."
+seoTitle: "One-Vendor Life Safety in Denver | Red Rocks Fire"
+seoDescription: "What changes for Denver property teams when one company handles sprinklers, alarms, extinguishers, monitoring and backflow instead of five vendors."
 excerpt: Most Denver buildings run a sprinkler company, an alarm company, an extinguisher company, a monitoring company, and a backflow tester — and no one owns the whole picture. Here's what changes when one vendor does.
 
 publishDate: 2026-08-28

@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const dataCentersPage: IndustryPageData = {
   seo: {
     title:
-      'Data Center Fire Protection in Colorado | Red Rocks Fire',
+      'Data Center Fire Protection Colorado | Red Rocks Fire Protection',
     description:
-      'Data center fire protection across Colorado\'s Front Range: preaction and deluge sprinklers, Gamewell-FCI alarms, ERRCS/BDA, monitoring and 24/7 emergency service.',
+      'Specialized fire and life safety services for Colorado data centers, including preaction sprinklers, alarms, monitoring, inspections and emergency response.',
   },
   banner: {
     title: 'Data Centers.',

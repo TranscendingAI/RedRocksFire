@@ -1,7 +1,7 @@
 ---
 title: Fire Protection for Assisted Living and Healthcare in Lakewood.
-seoTitle: "Assisted Living Fire Protection in Lakewood, CO | RRFPS"
-seoDescription: "Assisted living and healthcare facilities face the strictest fire safety rules. What NFPA 101 and West Metro Fire Rescue require of Lakewood, CO facilities."
+seoTitle: "Lakewood Assisted Living Fire Safety | Red Rocks"
+seoDescription: "Fire protection requirements for Lakewood assisted living and healthcare facilities, including NFPA 101 and what West Metro Fire Rescue expects."
 excerpt: In an assisted living facility, the people the fire code protects can't always get themselves out. That single fact raises the stakes on every system — and it's why healthcare life safety is its own discipline.
 
 publishDate: 2026-07-10

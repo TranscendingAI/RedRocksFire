@@ -1,7 +1,7 @@
 ---
 title: The Annual Backflow Certification Highlands Ranch HOAs Forget.
-seoTitle: "Highlands Ranch HOA Backflow Testing | Annual Certification"
-seoDescription: "Backflow assemblies protect drinking water and need annual certified testing that Highlands Ranch HOAs often miss. What the test covers and why it matters."
+seoTitle: "Highlands Ranch HOA Backflow Testing | Red Rocks"
+seoDescription: "Annual backflow certification for Highlands Ranch HOAs: what the test covers, why drinking-water protection depends on it, and what gets missed."
 excerpt: The backflow assembly on your community's fire line and irrigation system needs a certified test every year — and it's the compliance item HOA boards forget until the water utility sends a notice.
 
 publishDate: 2026-07-17

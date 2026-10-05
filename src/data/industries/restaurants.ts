@@ -12,9 +12,9 @@ import type { IndustryPageData } from './types';
 export const restaurantsPage: IndustryPageData = {
   seo: {
     title:
-      'Restaurant Fire Protection in Colorado | Red Rocks Fire',
+      'Restaurant Fire Protection & Hood Suppression Colorado | Red Rocks',
     description:
-      'Fire protection for Colorado restaurants and food trucks: kitchen hood suppression, fire alarms, sprinklers, extinguishers, monitoring and 24/7 emergency service.',
+      'Fire protection for Colorado restaurants and food trucks, including hood suppression, extinguishers, inspections, alarms, sprinklers and compliance support.',
   },
   banner: {
     title: 'Restaurants & Food Trucks.',

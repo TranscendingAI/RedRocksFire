@@ -268,9 +268,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection Services in Adams County, CO | Red Rocks Fire',
+      title: 'Fire Protection in Adams County | Red Rocks Fire Protection',
       description:
-        'Fire inspections, sprinkler, alarm and backflow testing across Adams County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
+        'Fire and life safety service across Adams County, Colorado, including inspections, sprinklers, alarms, backflow testing and 24/7 monitoring.',
       keywords:
         'fire protection Adams County CO, fire inspections Adams County, sprinkler inspection Thornton, fire alarm testing Commerce City, backflow testing Brighton, fire protection company Adams County Colorado, North Metro Fire Rescue inspections, South Adams County Fire inspections',
       canonical: '/service-areas/counties/adams-county-co/',
@@ -411,9 +411,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection in Arapahoe County, CO | Red Rocks Fire',
+      title: 'Fire Protection in Arapahoe County | Red Rocks Fire',
       description:
-        'Fire inspections, sprinkler, alarm and backflow testing across Arapahoe County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
+        'Fire and life safety service across Arapahoe County, Colorado, including inspections, sprinklers, alarms, backflow testing and 24/7 monitoring.',
       keywords:
         'fire protection Arapahoe County CO, fire inspections Arapahoe County, sprinkler inspection Centennial, fire alarm testing Aurora, backflow testing Littleton, South Metro Fire Rescue inspections, Aurora Fire Rescue inspections',
       canonical: '/service-areas/counties/arapahoe-county-co/',
@@ -555,9 +555,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection in Boulder County, CO | Red Rocks Fire',
+      title: 'Fire Protection in Boulder County | Red Rocks Fire',
       description:
-        'Fire inspections, sprinkler, alarm and backflow testing across Boulder County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
+        'Fire and life safety service across Boulder County, Colorado, including inspections, sprinklers, alarms, backflow testing and 24/7 monitoring.',
       keywords:
         'fire protection Boulder County CO, fire inspections Boulder, sprinkler inspection Longmont, fire alarm testing Louisville, backflow testing Boulder County, wildfire interface fire protection, Boulder Fire-Rescue inspections',
       canonical: '/service-areas/counties/boulder-county-co/',
@@ -684,9 +684,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection in Broomfield County, CO | Red Rocks Fire',
+      title: 'Fire Protection in Broomfield County | Red Rocks Fire',
       description:
-        'Fire inspections, sprinkler, alarm and backflow testing across Broomfield County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
+        'Fire and life safety service across Broomfield County, Colorado, including inspections, sprinklers, alarms, backflow testing and 24/7 monitoring.',
       keywords:
         'fire protection Broomfield CO, fire inspections Broomfield, sprinkler inspection Interlocken, fire alarm testing Arista, backflow testing Broomfield, Broomfield fire protection company, North Metro Fire Rescue inspections',
       canonical: '/service-areas/counties/broomfield-county-co/',
@@ -817,9 +817,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection in Denver County, CO | Red Rocks Fire',
+      title: 'Fire Protection in Denver County | Red Rocks Fire Protection',
       description:
-        'Fire inspections, sprinkler, alarm and backflow testing across Denver County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
+        'Fire and life safety service across Denver County, Colorado, including inspections, sprinklers, alarms, backflow testing and 24/7 monitoring.',
       keywords:
         'fire protection Denver County CO, fire inspections Denver, sprinkler inspection Denver, fire alarm testing Denver, backflow testing Denver, Denver Fire Department inspections, Denver Fire Code compliance',
       canonical: '/service-areas/counties/denver-county-co/',
@@ -957,9 +957,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection in Douglas County, CO | Red Rocks Fire',
+      title: 'Fire Protection in Douglas County | Red Rocks Fire',
       description:
-        'Fire inspections, sprinkler, alarm and backflow testing across Douglas County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
+        'Fire and life safety service across Douglas County, Colorado, including inspections, sprinklers, alarms, backflow testing and 24/7 monitoring.',
       keywords:
         'fire protection Douglas County CO, fire inspections Highlands Ranch, sprinkler inspection Parker, fire alarm testing Castle Rock, backflow testing Lone Tree, HOA fire protection Douglas County, South Metro Fire Rescue inspections',
       canonical: '/service-areas/counties/douglas-county-co/',
@@ -1096,9 +1096,9 @@ export const counties: County[] = [
     ],
 
     meta: {
-      title: 'Fire Protection in El Paso County, CO | Red Rocks Fire',
+      title: 'Fire Protection in El Paso County | Red Rocks Fire',
       description:
-        'Fire inspections, sprinkler, alarm and backflow testing across El Paso County, CO, plus 24/7 monitoring. Family-owned and serving Colorado since 2010.',
+        'Fire and life safety service across El Paso County, Colorado, including inspections, sprinklers, alarms, backflow testing and 24/7 monitoring.',
       keywords:
         'fire protection El Paso County CO, fire inspections Colorado Springs, sprinkler inspection Colorado Springs, fire alarm testing Monument, backflow testing Fountain, Colorado Springs Fire Department inspections, defense facility fire protection',
       canonical: '/service-areas/counties/el-paso-county-co/',
