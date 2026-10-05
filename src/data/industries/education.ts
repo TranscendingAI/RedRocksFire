@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const educationPage: IndustryPageData = {
   seo: {
     title:
-      'School & University Fire Protection in Colorado | RRFPS',
+      'Fire Protection for Schools & Universities Colorado | Red Rocks',
     description:
-      'Fire and life safety for Colorado schools, colleges and universities: inspections, alarms, sprinklers, kitchen hoods, Area of Refuge, ERRCS/BDA and monitoring.',
+      'Fire and life safety services for Colorado schools, colleges and universities, including inspections, alarms, sprinklers, monitoring and compliance support.',
   },
   banner: {
     title: 'Education.',

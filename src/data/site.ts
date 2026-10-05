@@ -99,9 +99,9 @@ export const leadership = {
 
 export const home = {
   seo: {
-    title: 'Denver Fire Protection Company | Red Rocks Fire Protection',
+    title: 'Fire Protection Services Denver & Colorado | Red Rocks Fire Protection',
     description:
-      'Family-owned Colorado fire protection since 2010. Inspections, sprinklers, alarms and 24/7 service with a 90-minute response window in the Denver Metro area.',
+      'Red Rocks Fire Protection Services provides inspections, fire alarms, sprinklers, monitoring and complete life safety solutions across Denver and Colorado’s Front Range.  ',
   },
   hero: {
     eyebrow: 'Fire Safety Inspections & Compliance',
@@ -164,9 +164,9 @@ export const home = {
 
 export const about = {
   seo: {
-    title: 'About Our Colorado Fire Protection Company | Red Rocks Fire',
+    title: 'About Red Rocks Fire Protection Services | Colorado',
     description:
-      'Red Rocks Fire Protection Services is a family-owned Colorado fire and life safety company serving the Denver metro and Front Range since 2010.',
+      'Meet Red Rocks Fire Protection Services, a family-owned Colorado life safety company providing comprehensive fire protection and compliance solutions since 2010.',
   },
   banner: {
     title: 'About Us.',
@@ -425,9 +425,9 @@ export const about = {
 
 export const services = {
   seo: {
-    title: 'Fire Protection Services in Denver, CO | Red Rocks Fire',
+    title: 'Fire & Life Safety Services Colorado | Red Rocks Fire Protection',
     description:
-      'Fire inspections, sprinkler and alarm service, monitoring, backflow, extinguishers, kitchen hood suppression and consulting from one vendor across Colorado.',
+      'Explore comprehensive fire protection services including inspections, sprinklers, alarms, monitoring, backflow, extinguishers, suppression and 24/7 service.',
   },
   hero: {
     eyebrow: 'Our Services',
@@ -551,9 +551,9 @@ export const services = {
 
 export const contactPage = {
   seo: {
-    title: 'Contact Red Rocks Fire Protection | Centennial, CO Office',
+    title: 'Contact Red Rocks Fire Protection | Colorado',
     description:
-      'Contact Red Rocks Fire Protection for fire inspections, service, monitoring and 24/7 emergency response across the Denver metro. Call (720) 733-8050 today.',
+      'Contact Red Rocks Fire Protection in Centennial for inspections, monitoring and 24/7 emergency service, with a 90-minute response window in the Denver metro.',
   },
   hero: {
     title: 'Contact Red Rocks Fire Protection.',
@@ -677,9 +677,9 @@ export const industries = [
 export const multiFamilyPage = {
   seo: {
     title:
-      'Multi-Family Fire Protection in Colorado | Red Rocks Fire',
+      'Fire Protection for Multi-Family Properties Colorado | Red Rocks',
     description:
-      'One vendor for apartment, townhome and student housing fire safety across the Denver metro: inspections, sprinklers, alarms, monitoring, backflow and BDA testing.',
+      'Fire protection for Colorado apartments and multi-family portfolios, including inspections, alarms, sprinklers, monitoring, compliance and 24/7 service.',
     h1: 'Multi-Family Management Companies.',
   },
   banner: {
@@ -934,9 +934,9 @@ export const inspectionsPage = {
 export const fireSprinklerPage = {
   seo: {
     title:
-      'Fire Sprinkler Service & Systems in Denver, CO | RRFPS',
+      'Fire Sprinkler Service & Systems Colorado | Red Rocks Fire Protection',
     description:
-      'Fire sprinkler service, modifications and replacement for commercial, multifamily, industrial and healthcare buildings across Colorado, plus 24/7 service.',
+      'Fire sprinkler service, repair, modifications and replacement for wet, dry, preaction, deluge, standpipe and fire pump systems throughout Colorado.',
   },
   banner: {
     /** ptbanner (industry.astro §0 pattern, replicated from inspections.astro §0). */

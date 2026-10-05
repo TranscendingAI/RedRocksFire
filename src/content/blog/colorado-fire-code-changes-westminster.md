@@ -1,7 +1,7 @@
 ---
 title: Getting Ahead of Colorado Fire Code Changes.
-seoTitle: "Westminster, CO Fire Code Changes | Property Manager Guide"
-seoDescription: "Colorado jurisdictions adopt new fire code editions on their own timelines. How Westminster property managers can stay ahead of code changes."
+seoTitle: "Westminster Fire Code Changes | Red Rocks Fire Protection"
+seoDescription: "How Westminster and other Colorado jurisdictions adopt new fire code editions on their own timelines, and how property managers can prepare."
 excerpt: Fire codes aren't static, and every Colorado jurisdiction adopts new editions on its own schedule. Here's how a Westminster property manager stays ahead of code changes instead of finding out at the next inspection.
 
 publishDate: 2026-09-25

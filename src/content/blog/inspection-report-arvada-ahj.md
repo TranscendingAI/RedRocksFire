@@ -1,7 +1,7 @@
 ---
 title: The Inspection Report Your Arvada AHJ Will Actually Accept.
-seoTitle: "Fire Inspection Reports Your Arvada AHJ Will Accept | RRFPS"
-seoDescription: "A fire inspection is only as good as its report. What makes a report the Arvada Fire Protection District accepts on the first pass, and what triggers rework."
+seoTitle: "Arvada Fire Inspection Reports | Red Rocks Fire Protection"
+seoDescription: "What makes a fire inspection report the Arvada Fire Protection District accepts on the first pass, and which gaps send a report back for rework."
 excerpt: Two inspectors can test the same building and hand you two very different reports. Only one of them keeps you out of a rework cycle with the Arvada Fire Protection District. Here's the difference.
 
 publishDate: 2026-09-11

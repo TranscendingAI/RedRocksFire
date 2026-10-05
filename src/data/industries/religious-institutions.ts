@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const religiousInstitutionsPage: IndustryPageData = {
   seo: {
     title:
-      'Church Fire Protection in Colorado | Red Rocks Fire Protection',
+      'Fire Protection for Churches & Religious Facilities Colorado',
     description:
-      'Fire and life safety for Colorado churches and religious institutions: inspections, sprinklers, alarms, kitchen hood suppression, security and 24/7 service.',
+      'Fire and life safety services for Colorado churches and religious facilities, including inspections, alarms, sprinklers, monitoring and compliance support.',
   },
   banner: {
     title: 'Religious Institutions.',

@@ -32,7 +32,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ClosingCTA from '../components/ClosingCTA.astro';
-import { about } from '../data/site';
+import { about, services } from '../data/site';
 
 const heroImage = '/images/rrfps-services-hero-bg.webp';
 const ctaImage = '/images/rrfps-services-cta-bg.webp';
@@ -43,8 +43,8 @@ const arrowPath = 'M0 6.78247C0 6.52555 0.102065 6.27914 0.283741 6.09746C0.4654
 ---
 
 <BaseLayout
-  title="Fire Protection Services in Denver, CO | Red Rocks Fire"
-  description="Fire inspections, sprinkler and alarm service, monitoring, backflow, extinguishers, kitchen hood suppression and consulting from one vendor across Colorado."
+  title={services.seo.title}
+  description={services.seo.description}
 >
   <div class="av-page sv-page">
 

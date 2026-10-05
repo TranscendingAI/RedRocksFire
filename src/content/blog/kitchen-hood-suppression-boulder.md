@@ -1,7 +1,7 @@
 ---
 title: "Kitchen Hood Suppression: A Compliance Guide for Boulder Restaurants."
-seoTitle: "Kitchen Hood Suppression in Boulder, CO | NFPA 96 & UL 300"
-seoDescription: "What Boulder restaurant owners need to know about kitchen fire suppression: NFPA 96, UL 300, the semiannual inspection and what Boulder Fire-Rescue checks for."
+seoTitle: "Boulder Kitchen Hood Suppression | Red Rocks Fire"
+seoDescription: "Kitchen hood suppression for Boulder restaurants: NFPA 96, UL 300, the semiannual inspection and what Boulder Fire-Rescue checks."
 excerpt: The hood suppression system over your cooking line is the most heavily regulated piece of equipment in a Boulder restaurant — and the one most likely to fail an inspection. Here's what compliance actually requires.
 
 publishDate: 2026-08-07

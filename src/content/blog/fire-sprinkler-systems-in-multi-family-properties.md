@@ -4,8 +4,8 @@
 title: Fire Sprinkler Systems in Multi-Family Properties.
 # SEO — overrides the front-end H1 in the page <title> tag (search engines
 # prefer the longer keyword-rich variant; humans see the brand voice).
-seoTitle: "Multi-Family Fire Sprinkler Guide | NFPA 13, 13R & 13D | RRFPS"
-seoDescription: "Fire sprinkler inspections for Colorado multi-family properties: which standard applies (NFPA 13, 13R or 13D), what gets tested and what AHJs expect to see."
+seoTitle: "Multi-Family Sprinkler Standards | Red Rocks Fire"
+seoDescription: "Which sprinkler standard applies to a Colorado multi-family property, NFPA 13, 13R or 13D, and what the inspection has to cover."
 excerpt: Multi-family properties have a specific NFPA path for sprinkler systems — and the wrong standard at install time becomes a permanent AHJ problem. Here's how 13, 13R, and 13D actually apply.
 
 # ── Editorial metadata ──────────────────────────────────────────

@@ -8,9 +8,9 @@ import type { IndustryPageData } from './types';
 export const warehouseIndustrialPage: IndustryPageData = {
   seo: {
     title:
-      'Warehouse Fire Protection in Colorado | Red Rocks Fire',
+      'Industrial & Warehouse Fire Protection Colorado | Red Rocks',
     description:
-      'Fire protection for Colorado warehouse and industrial facilities: wet, dry, preaction and deluge sprinklers, fire pumps, alarms, backflow and ERRCS/BDA.',
+      'Fire protection for Colorado warehouses, storage and industrial facilities, including inspections, sprinklers, alarms, monitoring and emergency service.',
   },
   banner: {
     title: 'Warehouse & Industrial.',
