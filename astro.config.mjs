@@ -21,6 +21,8 @@ const SITE = 'https://www.rrfps.com';
  *   - /index-2/              — Avelon demo replica, not a public page
  *   - redirect stubs         — old URLs that meta-refresh / 301 elsewhere
  *   - /thank-you/            — post-submit confirmation (also noindex)
+ *   - /fire-reports/         — hidden report lookup; still works by direct
+ *                              URL but is unlinked and noindex, nofollow
  */
 const SITEMAP_EXCLUDE = [
   /^\/admin(\/|$)/,
@@ -30,6 +32,7 @@ const SITEMAP_EXCLUDE = [
   /^\/about\/mission-vission-values\/?$/,
   /^\/404\/?$/,
   /^\/thank-you\/?$/,
+  /^\/fire-reports\/?$/,
 ];
 
 // https://astro.build/config

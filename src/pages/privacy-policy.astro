@@ -5,7 +5,6 @@
  * Plain-language policy describing what the site actually does:
  *   - Contact form (/contact) → /api/contact → emailed to staff via Resend
  *   - Google Analytics 4 + Microsoft Clarity (BaseLayout, production only)
- *   - Fire report lookup (/fire-reports) → search terms queried in Supabase
  *   - Hosting on Vercel; GSAP from jsDelivr; icons from the Iconify API
  *
  * Layout mirrors the other content pages: ptbanner hero (contact.astro §0
@@ -18,7 +17,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contact } from '../data/site';
 
-const LAST_UPDATED = 'September 30, 2026';
+const LAST_UPDATED = 'October 4, 2026';
 const bannerImage = '/images/rrfps-services-hero-bg.webp';
 
 const sections = [
@@ -39,7 +38,7 @@ const sections = [
 
 <BaseLayout
   title="Privacy Policy | Red Rocks Fire Protection Services"
-  description="How Red Rocks Fire Protection Services collects, uses and protects information submitted through rrfps.com, including our contact form and report lookup."
+  description="How Red Rocks Fire Protection Services collects, uses and protects information submitted through rrfps.com, including our contact form, analytics and cookies."
   canonical="https://www.rrfps.com/privacy-policy/"
 >
   <div class="av-page">
@@ -90,12 +89,6 @@ const sections = [
           <strong>company or property name</strong>. If you email or call us directly, we receive the
           information you choose to share.
         </p>
-        <h3>Fire report lookup</h3>
-        <p>
-          Our <a href="/fire-reports">fire report lookup</a> lets you search by property address or company
-          name. The search terms you enter are sent to our database provider to find matching reports.
-          No account is required, and we do not ask for your name or contact details to search.
-        </p>
         <h3>Information collected automatically</h3>
         <p>
           Like most websites, when you visit the Site we and our service providers automatically receive
@@ -110,7 +103,6 @@ const sections = [
         <ul>
           <li>To respond to your inquiries, quote requests, and service questions.</li>
           <li>To schedule, provide, and follow up on the services you request.</li>
-          <li>To provide the fire report lookup and deliver the reports you search for.</li>
           <li>To understand how visitors use the Site so we can improve its content, design, and performance.</li>
           <li>To protect the Site, detect spam and abuse, and keep it secure.</li>
           <li>To comply with legal obligations and enforce our rights.</li>
@@ -126,8 +118,7 @@ const sections = [
           <li>
             <strong>Service providers</strong> that operate parts of the Site on our behalf, including:{' '}
             <strong>Resend</strong> (delivers contact form submissions to our staff by email),{' '}
-            <strong>Vercel</strong> (website hosting), <strong>Supabase</strong> (database and file storage
-            for the fire report lookup), <strong>Google Analytics</strong> and{' '}
+            <strong>Vercel</strong> (website hosting), <strong>Google Analytics</strong> and{' '}
             <strong>Microsoft Clarity</strong> (site analytics), and content delivery networks that serve
             scripts and icons used by the Site (such as jsDelivr and Iconify). These providers process
             information under their own terms and privacy policies.
