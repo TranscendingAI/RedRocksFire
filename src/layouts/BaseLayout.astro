@@ -29,6 +29,8 @@ interface Props {
   preloadImage?: string;
   /** Emit <meta name="robots" content="noindex, follow"> (e.g. /thank-you). */
   noindex?: boolean;
+  /** With `noindex`, emit "noindex, nofollow" instead (e.g. hidden /fire-reports). */
+  nofollow?: boolean;
 }
 
 const {
@@ -43,6 +45,7 @@ const {
   schema,
   preloadImage,
   noindex = false,
+  nofollow = false,
 } = Astro.props;
 
 // Launch integrations. PUBLIC_* vars are inlined at build time, so changing
@@ -71,7 +74,7 @@ const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION?.trim();
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    {noindex && <meta name="robots" content={nofollow ? 'noindex, nofollow' : 'noindex, follow'} />}
     {preloadImage && (
       <link
         rel="preload"

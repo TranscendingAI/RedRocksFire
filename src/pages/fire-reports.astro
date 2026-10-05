@@ -1,10 +1,23 @@
 ---
+/**
+ * Fire Report Lookup — /fire-reports/
+ *
+ * HIDDEN from the public site (client request, Oct 2026). The page, its
+ * Supabase search, and the /admin portal still work for anyone with the
+ * direct URL, but:
+ *   - no nav/footer/page links point here,
+ *   - it is excluded from the sitemap (astro.config.mjs SITEMAP_EXCLUDE),
+ *   - it emits <meta name="robots" content="noindex, nofollow">.
+ * To bring it back, revert those three things.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
   title="Fire Inspection Report Lookup | Red Rocks Fire Protection"
   description="Look up your Red Rocks Fire Protection inspection report by property address or company name, then open or download the PDF. Serving Colorado since 2010."
+  noindex
+  nofollow
 >
   <!-- ══════════════════════════════════════════════════════════
        PAGE-TITLE BANNER (replicated from inspections.astro §0)

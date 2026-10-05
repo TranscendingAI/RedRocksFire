@@ -37,6 +37,7 @@ export const ROUTES = {
   industriesOld: '/industries-we-serve',
   serviceAreas: '/service-areas',
   blog: '/blog',
+  /** Hidden from the public site — still routable, but do not link to it. */
   fireReports: '/fire-reports',
   privacyPolicy: '/privacy-policy',
   thankYou: '/thank-you',
