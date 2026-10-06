@@ -12,7 +12,7 @@
  *       walk-the-property photo. Second column: paragraph
  *       explaining the page's purpose + links to /about and
  *       /industries.
- *   §2. Nine full testimonial blocks — each block has a
+ *   §2. Ten full testimonial blocks — each block has a
  *       1/2 + 1/2 grid: left column is the quote highlight
  *       ("title") in big black uppercase, right column is the
  *       full testimonial paragraph followed by an avatar +
@@ -26,7 +26,8 @@
  * Avatar photos: existing /public/images/ assets (Brandon headshot,
  *   greystar logo, user.png placeholder) plus /public/images/testimonials/
  *   (bart-copeland.webp headshot, testimonial-user-placeholder.webp
- *   generic avatar, orange "C" SVG avatar for Christine Kozubal).
+ *   generic avatar, orange "C" SVG avatar for Christine Kozubal,
+ *   green "C" WebP avatar for Chris Lanciano).
  *
  * Class prefix: `.tm-` for any new section-scoped styles. §0 + §1
  * reuse the existing .ptbanner + .mt-quote* styles from
@@ -120,6 +121,14 @@ const testimonials = [
     role: '',
     avatar: '/images/testimonials/testimonial-user-placeholder.webp',
   },
+  {
+    title: 'A DEPENDABLE FIRE PROTECTION PARTNER',
+    body:
+      '“As a fire protection supplier, we truly value our partnership with Red Rocks Fire Protection and appreciate their reliability, expertise, and commitment to getting the job done right. We would highly recommend them to anyone looking for a dependable fire protection partner.”',
+    name: 'Chris Lanciano',
+    role: '',
+    avatar: '/images/testimonials/chris-lanciano-avatar.webp',
+  },
 ] as const;
 ---
 
@@ -176,7 +185,7 @@ const testimonials = [
     </section>
 
     {/* ══════════════════════════════════════════════════════════
-       §2. TESTIMONIALS — 9 blocks, 1/2 + 1/2 grid each.
+       §2. TESTIMONIALS — 10 blocks, 1/2 + 1/2 grid each.
        Left column: title (highlighted quote) in big black uppercase.
        Right column: full quote paragraph + avatar/name/role row.
        1px divider between blocks.
@@ -337,7 +346,7 @@ const testimonials = [
   .tm-open__link:hover { color: #b01021; }
 
   /* ══════════════════════════════════════════════════════════
-     §2. TESTIMONIALS — 4 blocks, 1/2 + 1/2 grid, divider between
+     §2. TESTIMONIALS — 10 blocks, 1/2 + 1/2 grid, divider between
      ══════════════════════════════════════════════════════════ */
   .tm-list {
     background: #ffffff;
