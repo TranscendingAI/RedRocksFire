@@ -61,7 +61,7 @@ export const contact = {
   },
   mapsUrl: 'https://maps.app.goo.gl/6KtPNqsZFRP8iXmn7',
   /** Office reception hours — separate from field service availability. */
-  officeHours: 'Mon – Fri: 8:00 AM – 4:00 PM',
+  officeHours: 'Mon – Fri: 8:00 AM – 5:00 PM',
   officeClosed: 'Sat & Sun: Closed',
   /** Field service availability — 24/7/365 emergency response. */
   serviceAvailability: '24-hour, 7-days-a-week emergency service',

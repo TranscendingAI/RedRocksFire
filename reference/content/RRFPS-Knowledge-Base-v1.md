@@ -25,7 +25,7 @@ disagree, conflicts are surfaced in §13 — "Open Content Questions for Zack".
 | Service region | Colorado Front Range — Denver Metro focus, Colorado Springs → Fort Collins |
 | Phone | (720) 733-8050 |
 | Email | info@rrfps.com |
-| Hours (office) | Mon–Fri 8:00 AM – 4:00 PM · Sat & Sun Closed |
+| Hours (office) | Mon–Fri 8:00 AM – 5:00 PM · Sat & Sun Closed |
 | Office hours | Office only. Field service runs 24/7. |
 | Office URL | https://rrfps.com/ |
 | LinkedIn | (linkedin.com/ — placeholder URL on current page; pending canonical) |
