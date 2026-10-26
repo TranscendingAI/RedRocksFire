@@ -336,7 +336,7 @@ export const cities: City[] = [
     bannerImage: '/images/red-rocks-fire-protection-inspection-hero.webp',
 
     heroIntro:
-      'Denver properties range from century-old masonry buildings and converted warehouses to high-rise offices, dense apartment communities, commercial kitchens, healthcare facilities, and distribution space. That variety creates very different life-safety needs from one block to the next. Red Rocks Fire Protection helps Denver owners and property managers keep sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated under one vendor — with documentation prepared for the Denver Fire Department’s requirements.',
+      'Denver properties range from century-old masonry buildings and converted warehouses to high-rise offices, dense apartment communities, commercial kitchens, healthcare facilities, and distribution space. That variety creates very different life-safety needs from one block to the next. Red Rocks Fire Protection helps Denver owners and property managers keep sprinkler, alarm, extinguisher, suppression, monitoring, and backflow programs coordinated under one vendor — with documentation prepared for the Denver Fire Department’s requirements, dispatched from our office in Centennial.',
 
     ahj: {
       name: 'Denver Fire Department Fire Prevention Division',
@@ -378,24 +378,20 @@ export const cities: City[] = [
 
     servicesOffered: [
       {
-        title: 'Fire-Protection System Inspections',
-        body: 'Code-driven inspection, testing, and maintenance for sprinklers, alarms, extinguishers, pumps, standpipes, backflow assemblies, and suppression systems — with clear reports for your property records and Denver Fire review.',
+        title: 'Annual NFPA Fire Inspections',
+        body: 'Code-driven inspection, testing, and maintenance for sprinklers, alarms, extinguishers, pumps, standpipes, backflow assemblies, and suppression systems — documented on NFPA or Denver Fire forms with the technician’s Denver Fire Department license number, so your records are ready for the next Fire Prevention inspection.',
       },
       {
-        title: 'Fire Sprinkler, Standpipe & Pump Testing',
-        body: 'Wet, dry, preaction, and standpipe systems tested on the required NFPA cadence, including valves, drains, fire department connections, pumps, and prioritized deficiency documentation.',
+        title: 'Fire Sprinkler & Standpipe Testing',
+        body: 'Wet, dry, preaction, and standpipe systems tested on the required NFPA cadence — including valves, drains, fire department connections, and fire pumps in downtown high-rises — with prioritized deficiency documentation.',
       },
       {
-        title: 'Fire Alarm Testing & Service',
-        body: 'Functional testing of initiating devices, notification appliances, supervising signals, control equipment, secondary power, and system interfaces, coordinated to limit disruption in occupied buildings.',
+        title: 'Fire Alarm Testing',
+        body: 'Functional testing of initiating devices, notification appliances, voice evacuation, supervisory signals, control equipment, secondary power, and system interfaces, coordinated to limit disruption in occupied Denver buildings.',
       },
       {
-        title: '24/7 Alarm Monitoring',
-        body: 'Central-station monitoring and signal response for Denver properties, with account information, contacts, and dispatch procedures kept current as tenants and building staff change.',
-      },
-      {
-        title: 'System-Down & Fire-Watch Support',
-        body: 'Fast response when a sprinkler or alarm system is impaired, including repair coordination, outage documentation, and guidance through Denver’s system-down reporting and fire-watch process.',
+        title: '24/7 Monitoring',
+        body: 'Central-station monitoring and signal response for Denver properties, with account contacts and dispatch procedures kept current — plus support through Denver’s system-down reporting and fire-watch process when a sprinkler or alarm system is impaired.',
       },
       {
         title: 'Backflow Prevention',
@@ -403,19 +399,19 @@ export const cities: City[] = [
       },
       {
         title: 'Fire Extinguisher Service',
-        body: 'Inspection, tagging, maintenance, hydrostatic testing, recharging, placement review, and logbook support for portable extinguishers throughout commercial and multi-family properties.',
+        body: 'Inspection, tagging, maintenance, hydrostatic testing, recharging, placement review, and logbook support for portable extinguishers — out-of-date extinguishers and missing logbooks are among the violations Denver Fire calls out most.',
       },
       {
         title: 'Kitchen Hood Suppression',
-        body: 'Inspection and service for commercial cooking suppression systems in Denver restaurants, hotels, commissaries, food halls, schools, and institutional kitchens.',
+        body: 'Inspection and service for commercial cooking suppression systems in Denver restaurants, breweries, hotels, food halls, commissaries, schools, and institutional kitchens.',
       },
       {
-        title: 'Special Hazard & Clean-Agent Systems',
+        title: 'Special Hazard & Clean-Agent Suppression',
         body: 'Inspection and maintenance for clean-agent, carbon-dioxide, dry-chemical, and other special systems protecting data rooms, industrial processes, archives, and critical equipment.',
       },
       {
-        title: 'Permitting & Life-Safety Coordination',
-        body: 'Scope development, construction-permit coordination, acceptance-test preparation, and correction management for Denver tenant improvements, system modifications, and property transitions.',
+        title: 'Life-Safety Consulting & Code Navigation',
+        body: 'Scope development, Denver construction-permit coordination, acceptance-test preparation, and correction management for tenant improvements, changes of occupancy, system modifications, and property transitions.',
       },
     ],
 
@@ -8676,6 +8672,7 @@ export const cityRegions: CityRegion[] = [
   {
     region: 'South/Southwest Metro',
     cities: [
+      stub('Denver', 'denver-co', '/service-areas/denver-co/'),
       stub('Littleton', 'littleton-co', '/service-areas/littleton-co/'),
       stub('Centennial', 'centennial-co', '/service-areas/centennial-co/'),
       stub('Highlands Ranch', 'highlands-ranch-co', '/service-areas/highlands-ranch-co/'),
