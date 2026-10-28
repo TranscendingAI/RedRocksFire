@@ -23,6 +23,7 @@
  * navigates to /thank-you/.
  */
 
+import { HEAR_ABOUT_US_OPTIONS } from '../data/hearAboutUs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contact, contactPage, company } from '../data/site';
 
@@ -171,6 +172,24 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
               <div class="cf__field">
                 <label for="cf-company">Company / Property</label>
                 <input type="text" id="cf-company" name="company" autocomplete="organization" />
+              </div>
+
+              <div class="cf__field">
+                <label for="cf-hear">How Did You Hear About Us? <span aria-hidden="true">*</span></label>
+                <select id="cf-hear" name="hear_about" required data-hear-select>
+                  <option value="" selected disabled>Please Select One.</option>
+                  {HEAR_ABOUT_US_OPTIONS.map((o) => (
+                    <option value={o.value} data-detail={o.detail}>{o.value}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Follow-up "who / please specify" box. Visible without JS (the
+                  API requires it for referral / customer / Other); the script
+                  hides it unless the chosen option needs it. */}
+              <div class="cf__field" data-hear-detail>
+                <label for="cf-hear-detail"><span class="cf__hear-detail-text" data-hear-detail-label>Referral name / other details</span> <span aria-hidden="true">*</span></label>
+                <input type="text" id="cf-hear-detail" name="hear_about_detail" maxlength="200" />
               </div>
 
               <div class="cf__field">
@@ -431,6 +450,7 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
   }
   .cf__field label span { color: var(--av-primary); }
   .cf__field input,
+  .cf__field select,
   .cf__field textarea {
     width: 100%;
     box-sizing: border-box;
@@ -443,7 +463,21 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
     border-radius: 0;
     transition: border-color 0.3s;
   }
+  .cf__field select {
+    appearance: none;
+    padding-right: 44px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%234a4a4a' stroke-width='1.6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 12px 8px;
+  }
+  .cf__field select:invalid { color: #8a8a8a; }
+  .cf__field select option { color: #0a0a0a; }
+  .cf__field label .cf__hear-detail-text { color: inherit; }
+  .cf__field[hidden] { display: none; }
   .cf__field input:focus,
+  .cf__field select:focus,
   .cf__field textarea:focus {
     outline: none;
     border-color: var(--av-primary);
@@ -586,6 +620,23 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
     if (new URLSearchParams(window.location.search).get('status') === 'error') {
       showStatus(ERROR_MSG, 'error');
     }
+
+    // "How did you hear about us?" follow-up box: show + require it only for
+    // options that need a name ("who") or "Other (Please Specify)".
+    const hearSelect = form.querySelector<HTMLSelectElement>('[data-hear-select]');
+    const hearDetail = form.querySelector<HTMLElement>('[data-hear-detail]');
+    const hearDetailInput = hearDetail?.querySelector<HTMLInputElement>('input');
+    const hearDetailLabel = hearDetail?.querySelector<HTMLElement>('[data-hear-detail-label]');
+    const syncHearDetail = () => {
+      if (!hearSelect || !hearDetail || !hearDetailInput) return;
+      const prompt = hearSelect.selectedOptions[0]?.dataset.detail;
+      hearDetail.hidden = !prompt;
+      hearDetailInput.required = !!prompt;
+      if (prompt && hearDetailLabel) hearDetailLabel.textContent = prompt;
+      if (!prompt) hearDetailInput.value = '';
+    };
+    hearSelect?.addEventListener('change', syncHearDetail);
+    syncHearDetail();
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
