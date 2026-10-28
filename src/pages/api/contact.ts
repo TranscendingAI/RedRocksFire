@@ -93,7 +93,7 @@ function validate(p: Payload): FieldErrors {
   const hear = HEAR_ABOUT_US_OPTIONS.find((o) => o.value === p.hearAbout);
   if (!hear) errors.hearAbout = 'Please tell us how you heard about us.';
   else if (hear.detail && !p.hearAboutDetail)
-    errors.hearAboutDetail = 'Please tell us who referred you, or specify how you heard about us.';
+    errors.hearAboutDetail = 'Please fill in the follow-up box for how you heard about us.';
   for (const key of Object.keys(LIMITS) as Field[]) {
     if (!errors[key] && p[key].length > LIMITS[key]) {
       errors[key] = `Please keep this under ${LIMITS[key]} characters.`;
