@@ -268,7 +268,7 @@ export const cities: City[] = [
       },
       {
         question: 'Does Red Rocks Fire Protection actually have an office in Centennial?',
-        answer: 'Yes. Our office is at 7076 S. Alton Way, Suite G2, Centennial, CO 80112. Most of our technicians live and work in the south Denver metro, which is why we can offer a 90-minute emergency response window inside the Denver Metro area — including Centennial, Englewood, Littleton, Aurora, and Greenwood Village.',
+        answer: 'Yes. Our office is at 7076 S Alton Way # G-2, Centennial, CO 80112. Most of our technicians live and work in the south Denver metro, which is why we can offer a 90-minute emergency response window inside the Denver Metro area — including Centennial, Englewood, Littleton, Aurora, and Greenwood Village.',
       },
       {
         question: 'How often do fire sprinklers need to be inspected in Centennial?',
@@ -3703,7 +3703,7 @@ export const cities: City[] = [
       },
       {
         question: 'How far is Red Rocks Fire Protection from Englewood?',
-        answer: 'Our office is at 7076 S. Alton Way, Suite G2, Centennial, CO 80112 — roughly fifteen minutes from downtown Englewood down South Broadway or across on Hampden. Because Englewood is well inside the Denver metro, we hold a 90-minute emergency response window for fire-protection emergencies in the city, and we send technicians who already know your building rather than a rotating crew.',
+        answer: 'Our office is at 7076 S Alton Way # G-2, Centennial, CO 80112 — roughly fifteen minutes from downtown Englewood down South Broadway or across on Hampden. Because Englewood is well inside the Denver metro, we hold a 90-minute emergency response window for fire-protection emergencies in the city, and we send technicians who already know your building rather than a rotating crew.',
       },
       {
         question: 'Do you handle fire protection for the Swedish and Craig hospital campus?',
