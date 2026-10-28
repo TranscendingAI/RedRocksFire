@@ -53,7 +53,7 @@ export const contact = {
   email: 'info@rrfps.com',
   emailHref: 'mailto:info@rrfps.com',
   address: {
-    line1: '7076 S. Alton Way, Suite G2',
+    line1: '7076 S Alton Way # G-2',
     city: 'Centennial',
     state: 'CO',
     zip: '80112',
