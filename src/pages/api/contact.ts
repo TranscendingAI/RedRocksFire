@@ -19,6 +19,7 @@
  */
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
+import { HEAR_ABOUT_US_OPTIONS } from '../../data/hearAboutUs';
 import { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } from 'astro:env/server';
 
 export const prerender = false;
@@ -29,6 +30,8 @@ const LIMITS = {
   phone: 40,
   company: 150,
   message: 5000,
+  hearAbout: 100,
+  hearAboutDetail: 200,
 } as const;
 
 type Field = keyof typeof LIMITS;
@@ -75,6 +78,8 @@ async function readPayload(request: Request): Promise<Payload | null> {
     phone: oneLine(str('phone')),
     company: oneLine(str('company')),
     message: str('message').replace(/\r\n?/g, '\n'),
+    hearAbout: oneLine(str('hear_about')),
+    hearAboutDetail: oneLine(str('hear_about_detail')),
     website: str('website'),
   };
 }
@@ -85,6 +90,10 @@ function validate(p: Payload): FieldErrors {
   if (!p.email) errors.email = 'Please enter your email address.';
   else if (!EMAIL_RE.test(p.email)) errors.email = 'Please enter a valid email address.';
   if (!p.message) errors.message = 'Please tell us how we can help.';
+  const hear = HEAR_ABOUT_US_OPTIONS.find((o) => o.value === p.hearAbout);
+  if (!hear) errors.hearAbout = 'Please tell us how you heard about us.';
+  else if (hear.detail && !p.hearAboutDetail)
+    errors.hearAboutDetail = 'Please fill in the follow-up box for how you heard about us.';
   for (const key of Object.keys(LIMITS) as Field[]) {
     if (!errors[key] && p[key].length > LIMITS[key]) {
       errors[key] = `Please keep this under ${LIMITS[key]} characters.`;
@@ -93,12 +102,17 @@ function validate(p: Payload): FieldErrors {
   return errors;
 }
 
+/** "Google Search", or "Referral from a Friend or Colleague: Jane Doe". */
+const hearAboutLabel = (p: Payload) =>
+  p.hearAboutDetail ? `${p.hearAbout}: ${p.hearAboutDetail}` : p.hearAbout;
+
 function buildEmail(p: Payload) {
   const rows: [string, string][] = [
     ['Name', p.name],
     ['Email', p.email],
     ['Phone', p.phone],
     ['Company / Property', p.company],
+    ['How did you hear about us?', hearAboutLabel(p)],
   ].filter(([, v]) => v) as [string, string][];
 
   const text = [
@@ -185,7 +199,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       from: CONTACT_FROM_EMAIL,
       to,
       replyTo: payload.email,
-      subject: `Website inquiry from ${payload.name}${payload.company ? ` (${payload.company})` : ''}`,
+      // "Heard via" is in the subject so it shows in the Resend Emails list
+      // (that list's columns are fixed: To / Status / Subject / Sent).
+      subject: `Website inquiry from ${payload.name}${payload.company ? ` (${payload.company})` : ''} | Heard via: ${hearAboutLabel(payload)}`,
       text,
       html,
     });
