@@ -180,7 +180,10 @@ const contactMenu = {
   },
   /** Address encoded for Google Maps embed; URL-escaped once. Matches the
    *  display string in contactMenu.info.address.value above. */
-  mapsEmbedUrl: 'https://www.google.com/maps?q=7076+S+Alton+Way+%23+G-2+Centennial+CO+80112+USA&output=embed',
+  // Keyless embed pinned to the Google Business Profile (ftid) so the card
+  // shows "Red Rocks Fire Protection", not just the street address.
+  mapsEmbedUrl: 'https://www.google.com/maps?q=Red+Rocks+Fire+Protection,+7076+S+Alton+Way+G-2,+Centennial,+CO+80112&ftid=0x8a4fe4dc82741755:0x8e05a13c7f716f09&output=embed',
+  gbpUrl: 'https://www.google.com/maps/place/Red+Rocks+Fire+Protection/@39.5866715,-104.8858735,17z/data=!3m1!4b1!4m6!3m5!1s0x8a4fe4dc82741755:0x8e05a13c7f716f09!8m2!3d39.5866715!4d-104.8832986!16s%2Fg%2F11xmfdyrrb',
 } as const;
 
 /** Two social links shown below the contact rows (column 1). Facebook
@@ -394,15 +397,23 @@ const socials = [
                                 (Body paragraph removed per client edit, 2026-08-31.)
                                 Per client edit v4. */}
                             <p class="avh__contact-subhead">{contactMenu.intro.subhead}</p>
-                            <div class="avh__contact-map">
+                            <a
+                              class="avh__contact-map"
+                              href={contactMenu.gbpUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label="Open Red Rocks Fire Protection on Google Maps (opens in a new tab)"
+                            >
                               <iframe
+                                tabindex="-1"
+                                aria-hidden="true"
                                 src={contactMenu.mapsEmbedUrl}
                                 title="RRFPS office location"
                                 loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade"
-                                allowfullscreen
                               ></iframe>
-                            </div>
+                              <span class="avh__contact-map-btn">View on Google Maps</span>
+                            </a>
                           </div>
                         </li>
                       ) : (item.label === 'INDUSTRIES WE SERVE' || item.label === 'SERVICES') ? (
@@ -1383,6 +1394,8 @@ const socials = [
     max-width: 60ch;
   }
   .avh__contact-map {
+    position: relative;
+    display: block;
     width: 100%;
     aspect-ratio: 16 / 11;
     background: #e7e5e4;
@@ -1393,6 +1406,24 @@ const socials = [
     width: 100%;
     height: 100%;
     border: 0;
+    /* Block clicks on other businesses' pins; the wrapping link opens our GBP. */
+    pointer-events: none;
+  }
+  .avh__contact-map-btn {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    padding: 4px 10px;
+    background: #fff;
+    color: #1c1917;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
+  .avh__contact-map:hover .avh__contact-map-btn,
+  .avh__contact-map:focus-visible .avh__contact-map-btn {
+    text-decoration: underline;
   }
   .avh__contact {
     display: flex;
