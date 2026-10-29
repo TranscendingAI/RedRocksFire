@@ -26,6 +26,10 @@
 import { HEAR_ABOUT_US_OPTIONS } from '../data/hearAboutUs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { contact, contactPage, company } from '../data/site';
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client';
+
+// Public Turnstile site key; the hard-coded value is only a fallback.
+const turnstileSiteKey = PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAAFqVDmQyCD2vLw3l';
 
 // Shared arrow + diamond icons — same path data as the other pages so the
 // visual rhythm matches 1:1.
@@ -202,6 +206,9 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
                 <label for="cf-website">Website</label>
                 <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off" />
               </div>
+
+              {/* Cloudflare Turnstile (Managed) — rendered by the script below. */}
+              <div class="cf__turnstile" data-turnstile data-sitekey={turnstileSiteKey}></div>
 
               <button type="submit" class="av-wgl-btn cf__submit">
                 <span class="av-wgl-btn__text">send message</span>
@@ -514,6 +521,9 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
   .cf__form-note a { color: var(--av-primary); text-decoration: none; font-weight: 600; }
   .cf__form-note a:hover { text-decoration: underline; }
 
+  /* Turnstile widget slot (reserves height so the button doesn't jump). */
+  .cf__turnstile { min-height: 65px; margin: 0 0 22px; }
+
   /* Success / error message injected by the enhancement script. */
   .cf__status {
     margin: 18px 0 0;
@@ -558,6 +568,36 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
   const THANK_YOU_URL = '/thank-you/';
   /** Max wait for GA to confirm the lead event before navigating anyway. */
   const GA_TIMEOUT_MS = 1000;
+
+  type TurnstileApi = {
+    render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+    reset: (id?: string) => void;
+    getResponse: (id?: string) => string | undefined;
+  };
+  const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  let turnstileLoading: Promise<TurnstileApi> | null = null;
+  function loadTurnstile(): Promise<TurnstileApi> {
+    const w = window as unknown as { turnstile?: TurnstileApi };
+    if (w.turnstile) return Promise.resolve(w.turnstile);
+    if (!turnstileLoading) {
+      turnstileLoading = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = TURNSTILE_SRC;
+        s.async = true;
+        s.onload = () => (w.turnstile ? resolve(w.turnstile) : reject(new Error('turnstile missing')));
+        s.onerror = () => {
+          turnstileLoading = null;
+          reject(new Error('turnstile failed to load'));
+        };
+        document.head.appendChild(s);
+      });
+    }
+    return turnstileLoading;
+  }
+
+  const VERIFY_MSG = 'Please complete the verification check before sending.';
+  const VERIFY_FAILED_MSG =
+    'We couldn’t verify you’re human. Please complete the verification check and try again.';
 
   function initContactForm() {
     const form = document.querySelector<HTMLFormElement>('form[data-contact-form]');
@@ -616,9 +656,31 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
       });
     };
 
-    // No-JS fallback round-trip: the endpoint redirects back with ?status=error.
-    if (new URLSearchParams(window.location.search).get('status') === 'error') {
+    // Cloudflare Turnstile widget (explicit render so it works with ClientRouter).
+    const tsEl = form.querySelector<HTMLElement>('[data-turnstile]');
+    let tsApi: TurnstileApi | null = null;
+    let tsId: string | null = null;
+    if (tsEl) {
+      loadTurnstile()
+        .then((api) => {
+          if (!tsEl.isConnected) return;
+          tsApi = api;
+          tsId = api.render(tsEl, { sitekey: tsEl.dataset.sitekey, action: 'contact' });
+        })
+        .catch(() => {
+          /* Server rejects tokenless posts with a clear message. */
+        });
+    }
+    const resetTurnstile = () => {
+      if (tsApi && tsId) tsApi.reset(tsId);
+    };
+
+    // No-JS fallback round-trip: the endpoint redirects back with ?status=error|verify.
+    const fallbackStatus = new URLSearchParams(window.location.search).get('status');
+    if (fallbackStatus === 'error') {
       showStatus(ERROR_MSG, 'error');
+    } else if (fallbackStatus === 'verify') {
+      showStatus(VERIFY_FAILED_MSG, 'error');
     }
 
     // "How did you hear about us?" follow-up box: show + require it only for
@@ -650,13 +712,22 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
         return;
       }
 
+      const fd = new FormData(form);
+      const token =
+        String(fd.get('cf-turnstile-response') ?? '') || (tsApi && tsId ? tsApi.getResponse(tsId) ?? '' : '');
+      if (!token) {
+        showStatus(VERIFY_MSG, 'error');
+        return;
+      }
+      fd.set('cf-turnstile-response', token);
+
       setBusy(true);
       let succeeded = false;
       try {
         const res = await fetch(form.action, {
           method: 'POST',
           headers: { Accept: 'application/json' },
-          body: new FormData(form),
+          body: fd,
         });
         const data = (await res.json().catch(() => ({}))) as {
           ok?: boolean;
@@ -668,6 +739,8 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
           // Keep the button in its busy state while we hand off to /thank-you/.
           succeeded = true;
           trackLeadThenRedirect();
+        } else if (res.status === 403) {
+          showStatus(data.error || VERIFY_FAILED_MSG, 'error');
         } else if (res.status === 422 && data.fields) {
           showStatus(Object.values(data.fields).join(' '), 'error');
         } else {
@@ -676,7 +749,11 @@ const bannerImage = '/images/red-rocks-fire-protection-contact-us.webp';
       } catch {
         showStatus(ERROR_MSG, 'error');
       } finally {
-        if (!succeeded) setBusy(false);
+        if (!succeeded) {
+          setBusy(false);
+          // Tokens are single-use: get a fresh one for the next attempt.
+          resetTurnstile();
+        }
       }
     });
   }

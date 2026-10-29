@@ -20,7 +20,12 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { HEAR_ABOUT_US_OPTIONS } from '../../data/hearAboutUs';
-import { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } from 'astro:env/server';
+import {
+  RESEND_API_KEY,
+  CONTACT_TO_EMAIL,
+  CONTACT_FROM_EMAIL,
+  TURNSTILE_SECRET_KEY,
+} from 'astro:env/server';
 
 export const prerender = false;
 
@@ -35,7 +40,7 @@ const LIMITS = {
 } as const;
 
 type Field = keyof typeof LIMITS;
-type Payload = Record<Field, string> & { website: string };
+type Payload = Record<Field, string> & { website: string; turnstileToken: string };
 type FieldErrors = Partial<Record<Field, string>>;
 
 // Deliberately simple: one @, no spaces, a dot in the domain part.
@@ -81,6 +86,7 @@ async function readPayload(request: Request): Promise<Payload | null> {
     hearAbout: oneLine(str('hear_about')),
     hearAboutDetail: oneLine(str('hear_about_detail')),
     website: str('website'),
+    turnstileToken: str('cf-turnstile-response') || str('turnstileToken'),
   };
 }
 
@@ -100,6 +106,32 @@ function validate(p: Payload): FieldErrors {
     }
   }
   return errors;
+}
+
+const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const TURNSTILE_FAILED =
+  'We couldn’t verify you’re human. Please complete the verification check and try again.';
+
+/**
+ * Cloudflare Turnstile check. Missing secret: warn, and fail closed in
+ * production builds only (local dev without the secret is let through).
+ */
+async function verifyTurnstile(token: string, remoteip?: string): Promise<{ ok: boolean; reason?: string }> {
+  if (!TURNSTILE_SECRET_KEY) {
+    console.warn('[api/contact] TURNSTILE_SECRET_KEY is not set; cannot verify submissions.');
+    return import.meta.env.PROD ? { ok: false, reason: 'missing-secret' } : { ok: true };
+  }
+  if (!token || token.length > 2048) return { ok: false, reason: 'missing-token' };
+  try {
+    const body = new URLSearchParams({ secret: TURNSTILE_SECRET_KEY, response: token });
+    if (remoteip) body.set('remoteip', remoteip);
+    const res = await fetch(SITEVERIFY_URL, { method: 'POST', body, signal: AbortSignal.timeout(8000) });
+    const data = (await res.json()) as { success?: boolean; 'error-codes'?: string[] };
+    return data.success ? { ok: true } : { ok: false, reason: (data['error-codes'] ?? []).join(',') || 'failed' };
+  } catch (err) {
+    console.error('[api/contact] Turnstile siteverify failed:', err);
+    return { ok: false, reason: 'siteverify-error' };
+  }
 }
 
 /** "Google Search", or "Referral from a Friend or Colleague: Jane Doe". */
@@ -155,18 +187,18 @@ function buildEmail(p: Payload) {
   return { text, html };
 }
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect, clientAddress }) => {
   const wantsJson =
     (request.headers.get('accept') ?? '').includes('application/json') ||
     (request.headers.get('content-type') ?? '').includes('application/json');
 
-  const respond = (status: number, body: Record<string, unknown>) =>
+  const respond = (status: number, body: Record<string, unknown>, errorStatus = 'error') =>
     wantsJson
       ? new Response(JSON.stringify(body), {
           status,
           headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
         })
-      : redirect(body.ok ? '/thank-you/' : '/contact/?status=error#contact-form', 303);
+      : redirect(body.ok ? '/thank-you/' : `/contact/?status=${errorStatus}#contact-form`, 303);
 
   const payload = await readPayload(request);
   if (!payload) {
@@ -181,6 +213,21 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const errors = validate(payload);
   if (Object.keys(errors).length > 0) {
     return respond(422, { ok: false, error: 'Please check the highlighted fields.', fields: errors });
+  }
+
+  // Cloudflare Turnstile (spam protection).
+  let ip: string | undefined = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+  if (!ip) {
+    try {
+      ip = clientAddress;
+    } catch {
+      ip = undefined;
+    }
+  }
+  const captcha = await verifyTurnstile(payload.turnstileToken, ip);
+  if (!captcha.ok) {
+    console.warn('[api/contact] Turnstile rejected the submission:', captcha.reason);
+    return respond(403, { ok: false, error: TURNSTILE_FAILED, captcha: true }, 'verify');
   }
 
   const to = (CONTACT_TO_EMAIL ?? '')
