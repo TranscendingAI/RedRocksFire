@@ -60,6 +60,10 @@ export default defineConfig({
       RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       CONTACT_TO_EMAIL: envField.string({ context: 'server', access: 'secret', optional: true }),
       CONTACT_FROM_EMAIL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      // Cloudflare Turnstile (contact-form spam protection). The secret is
+      // read at request time; the site key is public and inlined at build.
+      TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      PUBLIC_TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
     },
   },
   integrations: [
