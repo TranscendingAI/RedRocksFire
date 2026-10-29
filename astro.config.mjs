@@ -63,6 +63,10 @@ export default defineConfig({
       // Cloudflare Turnstile (contact-form spam protection). The secret is
       // read at request time; the site key is public and inlined at build.
       TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      // Google Sheets inquiry log (Apps Script web app). Both optional; if
+      // either is unset /api/contact skips logging.
+      SHEETS_WEBHOOK_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      SHEETS_WEBHOOK_SECRET: envField.string({ context: 'server', access: 'secret', optional: true }),
       PUBLIC_TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
     },
   },

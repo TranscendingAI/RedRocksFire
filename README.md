@@ -41,3 +41,17 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## Contact form → Google Sheets log
+
+After `/api/contact` successfully sends an inquiry via Resend (never for
+honeypot or Turnstile-rejected spam), it also POSTs the submission as JSON to a
+Google Apps Script web app that appends a row to the Inquiries sheet. Set in
+Vercel (server-only, optional; logging is skipped if either is unset):
+
+- `SHEETS_WEBHOOK_URL`: the Apps Script deployment's `/exec` URL
+- `SHEETS_WEBHOOK_SECRET`: same value as the script's `SHARED_SECRET` property
+
+Payload: `{ secret, submittedAt, name, email, phone, company, message,
+hearAbout, hearAboutDetail, form: 'contact page', pageUrl }`. Logging is
+best-effort with a 5s timeout; failures are only `console.error`ed.

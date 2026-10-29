@@ -16,6 +16,10 @@
  *   CONTACT_TO_EMAIL    Inbox(es) that receive leads; comma-separated OK
  *   CONTACT_FROM_EMAIL  Sender on a Resend-verified domain, e.g.
  *                       "RRFPS Website <website@rrfps.com>"
+ *   SHEETS_WEBHOOK_URL    Optional. Google Apps Script web app /exec URL that
+ *                         appends each delivered inquiry to the Inquiries sheet
+ *   SHEETS_WEBHOOK_SECRET Optional. Must equal the script's SHARED_SECRET
+ *                         property. Logging is skipped if either is unset.
  */
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
@@ -25,6 +29,8 @@ import {
   CONTACT_TO_EMAIL,
   CONTACT_FROM_EMAIL,
   TURNSTILE_SECRET_KEY,
+  SHEETS_WEBHOOK_URL,
+  SHEETS_WEBHOOK_SECRET,
 } from 'astro:env/server';
 
 export const prerender = false;
@@ -137,6 +143,48 @@ async function verifyTurnstile(token: string, remoteip?: string): Promise<{ ok: 
 /** "Google Search", or "Referral from a Friend or Colleague: Jane Doe". */
 const hearAboutLabel = (p: Payload) =>
   p.hearAboutDetail ? `${p.hearAbout}: ${p.hearAboutDetail}` : p.hearAbout;
+
+/**
+ * Append the inquiry to the Google Sheet via the Apps Script web app. Only
+ * called after a successful Resend send (never for honeypot/Turnstile spam).
+ * Best-effort: 5s timeout, errors are logged and swallowed. Awaited by the
+ * caller because Vercel may freeze the function after the response is sent.
+ * Apps Script answers with a 302 to googleusercontent.com; fetch follows it.
+ */
+async function logToSheet(p: Payload, pageUrl: string | null): Promise<void> {
+  if (!SHEETS_WEBHOOK_URL || !SHEETS_WEBHOOK_SECRET) return;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    const res = await fetch(SHEETS_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      redirect: 'follow',
+      signal: controller.signal,
+      body: JSON.stringify({
+        secret: SHEETS_WEBHOOK_SECRET,
+        submittedAt: new Date().toISOString(),
+        name: p.name,
+        email: p.email,
+        phone: p.phone,
+        company: p.company,
+        message: p.message,
+        hearAbout: p.hearAbout,
+        hearAboutDetail: p.hearAboutDetail,
+        form: 'contact page',
+        pageUrl: pageUrl ?? '',
+      }),
+    });
+    const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+    if (!res.ok || !data?.ok) {
+      console.error('[api/contact] Sheet logging failed:', res.status, data?.error ?? 'bad response');
+    }
+  } catch (err) {
+    console.error('[api/contact] Sheet logging request failed:', err);
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 function buildEmail(p: Payload) {
   const rows: [string, string][] = [
@@ -260,6 +308,9 @@ export const POST: APIRoute = async ({ request, redirect, clientAddress }) => {
     console.error('[api/contact] Resend request failed:', err);
     return respond(502, { ok: false, error: 'We couldn’t send your message.' });
   }
+
+  // Email delivered; log to the Google Sheet (best-effort, max ~5s).
+  await logToSheet(payload, request.headers.get('referer'));
 
   return respond(200, { ok: true });
 };
